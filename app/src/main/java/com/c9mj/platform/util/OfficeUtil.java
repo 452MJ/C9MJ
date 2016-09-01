@@ -7,7 +7,8 @@ import android.net.Uri;
 import java.io.File;
 
 /**
- * Created by Administrator on 2016/7/4.
+ * author: LMJ
+ * date: 2016/9/1
  */
 public class OfficeUtil {
     private static final String[][] MIME_MapTable={

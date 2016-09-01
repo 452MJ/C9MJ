@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by Administrator on 2015/12/2.
- * 统一操作SharedPreferences
+ * author: LMJ
+ * date: 2016/9/1
  */
 public class SPUtil {
 

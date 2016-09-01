@@ -3,7 +3,8 @@ package com.c9mj.platform.util.retrofit.bean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/8/25.
+ * author: LMJ
+ * date: 2016/9/1
  */
 public class MovieBean {
 

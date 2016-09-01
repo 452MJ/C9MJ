@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#eb423e</color>
+    <color name="colorPrimaryDark">#80eb423e</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="layoutBackground">#eff3f6</color>
     <!--导航栏-->
-    <color name="colorTabSelected">#cf449a</color>
+    <color name="colorTabSelected">#eb423e</color>
     <color name="colorTabNormal">#696969</color>
+
+    <!--TopBar的Light主题-->
+    <color name="colorTopBarBackgroundLight">#f3f6f5</color>
+    <color name="colorTopBarBtnTextChooseLight">#ffffff</color>
+    <color name="colorTopBarBtnTextNormalLight">#8e8e8e</color>
+    <color name="colorTopBarTextLight">#505352</color>
+
+    <!--TopBar的Dark主题-->
+    <color name="colorTopBarBackgroundDark">@color/colorPrimary</color>
+    <color name="colorTopBarBtnTextChooseDark">@color/colorPrimary</color>
+    <color name="colorTopBarBtnTextNormalDark">#ffffff</color>
+    <color name="colorTopBarTextDark">#ffffff</color>
 </resources>

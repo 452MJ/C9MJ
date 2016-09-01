@@ -13,8 +13,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 /**
- * Utils for status bar
- * Created by qiu on 3/29/16.
+ * author: LMJ
+ * date: 2016/9/1
  */
 public class StatusBarCompat {
 

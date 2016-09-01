@@ -1,7 +1,8 @@
 package com.c9mj.platform.util.retrofit.bean;
 
 /**
- * Created by Administrator on 2016/8/23.
+ * author: LMJ
+ * date: 2016/9/1
  */
 public class BaseBean<T> {
 

@@ -15,7 +15,8 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2016/8/24.
+ * author: LMJ
+ * date: 2016/9/1
  */
 public class RetrofitHelper{
 

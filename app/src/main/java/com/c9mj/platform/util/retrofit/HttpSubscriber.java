@@ -3,7 +3,8 @@ package com.c9mj.platform.util.retrofit;
 import rx.Subscriber;
 
 /**
- * Created by Administrator on 2016/8/24.
+ * author: LMJ
+ * date: 2016/9/1
  */
 public abstract class HttpSubscriber<T> extends Subscriber<T>{
 

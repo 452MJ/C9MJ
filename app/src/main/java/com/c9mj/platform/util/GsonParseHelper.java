@@ -4,16 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
-* 项目名称：DTEduAppBaseLib   
-* 类名称：GsonParseHelper   
-* 类描述：   Gson解析帮助类
-* 创建人：Administrator   
-* 创建时间：2014-4-9 下午4:03:22   
-* 修改人：Administrator   
-* 修改时间：2014-4-9 下午4:03:22   
-* 修改备注：   
-* @version    
-*
+ * author: LMJ
+ * date: 2016/9/1
  */
 public class GsonParseHelper {
 

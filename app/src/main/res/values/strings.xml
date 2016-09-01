@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">C9MJ</string>
+    <string name="title_news">随便看看</string>
+    <string name="title_live">直播</string>
+    <string name="title_user">我</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="second_exit">"再按一次Back键退出程序"</string>
+
 </resources>

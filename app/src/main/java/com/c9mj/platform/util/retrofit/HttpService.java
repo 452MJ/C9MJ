@@ -11,7 +11,8 @@ import retrofit2.http.Query;
 import rx.Observable;
 
 /**
- * Created by Administrator on 2016/8/23.
+ * author: LMJ
+ * date: 2016/9/1
  */
 public interface HttpService {
 
