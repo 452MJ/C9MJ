@@ -1,4 +1,4 @@
-package com.c9mj.platform.http;
+package com.c9mj.platform.util.retrofit;
 
 /**
  * Created by Administrator on 2016/8/24.

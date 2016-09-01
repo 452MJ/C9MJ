@@ -1,7 +1,8 @@
-package com.c9mj.platform.http;
+package com.c9mj.platform.util.retrofit;
 
-import com.example.administrator.every_sample.bean.BaseBean;
-import com.example.administrator.every_sample.bean.MovieBean;
+
+import com.c9mj.platform.util.retrofit.bean.BaseBean;
+import com.c9mj.platform.util.retrofit.bean.MovieBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

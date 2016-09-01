@@ -4,18 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".main.MainActivity">
+    tools:context=".main.view.MainActivity">
 
-
-    <android.support.design.widget.TabLayout
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tablayout"
+        android:layout_height="match_parent"
+        android:id="@+id/viewpager"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/magic_indicator" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/magic_indicator"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:fillViewport="false"
-        app:tabIndicatorColor="@color/colorPrimaryDark"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="@color/colorAccent"
-        />
+        android:layout_alignParentStart="false" />
+
 </RelativeLayout>

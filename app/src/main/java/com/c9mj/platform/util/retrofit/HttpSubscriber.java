@@ -1,4 +1,4 @@
-package com.c9mj.platform.http;
+package com.c9mj.platform.util.retrofit;
 
 import rx.Subscriber;
 

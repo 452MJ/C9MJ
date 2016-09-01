@@ -1,6 +1,6 @@
-package com.c9mj.platform.http;
+package com.c9mj.platform.util.retrofit;
 
-import com.example.administrator.every_sample.bean.BaseBean;
+import com.c9mj.platform.util.retrofit.bean.BaseBean;
 
 import java.util.concurrent.TimeUnit;
 
