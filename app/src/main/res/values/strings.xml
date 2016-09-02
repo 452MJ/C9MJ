@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">C9MJ</string>
-    <string name="title_news">随便看看</string>
+    <string name="title_explore">发现</string>
     <string name="title_live">直播</string>
-    <string name="title_user">我</string>
+    <string name="title_user">我的</string>
 
     <string name="second_exit">"再按一次Back键退出程序"</string>
 

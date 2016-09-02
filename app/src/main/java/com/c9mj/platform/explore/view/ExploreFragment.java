@@ -1,4 +1,4 @@
-package com.c9mj.platform.user.view;
+package com.c9mj.platform.explore.view;
 
 
 import android.os.Bundle;
@@ -22,9 +22,9 @@ import me.yokeyword.fragmentation.SupportFragment;
  * author: LMJ
  * date: 2016/9/1
  */
-public class UserFragment extends SupportFragment {
+public class ExploreFragment extends SupportFragment {
 
-    private static UserFragment fragment = null;
+    private static ExploreFragment fragment = null;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -33,10 +33,10 @@ public class UserFragment extends SupportFragment {
     @BindView(R.id.text)
     TextView text;
 
-    public static UserFragment newInstance() {
+    public static ExploreFragment newInstance() {
         if (fragment == null) {
-            synchronized (UserFragment.class) {
-                fragment = new UserFragment();
+            synchronized (ExploreFragment.class) {
+                fragment = new ExploreFragment();
             }
         }
         return fragment;
@@ -46,24 +46,21 @@ public class UserFragment extends SupportFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
         ButterKnife.bind(this, view);
 
-        initToolBar();
+//        initToolBar();
         return view;
     }
-
     @Override
     public void onStart() {
         super.onStart();
 
     }
-
     private void initToolBar() {
-        toolbar.setTitle(getString(R.string.title_user));
+        toolbar.setTitle(getString(R.string.title_explore));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         text.setText(DateUtil.timeStamp2Date(String.valueOf(System.currentTimeMillis()), null));
-        Log.e("user", "initToolBar: ");
+        Log.e("explore", "initToolBar: ");
     }
-
 }

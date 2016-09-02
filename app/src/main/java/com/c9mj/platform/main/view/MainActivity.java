@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.explore.view.NewsFragment;
+import com.c9mj.platform.explore.view.ExploreFragment;
 import com.c9mj.platform.live.view.LiveFragment;
 import com.c9mj.platform.main.adapter.MainFragmentPagerAdapter;
 import com.c9mj.platform.user.view.UserFragment;
@@ -129,9 +129,13 @@ public class MainActivity extends SupportActivity {
     }
 
     private void initViewPager() {
-        fragmentList.add(new NewsFragment());
-        fragmentList.add(new LiveFragment());
-        fragmentList.add(new UserFragment());
+
+        ExploreFragment exploreFragment = ExploreFragment.newInstance();
+        LiveFragment liveFragment = LiveFragment.newInstance();
+        UserFragment userFragment = UserFragment.newInstance();
+        fragmentList.add(exploreFragment);
+        fragmentList.add(liveFragment);
+        fragmentList.add(userFragment);
         MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
     }
