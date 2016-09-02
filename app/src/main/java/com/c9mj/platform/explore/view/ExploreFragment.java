@@ -50,6 +50,11 @@ public class ExploreFragment extends LazyFragment {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_explore));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

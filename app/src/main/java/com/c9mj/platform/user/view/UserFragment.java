@@ -50,6 +50,21 @@ public class UserFragment extends LazyFragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        onSaveInstanceState(new Bundle());
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_user));
