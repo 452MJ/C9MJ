@@ -14,9 +14,9 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 public class MainFragmentPagerAdapter extends FragmentPagerAdapter{
 
-    private List<SupportFragment> fragmentList;
+    private List<Fragment> fragmentList;
 
-    public MainFragmentPagerAdapter(FragmentManager fm, List<SupportFragment> fragmentList) {
+    public MainFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
         this.fragmentList = fragmentList;
     }

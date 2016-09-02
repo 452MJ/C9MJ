@@ -45,7 +45,7 @@ public class MainActivity extends SupportActivity {
 
 
     private long mExitTime;//用于按两次Back键退出
-    private List<SupportFragment> fragmentList = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
     private SupportFragment[] fragmentArray = new SupportFragment[3];
 
     final int[] normalResId = new int[]{
@@ -70,51 +70,22 @@ public class MainActivity extends SupportActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        initFragment(savedInstanceState);
+        initFragment();
         initViewPager();
         initIndicator();
 
     }
 
-    private void initFragment(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-//            fragmentArray[EXPLORE] = ExploreFragment.newInstance();
-//            fragmentArray[LIVE] = LiveFragment.newInstance();
-//            fragmentArray[USER] = UserFragment.newInstance();
-//
-//            loadMultipleRootFragment(R.id.viewpager, EXPLORE,
-//                    fragmentArray[EXPLORE],
-//                    fragmentArray[LIVE],
-//                    fragmentArray[USER]
-//            );
-//            TAB_INDEX = EXPLORE;
-
-            fragmentList.add(ExploreFragment.newInstance());
-            fragmentList.add(LiveFragment.newInstance());
-            fragmentList.add(UserFragment.newInstance());
-        } else {
-            // 这里库已经做了Fragment恢复工作，不需要额外的处理
-            // 这里我们需要拿到mFragments的引用，用下面的方法查找更方便些，也可以通过getSupportFragmentManager.getFragments()自行进行判断查找(效率更高些)
-//            fragmentArray[EXPLORE] = findFragment(ExploreFragment.class);
-//            fragmentArray[LIVE] = findFragment(LiveFragment.class);
-//            fragmentArray[USER] = findFragment(UserFragment.class);
-
-            fragmentList.clear();
-            fragmentList.add(findFragment(ExploreFragment.class));
-            fragmentList.add(findFragment(LiveFragment.class));
-            fragmentList.add(findFragment(UserFragment.class));
-        }
+    private void initFragment() {
+        fragmentList.add(ExploreFragment.newInstance());
+        fragmentList.add(LiveFragment.newInstance());
+        fragmentList.add(UserFragment.newInstance());
     }
 
     private void initViewPager() {
-//        ExploreFragment exploreFragment = ExploreFragment.newInstance();
-//        LiveFragment liveFragment = LiveFragment.newInstance();
-//        UserFragment userFragment = UserFragment.newInstance();
-//        fragmentList.add(exploreFragment);
-//        fragmentList.add(liveFragment);
-//        fragmentList.add(userFragment);
         MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
 
 
@@ -159,31 +130,6 @@ public class MainActivity extends SupportActivity {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(index);
-//                        switch (index) {
-//                            case EXPLORE: {//jump to ExploreFragment
-//                                if (TAB_INDEX == LIVE)
-//                                    showHideFragment(fragmentArray[EXPLORE], fragmentArray[LIVE]);
-//                                if (TAB_INDEX == USER)
-//                                    showHideFragment(fragmentArray[EXPLORE], fragmentArray[USER]);
-//                            }
-//                            break;
-//                            case LIVE: {//jump to LiveFragment
-//                                if (TAB_INDEX == EXPLORE)
-//                                    showHideFragment(fragmentArray[LIVE], fragmentArray[EXPLORE]);
-//                                if (TAB_INDEX == USER)
-//                                    showHideFragment(fragmentArray[LIVE], fragmentArray[USER]);
-//                            }
-//                            break;
-//                            case USER: {//jump to UserFrament
-//                                if (TAB_INDEX == EXPLORE)
-//                                    showHideFragment(fragmentArray[USER], fragmentArray[EXPLORE]);
-//                                if (TAB_INDEX == LIVE)
-//                                    showHideFragment(fragmentArray[USER], fragmentArray[LIVE]);
-//                            }
-//                            break;
-//                            default:
-//                                break;
-//                        }
                     }
                 });
 
