@@ -1,7 +1,6 @@
 package com.c9mj.platform.main.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,9 +9,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.c9mj.platform.R;
+import com.c9mj.platform.explore.view.NewsFragment;
 import com.c9mj.platform.live.view.LiveFragment;
 import com.c9mj.platform.main.adapter.MainFragmentPagerAdapter;
-import com.c9mj.platform.news.view.NewsFragment;
 import com.c9mj.platform.user.view.UserFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -41,14 +40,14 @@ public class MainActivity extends SupportActivity {
     private List<Fragment> fragmentList = new ArrayList<>();
 
     final int[] normalResId = new int[]{
-            R.drawable.ic_news_normal,
-            R.drawable.ic_live_normal,
-            R.drawable.ic_user_normal
+            R.drawable.ic_explore_normal_40dp,
+            R.drawable.ic_live_normal_40dp,
+            R.drawable.ic_user_normal_40dp
     };
     final int[] pressedResId = new int[]{
-            R.drawable.ic_news_pressed,
-            R.drawable.ic_live_pressed,
-            R.drawable.ic_user_pressed
+            R.drawable.ic_explore_pressed_40dp,
+            R.drawable.ic_live_pressed_40dp,
+            R.drawable.ic_user_pressed_40dp
     };
 
     @BindView(R.id.magic_indicator)
@@ -121,7 +120,7 @@ public class MainActivity extends SupportActivity {
             public IPagerIndicator getIndicator(Context context) {
                 BezierPagerIndicator indicator = new BezierPagerIndicator(context);
                 indicator.setMaxCircleRadius(UIUtil.dip2px(context, 2.5));
-                indicator.setColors(Color.parseColor("#eb423e"));
+                indicator.setColors(getResources().getColor(R.color.color_primary));
                 return indicator;
             }
         });

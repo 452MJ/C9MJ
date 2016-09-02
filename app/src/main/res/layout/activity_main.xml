@@ -15,8 +15,8 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/colorPrimaryDark"
+        android:layout_height="0.5dp"
+        android:background="@color/color_primary_dark"
         android:layout_above="@+id/magic_indicator" />
 
     <net.lucode.hackware.magicindicator.MagicIndicator

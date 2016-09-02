@@ -2,14 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layoutBackground">
-
-    <com.c9mj.platform.widget.TopBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/top_bar"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    android:background="@color/color_layout_background">
 
     <TextView
         android:layout_width="wrap_content"
