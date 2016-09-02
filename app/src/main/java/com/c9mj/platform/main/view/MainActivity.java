@@ -30,14 +30,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
 public class MainActivity extends SupportActivity {
+
+    public int TAB_INDEX;
+    public static final int EXPLORE = 0;
+    public static final int LIVE = 1;
+    public static final int USER = 2;
+
+
     private long mExitTime;//用于按两次Back键退出
-    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<SupportFragment> fragmentList = new ArrayList<>();
+    private SupportFragment[] fragmentArray = new SupportFragment[3];
 
     final int[] normalResId = new int[]{
             R.drawable.ic_explore_normal_40dp,
@@ -61,12 +70,52 @@ public class MainActivity extends SupportActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        initFragment(savedInstanceState);
         initViewPager();
         initIndicator();
 
     }
 
+    private void initFragment(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+//            fragmentArray[EXPLORE] = ExploreFragment.newInstance();
+//            fragmentArray[LIVE] = LiveFragment.newInstance();
+//            fragmentArray[USER] = UserFragment.newInstance();
+//
+//            loadMultipleRootFragment(R.id.viewpager, EXPLORE,
+//                    fragmentArray[EXPLORE],
+//                    fragmentArray[LIVE],
+//                    fragmentArray[USER]
+//            );
+//            TAB_INDEX = EXPLORE;
 
+            fragmentList.add(ExploreFragment.newInstance());
+            fragmentList.add(LiveFragment.newInstance());
+            fragmentList.add(UserFragment.newInstance());
+        } else {
+            // 这里库已经做了Fragment恢复工作，不需要额外的处理
+            // 这里我们需要拿到mFragments的引用，用下面的方法查找更方便些，也可以通过getSupportFragmentManager.getFragments()自行进行判断查找(效率更高些)
+//            fragmentArray[EXPLORE] = findFragment(ExploreFragment.class);
+//            fragmentArray[LIVE] = findFragment(LiveFragment.class);
+//            fragmentArray[USER] = findFragment(UserFragment.class);
+
+            fragmentList.clear();
+            fragmentList.add(findFragment(ExploreFragment.class));
+            fragmentList.add(findFragment(LiveFragment.class));
+            fragmentList.add(findFragment(UserFragment.class));
+        }
+    }
+
+    private void initViewPager() {
+//        ExploreFragment exploreFragment = ExploreFragment.newInstance();
+//        LiveFragment liveFragment = LiveFragment.newInstance();
+//        UserFragment userFragment = UserFragment.newInstance();
+//        fragmentList.add(exploreFragment);
+//        fragmentList.add(liveFragment);
+//        fragmentList.add(userFragment);
+        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setAdapter(adapter);
+    }
 
 
     private void initIndicator() {
@@ -110,6 +159,31 @@ public class MainActivity extends SupportActivity {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(index);
+//                        switch (index) {
+//                            case EXPLORE: {//jump to ExploreFragment
+//                                if (TAB_INDEX == LIVE)
+//                                    showHideFragment(fragmentArray[EXPLORE], fragmentArray[LIVE]);
+//                                if (TAB_INDEX == USER)
+//                                    showHideFragment(fragmentArray[EXPLORE], fragmentArray[USER]);
+//                            }
+//                            break;
+//                            case LIVE: {//jump to LiveFragment
+//                                if (TAB_INDEX == EXPLORE)
+//                                    showHideFragment(fragmentArray[LIVE], fragmentArray[EXPLORE]);
+//                                if (TAB_INDEX == USER)
+//                                    showHideFragment(fragmentArray[LIVE], fragmentArray[USER]);
+//                            }
+//                            break;
+//                            case USER: {//jump to UserFrament
+//                                if (TAB_INDEX == EXPLORE)
+//                                    showHideFragment(fragmentArray[USER], fragmentArray[EXPLORE]);
+//                                if (TAB_INDEX == LIVE)
+//                                    showHideFragment(fragmentArray[USER], fragmentArray[LIVE]);
+//                            }
+//                            break;
+//                            default:
+//                                break;
+//                        }
                     }
                 });
 
@@ -128,24 +202,13 @@ public class MainActivity extends SupportActivity {
         SimpleViewPagerDelegate.with(magicIndicator, viewPager).delegate();
     }
 
-    private void initViewPager() {
-
-        ExploreFragment exploreFragment = ExploreFragment.newInstance();
-        LiveFragment liveFragment = LiveFragment.newInstance();
-        UserFragment userFragment = UserFragment.newInstance();
-        fragmentList.add(exploreFragment);
-        fragmentList.add(liveFragment);
-        fragmentList.add(userFragment);
-        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
-        viewPager.setAdapter(adapter);
-    }
 
     @Override
     public void onBackPressedSupport() {
-        if (System.currentTimeMillis() - mExitTime > 2000){
+        if (System.currentTimeMillis() - mExitTime > 2000) {
             mExitTime = System.currentTimeMillis();
             Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             super.onBackPressedSupport();
         }
     }

@@ -2,6 +2,7 @@ package com.c9mj.platform.user.view;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.DateUtil;
+import com.c9mj.platform.widget.LazyFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +24,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * author: LMJ
  * date: 2016/9/1
  */
-public class UserFragment extends SupportFragment {
-
-    private static UserFragment fragment = null;
+public class UserFragment extends LazyFragment {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -34,11 +34,9 @@ public class UserFragment extends SupportFragment {
     TextView text;
 
     public static UserFragment newInstance() {
-        if (fragment == null) {
-            synchronized (UserFragment.class) {
-                fragment = new UserFragment();
-            }
-        }
+        UserFragment fragment = new UserFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -49,15 +47,9 @@ public class UserFragment extends SupportFragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
 
-        initToolBar();
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_user));
@@ -66,4 +58,8 @@ public class UserFragment extends SupportFragment {
         Log.e("user", "initToolBar: ");
     }
 
+    @Override
+    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+        initToolBar();
+    }
 }

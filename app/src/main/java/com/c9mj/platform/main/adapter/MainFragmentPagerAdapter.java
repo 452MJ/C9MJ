@@ -6,15 +6,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
+import me.yokeyword.fragmentation.SupportFragment;
+
 /**
  * author: LMJ
  * date: 2016/9/1
  */
 public class MainFragmentPagerAdapter extends FragmentPagerAdapter{
 
-    private List<Fragment> fragmentList;
+    private List<SupportFragment> fragmentList;
 
-    public MainFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+    public MainFragmentPagerAdapter(FragmentManager fm, List<SupportFragment> fragmentList) {
         super(fm);
         this.fragmentList = fragmentList;
     }
