@@ -1,6 +1,7 @@
 package com.c9mj.platform.user.view;
 
 
+import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.widget.LazyFragment;
-import com.commit451.nativestackblur.NativeStackBlur;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +33,6 @@ public class UserFragment extends LazyFragment {
     @BindView(R.id.app_bar_iv)
     ImageView appBarIv;
 
-
     public static UserFragment newInstance() {
         UserFragment fragment = new UserFragment();
         Bundle args = new Bundle();
@@ -47,7 +47,6 @@ public class UserFragment extends LazyFragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
 
-
         return view;
     }
 
@@ -55,8 +54,7 @@ public class UserFragment extends LazyFragment {
         toolbar.setTitle(getString(R.string.title_user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        appBarIv.setImageBitmap(NativeStackBlur.process(BitmapFactory.decodeResource(getResources(), R.drawable.ic_header), 40));
-
+        Glide.with(this).load(R.drawable.ic_header).into(appBarIv);
     }
 
     @Override

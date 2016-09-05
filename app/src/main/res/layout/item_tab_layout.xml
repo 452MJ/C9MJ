@@ -5,8 +5,8 @@
     android:background="?selectableItemBackground">
 
     <Button
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
+        android:layout_width="@dimen/tab_imageview_size"
+        android:layout_height="@dimen/tab_imageview_size"
         android:id="@+id/tab_btn"
         android:layout_gravity="center"
         android:clickable="false" />

@@ -2,6 +2,7 @@ package com.c9mj.platform.widget;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.BaseAdapter;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -9,7 +10,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * author: LMJ
  * date: 2016/9/2
  */
-public abstract class LazyFragment extends SupportFragment{
+public abstract class LazyFragment extends BaseFragment{
     private boolean mInited = false;
     private Bundle mSavedInstanceState;
 
