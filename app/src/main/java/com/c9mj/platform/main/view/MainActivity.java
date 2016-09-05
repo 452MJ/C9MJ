@@ -72,6 +72,7 @@ public class MainActivity extends SupportActivity {
     private void initIndicator() {
         final CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdjustMode(true);
+        commonNavigator.setIndicatorOnTop(true);
         commonNavigator.setFollowTouch(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
