@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
+import me.yokeyword.fragmentation.SupportFragment;
+
 /**
  * author: LMJ
  * date: 2016/9/1

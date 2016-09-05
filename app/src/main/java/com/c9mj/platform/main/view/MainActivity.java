@@ -30,14 +30,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
 public class MainActivity extends SupportActivity {
+
+    public int TAB_INDEX;
+    public static final int EXPLORE = 0;
+    public static final int LIVE = 1;
+    public static final int USER = 2;
+
+
     private long mExitTime;//用于按两次Back键退出
     private List<Fragment> fragmentList = new ArrayList<>();
+    private SupportFragment[] fragmentArray = new SupportFragment[3];
 
     final int[] normalResId = new int[]{
             R.drawable.ic_explore_normal_40dp,
@@ -61,12 +70,23 @@ public class MainActivity extends SupportActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        initFragment();
         initViewPager();
         initIndicator();
 
     }
 
+    private void initFragment() {
+        fragmentList.add(ExploreFragment.newInstance());
+        fragmentList.add(LiveFragment.newInstance());
+        fragmentList.add(UserFragment.newInstance());
+    }
 
+    private void initViewPager() {
+        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
+    }
 
 
     private void initIndicator() {
@@ -129,24 +149,13 @@ public class MainActivity extends SupportActivity {
         SimpleViewPagerDelegate.with(magicIndicator, viewPager).delegate();
     }
 
-    private void initViewPager() {
-
-        ExploreFragment exploreFragment = ExploreFragment.newInstance();
-        LiveFragment liveFragment = LiveFragment.newInstance();
-        UserFragment userFragment = UserFragment.newInstance();
-        fragmentList.add(exploreFragment);
-        fragmentList.add(liveFragment);
-        fragmentList.add(userFragment);
-        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
-        viewPager.setAdapter(adapter);
-    }
 
     @Override
     public void onBackPressedSupport() {
-        if (System.currentTimeMillis() - mExitTime > 2000){
+        if (System.currentTimeMillis() - mExitTime > 2000) {
             mExitTime = System.currentTimeMillis();
             Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             super.onBackPressedSupport();
         }
     }

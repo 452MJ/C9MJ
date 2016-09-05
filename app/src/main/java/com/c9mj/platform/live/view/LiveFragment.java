@@ -2,6 +2,7 @@ package com.c9mj.platform.live.view;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.DateUtil;
+import com.c9mj.platform.widget.LazyFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +24,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * author: LMJ
  * date: 2016/9/1
  */
-public class LiveFragment extends SupportFragment {
-
-    private static LiveFragment fragment = null;
+public class LiveFragment extends LazyFragment {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -34,11 +34,9 @@ public class LiveFragment extends SupportFragment {
     TextView text;
 
     public static LiveFragment newInstance() {
-        if (fragment == null) {
-            synchronized (LiveFragment.class) {
-                fragment = new LiveFragment();
-            }
-        }
+        LiveFragment fragment = new LiveFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -49,14 +47,7 @@ public class LiveFragment extends SupportFragment {
         View view = inflater.inflate(R.layout.fragment_live, container, false);
         ButterKnife.bind(this, view);
 
-        initToolBar();
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
     }
 
     private void initToolBar() {
@@ -64,5 +55,10 @@ public class LiveFragment extends SupportFragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         text.setText(DateUtil.timeStamp2Date(String.valueOf(System.currentTimeMillis()), null));
         Log.e("live", "initToolBar: ");
+    }
+
+    @Override
+    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+        initToolBar();
     }
 }
