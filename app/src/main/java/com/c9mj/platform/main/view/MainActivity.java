@@ -15,7 +15,7 @@ import com.c9mj.platform.main.adapter.MainFragmentPagerAdapter;
 import com.c9mj.platform.user.view.UserFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.SimpleViewPagerDelegate;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
@@ -90,7 +90,7 @@ public class MainActivity extends SupportActivity {
 
 
     private void initIndicator() {
-        final CommonNavigator commonNavigator = new CommonNavigator(this);
+        CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdjustMode(true);
         commonNavigator.setIndicatorOnTop(true);
         commonNavigator.setFollowTouch(true);
@@ -146,7 +146,7 @@ public class MainActivity extends SupportActivity {
             }
         });
         magicIndicator.setNavigator(commonNavigator);
-        SimpleViewPagerDelegate.with(magicIndicator, viewPager).delegate();
+        ViewPagerHelper.bind(magicIndicator, viewPager);
     }
 
 
