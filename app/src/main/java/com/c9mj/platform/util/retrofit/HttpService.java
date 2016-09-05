@@ -1,7 +1,7 @@
 package com.c9mj.platform.util.retrofit;
 
 
-import com.c9mj.platform.util.retrofit.bean.BaseBean;
+import com.c9mj.platform.util.retrofit.bean.LiveBaseBean;
 import com.c9mj.platform.util.retrofit.bean.MovieBean;
 
 import retrofit2.Call;
@@ -17,7 +17,7 @@ import rx.Observable;
 public interface HttpService {
 
     @POST("user")
-    Observable<BaseBean<String>> login(
+    Observable<LiveBaseBean<String>> login(
 
     );
 

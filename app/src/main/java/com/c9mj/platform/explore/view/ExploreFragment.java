@@ -18,7 +18,6 @@ import com.c9mj.platform.widget.LazyFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
@@ -48,11 +47,6 @@ public class ExploreFragment extends LazyFragment {
         ButterKnife.bind(this, view);
 
         return view;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     private void initToolBar() {

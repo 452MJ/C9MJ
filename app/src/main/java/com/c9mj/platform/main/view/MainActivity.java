@@ -92,7 +92,6 @@ public class MainActivity extends SupportActivity {
     private void initIndicator() {
         CommonNavigator commonNavigator = new CommonNavigator(this);
         commonNavigator.setAdjustMode(true);
-        commonNavigator.setIndicatorOnTop(true);
         commonNavigator.setFollowTouch(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -140,7 +139,7 @@ public class MainActivity extends SupportActivity {
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 BezierPagerIndicator indicator = new BezierPagerIndicator(context);
-                indicator.setMaxCircleRadius(UIUtil.dip2px(context, 2.5));
+                indicator.setMaxCircleRadius(UIUtil.dip2px(context, 3));
                 indicator.setColors(getResources().getColor(R.color.color_primary));
                 return indicator;
             }

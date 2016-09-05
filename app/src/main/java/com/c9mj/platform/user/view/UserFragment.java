@@ -1,24 +1,23 @@
 package com.c9mj.platform.user.view;
 
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.util.DateUtil;
 import com.c9mj.platform.widget.LazyFragment;
+import com.commit451.nativestackblur.NativeStackBlur;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
@@ -30,8 +29,9 @@ public class UserFragment extends LazyFragment {
     Toolbar toolbar;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    @BindView(R.id.text)
-    TextView text;
+    @BindView(R.id.app_bar_iv)
+    ImageView appBarIv;
+
 
     public static UserFragment newInstance() {
         UserFragment fragment = new UserFragment();
@@ -47,30 +47,16 @@ public class UserFragment extends LazyFragment {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
 
+
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        onSaveInstanceState(new Bundle());
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        text.setText(DateUtil.timeStamp2Date(String.valueOf(System.currentTimeMillis()), null));
-        Log.e("user", "initToolBar: ");
+
+        appBarIv.setImageBitmap(NativeStackBlur.process(BitmapFactory.decodeResource(getResources(), R.drawable.ic_header), 40));
+
     }
 
     @Override
