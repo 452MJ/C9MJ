@@ -13,9 +13,9 @@ public class SpHelper {
     private static SpHelper instance = null;
 
     /*************默认保存为String类型（int与boolean在末尾添加说明）**************/
-    public static final String BOOLEAN_XX= "booleanXX";//boolean型value
+    public static final String BOOLEAN_XX= "boolean_XX";//boolean型value
     public static final String STRING_XX = "string_XX";//String型value
-    public static final String INT_XX = "intXX";        //int型value
+    public static final String INT_XX = "int_XX";        //int型value
 
     private SpHelper(){}
 
