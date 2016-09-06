@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 public class GsonHelper {
 	private static Gson gson;
 	public static	Object obj = null;
+	
 	//序列化所有注解的字段
 	private static Gson getInstance() {
 		synchronized (GsonHelper.class) {
