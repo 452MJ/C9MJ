@@ -1,4 +1,4 @@
-package com.c9mj.platform.widget;
+package com.c9mj.platform.widget.fragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 

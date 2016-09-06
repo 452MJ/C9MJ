@@ -14,11 +14,10 @@ import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.DateUtil;
-import com.c9mj.platform.widget.LazyFragment;
+import com.c9mj.platform.widget.fragment.LazyFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ

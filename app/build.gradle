@@ -54,5 +54,4 @@ dependencies {
     compile 'com.bm.photoview:library:1.4.1'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.9.7'
     compile 'com.github.hackware1993:MagicIndicator:+'
-
 }

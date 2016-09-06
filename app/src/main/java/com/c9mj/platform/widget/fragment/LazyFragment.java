@@ -1,10 +1,7 @@
-package com.c9mj.platform.widget;
+package com.c9mj.platform.widget.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.BaseAdapter;
-
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ

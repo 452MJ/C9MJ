@@ -27,8 +27,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 app:layout_collapseMode="parallax"
-                android:scaleType="centerCrop"
-                android:id="@+id/app_bar_iv" />
+                android:id="@+id/app_bar_iv"
+                android:scaleType="centerCrop" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -78,23 +78,51 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:clickable="false">
+                    android:clickable="false"
+                    android:padding="5dp">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@mipmap/ic_launcher"
-                        android:id="@+id/imageView" />
+                        android:src="@drawable/ic_user_40dp"
+                        android:id="@+id/imageView"
+                        android:layout_below="@+id/textView"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓名"
+                        android:id="@+id/textView"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignEnd="@+id/imageView"
+                        android:layout_alignParentStart="true"
+                        android:gravity="center"
+                        android:textColor="@color/color_secondary_text"
+                        android:textSize="@dimen/textsize_secondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="姓名"
+                        android:id="@+id/textView6"
+                        android:layout_below="@+id/textView"
+                        android:layout_toEndOf="@+id/imageView"
+                        android:layout_alignBottom="@+id/imageView"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:textSize="@dimen/textsize_primary"
+                        android:textColor="@color/color_primary_text" />
 
                 </RelativeLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/divider_height"
                     android:background="@color/color_divider"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -104,17 +132,45 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@mipmap/ic_launcher"
-                        android:id="@+id/imageView2" />
+                        android:src="@drawable/ic_computer_40dp"
+                        android:id="@+id/imageView2"
+                        android:layout_below="@+id/textView2"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="所在行业"
+                        android:id="@+id/textView2"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignEnd="@+id/imageView2"
+                        android:gravity="center"
+                        android:textColor="@color/color_secondary_text"
+                        android:textSize="@dimen/textsize_secondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="行业"
+                        android:id="@+id/textView7"
+                        android:layout_below="@+id/textView2"
+                        android:layout_toEndOf="@+id/imageView2"
+                        android:layout_alignBottom="@+id/imageView2"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:textSize="@dimen/textsize_primary"
+                        android:textColor="@color/color_primary_text" />
 
                 </RelativeLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/divider_height"
                     android:background="@color/color_divider"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,17 +179,44 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@mipmap/ic_launcher"
-                        android:id="@+id/imageView3" />
+                        android:src="@drawable/ic_android_40dp"
+                        android:id="@+id/imageView3"
+                        android:layout_below="@+id/textView3"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="职业经历"
+                        android:id="@+id/textView3"
+                        android:layout_alignEnd="@+id/imageView3"
+                        android:gravity="center"
+                        android:textColor="@color/color_secondary_text"
+                        android:textSize="@dimen/textsize_secondary"
+                        android:layout_alignParentStart="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="职位"
+                        android:id="@+id/textView8"
+                        android:layout_below="@+id/textView3"
+                        android:layout_toEndOf="@+id/imageView3"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:layout_alignBottom="@+id/imageView3"
+                        android:textSize="@dimen/textsize_primary"
+                        android:textColor="@color/color_primary_text" />
 
                 </RelativeLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/divider_height"
                     android:background="@color/color_divider"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,17 +226,44 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@mipmap/ic_launcher"
-                        android:id="@+id/imageView4" />
+                        android:src="@drawable/ic_school_40dp"
+                        android:id="@+id/imageView4"
+                        android:layout_below="@+id/textView4"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="教育经历"
+                        android:id="@+id/textView4"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignEnd="@+id/imageView4"
+                        android:gravity="center"
+                        android:textColor="@color/color_secondary_text"
+                        android:textSize="@dimen/textsize_secondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="学校 · 专业"
+                        android:id="@+id/textView9"
+                        android:layout_below="@+id/textView4"
+                        android:layout_toEndOf="@+id/imageView4"
+                        android:layout_alignBottom="@+id/imageView4"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:textSize="@dimen/textsize_primary"
+                        android:textColor="@color/color_primary_text" />
 
                 </RelativeLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/divider_height"
                     android:background="@color/color_divider"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,9 +272,34 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@mipmap/ic_launcher"
-                        android:id="@+id/imageView5" />
+                        android:src="@drawable/ic_introduction_40dp"
+                        android:id="@+id/imageView5"
+                        android:layout_below="@+id/textView5"
+                        android:padding="15dp" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="个人描述"
+                        android:id="@+id/textView5"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignEnd="@+id/imageView5"
+                        android:gravity="center"
+                        android:textColor="@color/color_secondary_text"
+                        android:textSize="@dimen/textsize_secondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="写代码的"
+                        android:id="@+id/textView10"
+                        android:layout_below="@+id/textView5"
+                        android:layout_toEndOf="@+id/imageView5"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:layout_alignBottom="@+id/imageView5"
+                        android:textSize="@dimen/textsize_primary"
+                        android:textColor="@color/color_primary_text" />
                 </RelativeLayout>
 
             </LinearLayout>

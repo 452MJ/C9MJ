@@ -1,8 +1,6 @@
 package com.c9mj.platform.user.view;
 
 
-import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +13,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
-import com.c9mj.platform.widget.LazyFragment;
+import com.c9mj.platform.widget.fragment.LazyFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +52,7 @@ public class UserFragment extends LazyFragment {
         toolbar.setTitle(getString(R.string.title_user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        Glide.with(this).load(R.drawable.ic_header).into(appBarIv);
+        Glide.with(this).load(R.drawable.background_user).into(appBarIv);
     }
 
     @Override
