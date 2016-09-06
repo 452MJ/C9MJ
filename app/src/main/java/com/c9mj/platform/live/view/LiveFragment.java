@@ -3,17 +3,13 @@ package com.c9mj.platform.live.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.util.DateUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
 import butterknife.BindView;
@@ -27,10 +23,6 @@ public class LiveFragment extends LazyFragment {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.text)
-    TextView text;
 
     public static LiveFragment newInstance() {
         LiveFragment fragment = new LiveFragment();
@@ -52,8 +44,6 @@ public class LiveFragment extends LazyFragment {
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_live));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        text.setText(DateUtil.timeStamp2Date(String.valueOf(System.currentTimeMillis()), null));
-        Log.e("live", "initToolBar: ");
     }
 
     @Override

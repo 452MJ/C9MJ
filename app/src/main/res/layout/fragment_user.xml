@@ -10,7 +10,7 @@
         android:layout_height="200dp"
         android:id="@+id/app_bar"
         android:fitsSystemWindows="true"
-        app:elevation="@dimen/wiget_elevation"
+        app:elevation="@dimen/widget_elevation"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:background="?android:selectableItemBackground"
-        android:elevation="@dimen/wiget_elevation"
+        android:elevation="@dimen/widget_elevation"
         android:src="@drawable/ic_camera_40dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
@@ -65,9 +65,14 @@
             android:layout_height="wrap_content"
             android:foreground="?android:selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:layout_margin="@dimen/cardview_margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:elevation="@dimen/widget_elevation"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="true"
             app:cardCornerRadius="@dimen/cardview_radius"
-            app:cardElevation="@dimen/wiget_elevation">
+            app:cardElevation="@dimen/cardview_elevation">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
