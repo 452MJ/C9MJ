@@ -1,39 +1,24 @@
 package com.c9mj.platform.util;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
-public class GsonParseHelper {
-
+public class GsonHelper {
 	private static Gson gson;
-	private static Gson builderGson;
 	public static	Object obj = null;
 	//序列化所有注解的字段
-	public static Gson getInstance() {
-		synchronized (GsonParseHelper.class) {
+	private static Gson getInstance() {
+		synchronized (GsonHelper.class) {
 			if (gson == null) {
 				gson = new Gson();
 			}
 		}
 		return gson;
 	}
-	
-	 // 不序列化没有 @Expose 注解的字段   
-	public static Gson getBuilderInstance(){
-		synchronized( GsonParseHelper.class ) {
-			if( builderGson == null ) {
-				GsonBuilder builder = new GsonBuilder();
-				builder.excludeFieldsWithoutExposeAnnotation();
-				builderGson = builder.create();
-			}
-		}
-		return builderGson;
-	}
-	
+
 	/**
 	 * 
 	* @Title: parseJson 

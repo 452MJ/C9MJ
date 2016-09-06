@@ -7,27 +7,27 @@ import android.content.SharedPreferences;
  * author: LMJ
  * date: 2016/9/1
  */
-public class SPUtil {
+public class SpHelper {
 
     private static Context context;
-    private static SPUtil instance = null;
+    private static SpHelper instance = null;
 
     /*************默认保存为String类型（int与boolean在末尾添加说明）**************/
     public static final String BOOLEAN_XX= "booleanXX";//boolean型value
     public static final String STRING_XX = "string_XX";//String型value
     public static final String INT_XX = "intXX";        //int型value
 
-    private SPUtil(){}
+    private SpHelper(){}
 
-    private SPUtil(Context ctx){
+    private SpHelper(Context ctx){
         context = ctx;
     }
 
-    public static SPUtil getInstance(Context ctx){
+    public static SpHelper with(Context ctx){
         if(instance == null){
-            synchronized (SPUtil.class){
+            synchronized (SpHelper.class){
                 if(instance == null){
-                    instance = new SPUtil(ctx.getApplicationContext());
+                    instance = new SpHelper(ctx.getApplicationContext());
                 }
             }
         }
@@ -35,7 +35,7 @@ public class SPUtil {
     }
 
     private SharedPreferences getSP(){
-        return context.getSharedPreferences("MyAppName", Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE | Context.MODE_APPEND | Context.MODE_MULTI_PROCESS);
+        return context.getSharedPreferences("C9MJ", Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE | Context.MODE_APPEND | Context.MODE_MULTI_PROCESS);
     }
 
     /************字符串String(key-value)*************/
