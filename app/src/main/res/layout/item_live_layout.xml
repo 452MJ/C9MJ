@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:background="@null">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_margin="@dimen/cardview_margin"
         app:cardCornerRadius="@dimen/cardview_default_radius"
         android:foreground="?selectableItemBackground"
@@ -19,41 +21,41 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="3dp">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="97dp"
                 android:id="@+id/imageView6"
+                android:background="@color/color_primary"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/color_primary" />
+                android:scaleType="fitXY" />
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:id="@+id/imageView7"
                 android:background="#f2e0e0"
-                android:layout_alignParentTop="true"
+                android:layout_alignBottom="@+id/imageView9"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="105dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="5dp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="name"
+                android:text="主播名称"
                 android:id="@+id/textView11"
-                android:layout_below="@+id/imageView6"
-                android:layout_alignBottom="@+id/imageView7"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/imageView7"
                 android:gravity="center_vertical"
                 android:padding="5dp"
-                android:textSize="@dimen/textsize_primary"
+                android:textSize="@dimen/textsize_secondary"
                 android:textColor="@color/color_primary_text"
-                />
+                android:layout_below="@+id/imageView6"
+                android:layout_toRightOf="@+id/imageView7"
+                android:layout_toLeftOf="@+id/imageView9"
+                android:scrollIndicators="end"
+                android:singleLine="true" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -65,14 +67,45 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="房间名"
+                    android:text="房间名称"
                     android:id="@+id/textView12"
                     android:textSize="@dimen/textsize_secondary"
                     android:textColor="@color/color_icons"
                     android:padding="5dp"
                     android:singleLine="true" />
             </FrameLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView8"
+                android:layout_below="@+id/imageView6"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1234"
+                android:id="@+id/textView13"
+                android:layout_below="@+id/imageView6"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/textsize_secondary"
+                android:gravity="center"
+                android:textColor="@color/color_secondary_text"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/imageView9"
+                android:layout_below="@+id/imageView6"
+                android:layout_toStartOf="@+id/textView13"
+                android:src="@drawable/ic_visitor_40dp"
+                android:layout_marginTop="5dp" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-</FrameLayout>
+
+</LinearLayout>

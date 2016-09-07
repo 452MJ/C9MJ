@@ -3,6 +3,8 @@ package com.c9mj.platform.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.c9mj.platform.R;
+
 /**
  * author: LMJ
  * date: 2016/9/1
@@ -17,7 +19,8 @@ public class SpHelper {
     public static final String STRING_XX = "string_XX";//String型value
     public static final String INT_XX = "int_XX";        //int型value
 
-    private SpHelper(){}
+    public static final String STRING_USER = "user_backgroun";
+    /****************************************************************************/
 
     private SpHelper(Context ctx){
         context = ctx;
@@ -35,7 +38,7 @@ public class SpHelper {
     }
 
     private SharedPreferences getSP(){
-        return context.getSharedPreferences("C9MJ", Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE | Context.MODE_APPEND | Context.MODE_MULTI_PROCESS);
+        return context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE | Context.MODE_APPEND | Context.MODE_MULTI_PROCESS);
     }
 
     /************字符串String(key-value)*************/

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.util.DateUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
 import butterknife.BindView;
@@ -52,7 +51,6 @@ public class ExploreFragment extends LazyFragment {
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_explore));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        text.setText(DateUtil.timeStamp2Date(String.valueOf(System.currentTimeMillis()), null));
         Log.e("explore", "initToolBar: ");
     }
 

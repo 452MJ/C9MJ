@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 app:layout_collapseMode="parallax"
-                android:id="@+id/app_bar_iv"
+                android:id="@+id/user_iv_appbar"
                 android:scaleType="centerCrop" />
 
             <android.support.v7.widget.Toolbar
@@ -43,7 +43,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/user_btn_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
@@ -63,7 +63,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foreground="?android:selectableItemBackgroundBorderless"
+            android:foreground="?android:selectableItemBackground"
             android:clickable="true"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="10dp"
