@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.PhotoUtils;
 import com.c9mj.platform.util.SpHelper;
+import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
 import org.joda.time.DateTime;
@@ -41,7 +42,7 @@ public class UserFragment extends LazyFragment {
     private static final int REQUEST_CAMERA = 100;
     private static final int REQUEST_GALLERY = REQUEST_CAMERA + 1;
 
-    private String savePath;
+    private String savePath;//调用系统Camera相片保存的路径
 
     @BindView(R.id.user_iv_appbar)
     ImageView iv_appbar;
@@ -77,11 +78,12 @@ public class UserFragment extends LazyFragment {
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         String filePath = SpHelper.with(this.getContext()).getString(SpHelper.STRING_USER);//查询保存的背景图片路径
         if (!TextUtils.isEmpty(filePath)) {
             Glide.with(this).load(filePath).into(iv_appbar);
         }else {
-            Glide.with(this).load(R.drawable.background_user).into(iv_appbar);
+            Glide.with(this).load(R.drawable.background_default).into(iv_appbar);
         }
     }
 
@@ -138,18 +140,22 @@ public class UserFragment extends LazyFragment {
                     String filePath = temp.getAbsolutePath();
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                } else if (resultCode == Activity.RESULT_CANCELED){
+                    ToastUtil.show(getContext(), getString(R.string.user_carema_cancel));
+                }else {
+                    ToastUtil.show(getContext(), getString(R.string.error_unknown));
                 }
             }
             break;
             case REQUEST_GALLERY: {// 相册获取
                 if (resultCode == Activity.RESULT_OK) {
-                    try {
-                        String filePath = PhotoUtils.getRealPathFromURI(this.getContext(), data.getData());
-                        Glide.with(this).load(filePath).into(iv_appbar);
-                        SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
+                    String filePath = PhotoUtils.getRealPathFromURI(this.getContext(), data.getData());
+                    Glide.with(this).load(filePath).into(iv_appbar);
+                    SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                }else if (resultCode == Activity.RESULT_CANCELED){
+                    ToastUtil.show(getContext(), getString(R.string.user_carema_cancel));
+                }else {
+                    ToastUtil.show(getContext(), getString(R.string.error_unknown));
                 }
             }break;
 

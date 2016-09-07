@@ -3,6 +3,7 @@ package com.c9mj.platform.util.retrofit;
 /**
  * author: LMJ
  * date: 2016/9/1
+ * 统一处理网络异常errorCode
  */
 public class RetrofitException extends RuntimeException{
 
@@ -31,7 +32,7 @@ public class RetrofitException extends RuntimeException{
                 msg = "服务器内部错误，请稍后再试！";
                 break;
             default:
-                msg = "未知错误";
+                msg = "未知错误！";
                 break;
         }
         return msg;

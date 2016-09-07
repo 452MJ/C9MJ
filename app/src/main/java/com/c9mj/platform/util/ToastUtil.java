@@ -11,7 +11,7 @@ public class ToastUtil {
     private static Toast toast;
     private static boolean isShow = false;
 
-    public static void initToast(Context context) {
+    private static void initToast(Context context) {
         if (toast == null){
             synchronized (ToastUtil.class){
                 toast = new Toast(context.getApplicationContext());
@@ -19,14 +19,24 @@ public class ToastUtil {
         }
     }
 
-    public static void show(Context context, String content){
+    public static void show(Context context, CharSequence content, int duration){
         initToast(context);
         if (isShow == true){
             isShow = false;
             toast.cancel();
         }
-        toast = Toast.makeText(context, content, Toast.LENGTH_LONG);
+        toast = Toast.makeText(context, content, duration);
         toast.show();
         isShow = true;
     }
+
+    public static void show(Context context, CharSequence content){
+        show(context, content, Toast.LENGTH_SHORT);
+    }
+
+    public static void show(Context context, int resId){
+        show(context, context.getString(resId), Toast.LENGTH_SHORT);
+    }
+
+
 }
