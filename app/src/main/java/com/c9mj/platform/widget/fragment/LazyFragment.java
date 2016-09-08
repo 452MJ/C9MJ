@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
  * date: 2016/9/2
  */
 public abstract class LazyFragment extends BaseFragment{
+
     private boolean mInited = false;
     private Bundle mSavedInstanceState;
 

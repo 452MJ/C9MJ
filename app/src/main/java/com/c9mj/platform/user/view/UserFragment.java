@@ -20,7 +20,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
-import com.c9mj.platform.util.PhotoUtils;
+import com.c9mj.platform.util.PhotoUtil;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
@@ -80,7 +80,7 @@ public class UserFragment extends LazyFragment {
         if (!TextUtils.isEmpty(filePath)) {
             Glide.with(this).load(filePath).into(iv_appbar);
         } else {
-            Glide.with(this).load(R.drawable.background_default).into(iv_appbar);
+            Glide.with(this).load(R.drawable.background_default).into(iv_appbar);//加载默认背景
         }
     }
 
@@ -96,7 +96,7 @@ public class UserFragment extends LazyFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                PhotoUtils.startGallery(UserFragment.this, REQUEST_GALLERY);
+                                PhotoUtil.startGallery(UserFragment.this, REQUEST_GALLERY);
                             }
                         })
                         .setNeutralButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -111,7 +111,7 @@ public class UserFragment extends LazyFragment {
                                 dialog.dismiss();
                                 String fileName = "C9MJ_" + new DateTime(System.currentTimeMillis()).toString("yyyyMMddHHmmss") + ".png";
                                 savePath = Environment.getExternalStorageDirectory() + "/DCIM/Camera/" + fileName;
-                                PhotoUtils.startTakePhoto(UserFragment.this, REQUEST_CAMERA, fileName);
+                                PhotoUtil.startTakePhoto(UserFragment.this, REQUEST_CAMERA, fileName);
                             }
                         });
                 AlertDialog dialog = builder.create();
@@ -133,7 +133,7 @@ public class UserFragment extends LazyFragment {
                     //如果调用相机时指定了savePath的Uri，则不会返回data，data == null
                     //我们可以直接从之前设置savePath得到相片File
                     File temp = new File(savePath);
-                    PhotoUtils.updateGallery(this.getContext(), savePath);
+                    PhotoUtil.updateGallery(this.getContext(), savePath);
                     String filePath = temp.getAbsolutePath();
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
@@ -146,7 +146,7 @@ public class UserFragment extends LazyFragment {
             break;
             case REQUEST_GALLERY: {// 相册获取
                 if (resultCode == Activity.RESULT_OK) {
-                    String filePath = PhotoUtils.getRealPathFromURI(this.getContext(), data.getData());
+                    String filePath = PhotoUtil.getRealPathFromURI(this.getContext(), data.getData());
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {

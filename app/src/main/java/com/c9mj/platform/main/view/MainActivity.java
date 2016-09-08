@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.view.ExploreFragment;
 import com.c9mj.platform.live.view.LiveFragment;
-import com.c9mj.platform.main.adapter.MainFragmentPagerAdapter;
+import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.user.view.UserFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -46,7 +46,6 @@ public class MainActivity extends SupportActivity {
 
     private long mExitTime;//用于按两次Back键退出
     private List<Fragment> fragmentList = new ArrayList<>();
-    private SupportFragment[] fragmentArray = new SupportFragment[3];
 
     final int[] normalResId = new int[]{
             R.drawable.ic_explore_normal_40dp,
@@ -60,7 +59,7 @@ public class MainActivity extends SupportActivity {
     };
 
     @BindView(R.id.magic_indicator)
-    MagicIndicator magicIndicator;
+    MagicIndicator indicator;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
@@ -83,17 +82,17 @@ public class MainActivity extends SupportActivity {
     }
 
     private void initViewPager() {
-        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
     }
 
 
     private void initIndicator() {
-        CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setAdjustMode(true);
-        commonNavigator.setFollowTouch(true);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+        CommonNavigator navigator = new CommonNavigator(this);
+        navigator.setAdjustMode(true);
+        navigator.setFollowTouch(true);
+        navigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
                 return fragmentList == null ? 0 : fragmentList.size();
@@ -102,7 +101,7 @@ public class MainActivity extends SupportActivity {
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 CommonPagerTitleView titleView = new CommonPagerTitleView(context);
-                titleView.setContentView(R.layout.item_tab_layout);
+                titleView.setContentView(R.layout.item_tab_layout);//加载自定义布局作为Tab
 
                 final Button tab_btn = (Button) titleView.findViewById(R.id.tab_btn);
                 titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
@@ -144,8 +143,8 @@ public class MainActivity extends SupportActivity {
                 return indicator;
             }
         });
-        magicIndicator.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(magicIndicator, viewPager);
+        indicator.setNavigator(navigator);
+        ViewPagerHelper.bind(indicator, viewPager);
     }
 
 

@@ -20,7 +20,7 @@ import java.io.IOException;
  * author: LMJ
  * date: 2016/9/7
  */
-public class PhotoUtils {
+public class PhotoUtil {
     /**
      * 裁剪图片方法实现
      * @param uri
