@@ -19,8 +19,9 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="center|bottom"
+            app:expandedTitleGravity="bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
 
             <ImageView
                 android:layout_width="match_parent"
@@ -41,6 +42,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/user_btn_photo"

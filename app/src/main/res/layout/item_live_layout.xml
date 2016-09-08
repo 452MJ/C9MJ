@@ -33,14 +33,16 @@
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/imageView7"
-                android:background="#f2e0e0"
                 android:layout_alignBottom="@+id/imageView9"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="5dp" />
+                android:src="@color/accent"
+                android:layout_marginLeft="5dp"
+                app:civ_border_color="#ffffff"
+                app:civ_border_width="2dp"/>
 
             <TextView
                 android:layout_width="match_parent"

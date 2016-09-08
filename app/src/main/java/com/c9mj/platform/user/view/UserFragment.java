@@ -64,11 +64,8 @@ public class UserFragment extends LazyFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ButterKnife.bind(this, view);
-
         return view;
     }
-
-
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
@@ -82,7 +79,7 @@ public class UserFragment extends LazyFragment {
         String filePath = SpHelper.with(this.getContext()).getString(SpHelper.STRING_USER);//查询保存的背景图片路径
         if (!TextUtils.isEmpty(filePath)) {
             Glide.with(this).load(filePath).into(iv_appbar);
-        }else {
+        } else {
             Glide.with(this).load(R.drawable.background_default).into(iv_appbar);
         }
     }
@@ -140,9 +137,9 @@ public class UserFragment extends LazyFragment {
                     String filePath = temp.getAbsolutePath();
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
-                } else if (resultCode == Activity.RESULT_CANCELED){
+                } else if (resultCode == Activity.RESULT_CANCELED) {
                     ToastUtil.show(getContext(), getString(R.string.user_carema_cancel));
-                }else {
+                } else {
                     ToastUtil.show(getContext(), getString(R.string.error_unknown));
                 }
             }
@@ -152,12 +149,13 @@ public class UserFragment extends LazyFragment {
                     String filePath = PhotoUtils.getRealPathFromURI(this.getContext(), data.getData());
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
-                }else if (resultCode == Activity.RESULT_CANCELED){
+                } else if (resultCode == Activity.RESULT_CANCELED) {
                     ToastUtil.show(getContext(), getString(R.string.user_carema_cancel));
-                }else {
+                } else {
                     ToastUtil.show(getContext(), getString(R.string.error_unknown));
                 }
-            }break;
+            }
+            break;
 
         }
         super.onActivityResult(requestCode, resultCode, data);
