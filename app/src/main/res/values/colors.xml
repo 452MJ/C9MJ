@@ -13,5 +13,7 @@
     <!--导航栏-->
     <color name="color_tab_pressed">@color/color_primary</color>
     <color name="color_tab_normal">@color/color_secondary_text</color>
+    <color name="color_tab_pressed_dark">@color/icons</color>
+    <color name="color_tab_normal_dark">@color/primary_light</color>
 
 </resources>

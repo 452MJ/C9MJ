@@ -1,4 +1,4 @@
-package com.c9mj.platform.user.view;
+package com.c9mj.platform.user.ui;
 
 
 import android.app.Activity;

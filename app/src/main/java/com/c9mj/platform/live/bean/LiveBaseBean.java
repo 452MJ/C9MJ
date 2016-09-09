@@ -1,4 +1,4 @@
-package com.c9mj.platform.util.retrofit.bean;
+package com.c9mj.platform.live.bean;
 
 /**
  * author: LMJ

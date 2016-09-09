@@ -1,6 +1,7 @@
 package com.c9mj.platform.util.retrofit;
 
-import com.c9mj.platform.util.retrofit.bean.LiveBaseBean;
+import com.c9mj.platform.live.bean.LiveBaseBean;
+import com.c9mj.platform.util.retrofit.exception.RetrofitException;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +22,7 @@ import rx.schedulers.Schedulers;
 public class RetrofitHelper{
 
     public static String BASE_EXPLORE_URL = "http://api.douban.com/v2/movie/";
-    public static String BASE_LIVE_URL = "http://api.douban.com/v2/movie/";
+    public static String BASE_LIVE_URL = "http://capi.douyucdn.cn";
     public static String BASE_USER_URL = "http://api.douban.com/v2/movie/";
 
     private static Retrofit retrofit = null;
@@ -44,7 +45,6 @@ public class RetrofitHelper{
         if (retrofit == null){
             synchronized (RetrofitHelper.class){
                 retrofit = new Retrofit.Builder()
-                        .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
                         .baseUrl(BASE_LIVE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

@@ -1,4 +1,4 @@
-package com.c9mj.platform.explore.view;
+package com.c9mj.platform.explore.ui;
 
 
 import android.os.Bundle;

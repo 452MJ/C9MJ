@@ -1,4 +1,4 @@
-package com.c9mj.platform.util.retrofit;
+package com.c9mj.platform.util.retrofit.exception;
 
 /**
  * author: LMJ

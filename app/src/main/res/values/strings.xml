@@ -7,6 +7,9 @@
     <string name="cancel">取消</string>
     <string name="second_exit">"再按一次Back键退出程序"</string>
 
+    <!--直播-->
+    <string name="live_all">全部直播</string>
+
     <!--我的-->
     <string name="user_carema">拍照</string>
     <string name="user_carema_cancel">取消拍照</string>
@@ -18,5 +21,8 @@
     <string name="error_network">网络错误，请检查网络连接设置！</string>
     <string name="error_server">服务器内部错误，请稍后再试！</string>
     <string name="error_unknown">未知错误！</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

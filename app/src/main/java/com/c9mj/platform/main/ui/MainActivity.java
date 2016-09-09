@@ -1,4 +1,4 @@
-package com.c9mj.platform.main.view;
+package com.c9mj.platform.main.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.explore.view.ExploreFragment;
-import com.c9mj.platform.live.view.LiveFragment;
+import com.c9mj.platform.explore.ui.ExploreFragment;
+import com.c9mj.platform.live.ui.LiveFragment;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
-import com.c9mj.platform.user.view.UserFragment;
+import com.c9mj.platform.user.ui.UserFragment;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -30,7 +30,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
-import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
@@ -44,7 +43,7 @@ public class MainActivity extends SupportActivity {
     public static final int USER = 2;
 
 
-    private long mExitTime;//用于按两次Back键退出
+    private long exitTime;//用于按两次Back键退出
     private List<Fragment> fragmentList = new ArrayList<>();
 
     final int[] normalResId = new int[]{
@@ -82,8 +81,8 @@ public class MainActivity extends SupportActivity {
     }
 
     private void initViewPager() {
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
-        viewPager.setAdapter(adapter);
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
+        viewPager.setAdapter(fragmentAdapter);
         viewPager.setOffscreenPageLimit(3);
     }
 
@@ -150,8 +149,8 @@ public class MainActivity extends SupportActivity {
 
     @Override
     public void onBackPressedSupport() {
-        if (System.currentTimeMillis() - mExitTime > 2000) {
-            mExitTime = System.currentTimeMillis();
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            exitTime = System.currentTimeMillis();
             Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressedSupport();
