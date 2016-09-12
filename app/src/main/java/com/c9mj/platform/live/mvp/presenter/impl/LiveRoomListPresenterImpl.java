@@ -2,12 +2,12 @@ package com.c9mj.platform.live.mvp.presenter.impl;
 
 import android.content.Context;
 
-import com.c9mj.platform.live.bean.LiveIndicatorBean;
+import com.c9mj.platform.live.api.LiveAPI;
+import com.c9mj.platform.live.bean.LiveRoomBean;
 import com.c9mj.platform.live.mvp.presenter.ILiveRoomListPresenter;
 import com.c9mj.platform.live.mvp.view.ILiveRoomListFragment;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
-import com.c9mj.platform.live.api.LiveAPI;
 
 import java.util.List;
 
@@ -25,17 +25,15 @@ public class LiveRoomListPresenterImpl implements ILiveRoomListPresenter {
         this.view = view;
     }
 
-
-
     @Override
-    public void getAllRoomList() {
+    public void getAllRoomList(int offset, int limit, String client_sys) {
         RetrofitHelper.getLiveHelper().create(LiveAPI.class)
-                .getColumnList()
-                .compose(RetrofitHelper.<List<LiveIndicatorBean>>handleLiveResult())
-                .subscribe(new HttpSubscriber<List<LiveIndicatorBean>>() {
+                .getAllLiveList(offset, limit, client_sys)
+                .compose(RetrofitHelper.<List<LiveRoomBean>>handleLiveResult())
+                .subscribe(new HttpSubscriber<List<LiveRoomBean>>() {
                     @Override
-                    public void _onNext(List<LiveIndicatorBean> columnBeanList) {
-                        view.updateRecyclerView(columnBeanList);
+                    public void _onNext(List<LiveRoomBean> roomBeanList) {
+                        view.updateRecyclerView(roomBeanList);
                     }
 
                     @Override
@@ -46,8 +44,21 @@ public class LiveRoomListPresenterImpl implements ILiveRoomListPresenter {
     }
 
     @Override
-    public void getColumnRoomList() {
+    public void getColumnRoomList(String cate_id, int offset, int limit, String client_sys) {
+        RetrofitHelper.getLiveHelper().create(LiveAPI.class)
+                .getColumnLiveList(cate_id, offset, limit, client_sys)
+                .compose(RetrofitHelper.<List<LiveRoomBean>>handleLiveResult())
+                .subscribe(new HttpSubscriber<List<LiveRoomBean>>() {
+                    @Override
+                    public void _onNext(List<LiveRoomBean> roomBeanList) {
+                        view.updateRecyclerView(roomBeanList);
+                    }
 
+                    @Override
+                    public void _onError(String message) {
+                        view.showError(message);
+                    }
+                });
     }
 
 }

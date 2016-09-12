@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * author: LMJ
  * date: 2016/9/1
+ * 用于管理FragmentViewPager
  */
 public class FragmentAdapter extends FragmentStatePagerAdapter{
 
@@ -29,8 +30,4 @@ public class FragmentAdapter extends FragmentStatePagerAdapter{
         return fragmentList.size();
     }
 
-    public void setDatas(List<Fragment> fragmentList) {
-        this.fragmentList = fragmentList;
-        notifyDataSetChanged();
-    }
 }

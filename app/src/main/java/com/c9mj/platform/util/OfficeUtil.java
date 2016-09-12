@@ -9,6 +9,7 @@ import java.io.File;
 /**
  * author: LMJ
  * date: 2016/9/1
+ * 通过外部第三方打开文件的工具类
  */
 public class OfficeUtil {
 

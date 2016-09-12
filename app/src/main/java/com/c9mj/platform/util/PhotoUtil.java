@@ -19,6 +19,7 @@ import java.io.IOException;
 /**
  * author: LMJ
  * date: 2016/9/7
+ * 相片处理工具类
  */
 public class PhotoUtil {
     /**

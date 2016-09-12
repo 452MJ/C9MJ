@@ -3,6 +3,7 @@ package com.c9mj.platform.live.api;
 
 import com.c9mj.platform.live.bean.LiveBaseBean;
 import com.c9mj.platform.live.bean.LiveIndicatorBean;
+import com.c9mj.platform.live.bean.LiveRoomBean;
 
 import java.util.List;
 
@@ -17,11 +18,14 @@ import rx.Observable;
  */
 public interface LiveAPI {
 
+    public static final String CLIENT_SYS = "client_sys";
+    public static final int LIMIT = 20;
+
     /**
      * 请求顶部栏目标题
      * @return
      */
-    @GET("/api/v1/getLiveRoomList?client_sys=android")
+    @GET("/api/v1/getColumnList?client_sys=android")
     Observable<LiveBaseBean<List<LiveIndicatorBean>>> getColumnList();
 
     /**
@@ -30,7 +34,7 @@ public interface LiveAPI {
      * @return
      */
     @GET("/api/v1/live")
-    Observable<LiveBaseBean<List<LiveIndicatorBean>>> getAllLiveList(
+    Observable<LiveBaseBean<List<LiveRoomBean>>> getAllLiveList(
             @Query("offset") int offset,
             @Query("limit") int limit,
             @Query("client_sys") String client_sys
@@ -45,7 +49,7 @@ public interface LiveAPI {
      * @return
      */
     @GET("/api/v1/getColumnRoom/{cate_id}")
-    Observable<LiveBaseBean<List<LiveIndicatorBean>>> getColumnLiveList(
+    Observable<LiveBaseBean<List<LiveRoomBean>>> getColumnLiveList(
             @Path("cate_id") String cate_id,
             @Query("offset") int offset,
             @Query("limit") int limit,

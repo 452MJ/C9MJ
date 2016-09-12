@@ -42,18 +42,18 @@ import butterknife.ButterKnife;
 public class LiveFragment extends LazyFragment implements ILiveFragment {
 
     private List<Fragment> fragmentList = new ArrayList<>();
-    private List<LiveIndicatorBean> columnList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
 
     private Context context;
     private LivePresenterImpl presenter;
-    private FragmentAdapter fragmentAdapter;
-    private CommonNavigatorAdapter navigatorAdapter;
+
 
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
+    CommonNavigatorAdapter navigatorAdapter;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    FragmentAdapter fragmentAdapter;
 
     public static LiveFragment newInstance() {
         LiveFragment fragment = new LiveFragment();
@@ -71,20 +71,21 @@ public class LiveFragment extends LazyFragment implements ILiveFragment {
 
         context = view.getContext();
 
+        initMVP();
+        initFragment();
+        initViewPager();
+        initIndicator();
+
         return view;
     }
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
-        initMVP();
-        initFragment();
-        initViewPager();
-        initIndicator();
+        presenter.getColumnList();
     }
 
     private void initMVP() {
         presenter = new LivePresenterImpl(context, this);
-        presenter.getColumnList();
     }
 
     private void initFragment() {
@@ -95,7 +96,7 @@ public class LiveFragment extends LazyFragment implements ILiveFragment {
     private void initViewPager() {
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(10);
+        viewPager.setOffscreenPageLimit(2);
     }
 
     private void initIndicator() {
@@ -145,7 +146,7 @@ public class LiveFragment extends LazyFragment implements ILiveFragment {
     public void updateIndicator(List<LiveIndicatorBean> list) {
         for (LiveIndicatorBean bean :
                 list) {
-            fragmentList.add(LiveRoomListFragment.newInstance());
+            fragmentList.add(LiveRoomListFragment.newInstance(bean.getCate_id()));
             titleList.add(bean.getCate_name());
         }
         fragmentAdapter.notifyDataSetChanged();

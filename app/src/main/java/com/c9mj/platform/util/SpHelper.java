@@ -8,6 +8,7 @@ import com.c9mj.platform.R;
 /**
  * author: LMJ
  * date: 2016/9/1
+ * SharedPreferences工具类
  */
 public class SpHelper {
 
@@ -19,7 +20,7 @@ public class SpHelper {
     public static final String STRING_XX = "string_XX";//String型value
     public static final String INT_XX = "int_XX";        //int型value
 
-    public static final String STRING_USER = "user_backgroun";
+    public static final String STRING_USER = "user_background";
     /****************************************************************************/
 
     private SpHelper(Context ctx){

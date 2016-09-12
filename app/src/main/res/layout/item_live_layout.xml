@@ -22,22 +22,31 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="3dp">
+            android:paddingBottom="1.5dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="97dp"
-                android:id="@+id/imageView6"
-                android:background="@color/color_primary"
+                android:id="@+id/live_iv_roomsrc_background"
+                android:background="@color/divider"
+                android:src="@drawable/ic_live_placeholder_40dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:scaleType="fitXY" />
+                android:padding="25dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="97dp"
+                android:id="@+id/live_iv_roomsrc"
+                android:background="@null"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:id="@+id/imageView7"
-                android:src="@color/accent"
+                android:id="@+id/live_iv_avatar"
+                android:src="@color/color_primary"
                 android:layout_marginLeft="5dp"
                 app:civ_border_color="#ffffff"
                 app:civ_border_width="2dp"
@@ -55,25 +64,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="房间名称"
-                    android:id="@+id/textView12"
+                    android:id="@+id/live_tv_roomname"
                     android:textSize="@dimen/textsize_secondary"
                     android:textColor="@color/color_icons"
-                    android:padding="5dp"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp" />
             </FrameLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_below="@+id/imageView6"
-                android:layout_toEndOf="@+id/imageView7"
-                android:id="@+id/relativeLayout">
+                android:layout_below="@+id/live_iv_roomsrc"
+                android:layout_toEndOf="@+id/live_iv_avatar"
+                android:id="@+id/relativeLayout"
+                android:paddingRight="5dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="主播名称"
-                    android:id="@+id/textView11"
+                    android:id="@+id/live_tv_nickname"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/textsize_secondary"
                     android:textColor="@color/color_primary_text"
@@ -87,13 +98,13 @@
                     android:id="@+id/imageView9"
                     android:src="@drawable/ic_visitor_40dp"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/textView13" />
+                    android:layout_toStartOf="@+id/live_tv_online" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="1234"
-                    android:id="@+id/textView13"
+                    android:id="@+id/live_tv_online"
                     android:textSize="@dimen/textsize_secondary"
                     android:gravity="center"
                     android:textColor="@color/color_secondary_text"

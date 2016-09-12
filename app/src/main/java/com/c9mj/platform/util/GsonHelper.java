@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 /**
  * author: LMJ
  * date: 2016/9/1
+ * Gson工具类
  */
 public class GsonHelper {
 	private static Gson gson;

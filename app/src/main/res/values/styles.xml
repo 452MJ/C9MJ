@@ -10,7 +10,7 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:textColor">@color/color_primary</item>
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/color_primary</item>
     </style>
 </resources>

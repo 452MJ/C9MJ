@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 /**
  * author: LMJ
  * date: 2016/9/1
+ * 沉浸式状态栏工具类
  */
 public class StatusBarCompat {
 
