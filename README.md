@@ -1,7 +1,5 @@
 # C9MJ
 
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_roomlist.jpg" width = "50%"/>
 
-![C9MJ](https://github.com/452MJ/C9MJ/blob/master/screenshots/live_roomlist.jpg)
-
-
-![C9MJ](https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg)
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "50%"/>
