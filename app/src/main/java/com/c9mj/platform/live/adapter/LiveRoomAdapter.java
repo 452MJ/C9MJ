@@ -24,7 +24,8 @@ public class LiveRoomAdapter extends BaseQuickAdapter<LiveRoomBean>{
     protected void convert(BaseViewHolder viewHolder, LiveRoomBean bean) {
         viewHolder.setText(R.id.live_tv_roomname, bean.getRoom_name())//房间名称
                 .setText(R.id.live_tv_nickname, bean.getNickname())//主播昵称
-                .setText(R.id.live_tv_online, String.valueOf(bean.getOnline()));//在线人数
+                .setText(R.id.live_tv_online, String.valueOf(bean.getOnline()))//在线人数
+                .setOnClickListener(R.id.live_cardview, new OnItemChildClickListener());//添加子Item点击监听，在UI中实现回调接口
         Glide.with(mContext)//直播房间截图
                 .load(bean.getRoom_src())
                 .crossFade()

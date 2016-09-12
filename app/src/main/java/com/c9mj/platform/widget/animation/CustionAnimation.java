@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.animation.BaseAnimation;
 /**
  * author: LMJ
  * date: 2016/9/12
+ * RecyclerView加载动画
  */
 public class CustionAnimation implements BaseAnimation {
     @Override

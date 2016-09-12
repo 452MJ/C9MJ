@@ -17,7 +17,8 @@
         android:clickable="true"
         app:cardElevation="@dimen/cardview_elevation"
         app:cardPreventCornerOverlap="true"
-        android:elevation="@dimen/widget_elevation">
+        android:elevation="@dimen/widget_elevation"
+        android:id="@+id/live_cardview">
 
         <RelativeLayout
             android:layout_width="match_parent"

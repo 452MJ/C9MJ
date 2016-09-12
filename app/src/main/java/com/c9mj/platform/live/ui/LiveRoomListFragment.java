@@ -118,6 +118,12 @@ public class LiveRoomListFragment extends LazyFragment implements ILiveRoomListF
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
         adapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
+        adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                ToastUtil.show(context, "" + view.getId() + "   " + i);
+            }
+        });
     }
 
     @Override
