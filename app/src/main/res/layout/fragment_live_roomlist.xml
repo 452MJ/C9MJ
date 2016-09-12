@@ -2,16 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_layout_background"
     tools:context=".live.ui.LiveRoomListFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_layout_background"
         android:id="@+id/refreshlayout">
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_layout_background"
             android:id="@+id/recyclerview"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>

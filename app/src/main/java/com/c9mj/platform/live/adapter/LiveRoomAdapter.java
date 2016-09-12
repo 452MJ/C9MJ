@@ -28,7 +28,7 @@ public class LiveRoomAdapter extends BaseQuickAdapter<LiveRoomBean>{
         Glide.with(mContext)//直播房间截图
                 .load(bean.getRoom_src())
                 .crossFade()
-                .fitCenter()
+                .centerCrop()
                 .into((ImageView) viewHolder.getView(R.id.live_iv_roomsrc));
         Glide.with(mContext)//主播头像
                 .load(bean.getAvatar_mid())

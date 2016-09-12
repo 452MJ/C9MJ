@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@null">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/live_end"
+        android:textColor="@color/color_secondary_text"
+        android:textSize="@dimen/textsize_secondary"/>
+
+</FrameLayout>

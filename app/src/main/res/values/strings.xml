@@ -9,6 +9,8 @@
 
     <!--直播-->
     <string name="live_all">全部直播</string>
+    <string name="live_end">无更多直播</string>
+    <string name="live_empty">暂无直播</string>
 
     <!--我的-->
     <string name="user_carema">拍照</string>
