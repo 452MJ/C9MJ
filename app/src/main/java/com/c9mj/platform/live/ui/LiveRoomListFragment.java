@@ -121,7 +121,7 @@ public class LiveRoomListFragment extends LazyFragment implements ILiveRoomListF
         adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                ToastUtil.show(context, "" + view.getId() + "   " + i);
+                roomBeanList.get(i);
             }
         });
     }

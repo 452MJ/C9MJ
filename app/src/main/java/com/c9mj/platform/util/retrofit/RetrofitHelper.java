@@ -21,9 +21,10 @@ import rx.schedulers.Schedulers;
  */
 public class RetrofitHelper{
 
-    public static String BASE_EXPLORE_URL = "http://api.douban.com/v2/movie/";
-    public static String BASE_LIVE_URL = "http://capi.douyucdn.cn";
-    public static String BASE_USER_URL = "http://api.douban.com/v2/movie/";
+    public static final String BASE_EXPLORE_URL = "http://api.douban.com/v2/movie/";
+    public static final String BASE_LIVE_URL = "http://capi.douyucdn.cn";
+    public static final String BASE_USER_URL = "http://api.douban.com/v2/movie/";
+    public static final String BASE_DANMU_URL = "openbarrage.douyutv.com";
 
     private static Retrofit retrofit = null;
 
