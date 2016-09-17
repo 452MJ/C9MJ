@@ -13,7 +13,13 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -51,4 +57,8 @@ dependencies {
     compile 'com.github.hackware1993:MagicIndicator:+'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'joda-time:joda-time:2.3'
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
 }

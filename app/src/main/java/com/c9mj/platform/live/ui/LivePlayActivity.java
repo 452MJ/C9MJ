@@ -6,13 +6,14 @@ import android.os.Bundle;
 import com.c9mj.platform.R;
 
 import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
  * author: LMJ
  * date: 2016/9/12
  * 观看直播Activity
  */
-public class LivePlayActivity extends SupportActivity {
+public class LivePlayActivity extends SwipeBackActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
