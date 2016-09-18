@@ -3,7 +3,7 @@ package com.c9mj.platform.live.api;
 
 import com.c9mj.platform.live.bean.LiveBaseBean;
 import com.c9mj.platform.live.bean.LiveIndicatorBean;
-import com.c9mj.platform.live.bean.LiveRoomBean;
+import com.c9mj.platform.live.bean.LiveRoomItemBean;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public interface LiveAPI {
      * @return
      */
     @GET("/api/v1/live")
-    Observable<LiveBaseBean<List<LiveRoomBean>>> getAllLiveList(
+    Observable<LiveBaseBean<List<LiveRoomItemBean>>> getAllLiveList(
             @Query("offset") int offset,
             @Query("limit") int limit,
             @Query("client_sys") String client_sys
@@ -49,10 +49,32 @@ public interface LiveAPI {
      * @return
      */
     @GET("/api/v1/getColumnRoom/{cate_id}")
-    Observable<LiveBaseBean<List<LiveRoomBean>>> getColumnLiveList(
+    Observable<LiveBaseBean<List<LiveRoomItemBean>>> getColumnLiveList(
             @Path("cate_id") String cate_id,
             @Query("offset") int offset,
             @Query("limit") int limit,
             @Query("client_sys") String client_sys
+    );
+
+    /**
+     * 请求直播间信息
+     * @param room_id
+     * @param aid
+     * @param client_sys
+     * @param ne
+     * @param support_pwd
+     * @param time
+     * @param auth
+     * @return
+     */
+    @GET("/api/v1/room/{room_id}")
+    Observable<LiveBaseBean<List<LiveRoomItemBean>>> getRoomInfo(
+            @Path("room_id") String room_id,
+            @Query("aid") String aid,
+            @Query("client_sys") String client_sys,
+            @Query("ne") String ne,
+            @Query("support_pwd") String support_pwd,
+            @Query("time") String time,
+            @Query("auth") String auth
     );
 }

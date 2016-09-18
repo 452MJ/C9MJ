@@ -4,7 +4,7 @@ package com.c9mj.platform.live.bean;
  * author: LMJ
  * date: 2016/9/12
  */
-public class LiveRoomBean {
+public class LiveRoomItemBean {
 
     /**
      * room_id : 4809

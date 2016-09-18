@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveRoomAdapter;
 import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.bean.LiveRoomBean;
+import com.c9mj.platform.live.bean.LiveRoomItemBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LiveRoomListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveRoomListFragment;
 import com.c9mj.platform.util.ToastUtil;
@@ -41,7 +41,7 @@ public class LiveRoomListFragment extends LazyFragment implements ILiveRoomListF
 
     private String cate_id;
     private int offset = 0;//用于记录分页偏移量
-    private List<LiveRoomBean> roomBeanList = new ArrayList<>();
+    private List<LiveRoomItemBean> roomBeanList = new ArrayList<>();
 
     private Context context;
     private LiveRoomListPresenterImpl presenter;
@@ -127,7 +127,7 @@ public class LiveRoomListFragment extends LazyFragment implements ILiveRoomListF
     }
 
     @Override
-    public void updateRecyclerView(List<LiveRoomBean> list) {
+    public void updateRecyclerView(List<LiveRoomItemBean> list) {
         refreshLayout.setRefreshing(false);
         roomBeanList.addAll(offset, list);//在roomBeanList的尾部添加
         offset = roomBeanList.size();

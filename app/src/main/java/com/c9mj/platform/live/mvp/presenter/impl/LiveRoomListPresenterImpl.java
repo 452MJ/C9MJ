@@ -3,7 +3,7 @@ package com.c9mj.platform.live.mvp.presenter.impl;
 import android.content.Context;
 
 import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.bean.LiveRoomBean;
+import com.c9mj.platform.live.bean.LiveRoomItemBean;
 import com.c9mj.platform.live.mvp.presenter.ILiveRoomListPresenter;
 import com.c9mj.platform.live.mvp.view.ILiveRoomListFragment;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
@@ -29,10 +29,10 @@ public class LiveRoomListPresenterImpl implements ILiveRoomListPresenter {
     public void getAllRoomList(int offset, int limit, String client_sys) {
         RetrofitHelper.getLiveHelper().create(LiveAPI.class)
                 .getAllLiveList(offset, limit, client_sys)
-                .compose(RetrofitHelper.<List<LiveRoomBean>>handleLiveResult())
-                .subscribe(new HttpSubscriber<List<LiveRoomBean>>() {
+                .compose(RetrofitHelper.<List<LiveRoomItemBean>>handleLiveResult())
+                .subscribe(new HttpSubscriber<List<LiveRoomItemBean>>() {
                     @Override
-                    public void _onNext(List<LiveRoomBean> roomBeanList) {
+                    public void _onNext(List<LiveRoomItemBean> roomBeanList) {
                         view.updateRecyclerView(roomBeanList);
                     }
 
@@ -47,10 +47,10 @@ public class LiveRoomListPresenterImpl implements ILiveRoomListPresenter {
     public void getColumnRoomList(String cate_id, int offset, int limit, String client_sys) {
         RetrofitHelper.getLiveHelper().create(LiveAPI.class)
                 .getColumnLiveList(cate_id, offset, limit, client_sys)
-                .compose(RetrofitHelper.<List<LiveRoomBean>>handleLiveResult())
-                .subscribe(new HttpSubscriber<List<LiveRoomBean>>() {
+                .compose(RetrofitHelper.<List<LiveRoomItemBean>>handleLiveResult())
+                .subscribe(new HttpSubscriber<List<LiveRoomItemBean>>() {
                     @Override
-                    public void _onNext(List<LiveRoomBean> roomBeanList) {
+                    public void _onNext(List<LiveRoomItemBean> roomBeanList) {
                         view.updateRecyclerView(roomBeanList);
                     }
 
