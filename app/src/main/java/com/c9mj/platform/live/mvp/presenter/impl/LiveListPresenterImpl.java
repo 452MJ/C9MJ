@@ -32,13 +32,7 @@ public class LiveListPresenterImpl implements ILiveListPresenter {
                 .getLiveList(
                         offset,
                         limit,
-                        game_type,
-                        LiveAPI.MAX_ID,
-                        LiveAPI.IMEI,
-                        LiveAPI.OS_TYPE,
-                        LiveAPI.OS_VERSION,
-                        LiveAPI.VERSION,
-                        LiveAPI.LANG
+                        game_type
                 )
                 .compose(RetrofitHelper.<List<LiveListItemBean>>handleLiveResult())
                 .subscribe(new HttpSubscriber<List<LiveListItemBean>>() {
