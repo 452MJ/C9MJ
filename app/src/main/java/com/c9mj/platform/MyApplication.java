@@ -2,6 +2,7 @@ package com.c9mj.platform;
 
 import android.app.Application;
 
+import com.c9mj.platform.util.ToastUtil;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -14,5 +15,6 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
+        ToastUtil.init(getApplicationContext());
     }
 }

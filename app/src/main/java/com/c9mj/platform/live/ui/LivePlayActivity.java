@@ -1,11 +1,13 @@
 package com.c9mj.platform.live.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.c9mj.platform.R;
 
-import me.yokeyword.fragmentation.SupportActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
@@ -15,9 +17,18 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
  */
 public class LivePlayActivity extends SwipeBackActivity {
 
+    @BindView(R.id.button)
+    Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_live_play);
+        ButterKnife.bind(this);
     }
+
+    @OnClick(R.id.button)
+    public void onClick() {
+    }
+
 }

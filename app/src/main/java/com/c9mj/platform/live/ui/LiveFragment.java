@@ -11,10 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.live.bean.LiveIndicatorBean;
-import com.c9mj.platform.live.mvp.presenter.impl.LivePresenterImpl;
-import com.c9mj.platform.live.mvp.view.ILiveFragment;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
@@ -39,14 +35,12 @@ import butterknife.ButterKnife;
  * date: 2016/9/1
  * 直播主页面
  */
-public class LiveFragment extends LazyFragment implements ILiveFragment {
+public class LiveFragment extends LazyFragment{
 
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
 
     private Context context;
-    private LivePresenterImpl presenter;
-
 
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
@@ -71,7 +65,6 @@ public class LiveFragment extends LazyFragment implements ILiveFragment {
 
         context = view.getContext();
 
-        initMVP();
         initFragment();
         initViewPager();
         initIndicator();
@@ -81,16 +74,19 @@ public class LiveFragment extends LazyFragment implements ILiveFragment {
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
-        presenter.getColumnList();
-    }
-
-    private void initMVP() {
-        presenter = new LivePresenterImpl(context, this);
     }
 
     private void initFragment() {
-        fragmentList.add(LiveRoomListFragment.newInstance());
-        titleList.add(getString(R.string.live_all));
+        titleList.add(getString(R.string.live_lol));
+        titleList.add(getString(R.string.live_ow));
+        titleList.add(getString(R.string.live_dota2));
+        titleList.add(getString(R.string.live_hs));
+        titleList.add(getString(R.string.live_csgo));
+        fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_lol)));
+        fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_ow)));
+        fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_dota2)));
+        fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_hs)));
+        fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_csgo)));
     }
 
     private void initViewPager() {
@@ -101,7 +97,7 @@ public class LiveFragment extends LazyFragment implements ILiveFragment {
 
     private void initIndicator() {
         CommonNavigator navigator = new CommonNavigator(context);
-        navigator.setAdjustMode(false);
+        navigator.setAdjustMode(true);
         navigator.setFollowTouch(true);
         navigatorAdapter = new CommonNavigatorAdapter() {
             @Override
@@ -142,19 +138,4 @@ public class LiveFragment extends LazyFragment implements ILiveFragment {
         ViewPagerHelper.bind(indicator, viewPager);
     }
 
-    @Override
-    public void updateIndicator(List<LiveIndicatorBean> list) {
-        for (LiveIndicatorBean bean :
-                list) {
-            fragmentList.add(LiveRoomListFragment.newInstance(bean.getCate_id()));
-            titleList.add(bean.getCate_name());
-        }
-        fragmentAdapter.notifyDataSetChanged();
-        navigatorAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showError(String message) {
-        ToastUtil.show(context, message);
-    }
 }

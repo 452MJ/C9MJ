@@ -7,27 +7,36 @@ package com.c9mj.platform.live.bean;
 public class LiveBaseBean<T> {
 
     /**
-     * error : 0
+     * status : 0
      * message : 成功
-     * data : {}
+     * result : {}
      */
 
-    private int error;
-    private T data;
+    private String status;
+    private String msg;
+    private T result;
 
-    public int getError() {
-        return error;
+    public String getStatus() {
+        return status;
     }
 
-    public void setError(int error) {
-        this.error = error;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public T getData() {
-        return data;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getResult() {
+        return result;
+    }
+
+    public void setResult(T result) {
+        this.result = result;
     }
 }

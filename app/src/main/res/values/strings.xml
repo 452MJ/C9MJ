@@ -8,9 +8,18 @@
     <string name="second_exit">"再按一次Back键退出程序"</string>
 
     <!--直播-->
-    <string name="live_all">全部直播</string>
+    <string name="live_lol">英雄联盟</string>
+    <string name="live_ow">守望先锋</string>
+    <string name="live_dota2">DOTA2</string>
+    <string name="live_hs">炉石传说</string>
+    <string name="live_csgo">CSGO</string>
     <string name="live_end">无更多直播</string>
     <string name="live_empty">暂无直播</string>
+    <string name="game_type_lol">lol</string>
+    <string name="game_type_ow">ow</string>
+    <string name="game_type_dota2">dota2</string>
+    <string name="game_type_hs">hs</string>
+    <string name="game_type_csgo">csgo</string>
 
     <!--我的-->
     <string name="user_carema">拍照</string>
@@ -19,6 +28,7 @@
     <string name="user_gallery_cancel">相册取消</string>
 
     <!--网络错误-->
+    <string name="status_ok">ok</string>
     <string name="error_token">token过期，请重新登陆！</string>
     <string name="error_network">网络错误，请检查网络连接设置！</string>
     <string name="error_server">服务器内部错误，请稍后再试！</string>
