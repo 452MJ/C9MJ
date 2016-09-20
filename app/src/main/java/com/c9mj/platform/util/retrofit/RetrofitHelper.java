@@ -26,12 +26,14 @@ public class RetrofitHelper{
     public static final String BASE_USER_URL = "http://api.douban.com/v2/movie/";
     public static final String BASE_DANMU_URL = "http://api.douban.com/v2/movie/";
 
-    private static Retrofit retrofit = null;
+    private static Retrofit explore = null;
+    private static Retrofit live = null;
+    private static Retrofit user = null;
 
     public static Retrofit getExploreHelper() {
-        if (retrofit == null){
+        if (explore == null){
             synchronized (RetrofitHelper.class){
-                retrofit = new Retrofit.Builder()
+                explore = new Retrofit.Builder()
                         .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
                         .baseUrl(BASE_EXPLORE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -39,26 +41,26 @@ public class RetrofitHelper{
                         .build();
             }
         }
-        return retrofit;
+        return explore;
     }
 
     public static Retrofit getLiveHelper() {
-        if (retrofit == null){
+        if (live == null){
             synchronized (RetrofitHelper.class){
-                retrofit = new Retrofit.Builder()
+                live = new Retrofit.Builder()
                         .baseUrl(BASE_LIVE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                         .build();
             }
         }
-        return retrofit;
+        return live;
     }
 
     public static Retrofit getUserHelper() {
-        if (retrofit == null){
+        if (user == null){
             synchronized (RetrofitHelper.class){
-                retrofit = new Retrofit.Builder()
+                user = new Retrofit.Builder()
                         .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
                         .baseUrl(BASE_USER_URL)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -66,7 +68,7 @@ public class RetrofitHelper{
                         .build();
             }
         }
-        return retrofit;
+        return user;
     }
 
     public static <T> Observable.Transformer<LiveBaseBean<T>, T> handleLiveResult(){
