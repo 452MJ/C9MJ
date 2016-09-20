@@ -1,6 +1,6 @@
 package com.c9mj.platform.util.retrofit;
 
-import com.c9mj.platform.live.bean.LiveBaseBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveBaseBean;
 import com.c9mj.platform.util.retrofit.exception.RetrofitException;
 
 import java.util.concurrent.TimeUnit;

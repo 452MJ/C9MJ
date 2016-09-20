@@ -1,8 +1,9 @@
 package com.c9mj.platform.live.api;
 
 
-import com.c9mj.platform.live.bean.LiveBaseBean;
-import com.c9mj.platform.live.bean.LiveListItemBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveBaseBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
 
 import java.util.List;
 
@@ -32,4 +33,11 @@ public interface LiveAPI {
             @Query("game_type") String game_type
     );
 
+    //请求获取直播详情
+    @GET("/api/live/detail/")
+    Observable<LiveBaseBean<LiveDetailBean>> getLiveDetail(
+            @Query("live_type") String live_type,
+            @Query("live_id") String live_id,
+            @Query("game_type") String game_type
+    );
 }

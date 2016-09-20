@@ -1,4 +1,4 @@
-package com.c9mj.platform.live.bean;
+package com.c9mj.platform.live.mvp.model.bean;
 
 /**
  * author: LMJ

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveListAdapter;
 import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.bean.LiveListItemBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveListFragment;
 import com.c9mj.platform.util.ToastUtil;
