@@ -29,11 +29,7 @@ public class LiveListPresenterImpl implements ILiveListPresenter {
     @Override
     public void getLiveList(int offset, int limit, String game_type) {
         RetrofitHelper.getLiveHelper().create(LiveAPI.class)
-                .getLiveList(
-                        offset,
-                        limit,
-                        game_type
-                )
+                .getLiveList(offset, limit, game_type)
                 .compose(RetrofitHelper.<List<LiveListItemBean>>handleLiveResult())
                 .subscribe(new HttpSubscriber<List<LiveListItemBean>>() {
                     @Override

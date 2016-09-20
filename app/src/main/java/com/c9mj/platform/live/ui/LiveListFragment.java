@@ -123,7 +123,7 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
                 intent.putExtra(LivePlayActivity.LIVE_TYPE, liveItemBean.getLive_type());
                 intent.putExtra(LivePlayActivity.LIVE_ID, liveItemBean.getLive_id());
                 intent.putExtra(LivePlayActivity.GAME_TYPE, liveItemBean.getGame_type());
-                intent.putExtra(LivePlayActivity.DOUYU_URL, liveItemBean.getUrl_info().getUrl());
+                intent.putExtra(LivePlayActivity.DOUYU_URL, liveItemBean.getUrl_info() == null ? "" : liveItemBean.getUrl_info().getUrl());
                 startActivity(intent);
             }
         });

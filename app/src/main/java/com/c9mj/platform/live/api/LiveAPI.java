@@ -3,12 +3,14 @@ package com.c9mj.platform.live.api;
 
 import com.c9mj.platform.live.mvp.model.bean.LiveBaseBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveDetailDouyuBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
 
 import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -39,5 +41,11 @@ public interface LiveAPI {
             @Query("live_type") String live_type,
             @Query("live_id") String live_id,
             @Query("game_type") String game_type
+    );
+
+    //请求获取弹幕聊天室详情
+    @GET
+    Observable<LiveDetailDouyuBean> getDouyuDetail(
+            @Url String url
     );
 }
