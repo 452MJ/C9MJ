@@ -42,6 +42,7 @@ public class LivePlayActivity extends SwipeBackActivity implements ILivePlayActi
 
         context = this;
 
+        //得到传入的参数
         Intent intent = getIntent();
         live_type = intent.getStringExtra(LIVE_TYPE);
         live_id = intent.getStringExtra(LIVE_ID);
@@ -51,8 +52,8 @@ public class LivePlayActivity extends SwipeBackActivity implements ILivePlayActi
         initMVP();
         initVideoView();
 
-        presenter.getLiveDetail(live_type, live_id, game_type);
-        presenter.getDanmuDetail(douyu_url);
+        presenter.getLiveDetail(live_type, live_id, game_type);     //请求直播详情
+        presenter.getDanmuDetail(douyu_url);                          //请求弹幕服务器相关参数
     }
 
     private void initMVP() {
