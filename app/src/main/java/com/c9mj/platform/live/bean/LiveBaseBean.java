@@ -3,6 +3,7 @@ package com.c9mj.platform.live.bean;
 /**
  * author: LMJ
  * date: 2016/9/1
+ * 网络请求实体基类
  */
 public class LiveBaseBean<T> {
 

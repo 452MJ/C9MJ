@@ -3,6 +3,7 @@ package com.c9mj.platform.live.bean;
 /**
  * author: LMJ
  * date: 2016/9/12
+ * 直播列表的ItemBean
  */
 public class LiveListItemBean {
 
