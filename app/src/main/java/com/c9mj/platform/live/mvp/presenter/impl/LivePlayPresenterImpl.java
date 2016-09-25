@@ -7,7 +7,7 @@ import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailDouyuBean;
 import com.c9mj.platform.live.mvp.presenter.ILivePlayPresenter;
-import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
+import com.c9mj.platform.live.mvp.view.ILivePlayChatFragment;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
 
@@ -23,9 +23,9 @@ import rx.schedulers.Schedulers;
 public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
     private Context context;
-    private ILivePlayActivity view;
+    private ILivePlayChatFragment view;
 
-    public LivePlayPresenterImpl(Context context, ILivePlayActivity view) {
+    public LivePlayPresenterImpl(Context context, ILivePlayChatFragment view) {
         this.context = context;
         this.view = view;
     }

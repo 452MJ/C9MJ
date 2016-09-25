@@ -8,7 +8,7 @@ import com.c9mj.platform.R;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailDouyuBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
-import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
+import com.c9mj.platform.live.mvp.view.ILivePlayChatFragment;
 import com.c9mj.platform.util.ToastUtil;
 
 import butterknife.ButterKnife;
@@ -19,7 +19,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
  * date: 2016/9/12
  * 观看直播Activity
  */
-public class LivePlayActivity extends SwipeBackActivity implements ILivePlayActivity{
+public class LivePlayActivity extends SwipeBackActivity implements ILivePlayChatFragment {
 
     public static final String LIVE_TYPE = "live_type"; //直播平台
     public static final String LIVE_ID = "live_id";     //直播房间ID
