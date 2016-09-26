@@ -75,6 +75,8 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                             }
                         }
                     });
+        }else {
+            view.showError("弹幕服务器接口链接无效！");
         }
     }
 }
