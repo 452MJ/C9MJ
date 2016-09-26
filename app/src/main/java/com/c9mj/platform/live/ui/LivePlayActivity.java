@@ -82,10 +82,10 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (mediaPlayer != null && mediaPlayer.isPlaying() == false) {
-            mediaPlayer.start();
+    protected void onRestart() {
+        super.onRestart();
+        if (mediaPlayer != null) {
+            mediaPlayer.reset();
         }
     }
 
@@ -183,7 +183,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @Override
     public void updateLiveDetail(LiveDetailBean detailBean) {
-        String live_url = detailBean.getStream_list().get(0).getUrl();
+        String live_url = detailBean.getStream_list().get(1).getUrl();
         prepareMediaPlayer(live_url);//加载直播链接进行播放
     }
 
@@ -201,7 +201,7 @@ public class LivePlayActivity extends SwipeBackActivity
     /********以下实现的Interface都是MediaPlayer的监听*********/
     @Override
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
-        mediaPlayer.start();
+        plMediaPlayer.start();
     }
 
     @Override
