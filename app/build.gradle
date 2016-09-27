@@ -52,6 +52,7 @@ dependencies {
     compile 'com.github.hackware1993:MagicIndicator:+'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'joda-time:joda-time:2.3'
+    compile 'com.orhanobut:logger:1.15'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
     apt 'com.jakewharton:butterknife-compiler:+'

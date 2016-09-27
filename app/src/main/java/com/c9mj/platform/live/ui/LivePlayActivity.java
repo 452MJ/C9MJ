@@ -2,6 +2,7 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILivePlayChatFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
+import com.orhanobut.logger.Logger;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 
@@ -48,13 +50,15 @@ public class LivePlayActivity extends SwipeBackActivity
     private String game_type;   //直播游戏类型
     private String douyu_url;   //斗鱼直播专属url
 
+    private int surfaceWidth;
+    private int surfaceHeight;
+    private boolean isStop = false;
+
     private Context context;
     private LivePlayPresenterImpl presenter;
 
     @BindView(R.id.surfaceview)
     SurfaceView sv_live;                  //显示画面
-    private int surfaceWidth;
-    private int surfaceHeight;
     private PLMediaPlayer mediaPlayer;  //媒体控制器
     private AVOptions avOptions;        //播放参数配置
 
@@ -82,10 +86,10 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        if (mediaPlayer != null) {
-            mediaPlayer.reset();
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayer != null && isStop == true) {
+            mediaPlayer.prepareAsync();
         }
     }
 
@@ -94,6 +98,7 @@ public class LivePlayActivity extends SwipeBackActivity
         super.onPause();
         if (mediaPlayer != null) {
             mediaPlayer.stop();
+            isStop = true;
         }
     }
 
@@ -105,6 +110,8 @@ public class LivePlayActivity extends SwipeBackActivity
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.abandonAudioFocus(null);
     }
 
     @Override
@@ -122,6 +129,7 @@ public class LivePlayActivity extends SwipeBackActivity
         sv_live.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+                prepareMediaPlayer();
             }
 
             @Override
@@ -141,9 +149,8 @@ public class LivePlayActivity extends SwipeBackActivity
 
     /**
      * 配置MediaPlayer相关参数
-     * @param live_url
      */
-    private void prepareMediaPlayer(String live_url) {
+    private void prepareMediaPlayer() {
 
         if (mediaPlayer != null) {
             mediaPlayer.setDisplay(sv_live.getHolder());
@@ -152,12 +159,18 @@ public class LivePlayActivity extends SwipeBackActivity
 
         try {
             avOptions = new AVOptions();
-            avOptions.setInteger(AVOptions.KEY_LIVE_STREAMING, 1);  //直播流：1->是 0->否
+            avOptions.setInteger(AVOptions.KEY_LIVE_STREAMING, 0);  //直播流：1->是 0->否
             avOptions.setInteger(AVOptions.KEY_MEDIACODEC, 0);      //解码类型 1->硬解 0->软解
             avOptions.setInteger(AVOptions.KEY_START_ON_PREPARED, 0);//缓冲结束后自动播放
             avOptions.setInteger(AVOptions.KEY_DELAY_OPTIMIZATION, 1);
             avOptions.setInteger(AVOptions.KEY_PREPARE_TIMEOUT, 10 * 1000);
+            avOptions.setInteger(AVOptions.KEY_BUFFER_TIME, 10 * 1000);
             avOptions.setInteger(AVOptions.KEY_GET_AV_FRAME_TIMEOUT, 10 * 1000);
+            avOptions.setInteger(AVOptions.KEY_CACHE_BUFFER_DURATION,10 * 1000);
+            avOptions.setInteger(AVOptions.KEY_MAX_CACHE_BUFFER_DURATION, 15 * 1000);
+
+            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 
             mediaPlayer = new PLMediaPlayer(avOptions);
 
@@ -168,14 +181,14 @@ public class LivePlayActivity extends SwipeBackActivity
             mediaPlayer.setOnErrorListener(this);
 
             mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-            mediaPlayer.setDataSource(live_url);
+//            mediaPlayer.setDataSource(live_url);
             mediaPlayer.setDisplay(sv_live.getHolder());
             mediaPlayer.prepareAsync();
         }catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
             e.printStackTrace();
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
 
@@ -183,8 +196,15 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @Override
     public void updateLiveDetail(LiveDetailBean detailBean) {
-        String live_url = detailBean.getStream_list().get(1).getUrl();
-        prepareMediaPlayer(live_url);//加载直播链接进行播放
+        String live_url = detailBean.getStream_list().get(0).getUrl();
+        Logger.d(live_url);
+//        live_url = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+        try {
+            mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
+            mediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -201,7 +221,7 @@ public class LivePlayActivity extends SwipeBackActivity
     /********以下实现的Interface都是MediaPlayer的监听*********/
     @Override
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
-        plMediaPlayer.start();
+        mediaPlayer.start();
     }
 
     @Override
