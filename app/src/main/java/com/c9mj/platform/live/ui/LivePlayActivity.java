@@ -17,7 +17,6 @@ import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILivePlayChatFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
-import com.orhanobut.logger.Logger;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 
@@ -196,15 +195,20 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @Override
     public void updateLiveDetail(LiveDetailBean detailBean) {
-        String live_url = detailBean.getStream_list().get(0).getUrl();
-        Logger.d(live_url);
-//        live_url = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+        String live_url;
+        try {
+            live_url = detailBean.getStream_list().get(1).getUrl();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            live_url = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+        }
         try {
             mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
             mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
