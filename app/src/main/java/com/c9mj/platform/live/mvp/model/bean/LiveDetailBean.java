@@ -14,19 +14,20 @@ public class LiveDetailBean {
      * enable : 1
      * game_type : lol
      * is_followed : 0
-     * live_id : 453751
-     * live_img : https://rpic.douyucdn.cn/z1609/20/09/453751_160920093735.jpg
-     * live_name : douyu
-     * live_nickname : 我叫撸管飞
-     * live_online : 88739
-     * live_title : 国服第一风暴诺手！五天大师！
-     * live_type : douyu
-     * live_userimg :
-     * offline_time : 1473748293.7780
-     * online_time : 1473735863.0744
-     * push_time : 1473730708.5845
-     * sort_num : 88739
-     * stream_list : [{"type":"超清","url":"http://hdl3.douyutv.com/live/453751rmOQP0R7yZ.flv?wsSecret=2eeda296e6253d3d3e27632c44d9fbf8&wsTime=1454410265"},{"type":"普清","url":"http://hdl3.douyutv.com/live/453751rmOQP0R7yZ_550.flv?wsSecret=7341e36a7b32c22e6bc45135d1905867&wsTime=1454410265"}]
+     * live_id : 55666
+     * live_img : http://i6.pdim.gs/45/13ecd3300415d96aad567381beb5c79b/w338/h190.jpg
+     * live_name : panda
+     * live_nickname : 爷大干丶
+     * live_online : 454862
+     * live_title : 爷大干：无限火力
+     * live_type : panda
+     * live_userimg : http://i6.pdim.gs/93066daafff81caf5d75777cf32507ef.png
+     * offline_time : 1475735232.6568
+     * online_time : 1475716127.4759
+     * push_time : 1475716127.4774
+     * sort_num : 90972
+     * sort_weight : -1
+     * stream_list : [{"type":"超清","url":"http://pl11.live.panda.tv/live_panda/b22aaba9221c50db7e4015bb445650a2.flv?sign=sign&time=ts"}]
      */
 
     private int enable;
@@ -44,9 +45,10 @@ public class LiveDetailBean {
     private String online_time;
     private String push_time;
     private int sort_num;
+    private int sort_weight;
     /**
      * type : 超清
-     * url : http://hdl3.douyutv.com/live/453751rmOQP0R7yZ.flv?wsSecret=2eeda296e6253d3d3e27632c44d9fbf8&wsTime=1454410265
+     * url : http://pl11.live.panda.tv/live_panda/b22aaba9221c50db7e4015bb445650a2.flv?sign=sign&time=ts
      */
 
     private List<StreamListBean> stream_list;
@@ -169,6 +171,14 @@ public class LiveDetailBean {
 
     public void setSort_num(int sort_num) {
         this.sort_num = sort_num;
+    }
+
+    public int getSort_weight() {
+        return sort_weight;
+    }
+
+    public void setSort_weight(int sort_weight) {
+        this.sort_weight = sort_weight;
     }
 
     public List<StreamListBean> getStream_list() {

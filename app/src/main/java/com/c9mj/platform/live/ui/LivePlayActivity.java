@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,6 +22,7 @@ import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +50,7 @@ public class LivePlayActivity extends SwipeBackActivity
     private String live_id;     //直播房间号ID
     private String game_type;   //直播游戏类型
     private String douyu_url;   //斗鱼直播专属url
+    private String live_url;   //直播url
 
     private int surfaceWidth;
     private int surfaceHeight;
@@ -57,7 +60,7 @@ public class LivePlayActivity extends SwipeBackActivity
     private LivePlayPresenterImpl presenter;
 
     @BindView(R.id.surfaceview)
-    SurfaceView sv_live;                  //显示画面
+    SurfaceView sv_live;                  //用于显示播放画面
     private PLMediaPlayer mediaPlayer;  //媒体控制器
     private AVOptions avOptions;        //播放参数配置
 
@@ -87,15 +90,21 @@ public class LivePlayActivity extends SwipeBackActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (mediaPlayer != null && isStop == true) {
-            mediaPlayer.prepareAsync();
+        if (mediaPlayer != null && isStop == true && !TextUtils.isEmpty(live_url)) {
+            try {
+                mediaPlayer.reset();
+                mediaPlayer.setDataSource(live_url);
+                mediaPlayer.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             isStop = true;
         }
@@ -109,8 +118,8 @@ public class LivePlayActivity extends SwipeBackActivity
             mediaPlayer.release();
             mediaPlayer = null;
         }
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.abandonAudioFocus(null);
+//        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//        audioManager.abandonAudioFocus(null);
     }
 
     @Override
@@ -168,8 +177,8 @@ public class LivePlayActivity extends SwipeBackActivity
             avOptions.setInteger(AVOptions.KEY_CACHE_BUFFER_DURATION,10 * 1000);
             avOptions.setInteger(AVOptions.KEY_MAX_CACHE_BUFFER_DURATION, 15 * 1000);
 
-            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+//            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//            audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 
             mediaPlayer = new PLMediaPlayer(avOptions);
 
@@ -195,9 +204,9 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @Override
     public void updateLiveDetail(LiveDetailBean detailBean) {
-        String live_url;
         try {
-            live_url = detailBean.getStream_list().get(1).getUrl();
+            List<LiveDetailBean.StreamListBean> streamList = detailBean.getStream_list();
+            live_url = streamList.get(streamList.size() - 1).getUrl();
         } catch (NullPointerException e) {
             e.printStackTrace();
             live_url = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
