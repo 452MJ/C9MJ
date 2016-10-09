@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controller_widget_size"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="#80000000">
+
+        <ImageView
+            android:layout_width="@dimen/controller_widget_size"
+            android:layout_height="@dimen/controller_widget_size"
+            android:padding="@dimen/controller_widget_padding"
+            android:src="@drawable/selector_btn_back"
+            android:scaleType="centerCrop"
+            android:background="@null"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/imageView7" />
+
+        <TextView
+            android:text="直播间名称"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/controller_widget_padding"
+            android:id="@+id/textView12"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/imageView7"
+            android:layout_toLeftOf="@+id/btn_stream"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_icons"
+            android:textSize="14sp" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:background="@drawable/selector_btn_stream"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="高清"
+            android:textColor="@color/color_icons"
+            android:textSize="14sp"
+            android:id="@+id/btn_stream" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controller_widget_size"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#80000000">
+
+        <ImageView
+            android:layout_width="@dimen/controller_widget_size"
+            android:layout_height="@dimen/controller_widget_size"
+            android:padding="@dimen/controller_widget_padding"
+            android:src="@drawable/selector_btn_back"
+            android:scaleType="centerCrop"
+            android:background="@null"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/imageView8" />
+
+        <ImageView
+            android:layout_width="@dimen/controller_widget_size"
+            android:layout_height="@dimen/controller_widget_size"
+            android:padding="@dimen/controller_widget_padding"
+            android:src="@drawable/selector_btn_back"
+            android:scaleType="centerCrop"
+            android:background="@null"
+            android:layout_toRightOf="@+id/imageView8"
+            android:id="@+id/imageView9" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@drawable/background_layout_danmu"
+            android:layout_margin="3dp"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@+id/imageView10"
+            android:layout_toRightOf="@+id/imageView9">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_et_danmu"
+                android:hint="输入发送弹幕"
+                android:padding="3dp"
+                android:maxLength="25"
+                android:textSize="14sp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:background="@null"
+                android:text="发送"
+                android:textColor="@color/color_icons"
+                android:textSize="14sp"
+                android:id="@+id/btn_send" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="@dimen/controller_widget_size"
+            android:layout_height="@dimen/controller_widget_size"
+            android:padding="@dimen/controller_widget_padding"
+            android:src="@drawable/selector_btn_back"
+            android:scaleType="centerCrop"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:id="@+id/imageView10" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
