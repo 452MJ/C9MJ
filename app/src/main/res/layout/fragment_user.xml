@@ -51,7 +51,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:background="?android:selectableItemBackground"
         android:elevation="@dimen/widget_elevation"
-        android:src="@drawable/ic_camera_40dp"
+        android:src="@drawable/ic_camera"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         android:clickable="true" />
@@ -91,7 +91,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_user_40dp"
+                        android:src="@drawable/ic_user"
                         android:id="@+id/imageView"
                         android:layout_below="@+id/textView"
                         android:padding="15dp" />
@@ -139,7 +139,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_computer_40dp"
+                        android:src="@drawable/ic_computer"
                         android:id="@+id/imageView2"
                         android:layout_below="@+id/textView2"
                         android:padding="15dp" />
@@ -186,7 +186,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_android_40dp"
+                        android:src="@drawable/ic_android"
                         android:id="@+id/imageView3"
                         android:layout_below="@+id/textView3"
                         android:padding="15dp" />
@@ -233,7 +233,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_school_40dp"
+                        android:src="@drawable/ic_school"
                         android:id="@+id/imageView4"
                         android:layout_below="@+id/textView4"
                         android:padding="15dp" />
@@ -279,7 +279,7 @@
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_introduction_40dp"
+                        android:src="@drawable/ic_introduction"
                         android:id="@+id/imageView5"
                         android:layout_below="@+id/textView5"
                         android:padding="15dp" />

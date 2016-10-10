@@ -30,7 +30,7 @@
                 android:layout_height="97dp"
                 android:id="@+id/live_iv_roomsrc_background"
                 android:background="@color/divider"
-                android:src="@drawable/ic_live_placeholder_40dp"
+                android:src="@drawable/ic_live_placeholder"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:padding="25dp" />
@@ -98,7 +98,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:id="@+id/imageView9"
-                    android:src="@drawable/ic_visitor_40dp"
+                    android:src="@drawable/ic_visitor"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/live_tv_online" />
 

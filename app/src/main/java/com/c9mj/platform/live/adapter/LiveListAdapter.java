@@ -36,7 +36,7 @@ public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean>{
                 .load(bean.getLive_userimg())
                 .crossFade()
                 .centerCrop()
-                .placeholder(R.drawable.ic_avatar_default_40dp)
+                .placeholder(R.drawable.ic_avatar_default)
                 .into((ImageView) viewHolder.getView(R.id.live_iv_avatar));
     }
 }

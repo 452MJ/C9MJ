@@ -47,14 +47,14 @@ public class MainActivity extends SupportActivity {
     private List<Fragment> fragmentList = new ArrayList<>();
 
     final int[] normalResId = new int[]{
-            R.drawable.ic_explore_normal_40dp,
-            R.drawable.ic_live_normal_40dp,
-            R.drawable.ic_user_normal_40dp
+            R.drawable.ic_explore_normal,
+            R.drawable.ic_live_normal,
+            R.drawable.ic_user_normal
     };
     final int[] pressedResId = new int[]{
-            R.drawable.ic_explore_pressed_40dp,
-            R.drawable.ic_live_pressed_40dp,
-            R.drawable.ic_user_pressed_40dp
+            R.drawable.ic_explore_pressed,
+            R.drawable.ic_live_pressed,
+            R.drawable.ic_user_pressed
     };
 
     @BindView(R.id.magic_indicator)

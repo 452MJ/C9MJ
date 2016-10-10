@@ -61,7 +61,7 @@
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
             android:padding="@dimen/controller_widget_padding"
-            android:src="@drawable/selector_btn_back"
+            android:src="@drawable/selector_btn_play"
             android:scaleType="centerCrop"
             android:background="@null"
             android:layout_alignParentLeft="true"
@@ -72,7 +72,7 @@
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
             android:padding="@dimen/controller_widget_padding"
-            android:src="@drawable/selector_btn_back"
+            android:src="@drawable/selector_btn_refresh"
             android:scaleType="centerCrop"
             android:background="@null"
             android:layout_toRightOf="@+id/imageView8"
@@ -85,7 +85,7 @@
             android:background="@drawable/background_layout_danmu"
             android:layout_margin="3dp"
             android:gravity="center_vertical"
-            android:layout_toLeftOf="@+id/imageView10"
+            android:layout_toLeftOf="@+id/imageView11"
             android:layout_toRightOf="@+id/imageView9">
 
             <EditText
@@ -110,12 +110,22 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="@dimen/controller_widget_size"
+            android:layout_height="@dimen/controller_widget_size"
+            android:padding="@dimen/controller_widget_padding"
+            android:src="@drawable/selector_btn_danmu_on"
+            android:scaleType="centerCrop"
+            android:background="@null"
+            android:layout_toLeftOf="@+id/imageView10"
+            android:id="@+id/imageView11" />
+
 
         <ImageView
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
             android:padding="@dimen/controller_widget_padding"
-            android:src="@drawable/selector_btn_back"
+            android:src="@drawable/selector_btn_fullscreen_exit"
             android:scaleType="centerCrop"
             android:background="@null"
             android:layout_alignParentRight="true"

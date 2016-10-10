@@ -22,6 +22,6 @@
         android:id="@+id/imageView6"
         android:layout_above="@+id/textView11"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_empty_40dp" />
+        android:src="@drawable/ic_empty" />
 
 </RelativeLayout>
