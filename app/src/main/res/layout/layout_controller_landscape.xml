@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/controller_landscape_layout">
 
 
     <RelativeLayout
@@ -22,17 +23,17 @@
             android:background="@null"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:id="@+id/imageView7" />
+            android:id="@+id/controller_landscape_iv_back" />
 
         <TextView
             android:text="直播间名称"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="@dimen/controller_widget_padding"
-            android:id="@+id/textView12"
+            android:id="@+id/controller_landscape_tv_roomname"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/imageView7"
-            android:layout_toLeftOf="@+id/btn_stream"
+            android:layout_toRightOf="@+id/controller_landscape_iv_back"
+            android:layout_toLeftOf="@+id/controller_landscape_btn_stream"
             android:gravity="center_vertical"
             android:textColor="@color/color_icons"
             android:textSize="14sp" />
@@ -46,7 +47,7 @@
             android:text="高清"
             android:textColor="@color/color_icons"
             android:textSize="14sp"
-            android:id="@+id/btn_stream" />
+            android:id="@+id/controller_landscape_btn_stream" />
 
     </RelativeLayout>
 
@@ -66,7 +67,7 @@
             android:background="@null"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:id="@+id/imageView8" />
+            android:id="@+id/controller_landscape_iv_play&pause" />
 
         <ImageView
             android:layout_width="@dimen/controller_widget_size"
@@ -75,8 +76,8 @@
             android:src="@drawable/selector_btn_refresh"
             android:scaleType="centerCrop"
             android:background="@null"
-            android:layout_toRightOf="@+id/imageView8"
-            android:id="@+id/imageView9" />
+            android:layout_toRightOf="@+id/controller_landscape_iv_play&amp;pause"
+            android:id="@+id/controller_landscape_iv_refresh" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,8 +86,8 @@
             android:background="@drawable/background_layout_danmu"
             android:layout_margin="3dp"
             android:gravity="center_vertical"
-            android:layout_toLeftOf="@+id/imageView11"
-            android:layout_toRightOf="@+id/imageView9">
+            android:layout_toLeftOf="@+id/controller_landscape_iv_danmu_visible"
+            android:layout_toRightOf="@+id/controller_landscape_iv_refresh">
 
             <EditText
                 android:layout_width="match_parent"
@@ -96,7 +97,8 @@
                 android:padding="3dp"
                 android:maxLength="25"
                 android:textSize="14sp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:id="@+id/controller_landscape_et_danmu" />
 
             <Button
                 android:layout_width="40dp"
@@ -106,7 +108,7 @@
                 android:text="发送"
                 android:textColor="@color/color_icons"
                 android:textSize="14sp"
-                android:id="@+id/btn_send" />
+                android:id="@+id/controller_landscape_btn_senddanmu" />
 
         </LinearLayout>
 
@@ -117,8 +119,8 @@
             android:src="@drawable/selector_btn_danmu_on"
             android:scaleType="centerCrop"
             android:background="@null"
-            android:layout_toLeftOf="@+id/imageView10"
-            android:id="@+id/imageView11" />
+            android:layout_toLeftOf="@+id/controller_landscape_iv_fullscreen_exit"
+            android:id="@+id/controller_landscape_iv_danmu_visible" />
 
 
         <ImageView
@@ -129,7 +131,7 @@
             android:scaleType="centerCrop"
             android:background="@null"
             android:layout_alignParentRight="true"
-            android:id="@+id/imageView10" />
+            android:id="@+id/controller_landscape_iv_fullscreen_exit" />
 
     </RelativeLayout>
 

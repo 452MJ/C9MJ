@@ -90,14 +90,14 @@
                     android:gravity="center_vertical"
                     android:textSize="@dimen/textsize_secondary"
                     android:textColor="@color/color_primary_text"
-                    android:layout_toLeftOf="@+id/imageView9"
+                    android:layout_toLeftOf="@+id/controller_landscape_iv_refresh"
                     android:scrollIndicators="end"
                     android:singleLine="true" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:id="@+id/imageView9"
+                    android:id="@+id/controller_landscape_iv_refresh"
                     android:src="@drawable/ic_visitor"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/live_tv_online" />
