@@ -20,6 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/surfaceview" />
+
+        <include layout="@layout/layout_controller_landscape" />
+
+        <include layout="@layout/layout_controller_portrait" />
+
     </FrameLayout>
 
 </LinearLayout>

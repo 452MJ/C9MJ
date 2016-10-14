@@ -2,14 +2,19 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
@@ -26,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
@@ -39,12 +45,38 @@ public class LivePlayActivity extends SwipeBackActivity
         PLMediaPlayer.OnVideoSizeChangedListener,
         PLMediaPlayer.OnCompletionListener,
         PLMediaPlayer.OnInfoListener,
-        PLMediaPlayer.OnErrorListener{
+        PLMediaPlayer.OnErrorListener {
 
     public static final String LIVE_TYPE = "live_type"; //直播平台
     public static final String LIVE_ID = "live_id";     //直播房间ID
     public static final String GAME_TYPE = "game_type"; //直播游戏类型
     public static final String DOUYU_URL = "douyu_url"; //斗鱼直播url
+    @BindView(R.id.controller_landscape_iv_back)
+    ImageView controllerLandscapeIvBack;
+    @BindView(R.id.controller_landscape_tv_roomname)
+    TextView controllerLandscapeTvRoomname;
+    @BindView(R.id.controller_landscape_btn_stream)
+    Button controllerLandscapeBtnStream;
+    @BindView(R.id.controller_landscape_iv_play_pause)
+    ImageView controllerLandscapeIvPlayPause;
+    @BindView(R.id.controller_landscape_iv_refresh)
+    ImageView controllerLandscapeIvRefresh;
+    @BindView(R.id.controller_landscape_et_danmu)
+    EditText controllerLandscapeEtDanmu;
+    @BindView(R.id.controller_landscape_btn_senddanmu)
+    Button controllerLandscapeBtnSenddanmu;
+    @BindView(R.id.controller_landscape_iv_danmu_visible)
+    ImageView controllerLandscapeIvDanmuVisible;
+    @BindView(R.id.controller_landscape_iv_fullscreen_exit)
+    ImageView controllerLandscapeIvFullscreenExit;
+    @BindView(R.id.controller_landscape_layout)
+    RelativeLayout controllerLandscapeLayout;
+    @BindView(R.id.controller_portrait_iv_back)
+    ImageView controllerPortraitIvBack;
+    @BindView(R.id.controller_portrait_iv_fullscreen)
+    ImageView controllerPortraitIvFullscreen;
+    @BindView(R.id.controller_portrait_layout)
+    RelativeLayout controllerPortraitLayout;
 
     private String live_type;   //直播平台
     private String live_id;     //直播房间号ID
@@ -60,7 +92,7 @@ public class LivePlayActivity extends SwipeBackActivity
     private LivePlayPresenterImpl presenter;
 
     @BindView(R.id.surfaceview)
-    SurfaceView sv_live;                  //用于显示播放画面
+    SurfaceView surfaceView;                  //用于显示播放画面
     private PLMediaPlayer mediaPlayer;  //媒体控制器
     private AVOptions avOptions;        //播放参数配置
 
@@ -82,6 +114,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
         initMVP();
         initSurfaceView();
+        initController();
 
         presenter.getLiveDetail(live_type, live_id, game_type);     //请求直播详情
         presenter.getDanmuDetail(douyu_url);                          //请求弹幕服务器相关参数
@@ -126,6 +159,7 @@ public class LivePlayActivity extends SwipeBackActivity
     public void onBackPressedSupport() {
         super.onBackPressedSupport();
     }
+
     private void initMVP() {
         presenter = new LivePlayPresenterImpl(context, this);
     }
@@ -134,7 +168,7 @@ public class LivePlayActivity extends SwipeBackActivity
      * 监听SurfaceView回调
      */
     private void initSurfaceView() {
-        sv_live.getHolder().addCallback(new SurfaceHolder.Callback() {
+        surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 prepareMediaPlayer();
@@ -148,11 +182,29 @@ public class LivePlayActivity extends SwipeBackActivity
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                if (mediaPlayer != null){
+                if (mediaPlayer != null) {
                     mediaPlayer.setDisplay(null);
                 }
             }
         });
+    }
+
+    /**
+     * 初始化控制器
+     */
+    private void initController() {
+        enterFullscreen();
+        exitFullscreen();
+    }
+
+    //进入全屏
+    private void enterFullscreen() {
+
+    }
+
+    //退出全屏
+    private void exitFullscreen() {
+
     }
 
     /**
@@ -161,7 +213,7 @@ public class LivePlayActivity extends SwipeBackActivity
     private void prepareMediaPlayer() {
 
         if (mediaPlayer != null) {
-            mediaPlayer.setDisplay(sv_live.getHolder());
+            mediaPlayer.setDisplay(surfaceView.getHolder());
             return;
         }
 
@@ -174,7 +226,7 @@ public class LivePlayActivity extends SwipeBackActivity
             avOptions.setInteger(AVOptions.KEY_PREPARE_TIMEOUT, 10 * 1000);
             avOptions.setInteger(AVOptions.KEY_BUFFER_TIME, 10 * 1000);
             avOptions.setInteger(AVOptions.KEY_GET_AV_FRAME_TIMEOUT, 10 * 1000);
-            avOptions.setInteger(AVOptions.KEY_CACHE_BUFFER_DURATION,10 * 1000);
+            avOptions.setInteger(AVOptions.KEY_CACHE_BUFFER_DURATION, 10 * 1000);
             avOptions.setInteger(AVOptions.KEY_MAX_CACHE_BUFFER_DURATION, 15 * 1000);
 
 //            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -190,13 +242,13 @@ public class LivePlayActivity extends SwipeBackActivity
 
             mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
 //            mediaPlayer.setDataSource(live_url);
-            mediaPlayer.setDisplay(sv_live.getHolder());
+            mediaPlayer.setDisplay(surfaceView.getHolder());
             mediaPlayer.prepareAsync();
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -231,7 +283,9 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
 
-    /********以下实现的Interface都是MediaPlayer的监听*********/
+    /********
+     * 以下实现的Interface都是MediaPlayer的监听
+     *********/
     @Override
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
         mediaPlayer.start();
@@ -240,14 +294,14 @@ public class LivePlayActivity extends SwipeBackActivity
     @Override
     public void onVideoSizeChanged(PLMediaPlayer plMediaPlayer, int width, int height) {
         if (width != 0 && height != 0) {
-            float ratioW = (float) width/(float) surfaceWidth;
-            float ratioH = (float) height/(float) surfaceHeight;
+            float ratioW = (float) width / (float) surfaceWidth;
+            float ratioH = (float) height / (float) surfaceHeight;
             float ratio = Math.max(ratioW, ratioH);
-            width  = (int) Math.ceil((float)width/ratio);
-            height = (int) Math.ceil((float)height/ratio);
+            width = (int) Math.ceil((float) width / ratio);
+            height = (int) Math.ceil((float) height / ratio);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(width, height);
             lp.gravity = Gravity.CENTER;
-            sv_live.setLayoutParams(lp);
+            surfaceView.setLayoutParams(lp);
         }
     }
 
@@ -277,5 +331,29 @@ public class LivePlayActivity extends SwipeBackActivity
     public boolean onError(PLMediaPlayer plMediaPlayer, int errorCode) {
         showError(new MediaException(errorCode).getMessage());
         return true;
+    }
+
+    @OnClick({R.id.controller_landscape_iv_back, R.id.controller_landscape_btn_stream, R.id.controller_landscape_iv_play_pause, R.id.controller_landscape_iv_refresh, R.id.controller_landscape_btn_senddanmu, R.id.controller_landscape_iv_danmu_visible, R.id.controller_landscape_iv_fullscreen_exit, R.id.controller_portrait_iv_back, R.id.controller_portrait_iv_fullscreen})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.controller_landscape_iv_back:
+                break;
+            case R.id.controller_landscape_btn_stream:
+                break;
+            case R.id.controller_landscape_iv_play_pause:
+                break;
+            case R.id.controller_landscape_iv_refresh:
+                break;
+            case R.id.controller_landscape_btn_senddanmu:
+                break;
+            case R.id.controller_landscape_iv_danmu_visible:
+                break;
+            case R.id.controller_landscape_iv_fullscreen_exit:
+                break;
+            case R.id.controller_portrait_iv_back:
+                break;
+            case R.id.controller_portrait_iv_fullscreen:
+                break;
+        }
     }
 }
