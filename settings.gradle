@@ -1,1 +1,1 @@
-include ':app', ':pldroidlibrary'
+include ':app'

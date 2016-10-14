@@ -67,7 +67,7 @@
             android:background="@null"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:id="@+id/controller_landscape_iv_play&pause" />
+            android:id="@+id/controller_landscape_iv_play_pause" />
 
         <ImageView
             android:layout_width="@dimen/controller_widget_size"
@@ -76,7 +76,7 @@
             android:src="@drawable/selector_btn_refresh"
             android:scaleType="centerCrop"
             android:background="@null"
-            android:layout_toRightOf="@+id/controller_landscape_iv_play&amp;pause"
+            android:layout_toRightOf="@+id/controller_landscape_iv_play_pause"
             android:id="@+id/controller_landscape_iv_refresh" />
 
         <LinearLayout

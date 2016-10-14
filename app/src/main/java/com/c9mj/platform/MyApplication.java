@@ -3,7 +3,6 @@ package com.c9mj.platform;
 import android.app.Application;
 
 import com.c9mj.platform.util.ToastUtil;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * author: LMJ
@@ -14,7 +13,6 @@ public class MyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-//        LeakCanary.install(this);
         ToastUtil.init(getApplicationContext());
     }
 }

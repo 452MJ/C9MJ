@@ -113,7 +113,7 @@ public class LivePlayActivity extends SwipeBackActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
@@ -180,7 +180,7 @@ public class LivePlayActivity extends SwipeBackActivity
 //            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 //            audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 
-            mediaPlayer = new PLMediaPlayer(avOptions);
+            mediaPlayer = new PLMediaPlayer(context, avOptions);
 
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.setOnVideoSizeChangedListener(this);
