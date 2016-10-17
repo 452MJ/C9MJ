@@ -3,6 +3,8 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -83,7 +85,11 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         return view;
     }
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+    }
 
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {

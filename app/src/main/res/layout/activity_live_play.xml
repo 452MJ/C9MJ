@@ -8,23 +8,61 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_alignParentTop="true">
+        android:layout_height="match_parent"
+        android:id="@+id/live_play_top_layout"
+        android:layout_weight="4">
 
-        <View
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#000000"/>
+            android:layout_height="wrap_content"
+            android:background="#000000">
+
+            <ProgressBar
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:theme="@style/CircularProgress"/>
+
+        </FrameLayout>
 
         <SurfaceView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/surfaceview" />
 
-        <include layout="@layout/layout_controller_landscape" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/live_play_progressbar"
+            android:background="@color/divider"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:theme="@style/CircularProgress"/>
+
+        </FrameLayout>
+
+        <include layout="@layout/layout_controller_landscape"
+            android:visibility="gone"/>
 
         <include layout="@layout/layout_controller_portrait" />
 
+
     </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/live_play_bottom_layout"
+        android:layout_weight="3"
+        android:visibility="visible">
+
+    </FrameLayout>
 </LinearLayout>

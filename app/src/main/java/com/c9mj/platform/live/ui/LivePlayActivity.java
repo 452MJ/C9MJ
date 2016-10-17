@@ -2,13 +2,18 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -45,12 +50,45 @@ public class LivePlayActivity extends SwipeBackActivity
         PLMediaPlayer.OnVideoSizeChangedListener,
         PLMediaPlayer.OnCompletionListener,
         PLMediaPlayer.OnInfoListener,
-        PLMediaPlayer.OnErrorListener {
+        PLMediaPlayer.OnErrorListener,
+        Handler.Callback {
 
     public static final String LIVE_TYPE = "live_type"; //直播平台
     public static final String LIVE_ID = "live_id";     //直播房间ID
     public static final String GAME_TYPE = "game_type"; //直播游戏类型
     public static final String DOUYU_URL = "douyu_url"; //斗鱼直播url
+
+    public static final int HANDLER_HIDE_CONTROLLER = 100;//隐藏MediaController
+    public static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
+
+    private boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
+    private boolean isVideoPrepared = false;         //Video加载标志位
+    private boolean isPause = false;         //直播暂停标志位
+    private boolean isFullscreen = false;   //全屏标志位
+    private boolean isControllerHiden = false;   //MediaController显示隐藏标志位
+
+    private String live_type;   //直播平台
+    private String live_id;     //直播房间号ID
+    private String game_type;   //直播游戏类型
+    private String douyu_url;   //斗鱼直播专属url
+    private String live_url;   //直播url
+
+    private int surfaceWidth;
+    private int surfaceHeight;
+    private int videoWidth;
+    private int videoHeight;
+    private int playWidth;
+    private int playHeight;
+
+    private Context context;
+    private LivePlayPresenterImpl presenter;
+    private Handler controllerHandler;
+
+    @BindView(R.id.surfaceview)
+    SurfaceView surfaceView;                  //用于显示播放画面
+    private PLMediaPlayer mediaPlayer;  //媒体控制器
+    private AVOptions avOptions;        //播放参数配置
+
     @BindView(R.id.controller_landscape_iv_back)
     ImageView controllerLandscapeIvBack;
     @BindView(R.id.controller_landscape_tv_roomname)
@@ -77,25 +115,12 @@ public class LivePlayActivity extends SwipeBackActivity
     ImageView controllerPortraitIvFullscreen;
     @BindView(R.id.controller_portrait_layout)
     RelativeLayout controllerPortraitLayout;
-
-    private String live_type;   //直播平台
-    private String live_id;     //直播房间号ID
-    private String game_type;   //直播游戏类型
-    private String douyu_url;   //斗鱼直播专属url
-    private String live_url;   //直播url
-
-    private int surfaceWidth;
-    private int surfaceHeight;
-    private boolean isStop = false;
-
-    private Context context;
-    private LivePlayPresenterImpl presenter;
-
-    @BindView(R.id.surfaceview)
-    SurfaceView surfaceView;                  //用于显示播放画面
-    private PLMediaPlayer mediaPlayer;  //媒体控制器
-    private AVOptions avOptions;        //播放参数配置
-
+    @BindView(R.id.live_play_progressbar)
+    FrameLayout livePlayProgreeBar;
+    @BindView(R.id.live_play_top_layout)
+    FrameLayout livePlayTopLayout;
+    @BindView(R.id.live_play_bottom_layout)
+    FrameLayout livePlayBottomLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +129,8 @@ public class LivePlayActivity extends SwipeBackActivity
         ButterKnife.bind(this);
 
         context = this;
+
+        controllerHandler = new Handler(this);
 
         //得到传入的参数
         Intent intent = getIntent();
@@ -123,11 +150,15 @@ public class LivePlayActivity extends SwipeBackActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (mediaPlayer != null && isStop == true && !TextUtils.isEmpty(live_url)) {
+        if (mediaPlayer != null && isPause == true && !TextUtils.isEmpty(live_url)) {
             try {
+//                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//                audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+
                 mediaPlayer.reset();
                 mediaPlayer.setDataSource(live_url);
                 mediaPlayer.prepareAsync();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -138,26 +169,33 @@ public class LivePlayActivity extends SwipeBackActivity
     protected void onPause() {
         super.onPause();
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            isStop = true;
+            mediaPlayer.pause();
+            isPause = true;
+//            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//            audioManager.abandonAudioFocus(null);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
             mediaPlayer.release();
             mediaPlayer = null;
+//            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//            audioManager.abandonAudioFocus(null);
         }
-//        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-//        audioManager.abandonAudioFocus(null);
+
     }
 
     @Override
     public void onBackPressedSupport() {
-        super.onBackPressedSupport();
+        if (isFullscreen == true){
+            exitFullscreen();
+        }else {
+            super.onBackPressedSupport();
+        }
     }
 
     private void initMVP() {
@@ -176,8 +214,11 @@ public class LivePlayActivity extends SwipeBackActivity
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                surfaceWidth = width;
-                surfaceHeight = height;
+                if (isSurfaceViewInit == false) {
+                    surfaceWidth = width;
+                    surfaceHeight = height;
+                    isSurfaceViewInit = true;
+                }
             }
 
             @Override
@@ -195,17 +236,9 @@ public class LivePlayActivity extends SwipeBackActivity
     private void initController() {
         enterFullscreen();
         exitFullscreen();
+        livePlayProgreeBar.setVisibility(View.VISIBLE);
     }
 
-    //进入全屏
-    private void enterFullscreen() {
-
-    }
-
-    //退出全屏
-    private void exitFullscreen() {
-
-    }
 
     /**
      * 配置MediaPlayer相关参数
@@ -288,18 +321,23 @@ public class LivePlayActivity extends SwipeBackActivity
      *********/
     @Override
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
+        isVideoPrepared = true;
+        livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
         mediaPlayer.start();
     }
 
     @Override
     public void onVideoSizeChanged(PLMediaPlayer plMediaPlayer, int width, int height) {
-        if (width != 0 && height != 0) {
-            float ratioW = (float) width / (float) surfaceWidth;
-            float ratioH = (float) height / (float) surfaceHeight;
+        videoWidth = width;
+        videoHeight = height;
+
+        if (videoWidth != 0 && videoHeight != 0) {
+            float ratioW = (float) videoWidth / (float) surfaceWidth;
+            float ratioH = (float) videoHeight / (float) surfaceHeight;
             float ratio = Math.max(ratioW, ratioH);
-            width = (int) Math.ceil((float) width / ratio);
-            height = (int) Math.ceil((float) height / ratio);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(width, height);
+            playWidth = (int) Math.ceil((float) videoWidth / ratio);
+            playHeight = (int) Math.ceil((float) videoHeight / ratio);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(playWidth, playHeight);
             lp.gravity = Gravity.CENTER;
             surfaceView.setLayoutParams(lp);
         }
@@ -326,17 +364,42 @@ public class LivePlayActivity extends SwipeBackActivity
         return true;
     }
 
-
     @Override
     public boolean onError(PLMediaPlayer plMediaPlayer, int errorCode) {
         showError(new MediaException(errorCode).getMessage());
         return true;
     }
 
-    @OnClick({R.id.controller_landscape_iv_back, R.id.controller_landscape_btn_stream, R.id.controller_landscape_iv_play_pause, R.id.controller_landscape_iv_refresh, R.id.controller_landscape_btn_senddanmu, R.id.controller_landscape_iv_danmu_visible, R.id.controller_landscape_iv_fullscreen_exit, R.id.controller_portrait_iv_back, R.id.controller_portrait_iv_fullscreen})
+    @OnClick({R.id.surfaceview, R.id.controller_landscape_iv_back, R.id.controller_landscape_btn_stream, R.id.controller_landscape_iv_play_pause, R.id.controller_landscape_iv_refresh, R.id.controller_landscape_btn_senddanmu, R.id.controller_landscape_iv_danmu_visible, R.id.controller_landscape_iv_fullscreen_exit, R.id.controller_portrait_iv_back, R.id.controller_portrait_iv_fullscreen})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.surfaceview:
+                if (isFullscreen == true){
+                    if (isControllerHiden == true) {//全屏&&隐藏
+                        controllerLandscapeLayout.setVisibility(View.VISIBLE);
+                        controllerPortraitLayout.setVisibility(View.GONE);
+                        controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                        controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
+                        isControllerHiden = false;
+                    }else if (isControllerHiden == false){//全屏&&显示
+                        controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                        controllerHandler.sendEmptyMessage(HANDLER_HIDE_CONTROLLER);
+                    }
+                }else if (isFullscreen == false){
+                    if (isControllerHiden == true) {//非全屏&&隐藏
+                        controllerLandscapeLayout.setVisibility(View.GONE);
+                        controllerPortraitLayout.setVisibility(View.VISIBLE);
+                        controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                        controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
+                        isControllerHiden = false;
+                    }else if (isControllerHiden == false){//非全屏&&显示
+                        controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                        controllerHandler.sendEmptyMessage(HANDLER_HIDE_CONTROLLER);
+                    }
+                }
+                break;
             case R.id.controller_landscape_iv_back:
+                onBackPressedSupport();
                 break;
             case R.id.controller_landscape_btn_stream:
                 break;
@@ -349,11 +412,91 @@ public class LivePlayActivity extends SwipeBackActivity
             case R.id.controller_landscape_iv_danmu_visible:
                 break;
             case R.id.controller_landscape_iv_fullscreen_exit:
+                exitFullscreen();
                 break;
             case R.id.controller_portrait_iv_back:
+                onBackPressedSupport();
                 break;
             case R.id.controller_portrait_iv_fullscreen:
+                enterFullscreen();
                 break;
         }
     }
+
+    //进入全屏
+    private void enterFullscreen() {
+
+        livePlayTopLayout.removeView(surfaceView);
+        livePlayTopLayout.removeView(livePlayProgreeBar);
+        livePlayTopLayout.removeView(controllerLandscapeLayout);
+        livePlayTopLayout.removeView(controllerPortraitLayout);
+
+        livePlayBottomLayout.setVisibility(View.GONE);
+        livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
+        controllerLandscapeLayout.setVisibility(View.VISIBLE);
+        controllerPortraitLayout.setVisibility(View.GONE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+
+        isFullscreen = true;
+        isControllerHiden = false;
+        controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+        controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
+
+        livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        //全屏隐藏状态栏
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getWindow().setAttributes(lp);
+
+    }
+
+    //退出全屏
+    private void exitFullscreen() {
+
+        livePlayTopLayout.removeView(surfaceView);
+        livePlayTopLayout.removeView(livePlayProgreeBar);
+        livePlayTopLayout.removeView(controllerLandscapeLayout);
+        livePlayTopLayout.removeView(controllerPortraitLayout);
+
+        livePlayBottomLayout.setVisibility(View.VISIBLE);
+        livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
+        controllerLandscapeLayout.setVisibility(View.GONE);
+        controllerPortraitLayout.setVisibility(View.VISIBLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+
+        isFullscreen = false;
+        isControllerHiden = false;
+        controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+        controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
+
+        livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        onVideoSizeChanged(mediaPlayer, videoWidth, videoHeight);
+
+        //显示状态栏
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setAttributes(lp);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        if (msg.what == HANDLER_HIDE_CONTROLLER){
+            //hide controller
+            controllerLandscapeLayout.setVisibility(View.GONE);
+            controllerPortraitLayout.setVisibility(View.GONE);
+            isControllerHiden = true;
+        }
+        return true;
+    }
+
 }
