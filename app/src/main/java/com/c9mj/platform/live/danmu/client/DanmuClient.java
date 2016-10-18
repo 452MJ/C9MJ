@@ -24,7 +24,7 @@ public class DanmuClient {
     private static DanmuClient client;
 
     //第三方弹幕协议服务器地址
-    private static final String HOST = RetrofitHelper.BASE_DANMU_URL;
+    private static final String HOST = RetrofitHelper.BASE_PANDA_URL;
 
     //第三方弹幕协议服务器端口
     private static final int SOCKET_PORT = 8601;

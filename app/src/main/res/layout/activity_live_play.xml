@@ -10,22 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/live_play_top_layout"
+        android:background="#000000"
         android:layout_weight="4">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#000000">
-
-            <ProgressBar
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:padding="10dp"
-                android:layout_gravity="center"
-                style="@style/Widget.AppCompat.ProgressBar"
-                android:theme="@style/CircularProgress"/>
-
-        </FrameLayout>
 
         <SurfaceView
             android:layout_width="match_parent"

@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailDouyuBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveDetailPandaBean;
 import com.c9mj.platform.live.mvp.presenter.ILivePlayPresenter;
 import com.c9mj.platform.live.mvp.view.ILivePlayChatFragment;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
@@ -49,13 +49,13 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
     }
 
     @Override
-    public void getDanmuDetail(String url) {
-        if (TextUtils.isEmpty(url) == false) {
-            RetrofitHelper.getLiveHelper().create(LiveAPI.class)
-                    .getDouyuDetail(url)
+    public void getDanmuDetail(String live_id, String live_type) {
+        if (live_type.equals("panda")) {
+            RetrofitHelper.getPandaHelper().create(LiveAPI.class)
+                    .getPandaChatroom(live_id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<LiveDetailDouyuBean>() {
+                    .subscribe(new Observer<LiveDetailPandaBean>() {
                         @Override
                         public void onCompleted() {
 
@@ -67,16 +67,16 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                         }
 
                         @Override
-                        public void onNext(LiveDetailDouyuBean detailDouyuBean) {
-                            if (detailDouyuBean.getError() == 0) {
-                                view.updateDouyuDetail(detailDouyuBean);
+                        public void onNext(LiveDetailPandaBean detailPandaBean) {
+                            if (detailPandaBean.getErrno() == 0) {
+                                view.updateDouyuDetail(detailPandaBean);
                             } else {
-                                view.showError("弹幕服务器接口已过期，请刷新直播列表！");
+                                view.showError(detailPandaBean.getErrmsg());
                             }
                         }
                     });
         }else {
-            view.showError("弹幕服务器接口链接无效！");
+            view.showError("直播平台：" + live_type +"！不是熊猫TV的弹幕池！");
         }
     }
 }

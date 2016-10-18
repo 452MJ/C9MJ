@@ -3,7 +3,7 @@ package com.c9mj.platform.live.api;
 
 import com.c9mj.platform.live.mvp.model.bean.LiveBaseBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailDouyuBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveDetailPandaBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
 
 import java.util.List;
@@ -44,8 +44,8 @@ public interface LiveAPI {
     );
 
     //请求获取弹幕聊天室详情
-    @GET
-    Observable<LiveDetailDouyuBean> getDouyuDetail(
-            @Url String url
+    @GET("/ajax_chatinfo")
+    Observable<LiveDetailPandaBean> getPandaChatroom(
+            @Query("roomid") String live_id
     );
 }

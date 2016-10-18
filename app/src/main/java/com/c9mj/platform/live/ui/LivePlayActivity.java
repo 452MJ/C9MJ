@@ -2,7 +2,6 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,9 +20,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ScreenUtils;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailDouyuBean;
+import com.c9mj.platform.live.mvp.model.bean.LiveDetailPandaBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILivePlayChatFragment;
 import com.c9mj.platform.util.ToastUtil;
@@ -56,7 +56,6 @@ public class LivePlayActivity extends SwipeBackActivity
     public static final String LIVE_TYPE = "live_type"; //直播平台
     public static final String LIVE_ID = "live_id";     //直播房间ID
     public static final String GAME_TYPE = "game_type"; //直播游戏类型
-    public static final String DOUYU_URL = "douyu_url"; //斗鱼直播url
 
     public static final int HANDLER_HIDE_CONTROLLER = 100;//隐藏MediaController
     public static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
@@ -70,11 +69,10 @@ public class LivePlayActivity extends SwipeBackActivity
     private String live_type;   //直播平台
     private String live_id;     //直播房间号ID
     private String game_type;   //直播游戏类型
-    private String douyu_url;   //斗鱼直播专属url
     private String live_url;   //直播url
 
-    private int surfaceWidth;
-    private int surfaceHeight;
+    private int surfacePortraitWidth;
+    private int surfacePortraitHeight;
     private int videoWidth;
     private int videoHeight;
     private int playWidth;
@@ -137,14 +135,13 @@ public class LivePlayActivity extends SwipeBackActivity
         live_type = intent.getStringExtra(LIVE_TYPE);
         live_id = intent.getStringExtra(LIVE_ID);
         game_type = intent.getStringExtra(GAME_TYPE);
-        douyu_url = intent.getStringExtra(DOUYU_URL);
 
         initMVP();
         initSurfaceView();
-        initController();
+//        initController();
 
         presenter.getLiveDetail(live_type, live_id, game_type);     //请求直播详情
-        presenter.getDanmuDetail(douyu_url);                          //请求弹幕服务器相关参数
+        presenter.getDanmuDetail(live_id, live_type);                          //请求弹幕服务器相关参数
     }
 
     @Override
@@ -158,7 +155,7 @@ public class LivePlayActivity extends SwipeBackActivity
                 mediaPlayer.reset();
                 mediaPlayer.setDataSource(live_url);
                 mediaPlayer.prepareAsync();
-
+                isPause = false;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -215,8 +212,10 @@ public class LivePlayActivity extends SwipeBackActivity
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
                 if (isSurfaceViewInit == false) {
-                    surfaceWidth = width;
-                    surfaceHeight = height;
+                    //竖屏
+                    surfacePortraitWidth = width;
+                    surfacePortraitHeight = height;
+
                     isSurfaceViewInit = true;
                 }
             }
@@ -306,8 +305,8 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     @Override
-    public void updateDouyuDetail(LiveDetailDouyuBean detailDouyuBean) {
-
+    public void updateDouyuDetail(LiveDetailPandaBean detailPandaBean) {
+        ToastUtil.show(detailPandaBean.toString());
     }
 
     @Override
@@ -332,8 +331,8 @@ public class LivePlayActivity extends SwipeBackActivity
         videoHeight = height;
 
         if (videoWidth != 0 && videoHeight != 0) {
-            float ratioW = (float) videoWidth / (float) surfaceWidth;
-            float ratioH = (float) videoHeight / (float) surfaceHeight;
+            float ratioW = (float) videoWidth / (float) (isFullscreen ? ScreenUtils.getScreenWidth(context) : surfacePortraitWidth);
+            float ratioH = (float) videoHeight / (float) (isFullscreen ? ScreenUtils.getScreenHeight(context) : surfacePortraitHeight);
             float ratio = Math.max(ratioW, ratioH);
             playWidth = (int) Math.ceil((float) videoWidth / ratio);
             playHeight = (int) Math.ceil((float) videoHeight / ratio);
@@ -351,12 +350,14 @@ public class LivePlayActivity extends SwipeBackActivity
     @Override
     public boolean onInfo(PLMediaPlayer plMediaPlayer, int what, int extra) {
         switch (what) {
-            case PLMediaPlayer.MEDIA_INFO_BUFFERING_START:
-//                mLoadingView.setVisibility(View.VISIBLE);
+            case PLMediaPlayer.MEDIA_INFO_BUFFERING_START://开始缓冲
+                livePlayProgreeBar.setVisibility(View.VISIBLE);
                 break;
             case PLMediaPlayer.MEDIA_INFO_BUFFERING_END:
-            case PLMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
-//                mLoadingView.setVisibility(View.GONE);
+            case PLMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START://视频缓冲完成可播放
+                livePlayProgreeBar.setVisibility(View.GONE);
+                isPause = false;
+                controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
                 break;
             default:
                 break;
@@ -398,26 +399,49 @@ public class LivePlayActivity extends SwipeBackActivity
                     }
                 }
                 break;
-            case R.id.controller_landscape_iv_back:
+            case R.id.controller_landscape_iv_back://全屏Back
                 onBackPressedSupport();
                 break;
-            case R.id.controller_landscape_btn_stream:
+            case R.id.controller_landscape_btn_stream://直播流连接切换
+                controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
-            case R.id.controller_landscape_iv_play_pause:
+            case R.id.controller_landscape_iv_play_pause://播放/暂停
+                if (isPause == true){
+                    onResume();
+                }else if (isPause == false){
+                    onPause();
+                }
+                controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
+                controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
-            case R.id.controller_landscape_iv_refresh:
+            case R.id.controller_landscape_iv_refresh://重新加载
+                try {
+                    mediaPlayer.reset();
+                    mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
+                    mediaPlayer.prepareAsync();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
-            case R.id.controller_landscape_btn_senddanmu:
+            case R.id.controller_landscape_btn_senddanmu://发送弹幕
+                controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
-            case R.id.controller_landscape_iv_danmu_visible:
+            case R.id.controller_landscape_iv_danmu_visible://弹幕显示&隐藏
+                controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+                controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
-            case R.id.controller_landscape_iv_fullscreen_exit:
+            case R.id.controller_landscape_iv_fullscreen_exit://退出全屏
                 exitFullscreen();
                 break;
-            case R.id.controller_portrait_iv_back:
+            case R.id.controller_portrait_iv_back://竖屏Back
                 onBackPressedSupport();
                 break;
-            case R.id.controller_portrait_iv_fullscreen:
+            case R.id.controller_portrait_iv_fullscreen://进入全屏
                 enterFullscreen();
                 break;
         }
@@ -435,7 +459,7 @@ public class LivePlayActivity extends SwipeBackActivity
         livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
         controllerLandscapeLayout.setVisibility(View.VISIBLE);
         controllerPortraitLayout.setVisibility(View.GONE);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        ScreenUtils.setLandscape(this);
 
         isFullscreen = true;
         isControllerHiden = false;
@@ -452,6 +476,8 @@ public class LivePlayActivity extends SwipeBackActivity
         lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(lp);
 
+        controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
+
     }
 
     //退出全屏
@@ -466,7 +492,7 @@ public class LivePlayActivity extends SwipeBackActivity
         livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
         controllerLandscapeLayout.setVisibility(View.GONE);
         controllerPortraitLayout.setVisibility(View.VISIBLE);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        ScreenUtils.setPortrait(this);
 
         isFullscreen = false;
         isControllerHiden = false;

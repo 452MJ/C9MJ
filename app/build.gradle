@@ -50,6 +50,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'joda-time:joda-time:2.3'
     compile 'com.orhanobut:logger:1.15'
+    compile 'com.blankj:utilcode:1.3.0'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:+'
     compile files('libs/pldroid-player-1.3.2.jar')

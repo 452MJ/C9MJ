@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".main.ui.MainActivity"
-            android:configChanges="orientation|screenSize">
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +29,7 @@
         </activity>
         <activity
             android:name=".live.ui.LivePlayActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
     </application>
 

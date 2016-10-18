@@ -24,11 +24,12 @@ public class RetrofitHelper{
     public static final String BASE_EXPLORE_URL = "http://api.douban.com/v2/movie/";
     public static final String BASE_LIVE_URL = "http://api.maxjia.com";
     public static final String BASE_USER_URL = "http://api.douban.com/v2/movie/";
-    public static final String BASE_DANMU_URL = "http://api.douban.com/v2/movie/";
+    public static final String BASE_PANDA_URL = "http://www.panda.tv";
 
     private static Retrofit explore = null;
     private static Retrofit live = null;
     private static Retrofit user = null;
+    private static Retrofit panda = null;
 
     public static Retrofit getExploreHelper() {
         if (explore == null){
@@ -69,6 +70,20 @@ public class RetrofitHelper{
             }
         }
         return user;
+    }
+
+    public static Retrofit getPandaHelper() {
+        if (panda == null){
+            synchronized (RetrofitHelper.class){
+                panda = new Retrofit.Builder()
+                        .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
+                        .baseUrl(BASE_PANDA_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .build();
+            }
+        }
+        return panda;
     }
 
     public static <T> Observable.Transformer<LiveBaseBean<T>, T> handleLiveResult(){
