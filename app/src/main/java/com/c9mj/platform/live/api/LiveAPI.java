@@ -3,14 +3,13 @@ package com.c9mj.platform.live.api;
 
 import com.c9mj.platform.live.mvp.model.bean.LiveBaseBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailPandaBean;
+import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
 
 import java.util.List;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -45,7 +44,7 @@ public interface LiveAPI {
 
     //请求获取弹幕聊天室详情
     @GET("/ajax_chatinfo")
-    Observable<LiveDetailPandaBean> getPandaChatroom(
-            @Query("roomid") String live_id
+    Observable<LivePandaBean> getPandaChatroom(
+            @Query("roomid") String roomid
     );
 }

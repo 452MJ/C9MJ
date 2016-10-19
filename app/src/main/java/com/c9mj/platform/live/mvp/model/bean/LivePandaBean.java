@@ -8,7 +8,7 @@ import java.util.List;
  * 熊猫直播详情
  */
 
-public class LiveDetailPandaBean {
+public class LivePandaBean {
 
 
     /**
@@ -113,7 +113,7 @@ public class LiveDetailPandaBean {
 
     @Override
     public String toString() {
-        return "LiveDetailPandaBean{" +
+        return "LivePandaBean{" +
                 "data=" + data +
                 '}';
     }

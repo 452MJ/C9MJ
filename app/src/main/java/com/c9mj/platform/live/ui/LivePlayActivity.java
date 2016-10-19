@@ -23,15 +23,16 @@ import android.widget.TextView;
 import com.blankj.utilcode.utils.ScreenUtils;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailPandaBean;
+import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
-import com.c9mj.platform.live.mvp.view.ILivePlayChatFragment;
+import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,7 +46,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
  * 观看直播Activity
  */
 public class LivePlayActivity extends SwipeBackActivity
-        implements ILivePlayChatFragment,
+        implements ILivePlayActivity,
         PLMediaPlayer.OnPreparedListener,
         PLMediaPlayer.OnVideoSizeChangedListener,
         PLMediaPlayer.OnCompletionListener,
@@ -61,7 +62,7 @@ public class LivePlayActivity extends SwipeBackActivity
     public static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
 
     private boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
-    private boolean isVideoPrepared = false;         //Video加载标志位
+    private boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
     private boolean isPause = false;         //直播暂停标志位
     private boolean isFullscreen = false;   //全屏标志位
     private boolean isControllerHiden = false;   //MediaController显示隐藏标志位
@@ -305,8 +306,8 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     @Override
-    public void updateDouyuDetail(LiveDetailPandaBean detailPandaBean) {
-        ToastUtil.show(detailPandaBean.toString());
+    public void updateChatDetail(LivePandaBean pandaBean) {
+        presenter.connectToChatRoom(live_id, pandaBean);
     }
 
     @Override
