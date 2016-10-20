@@ -11,6 +11,7 @@
         android:id="@+id/app_bar"
         android:fitsSystemWindows="true"
         app:elevation="@dimen/widget_elevation"
+        app:layout_behavior="@string/appbar_spring_behavior"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout

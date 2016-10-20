@@ -56,4 +56,5 @@ dependencies {
     compile files('libs/pldroid-player-1.3.2.jar')
     compile 'com.qiniu:happy-dns:0.2.+'
     compile 'com.qiniu.pili:pili-android-qos:0.8.+'
+    compile 'com.github.todou:appbarspring:1.0.2'
 }
