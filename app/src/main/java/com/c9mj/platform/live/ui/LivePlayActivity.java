@@ -184,7 +184,7 @@ public class LivePlayActivity extends SwipeBackActivity
 //            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 //            audioManager.abandonAudioFocus(null);
         }
-
+        presenter.closeConnection();
     }
 
     @Override
@@ -323,7 +323,7 @@ public class LivePlayActivity extends SwipeBackActivity
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
         isVideoPrepared = true;
         livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
-        mediaPlayer.start();
+//        mediaPlayer.start();
     }
 
     @Override

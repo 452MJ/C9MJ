@@ -14,7 +14,7 @@ public class DanmuUtil {
     public final static byte[] START_FLAG = {0x00, 0x06, 0x00, 0x02};  //连接弹幕服务器帧头
     public final static byte[] RESPONSE = {0x00, 0x06, 0x00, 0x06};  //连接弹幕服务器响应
     public final static byte[] KEEP_ALIVE = {0x00, 0x06, 0x00, 0x00};  //与弹幕服务器心跳心跳保持
-    public final static byte[] RECEIVE_MSG = {0x00, 0x06, 0x00, 0x03}; //接收到消息
+    public final static byte[] RECEIVE_MSG = {0x00, 0x06, 0x00, 0x03}; //接收到弹幕消息的帧头
     public final static byte[] HEART_BEAT_RESPONSE ={0x00, 0x06, 0x00, 0x01};//心跳保持服务器返回的值
     public final static int IGNORE_BYTE_LENGTH = 16;//弹幕消息体忽略的字节数
     public final static int MAX_AUTO_CONNECT_TIME = 5;//自动断线重连次数
@@ -47,6 +47,6 @@ public class DanmuUtil {
     }
 
     public static byte[] getHeartData() {
-        return null;
+        return KEEP_ALIVE;
     }
 }

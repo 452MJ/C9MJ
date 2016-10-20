@@ -11,15 +11,19 @@ import com.c9mj.platform.util.DanmuUtil;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
 import rx.Observer;
+import rx.Scheduler;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -70,7 +74,8 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                         @Override
                         public void onError(Throwable e) {
-                            view.showError("弹幕服务器接口已过期，请刷新直播列表！");
+//                            view.showError("弹幕服务器接口已过期，请刷新直播列表！");
+                            view.showError(e.getMessage());
                         }
 
                         @Override
@@ -101,17 +106,19 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
     private LivePandaBean pandaBean;
     private boolean isConnectSuccess = false;
 
-    //心跳包线程相关
-    private HeartRunnable heart;
+    //心跳包相关
     private boolean isAlreadySendHeart = false;  //是否已发送心跳包
-    private boolean isHeartStop = false;     //用于外部控制线程结束
+    private boolean isHeartStop = false;     //用于外部控制心跳线程结束
+
+    //弹幕接收相关
+    private boolean isReceiveStop = false;     //用于外部控制接收线程结束
 
     private Socket socket = null;
-    private InputStream inputStream;
-    private OutputStream outputStream;
+    private BufferedInputStream bis;
+    private BufferedOutputStream bos;
 
     @Override
-    public void connectToChatRoom(String roomid, LivePandaBean pandaBean) {
+    public void connectToChatRoom(String roomid, final LivePandaBean pandaBean) {
 
         this.roomid = roomid;
         this.pandaBean = pandaBean;
@@ -121,84 +128,221 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
             view.showError("无法连接至弹幕服务器！");
             return;
         }
-        try {
-            socketIP = chatRoomList.get(0).split(":")[0];
-            socketPort = Integer.parseInt(chatRoomList.get(0).split(":")[1]);
-            socket = new Socket(socketIP, socketPort);
 
-            inputStream = socket.getInputStream();//得到Socket输入流
-            outputStream = socket.getOutputStream();//得到Socket输出流
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                //接收响应数据
+                byte readData[] = new byte[6];
+                try {
+                    socketIP = chatRoomList.get(0).split(":")[0];
+                    socketPort = Integer.parseInt(chatRoomList.get(0).split(":")[1]);
+                    socket = new Socket(socketIP, socketPort);
 
-            //发送建立连接请求
-            outputStream.write(DanmuUtil.getConnectData(pandaBean.getData()));
+                    bis = new BufferedInputStream(socket.getInputStream());//得到Socket输入流
+                    bos = new BufferedOutputStream(socket.getOutputStream());//得到Socket输出流
 
-            //接收响应数据
-            byte readData[] = new byte[6];
-            inputStream.read(readData);
-            int isLength = inputStream.read(readData);
-            if (isLength >= 6){
-                if(!(readData[0] == DanmuUtil.RESPONSE[0] &&
-                        readData[1] == DanmuUtil.RESPONSE[1] &&
-                        readData[2] == DanmuUtil.RESPONSE[2] &&
-                        readData[3] == DanmuUtil.RESPONSE[3]))
-                    isConnectSuccess = false;
-                else{
-                    isConnectSuccess = true;
-                    //消息主体，暂时用不到
-				/*	short dataLength=(short) (readData[5]|(readData[4]<<8));
-					byte[] data=new byte[dataLength];//数据
-					is.read(data);//主体数据，appid+r的值，eg:id:845694055\nr:0  暂时用不到
-				*/
+                    //发送建立连接请求
+                    bos.write(DanmuUtil.getConnectData(pandaBean.getData()));
+                    bos.flush();
+                    bis.read(readData);
+                    int isLength = bis.read();
+
+                    if (isLength >= 6){
+                        if(!(readData[0] == DanmuUtil.RESPONSE[0] &&
+                                readData[1] == DanmuUtil.RESPONSE[1] &&
+                                readData[2] == DanmuUtil.RESPONSE[2] &&
+                                readData[3] == DanmuUtil.RESPONSE[3]))
+                            isConnectSuccess = false;
+                        else{
+                            isConnectSuccess = true;
+                            subscriber.onNext("connect success!");
+                        }
+                    }else {
+                        isConnectSuccess = false;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }else {
-                isConnectSuccess = false;
+
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-       }
-        //建立连接成功
-        if (isConnectSuccess == true){
-            heart = new HeartRunnable();
-        }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        view.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(String result) {
+                        //连接成功
+                        if (isConnectSuccess){
+                            runHeartDanmuOnRxJava();
+                        }
+                    }
+                });
     }
+
+
 
     @Override
     public void closeConnection() {
 
-    }
-
-    private class HeartRunnable implements Runnable {
-
-        private int autoConnectedTime = 0;
-        private int maxConnectedTime = 5;//自动断线重连次数
-
-        @Override
-        public void run() {
-            while (isHeartStop == false){
-                try {
-                    outputStream.write(DanmuUtil.getHeartData());//发送心跳包
-                    if (isAlreadySendHeart == true){
-                        connectToChatRoom(roomid, pandaBean); //连接断开，自动重新连接
-                        autoConnectedTime++;
-                        if (autoConnectedTime > maxConnectedTime){//超过最大重连次数
-                            view.showError("无法连接至弹幕服务器！");
-                            autoConnectedTime = 0;
-                            closeConnection();
-                        }else {
-                            Thread.sleep(3000);//三秒后再次尝试发送心跳包
-                            continue;
-                        }
-                    }
-                    isAlreadySendHeart = true;//修改标志已发送心跳包
-                    autoConnectedTime = 0;//断线重连计数置零
-
-                    //等到300s再次发送心跳包
-                    Thread.sleep(300 * 1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        if(socket != null &&
+                bis != null &&
+                bos != null &&
+                socket.isConnected()){
+            try {
+                isHeartStop = true;//停止心跳线程
+                isReceiveStop = true;//停止弹幕消息接收
+                bis.close();
+                bos.close();
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
 
+    /**
+     * 1.心跳包
+     * 2.接收弹幕
+     */
+    private void runHeartDanmuOnRxJava(){
+//        /**
+//         * 心跳包
+//         */
+//        Observable.create(new Observable.OnSubscribe<String>() {
+//            @Override
+//            public void call(Subscriber<? super String> subscriber) {
+//                int autoConnectedTime = 0;
+//                int maxConnectedTime = 5;//自动断线重连次数
+//                while (!isHeartStop){
+//                    try {
+//                        bos.write(DanmuUtil.getHeartData());//发送心跳包
+//                        bos.flush();
+//                        if (isAlreadySendHeart == true){
+//                            connectToChatRoom(roomid, pandaBean); //连接断开，自动重新连接
+//                            autoConnectedTime++;
+//                            if (autoConnectedTime > maxConnectedTime){//超过最大重连次数
+//                                subscriber.onNext("无法连接至弹幕服务器！");
+//                                autoConnectedTime = 0;
+//
+//                            }else {
+//                                Thread.sleep(3 * 1000);//3s后再次尝试发送心跳包
+//                                continue;
+//                            }
+//                        }
+//                        isAlreadySendHeart = true;//修改标志已发送心跳包
+//                        autoConnectedTime = 0;//断线重连计数置零
+//
+//                        //等到300s再次发送心跳包
+//                        Thread.sleep(300 * 1000);
+//                    } catch (Exception e) {
+//                        subscriber.onError(e);
+//                    }
+//                }
+//            }
+//        })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<String>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        closeConnection();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        view.showError(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(String result) {
+//                        System.out.println(result);
+//                    }
+//                });
+
+        /**
+         * 接收弹幕
+         */
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                byte[] headMsg = new byte[4];//帧头部
+                int body1stLength;//消息体1长度
+                byte[] body2ndUpper = new byte[DanmuUtil.IGNORE_BYTE_LENGTH];//消息体2 = 消息体2前部分 + 弹幕消息
+                int body2ndUpperLength;//消息体2前部分长度
+
+                while (!isReceiveStop){
+                    try {
+                        if (bis.read(headMsg) >= 4){//成功接收到数据
+                            //分析帧头
+                            if(headMsg[0] == DanmuUtil.RECEIVE_MSG[0] &&//1.弹幕
+                                    headMsg[1] == DanmuUtil.RECEIVE_MSG[1] &&
+                                    headMsg[2] == DanmuUtil.RECEIVE_MSG[2] &&
+                                    headMsg[3] == DanmuUtil.RECEIVE_MSG[3]){
+
+                                body1stLength = bis.read();//消息体1长度
+
+                                if (body1stLength > 0){
+                                    byte[] body1st = new byte[body1stLength];
+                                    bis.read(body1st);//接收消息体1
+
+                                    body2ndUpperLength = bis.read();//消息体2前半部分长度
+                                    bis.read(body2ndUpper);
+
+                                    int danmuLength = DanmuUtil.IGNORE_BYTE_LENGTH - body2ndUpperLength;//得到最后部分
+                                    if (danmuLength > 0){//弹幕内容不为空
+                                        byte[] danmu = new byte[danmuLength];
+                                        bis.read(danmu);//接收弹幕
+                                        subscriber.onNext(new String(danmu, "UTF-8"));
+                                    }
+                                }
+                            } else if (headMsg[0] == DanmuUtil.HEART_BEAT_RESPONSE[0] &&//2.心跳包
+                                    headMsg[1] == DanmuUtil.HEART_BEAT_RESPONSE[1] &&
+                                    headMsg[2] == DanmuUtil.HEART_BEAT_RESPONSE[2] &&
+                                    headMsg[3] == DanmuUtil.HEART_BEAT_RESPONSE[3]){
+                                //接收到响应，重置心跳包发送标志位
+                                isAlreadySendHeart = false;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        view.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(String result) {
+                        System.out.println(result);
+                    }
+                });
+    }
+
+    /**
+     * 解析所接收弹幕的Json
+     * @param danmu
+     */
+    private void parseDanmu(String danmu){
+        view.showError(danmu);
+    }
 }
