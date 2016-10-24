@@ -49,4 +49,16 @@ public class DanmuUtil {
     public static byte[] getHeartData() {
         return KEEP_ALIVE;
     }
+
+    public static int byte2Int(byte[] bytes) {
+        int value = 0;
+        byte temp;
+
+        for (int i = 0; i < bytes.length; i++) {
+            temp = bytes[i];
+            value += (temp & 0xFF) << (8 * i);
+        }
+        return value;
+    }
+
 }
