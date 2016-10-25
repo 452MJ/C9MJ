@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/controller_landscape_layout">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_widget_size"
@@ -134,5 +133,6 @@
             android:id="@+id/controller_landscape_iv_fullscreen_exit" />
 
     </RelativeLayout>
+
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.c9mj.platform.live.mvp.view;
 
+import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
 import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
 import com.c9mj.platform.util.retrofit.exception.IErrorView;
@@ -11,4 +12,5 @@ import com.c9mj.platform.util.retrofit.exception.IErrorView;
 public interface ILivePlayActivity extends IErrorView {
     void updateLiveDetail(LiveDetailBean detailBean);//更新直播详情
     void updateChatDetail(LivePandaBean detailPandaBean);//更新熊猫弹幕聊天室详情
+    void addDanmu(DanmuBean danmuBean, boolean withBorder);//添加弹幕
 }

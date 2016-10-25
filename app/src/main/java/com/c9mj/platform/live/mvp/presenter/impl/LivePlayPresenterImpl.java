@@ -1,13 +1,16 @@
 package com.c9mj.platform.live.mvp.presenter.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.c9mj.platform.live.api.LiveAPI;
+import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
 import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
 import com.c9mj.platform.live.mvp.presenter.ILivePlayPresenter;
 import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
 import com.c9mj.platform.util.DanmuUtil;
+import com.c9mj.platform.util.GsonHelper;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
 import com.orhanobut.logger.Logger;
@@ -216,9 +219,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
      * 2.接收弹幕
      */
     private void runHeartDanmuOnRxJava(){
-        /**
-         * 心跳包
-         */
+        //心跳包
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
@@ -270,9 +271,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                     }
                 });
 
-        /**
-         * 接收弹幕
-         */
+        //接收弹幕
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
@@ -295,10 +294,34 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                                     realBuf[2] == DanmuUtil.RECEIVE_MSG[2] &&
                                     realBuf[3] == DanmuUtil.RECEIVE_MSG[3]){
 
+                                //{"type":"1","time":1477356608,"data":{"from":{"__plat":"android","identity":"30","level":"4","msgcolor":"","nickName":"看了还说了","rid":"45560306","sp_identity":"0","userName":""},"to":{"toroom":"15161"},"content":"我去"}}
                                 String content = new String(realBuf, "UTF-8");
-                                int danmuIndex = content.indexOf("{");
-                                String danmu = content.substring(danmuIndex, content.length());
+
+                                //第一条弹幕
+                                int danmuFromIndex = content.indexOf("{\"type");
+                                int danmuToIndex = content.indexOf("}}");
+
+                                //第二条弹幕（可有）
+                                int danmuFromIndex_2 = content.lastIndexOf("{\"type");
+                                int danmuToIndex_2 = content.lastIndexOf("}}");
+
+                                String danmu;//存放弹幕
+
+                                danmu = content.substring(danmuFromIndex, danmuToIndex + 2);
+                                if (TextUtils.isEmpty(danmu)) {//为空不发射事件
+                                    continue;
+                                }
                                 subscriber.onNext(danmu);
+
+                                //如果存在第二条弹幕
+                                if (!(danmuFromIndex == danmuFromIndex_2 &&
+                                        danmuToIndex == danmuFromIndex_2)){
+                                    danmu = content.substring(danmuFromIndex_2, danmuToIndex_2 + 2);
+                                    if (TextUtils.isEmpty(danmu)) {
+                                        continue;
+                                    }
+                                    subscriber.onNext(danmu);
+                                }
 
 
                             } else if (messege[0] == DanmuUtil.HEART_BEAT_RESPONSE[0] &&//2.心跳包
@@ -329,7 +352,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                     @Override
                     public void onNext(String result) {
-                        System.out.println(result);
+                        parseDanmu(result);
                     }
                 });
     }
@@ -338,7 +361,34 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
      * 解析所接收弹幕的Json
      * @param danmu
      */
-    private void parseDanmu(String danmu){
-        view.showError(danmu);
+    private void parseDanmu(final String danmu){
+        Observable.create(new Observable.OnSubscribe<DanmuBean>() {
+            @Override
+            public void call(Subscriber<? super DanmuBean> subscriber) {
+                //解析弹幕Json
+                int one = danmu.indexOf("1");
+                if (danmu.substring(one, one + 1).equals("1")) {
+                    DanmuBean danmuBean = (DanmuBean) GsonHelper.parseJson(danmu, DanmuBean.class);
+                    subscriber.onNext(danmuBean);
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<DanmuBean>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        view.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(DanmuBean bean) {
+                        view.addDanmu(bean, false);
+                    }
+                });
     }
 }

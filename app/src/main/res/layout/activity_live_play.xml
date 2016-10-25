@@ -18,6 +18,11 @@
             android:layout_height="match_parent"
             android:id="@+id/surfaceview" />
 
+        <master.flame.danmaku.ui.widget.DanmakuView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/danmuview"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

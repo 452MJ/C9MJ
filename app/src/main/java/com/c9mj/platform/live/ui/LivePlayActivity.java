@@ -2,6 +2,7 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,7 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.ScreenUtils;
+import com.blankj.utilcode.utils.SizeUtils;
 import com.c9mj.platform.R;
+import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
 import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
 import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
@@ -32,12 +35,19 @@ import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import master.flame.danmaku.controller.DrawHandler;
+import master.flame.danmaku.danmaku.model.BaseDanmaku;
+import master.flame.danmaku.danmaku.model.DanmakuTimer;
+import master.flame.danmaku.danmaku.model.IDanmakus;
+import master.flame.danmaku.danmaku.model.android.DanmakuContext;
+import master.flame.danmaku.danmaku.model.android.Danmakus;
+import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
+import master.flame.danmaku.ui.widget.DanmakuView;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
@@ -60,6 +70,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
     public static final int HANDLER_HIDE_CONTROLLER = 100;//隐藏MediaController
     public static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
+
 
     private boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
     private boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
@@ -87,6 +98,18 @@ public class LivePlayActivity extends SwipeBackActivity
     SurfaceView surfaceView;                  //用于显示播放画面
     private PLMediaPlayer mediaPlayer;  //媒体控制器
     private AVOptions avOptions;        //播放参数配置
+
+    @BindView(R.id.danmuview)
+    DanmakuView danmuView;
+    private boolean isShowDanmu = false;// 弹幕显示标志位
+    private DanmakuContext danmakuContext;
+    private BaseDanmakuParser parser = new BaseDanmakuParser() {
+        @Override
+        protected IDanmakus parse() {
+            return new Danmakus();
+        }
+    };
+
 
     @BindView(R.id.controller_landscape_iv_back)
     ImageView controllerLandscapeIvBack;
@@ -139,7 +162,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
         initMVP();
         initSurfaceView();
-//        initController();
+        initDanmuView();
 
         presenter.getLiveDetail(live_type, live_id, game_type);     //请求直播详情
         presenter.getDanmuDetail(live_id, live_type);                          //请求弹幕服务器相关参数
@@ -161,6 +184,9 @@ public class LivePlayActivity extends SwipeBackActivity
                 e.printStackTrace();
             }
         }
+        if (danmuView != null && danmuView.isPrepared() && danmuView.isPaused()) {
+            danmuView.resume();
+        }
     }
 
     @Override
@@ -171,6 +197,9 @@ public class LivePlayActivity extends SwipeBackActivity
             isPause = true;
 //            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 //            audioManager.abandonAudioFocus(null);
+        }
+        if (danmuView != null && danmuView.isPrepared()) {
+            danmuView.pause();
         }
     }
 
@@ -184,14 +213,22 @@ public class LivePlayActivity extends SwipeBackActivity
 //            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 //            audioManager.abandonAudioFocus(null);
         }
+        //断开弹幕服务器连接
         presenter.closeConnection();
+
+        //关闭弹幕
+        isShowDanmu = false;
+        if (danmuView != null) {
+            danmuView.release();
+            danmuView = null;
+        }
     }
 
     @Override
     public void onBackPressedSupport() {
-        if (isFullscreen == true){
+        if (isFullscreen == true) {
             exitFullscreen();
-        }else {
+        } else {
             super.onBackPressedSupport();
         }
     }
@@ -231,12 +268,34 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     /**
-     * 初始化控制器
+     * 初始化弹幕引擎
      */
-    private void initController() {
-        enterFullscreen();
-        exitFullscreen();
-        livePlayProgreeBar.setVisibility(View.VISIBLE);
+    private void initDanmuView() {
+        danmuView.enableDanmakuDrawingCache(true);//打开绘图缓存，提升绘制效率
+        danmuView.setCallback(new DrawHandler.Callback() {
+            @Override
+            public void prepared() {
+                isShowDanmu = true;
+                danmuView.start();
+            }
+
+            @Override
+            public void updateTimer(DanmakuTimer timer) {
+
+            }
+
+            @Override
+            public void danmakuShown(BaseDanmaku danmaku) {
+
+            }
+
+            @Override
+            public void drawingFinished() {
+
+            }
+        });
+        danmakuContext = DanmakuContext.create();
+        danmuView.prepare(parser, danmakuContext);
     }
 
 
@@ -311,6 +370,20 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     @Override
+    public void addDanmu(DanmuBean danmuBean, boolean withBorder) {
+        BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        danmaku.text = danmuBean.getData().getContent();
+        danmaku.padding = 5;
+        danmaku.textSize = SizeUtils.sp2px(context, 20 * 1.0f);
+        danmaku.textColor = Color.WHITE;
+        danmaku.setTime(danmuView.getCurrentTime());
+        if (withBorder) {
+            danmaku.borderColor = getResources().getColor(R.color.color_primary);
+        }
+        danmuView.addDanmaku(danmaku);
+    }
+
+    @Override
     public void showError(String message) {
         ToastUtil.show(message);
     }
@@ -323,7 +396,7 @@ public class LivePlayActivity extends SwipeBackActivity
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
         isVideoPrepared = true;
         livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
-//        mediaPlayer.start();
+        mediaPlayer.start();
     }
 
     @Override
@@ -376,25 +449,25 @@ public class LivePlayActivity extends SwipeBackActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.surfaceview:
-                if (isFullscreen == true){
+                if (isFullscreen == true) {
                     if (isControllerHiden == true) {//全屏&&隐藏
                         controllerLandscapeLayout.setVisibility(View.VISIBLE);
                         controllerPortraitLayout.setVisibility(View.GONE);
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                         isControllerHiden = false;
-                    }else if (isControllerHiden == false){//全屏&&显示
+                    } else if (isControllerHiden == false) {//全屏&&显示
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessage(HANDLER_HIDE_CONTROLLER);
                     }
-                }else if (isFullscreen == false){
+                } else if (isFullscreen == false) {
                     if (isControllerHiden == true) {//非全屏&&隐藏
                         controllerLandscapeLayout.setVisibility(View.GONE);
                         controllerPortraitLayout.setVisibility(View.VISIBLE);
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                         isControllerHiden = false;
-                    }else if (isControllerHiden == false){//非全屏&&显示
+                    } else if (isControllerHiden == false) {//非全屏&&显示
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessage(HANDLER_HIDE_CONTROLLER);
                     }
@@ -408,9 +481,9 @@ public class LivePlayActivity extends SwipeBackActivity
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
             case R.id.controller_landscape_iv_play_pause://播放/暂停
-                if (isPause == true){
+                if (isPause == true) {
                     onResume();
-                }else if (isPause == false){
+                } else if (isPause == false) {
                     onPause();
                 }
                 controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
@@ -452,6 +525,7 @@ public class LivePlayActivity extends SwipeBackActivity
     private void enterFullscreen() {
 
         livePlayTopLayout.removeView(surfaceView);
+        livePlayTopLayout.removeView(danmuView);
         livePlayTopLayout.removeView(livePlayProgreeBar);
         livePlayTopLayout.removeView(controllerLandscapeLayout);
         livePlayTopLayout.removeView(controllerPortraitLayout);
@@ -468,6 +542,7 @@ public class LivePlayActivity extends SwipeBackActivity
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
         livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -485,6 +560,7 @@ public class LivePlayActivity extends SwipeBackActivity
     private void exitFullscreen() {
 
         livePlayTopLayout.removeView(surfaceView);
+        livePlayTopLayout.removeView(danmuView);
         livePlayTopLayout.removeView(livePlayProgreeBar);
         livePlayTopLayout.removeView(controllerLandscapeLayout);
         livePlayTopLayout.removeView(controllerPortraitLayout);
@@ -501,6 +577,7 @@ public class LivePlayActivity extends SwipeBackActivity
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
         livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -517,7 +594,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @Override
     public boolean handleMessage(Message msg) {
-        if (msg.what == HANDLER_HIDE_CONTROLLER){
+        if (msg.what == HANDLER_HIDE_CONTROLLER) {
             //hide controller
             controllerLandscapeLayout.setVisibility(View.GONE);
             controllerPortraitLayout.setVisibility(View.GONE);

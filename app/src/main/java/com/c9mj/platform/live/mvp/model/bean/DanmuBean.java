@@ -6,18 +6,19 @@ package com.c9mj.platform.live.mvp.model.bean;
 
 public class DanmuBean {
 
+
     /**
      * type : 1
-     * time : 1456824617
-     * data : {"from":{"identity":"30","rid":"27742018","__plat":"pc_web","nickName":"neucrack","level":"2","userName":"PandaTv27742018"},"to":{"toqid":1,"toroom":"313180"},"content":"55555"}
+     * time : 1477356473
+     * data : {"from":{"__plat":"pc_web","identity":"30","level":"5","msgcolor":"","nickName":"个人昵称","rid":"23326050","sp_identity":"0","userName":""},"to":{"toroom":"15161"},"content":"英雄联盟"}
      */
 
     private String type;
     private int time;
     /**
-     * from : {"identity":"30","rid":"27742018","__plat":"pc_web","nickName":"neucrack","level":"2","userName":"PandaTv27742018"}
-     * to : {"toqid":1,"toroom":"313180"}
-     * content : 55555
+     * from : {"__plat":"pc_web","identity":"30","level":"5","msgcolor":"","nickName":"个人昵称","rid":"23326050","sp_identity":"0","userName":""}
+     * to : {"toroom":"15161"}
+     * content : 英雄联盟
      */
 
     private DataBean data;
@@ -48,18 +49,19 @@ public class DanmuBean {
 
     public static class DataBean {
         /**
+         * __plat : pc_web
          * identity : 30
-         * rid : 27742018
-         * __plat : android
-         * nickName : neucrack
-         * level : 2
-         * userName : PandaTv27742018
+         * level : 5
+         * msgcolor :
+         * nickName : 个人昵称
+         * rid : 23326050
+         * sp_identity : 0
+         * userName :
          */
 
         private FromBean from;
         /**
-         * toqid : 1
-         * toroom : 313180
+         * toroom : 15161
          */
 
         private ToBean to;
@@ -90,12 +92,22 @@ public class DanmuBean {
         }
 
         public static class FromBean {
-            private String identity;
-            private String rid;
             private String __plat;
-            private String nickName;
+            private String identity;
             private String level;
+            private String msgcolor;
+            private String nickName;
+            private String rid;
+            private String sp_identity;
             private String userName;
+
+            public String get__plat() {
+                return __plat;
+            }
+
+            public void set__plat(String __plat) {
+                this.__plat = __plat;
+            }
 
             public String getIdentity() {
                 return identity;
@@ -105,20 +117,20 @@ public class DanmuBean {
                 this.identity = identity;
             }
 
-            public String getRid() {
-                return rid;
+            public String getLevel() {
+                return level;
             }
 
-            public void setRid(String rid) {
-                this.rid = rid;
+            public void setLevel(String level) {
+                this.level = level;
             }
 
-            public String get__plat() {
-                return __plat;
+            public String getMsgcolor() {
+                return msgcolor;
             }
 
-            public void set__plat(String __plat) {
-                this.__plat = __plat;
+            public void setMsgcolor(String msgcolor) {
+                this.msgcolor = msgcolor;
             }
 
             public String getNickName() {
@@ -129,12 +141,20 @@ public class DanmuBean {
                 this.nickName = nickName;
             }
 
-            public String getLevel() {
-                return level;
+            public String getRid() {
+                return rid;
             }
 
-            public void setLevel(String level) {
-                this.level = level;
+            public void setRid(String rid) {
+                this.rid = rid;
+            }
+
+            public String getSp_identity() {
+                return sp_identity;
+            }
+
+            public void setSp_identity(String sp_identity) {
+                this.sp_identity = sp_identity;
             }
 
             public String getUserName() {
@@ -147,16 +167,7 @@ public class DanmuBean {
         }
 
         public static class ToBean {
-            private int toqid;
             private String toroom;
-
-            public int getToqid() {
-                return toqid;
-            }
-
-            public void setToqid(int toqid) {
-                this.toqid = toqid;
-            }
 
             public String getToroom() {
                 return toroom;
