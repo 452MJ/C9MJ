@@ -2,12 +2,14 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -110,13 +112,15 @@ public class LivePlayActivity extends SwipeBackActivity
         }
     };
 
-
+    //横屏控件
     @BindView(R.id.controller_landscape_iv_back)
     ImageView controllerLandscapeIvBack;
     @BindView(R.id.controller_landscape_tv_roomname)
     TextView controllerLandscapeTvRoomname;
-    @BindView(R.id.controller_landscape_btn_stream)
-    Button controllerLandscapeBtnStream;
+    @BindView(R.id.controller_landscape_btn_stream_720p)
+    Button controllerLandscapeBtnStream720P;
+    @BindView(R.id.controller_landscape_btn_stream_360p)
+    Button controllerLandscapeBtnStream360P;
     @BindView(R.id.controller_landscape_iv_play_pause)
     ImageView controllerLandscapeIvPlayPause;
     @BindView(R.id.controller_landscape_iv_refresh)
@@ -131,12 +135,14 @@ public class LivePlayActivity extends SwipeBackActivity
     ImageView controllerLandscapeIvFullscreenExit;
     @BindView(R.id.controller_landscape_layout)
     RelativeLayout controllerLandscapeLayout;
+    //竖屏控件
     @BindView(R.id.controller_portrait_iv_back)
     ImageView controllerPortraitIvBack;
     @BindView(R.id.controller_portrait_iv_fullscreen)
     ImageView controllerPortraitIvFullscreen;
     @BindView(R.id.controller_portrait_layout)
     RelativeLayout controllerPortraitLayout;
+
     @BindView(R.id.live_play_progressbar)
     FrameLayout livePlayProgreeBar;
     @BindView(R.id.live_play_top_layout)
@@ -225,6 +231,12 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
     public void onBackPressedSupport() {
         if (isFullscreen == true) {
             exitFullscreen();
@@ -244,6 +256,7 @@ public class LivePlayActivity extends SwipeBackActivity
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+                livePlayProgreeBar.setVisibility(View.VISIBLE);
                 prepareMediaPlayer();
             }
 
@@ -271,12 +284,16 @@ public class LivePlayActivity extends SwipeBackActivity
      * 初始化弹幕引擎
      */
     private void initDanmuView() {
+
+        controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+
         danmuView.enableDanmakuDrawingCache(true);//打开绘图缓存，提升绘制效率
         danmuView.setCallback(new DrawHandler.Callback() {
             @Override
             public void prepared() {
                 isShowDanmu = true;
                 danmuView.start();
+                controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
             }
 
             @Override
@@ -371,10 +388,12 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @Override
     public void addDanmu(DanmuBean danmuBean, boolean withBorder) {
+        if (isShowDanmu == false){
+            return;
+        }
         BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         danmaku.text = danmuBean.getData().getContent();
-        danmaku.padding = 5;
-        danmaku.textSize = SizeUtils.sp2px(context, 20 * 1.0f);
+        danmaku.textSize = SizeUtils.sp2px(context, 12 * 1.0f);
         danmaku.textColor = Color.WHITE;
         danmaku.setTime(danmuView.getCurrentTime());
         if (withBorder) {
@@ -394,7 +413,6 @@ public class LivePlayActivity extends SwipeBackActivity
      *********/
     @Override
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
-        isVideoPrepared = true;
         livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
         mediaPlayer.start();
     }
@@ -425,15 +443,33 @@ public class LivePlayActivity extends SwipeBackActivity
     public boolean onInfo(PLMediaPlayer plMediaPlayer, int what, int extra) {
         switch (what) {
             case PLMediaPlayer.MEDIA_INFO_BUFFERING_START://开始缓冲
-                livePlayProgreeBar.setVisibility(View.VISIBLE);
+//                isVideoPrepared = false;
+                Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_BUFFERING_START");
                 break;
-            case PLMediaPlayer.MEDIA_INFO_BUFFERING_END:
+            case PLMediaPlayer.MEDIA_INFO_BUFFERING_END://缓冲结束
+                Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_BUFFERING_END");
+                break;
+            case PLMediaPlayer.MEDIA_INFO_BUFFERING_BYTES_UPDATE:
+                Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_BUFFERING_BYTES_UPDATE");
+                break;
+            case PLMediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
+                Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_NOT_SEEKABLE");
+                break;
+            case PLMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:
+                Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_VIDEO_ROTATION_CHANGED");
+                break;
+            case PLMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START:
+                Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_AUDIO_RENDERING_START");
+                break;
             case PLMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START://视频缓冲完成可播放
                 livePlayProgreeBar.setVisibility(View.GONE);
+                isVideoPrepared = true;
                 isPause = false;
                 controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
+                Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_VIDEO_RENDERING_START");
                 break;
             default:
+                Log.d("PLMediaPlayer", "onInfo: " + what);
                 break;
         }
         return true;
@@ -445,7 +481,7 @@ public class LivePlayActivity extends SwipeBackActivity
         return true;
     }
 
-    @OnClick({R.id.surfaceview, R.id.controller_landscape_iv_back, R.id.controller_landscape_btn_stream, R.id.controller_landscape_iv_play_pause, R.id.controller_landscape_iv_refresh, R.id.controller_landscape_btn_senddanmu, R.id.controller_landscape_iv_danmu_visible, R.id.controller_landscape_iv_fullscreen_exit, R.id.controller_portrait_iv_back, R.id.controller_portrait_iv_fullscreen})
+    @OnClick({R.id.surfaceview, R.id.controller_landscape_iv_back, R.id.controller_landscape_btn_stream_360p, R.id.controller_landscape_iv_play_pause, R.id.controller_landscape_iv_refresh, R.id.controller_landscape_btn_senddanmu, R.id.controller_landscape_iv_danmu_visible, R.id.controller_landscape_iv_fullscreen_exit, R.id.controller_portrait_iv_back, R.id.controller_portrait_iv_fullscreen})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.surfaceview:
@@ -476,7 +512,7 @@ public class LivePlayActivity extends SwipeBackActivity
             case R.id.controller_landscape_iv_back://全屏Back
                 onBackPressedSupport();
                 break;
-            case R.id.controller_landscape_btn_stream://直播流连接切换
+            case R.id.controller_landscape_btn_stream_360p://直播流连接切换
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
@@ -506,6 +542,17 @@ public class LivePlayActivity extends SwipeBackActivity
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
             case R.id.controller_landscape_iv_danmu_visible://弹幕显示&隐藏
+
+                if (isShowDanmu == true){//已开启弹幕
+                    isShowDanmu = false;
+                    controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    ToastUtil.show("弹幕已关闭！");
+                }else if (isShowDanmu == false){//已关闭弹幕
+                    isShowDanmu = true;
+                    controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    ToastUtil.show("弹幕已开启！");
+                }
+
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
@@ -525,15 +572,11 @@ public class LivePlayActivity extends SwipeBackActivity
     private void enterFullscreen() {
 
         livePlayTopLayout.removeView(surfaceView);
-        livePlayTopLayout.removeView(danmuView);
         livePlayTopLayout.removeView(livePlayProgreeBar);
+        livePlayTopLayout.removeView(danmuView);
         livePlayTopLayout.removeView(controllerLandscapeLayout);
         livePlayTopLayout.removeView(controllerPortraitLayout);
 
-        livePlayBottomLayout.setVisibility(View.GONE);
-        livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
-        controllerLandscapeLayout.setVisibility(View.VISIBLE);
-        controllerPortraitLayout.setVisibility(View.GONE);
         ScreenUtils.setLandscape(this);
 
         isFullscreen = true;
@@ -542,8 +585,8 @@ public class LivePlayActivity extends SwipeBackActivity
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
         livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -552,6 +595,10 @@ public class LivePlayActivity extends SwipeBackActivity
         lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(lp);
 
+        livePlayBottomLayout.setVisibility(View.GONE);
+//        livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+        controllerLandscapeLayout.setVisibility(View.VISIBLE);
+        controllerPortraitLayout.setVisibility(View.GONE);
         controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
 
     }
@@ -560,15 +607,11 @@ public class LivePlayActivity extends SwipeBackActivity
     private void exitFullscreen() {
 
         livePlayTopLayout.removeView(surfaceView);
-        livePlayTopLayout.removeView(danmuView);
         livePlayTopLayout.removeView(livePlayProgreeBar);
+        livePlayTopLayout.removeView(danmuView);
         livePlayTopLayout.removeView(controllerLandscapeLayout);
         livePlayTopLayout.removeView(controllerPortraitLayout);
 
-        livePlayBottomLayout.setVisibility(View.VISIBLE);
-        livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
-        controllerLandscapeLayout.setVisibility(View.GONE);
-        controllerPortraitLayout.setVisibility(View.VISIBLE);
         ScreenUtils.setPortrait(this);
 
         isFullscreen = false;
@@ -577,8 +620,8 @@ public class LivePlayActivity extends SwipeBackActivity
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
         livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
@@ -590,6 +633,10 @@ public class LivePlayActivity extends SwipeBackActivity
         getWindow().setAttributes(lp);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        livePlayBottomLayout.setVisibility(View.VISIBLE);
+//        livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+        controllerLandscapeLayout.setVisibility(View.GONE);
+        controllerPortraitLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

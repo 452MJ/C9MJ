@@ -32,11 +32,11 @@ public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean>{
                 .crossFade()
                 .centerCrop()
                 .into((ImageView) viewHolder.getView(R.id.live_iv_roomsrc));
+
         Glide.with(mContext)//主播头像
                 .load(bean.getLive_userimg())
                 .crossFade()
                 .centerCrop()
-                .placeholder(R.drawable.ic_avatar_default)
                 .into((ImageView) viewHolder.getView(R.id.live_iv_avatar));
     }
 }

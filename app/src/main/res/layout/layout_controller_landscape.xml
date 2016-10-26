@@ -32,21 +32,49 @@
             android:id="@+id/controller_landscape_tv_roomname"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/controller_landscape_iv_back"
-            android:layout_toLeftOf="@+id/controller_landscape_btn_stream"
+            android:layout_toLeftOf="@+id/controller_landscape_layout_stream"
             android:gravity="center_vertical"
             android:textColor="@color/color_icons"
             android:textSize="14sp" />
 
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="25dp"
-            android:background="@drawable/selector_btn_stream"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/controller_landscape_layout_stream"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="高清"
-            android:textColor="@color/color_icons"
-            android:textSize="14sp"
-            android:id="@+id/controller_landscape_btn_stream" />
+            >
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_btn_stream"
+                android:layout_marginRight="2.5dp"
+                android:text="超清"
+                android:layout_centerVertical="true"
+                android:textColor="@color/color_icons"
+                android:textSize="14sp"
+                android:id="@+id/controller_landscape_btn_stream_720p"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp" />
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/selector_btn_stream"
+                android:layout_marginLeft="2.5dp"
+                android:text="高清"
+                android:layout_centerVertical="true"
+                android:textColor="@color/color_icons"
+                android:textSize="14sp"
+                android:id="@+id/controller_landscape_btn_stream_360p"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+        </LinearLayout>
+
 
     </RelativeLayout>
 
