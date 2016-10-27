@@ -44,35 +44,29 @@
             android:id="@+id/controller_landscape_layout_stream"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            >
+            android:padding="6dp">
 
             <Button
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/selector_btn_stream"
+                android:background="@drawable/background_btn_stream_normal"
                 android:layout_marginRight="2.5dp"
                 android:text="超清"
                 android:layout_centerVertical="true"
                 android:textColor="@color/color_icons"
                 android:textSize="14sp"
-                android:id="@+id/controller_landscape_btn_stream_720p"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp" />
+                android:id="@+id/controller_landscape_btn_stream_1080p" />
 
             <Button
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/selector_btn_stream"
+                android:background="@drawable/background_btn_stream_normal"
                 android:layout_marginLeft="2.5dp"
                 android:text="高清"
                 android:layout_centerVertical="true"
                 android:textColor="@color/color_icons"
                 android:textSize="14sp"
-                android:id="@+id/controller_landscape_btn_stream_360p"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
+                android:id="@+id/controller_landscape_btn_stream_360p" />
         </LinearLayout>
 
 

@@ -25,4 +25,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/controller_portrait_iv_fullscreen" />
+
+    <ImageView
+        android:layout_width="@dimen/controller_widget_size"
+        android:layout_height="@dimen/controller_widget_size"
+        android:padding="@dimen/controller_widget_padding"
+        android:src="@drawable/selector_btn_danmu_on"
+        android:background="@drawable/background_iv_circle"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/controller_portrait_iv_danmu_visible" />
 </RelativeLayout>

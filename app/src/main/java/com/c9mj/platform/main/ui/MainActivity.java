@@ -100,7 +100,7 @@ public class MainActivity extends SupportActivity {
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 CommonPagerTitleView titleView = new CommonPagerTitleView(context);
-                titleView.setContentView(R.layout.item_tab_layout);//加载自定义布局作为Tab
+                titleView.setContentView(R.layout.item_tab_indicator_layout);//加载自定义布局作为Tab
 
                 final Button tab_btn = (Button) titleView.findViewById(R.id.tab_btn);
                 titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {

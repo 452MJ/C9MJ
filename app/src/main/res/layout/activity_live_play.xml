@@ -48,12 +48,22 @@
 
     </FrameLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:id="@+id/live_play_bottom_layout"
         android:layout_weight="2"
         android:visibility="visible">
 
-    </FrameLayout>
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/magic_indicator"/>
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewpager"/>
+    </LinearLayout>
 </LinearLayout>
