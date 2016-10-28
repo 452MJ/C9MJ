@@ -10,4 +10,4 @@
 <br>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape.jpg" width = "100%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_with_controller.jpg" width = "100%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_with_controller.jpg" width = "100%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_with_controller_2.jpg" width = "100%"/>
