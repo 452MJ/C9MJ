@@ -49,4 +49,6 @@ public abstract class LazyFragment extends BaseFragment{
      * 懒加载
      */
     protected abstract void initLazyView(@Nullable Bundle savedInstanceState);
+
+
 }
