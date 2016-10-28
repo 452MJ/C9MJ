@@ -20,6 +20,9 @@
     <string name="game_type_dota2">dota2</string>
     <string name="game_type_hs">hs</string>
     <string name="game_type_csgo">csgo</string>
+    <string name="stream_1080p">超清</string>
+    <string name="stream_360p">普清</string>
+    <string name="chat_name">我</string>
 
     <!--我的-->
     <string name="user_carema">拍照</string>

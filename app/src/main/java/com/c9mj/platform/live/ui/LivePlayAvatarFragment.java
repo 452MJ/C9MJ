@@ -23,10 +23,9 @@ import butterknife.ButterKnife;
  */
 public class LivePlayAvatarFragment extends LazyFragment {
 
-    private static final String GAME_TYPE = "game_type";
+    private static final String AVATAR = "avatar";
 
     private Context context;
-    private LiveListPresenterImpl presenter;
 
     public static LivePlayAvatarFragment newInstance() {
         return newInstance("");
@@ -35,7 +34,7 @@ public class LivePlayAvatarFragment extends LazyFragment {
     public static LivePlayAvatarFragment newInstance(String game_type) {
         LivePlayAvatarFragment fragment = new LivePlayAvatarFragment();
         Bundle args = new Bundle();
-        args.putString(GAME_TYPE, game_type);
+        args.putString(AVATAR, game_type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,12 +50,6 @@ public class LivePlayAvatarFragment extends LazyFragment {
         context = view.getContext();
 
         return view;
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
     }
 
     @Override

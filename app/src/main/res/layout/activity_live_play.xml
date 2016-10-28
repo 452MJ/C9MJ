@@ -59,11 +59,14 @@
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:elevation="@dimen/cardview_elevation"
+            android:background="@color/color_icons"
             android:id="@+id/magic_indicator"/>
 
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/viewpager"/>
+            android:id="@+id/viewpager" />
+
     </LinearLayout>
 </LinearLayout>

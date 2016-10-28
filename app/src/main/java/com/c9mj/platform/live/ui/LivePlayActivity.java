@@ -189,6 +189,8 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    LivePlayChatFragment chatFragment;//弹幕聊天室Fragment
+    LivePlayAvatarFragment avatarFragment;//主播详情Fragment
     List<Fragment> fragmentList = new ArrayList<>();
 
     @Override
@@ -258,6 +260,7 @@ public class LivePlayActivity extends SwipeBackActivity
         super.onDestroy();
         if (mediaPlayer != null) {
             mediaPlayer.pause();
+            mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
 //            AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -328,6 +331,10 @@ public class LivePlayActivity extends SwipeBackActivity
      * 初始化控制器
      */
     private void initController() {
+
+        controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+        controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
+
         controllerLandscapeEtDanmu.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -385,8 +392,11 @@ public class LivePlayActivity extends SwipeBackActivity
         titleList.add(indicatorText[0]);
         titleList.add(indicatorText[1]);
 
-        fragmentList.add(LivePlayChatFragment.newInstance());
-        fragmentList.add(LivePlayAvatarFragment.newInstance());
+        chatFragment = LivePlayChatFragment.newInstance();
+        avatarFragment = LivePlayAvatarFragment.newInstance();
+
+        fragmentList.add(chatFragment);
+        fragmentList.add(avatarFragment);
 
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
@@ -424,7 +434,7 @@ public class LivePlayActivity extends SwipeBackActivity
                     @Override
                     public void onDeselected(int index, int totalCount) {
                         live_play_iv_icon.setImageResource(normalResId[index]);
-                        live_play_tv_title.setTextColor(getResources().getColor(R.color.color_primary_text));
+                        live_play_tv_title.setTextColor(getResources().getColor(R.color.color_secondary_text));
                         live_play_tv_title.setText(indicatorText[index]);
                     }
 
@@ -520,20 +530,20 @@ public class LivePlayActivity extends SwipeBackActivity
             LiveDetailBean.StreamListBean stream = streamList.get(streamList.size() - 1);
             live_url = stream.getUrl();
             if (streamList.size() == 1) {
-                if (stream.getType().equals("超清")) {
+                if (stream.getType().equals(getString(R.string.stream_1080p))) {
                     controllerLandscapeBtnStream360P.setVisibility(View.GONE);
                 }
-                if (stream.getType().equals("普清")) {
+                if (stream.getType().equals(getString(R.string.stream_360p))) {
                     controllerLandscapeBtnStream1080P.setVisibility(View.GONE);
                 }
             }
-            if (stream.getType().equals("超清")) {
+            if (stream.getType().equals(getString(R.string.stream_1080p))) {
                 controllerLandscapeBtnStream1080P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
                 controllerLandscapeBtnStream360P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
                 controllerLandscapeBtnStream1080P.setTextColor(getResources().getColor(R.color.color_primary));
                 controllerLandscapeBtnStream360P.setTextColor(getResources().getColor(R.color.color_icons));
             }
-            if (stream.getType().equals("普清")) {
+            if (stream.getType().equals(getString(R.string.stream_360p))) {
                 controllerLandscapeBtnStream1080P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
                 controllerLandscapeBtnStream360P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
                 controllerLandscapeBtnStream1080P.setTextColor(getResources().getColor(R.color.color_icons));
@@ -558,19 +568,11 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     @Override
-    public void addDanmu(DanmuBean danmuBean, boolean withBorder) {
-        if (isShowDanmu == false) {
-            return;
+    public void receiveDanmu(DanmuBean danmuBean, boolean withBorder) {
+        this.addDanmuOnDanmakuView(danmuBean, false);
+        if (chatFragment != null){
+            chatFragment.addDanmuOnRecyclerView(danmuBean);
         }
-        BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
-        danmaku.text = danmuBean.getData().getContent();
-        danmaku.textSize = SizeUtils.sp2px(context, 12 * 1.0f);
-        danmaku.textColor = Color.WHITE;
-        danmaku.setTime(danmuView.getCurrentTime());
-        if (withBorder) {
-            danmaku.borderColor = getResources().getColor(R.color.color_primary);
-        }
-        danmuView.addDanmaku(danmaku);
     }
 
     @Override
@@ -711,7 +713,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
                 for (LiveDetailBean.StreamListBean stream :
                         streamList) {
-                    if (stream.getType().equals("超清")) {
+                    if (stream.getType().equals(getString(R.string.stream_1080p))) {
                         live_url = stream.getUrl();
                     }
                 }
@@ -738,7 +740,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
                 for (LiveDetailBean.StreamListBean stream :
                         streamList) {
-                    if (stream.getType().equals("普清")) {
+                    if (stream.getType().equals(getString(R.string.stream_360p))) {
                         live_url = stream.getUrl();
                     }
                 }
@@ -793,12 +795,20 @@ public class LivePlayActivity extends SwipeBackActivity
                     ToastUtil.show("发送弹幕内容不能为空");
                     return;
                 }
+
+                //新建弹幕对象
                 DanmuBean danmuBean = new DanmuBean();
                 DanmuBean.DataBean dataBean = new DanmuBean.DataBean();
+                DanmuBean.DataBean.FromBean fromBean = new DanmuBean.DataBean.FromBean();
+                fromBean.setNickName(getString(R.string.chat_name));
+                fromBean.setUserName(getString(R.string.chat_name));
+                dataBean.setFrom(fromBean);
                 dataBean.setContent(danmu);
                 danmuBean.setData(dataBean);
-                addDanmu(danmuBean, true);
-                danmuBean = null;
+
+                this.addDanmuOnDanmakuView(danmuBean, true); //添加弹幕至DanmakuView
+                chatFragment.addDanmuOnRecyclerView(danmuBean);//添加弹幕至RecyclerView
+
                 controllerLandscapeEtDanmu.setText(null);
                 break;
 
@@ -853,6 +863,26 @@ public class LivePlayActivity extends SwipeBackActivity
                 enterFullscreen();
                 break;
         }
+    }
+
+    /**
+     * ListPlayChatFragment调用，往DanmakuView添加弹幕
+     * @param danmuBean
+     * @param withBorder
+     */
+    public void addDanmuOnDanmakuView(DanmuBean danmuBean, boolean withBorder) {
+        if (isShowDanmu == false) {
+            return;
+        }
+        BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        danmaku.text = danmuBean.getData().getContent();
+        danmaku.textSize = SizeUtils.sp2px(context, 12 * 1.0f);
+        danmaku.textColor = Color.WHITE;
+        danmaku.setTime(danmuView.getCurrentTime());
+        if (withBorder) {
+            danmaku.borderColor = getResources().getColor(R.color.color_primary);
+        }
+        danmuView.addDanmaku(danmaku);
     }
 
     //进入全屏

@@ -13,7 +13,6 @@ import com.c9mj.platform.util.DanmuUtil;
 import com.c9mj.platform.util.GsonHelper;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
-import com.orhanobut.logger.Logger;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -24,10 +23,8 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Observer;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -315,7 +312,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                                 //如果存在第二条弹幕
                                 if (!(danmuFromIndex == danmuFromIndex_2 &&
-                                        danmuToIndex == danmuFromIndex_2)){
+                                        danmuToIndex == danmuToIndex_2)){
                                     danmu = content.substring(danmuFromIndex_2, danmuToIndex_2 + 2);
                                     if (TextUtils.isEmpty(danmu)) {
                                         continue;
@@ -387,7 +384,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                     @Override
                     public void onNext(DanmuBean bean) {
-                        view.addDanmu(bean, false);
+                        view.receiveDanmu(bean, false);
                     }
                 });
     }

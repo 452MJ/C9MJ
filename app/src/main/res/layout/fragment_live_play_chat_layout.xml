@@ -8,22 +8,40 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@id/recyclerview"
+        android:background="@color/color_layout_background"
         android:layout_weight="1"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:src="@color/color_primary"
+        android:layout_weight="0"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
+        android:background="@color/color_layout_background"
         android:layout_weight="0">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/background_portrait_et_danmu"
+            android:layout_margin="5dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:hint="输入发送弹幕(15字以内)"
+            android:maxLength="15"
+            android:textSize="14sp"
+            android:id="@+id/live_play_chat_fragment_et_danmu"
             android:layout_weight="1"/>
 
         <Button
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            android:id="@+id/live_play_chat_fragment_btn_send"
             android:text="发送"
             android:layout_weight="0"/>
 

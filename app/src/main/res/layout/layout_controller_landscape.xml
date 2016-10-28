@@ -113,7 +113,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_et_danmu"
+                android:background="@drawable/background_landscape_et_danmu"
                 android:hint="输入发送弹幕"
                 android:padding="3dp"
                 android:maxLength="25"
@@ -136,7 +136,7 @@
         <ImageView
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
-            android:padding="@dimen/controller_widget_padding"
+            android:padding="7.5dp"
             android:src="@drawable/selector_btn_danmu_on"
             android:scaleType="centerCrop"
             android:background="@null"
