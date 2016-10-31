@@ -94,10 +94,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
     }
 
 
-    /**
-     * 以下是弹幕Socket连接相关
-     */
-
+    /********************** 以下是弹幕Socket连接相关 *****************/
     private List<String> chatRoomList = new ArrayList(){};
     private String socketIP;
     private int socketPort;
@@ -189,8 +186,6 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                     }
                 });
     }
-
-
 
     @Override
     public void closeConnection() {

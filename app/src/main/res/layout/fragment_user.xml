@@ -76,6 +76,7 @@
             app:cardPreventCornerOverlap="true"
             app:cardCornerRadius="@dimen/cardview_radius"
             app:cardElevation="@dimen/cardview_elevation">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

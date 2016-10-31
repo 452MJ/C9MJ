@@ -1,120 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@null">
 
-    <android.support.v7.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="@dimen/cardview_margin"
-        app:cardCornerRadius="@dimen/cardview_default_radius"
-        android:foreground="?selectableItemBackground"
-        android:clickable="true"
-        app:cardElevation="@dimen/cardview_elevation"
-        app:cardPreventCornerOverlap="true"
-        android:elevation="@dimen/widget_elevation"
-        android:id="@+id/live_cardview">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="1.5dp">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="97dp"
-                android:id="@+id/live_iv_roomsrc_background"
-                android:background="@color/divider"
-                android:src="@drawable/ic_live_placeholder"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:padding="25dp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="97dp"
-                android:id="@+id/live_iv_roomsrc"
-                android:background="@null"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:id="@+id/live_iv_avatar"
-                android:layout_marginLeft="5dp"
-                app:civ_border_overlay="true"
-                app:civ_fill_color="#ffffff"
-                app:civ_border_color="#ffffff"
-                app:civ_border_width="2dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignBottom="@+id/relativeLayout" />
-
-            <FrameLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#80757575"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
+                android:foreground="?android:selectableItemBackground"
+                android:clickable="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:elevation="@dimen/widget_elevation"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="true"
+                app:cardCornerRadius="@dimen/cardview_radius"
+                app:cardElevation="@dimen/cardview_elevation">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="房间名称"
-                    android:id="@+id/live_tv_roomname"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:textColor="@color/color_icons"
-                    android:singleLine="true"
-                    android:paddingRight="5dp"
-                    android:paddingLeft="5dp" />
-            </FrameLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_below="@+id/live_iv_roomsrc"
-                android:layout_toEndOf="@+id/live_iv_avatar"
-                android:id="@+id/relativeLayout"
-                android:paddingRight="5dp">
-
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="主播名称"
-                    android:id="@+id/live_tv_nickname"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:textColor="@color/color_primary_text"
-                    android:layout_toLeftOf="@+id/controller_landscape_iv_refresh"
-                    android:scrollIndicators="end"
-                    android:singleLine="true" />
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="false"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:text="主播昵称："
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView12"
+                        android:textColor="@color/color_primary_dark"/>
+
+                    <TextView
+                        android:text="nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/textView12"
+                        android:id="@+id/textView13"
+                        android:textColor="@color/color_primary_text"/>
+
+                    <TextView
+                        android:text="直播平台："
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView12"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView14"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/color_primary_dark"/>
+
+                    <TextView
+                        android:text="游戏分类："
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/textView16"
+                        android:layout_below="@+id/textView14"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/color_primary_dark"/>
+
+                    <TextView
+                        android:text="live_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView15"
+                        android:layout_alignBaseline="@+id/textView14"
+                        android:layout_alignBottom="@+id/textView14"
+                        android:layout_toEndOf="@+id/textView14"
+                        android:textColor="@color/color_primary_text"/>
+
+                    <TextView
+                        android:text="game_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView17"
+                        android:layout_alignBaseline="@+id/textView16"
+                        android:layout_alignBottom="@+id/textView16"
+                        android:layout_toEndOf="@+id/textView16"
+                        android:textColor="@color/color_primary_text"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?android:selectableItemBackground"
+                android:clickable="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:elevation="@dimen/widget_elevation"
+                app:cardUseCompatPadding="true"
+                app:cardPreventCornerOverlap="true"
+                app:cardCornerRadius="@dimen/cardview_radius"
+                app:cardElevation="@dimen/cardview_elevation">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:id="@+id/controller_landscape_iv_refresh"
-                    android:src="@drawable/ic_visitor"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/live_tv_online" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/live_play_avatar_iv_backbround"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+            </android.support.v7.widget.CardView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="1234"
-                    android:id="@+id/live_tv_online"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:gravity="center"
-                    android:textColor="@color/color_secondary_text"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true" />
-            </RelativeLayout>
-        </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
 
-</LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

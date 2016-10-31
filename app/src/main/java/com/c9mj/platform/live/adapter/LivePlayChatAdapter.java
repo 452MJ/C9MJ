@@ -1,6 +1,7 @@
 package com.c9mj.platform.live.adapter;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -27,11 +28,17 @@ public class LivePlayChatAdapter extends BaseQuickAdapter<DanmuBean>{
     protected void convert(BaseViewHolder viewHolder, DanmuBean bean) {
 
         String name = TextUtils.isEmpty(bean.getData().getFrom().getNickName()) ? bean.getData().getFrom().getUserName() : bean.getData().getFrom().getNickName();
+        if (TextUtils.isEmpty(name)){
+            name = "游客";
+        }
         String content = bean.getData().getContent();
         viewHolder.setText(R.id.chat_tv_nickname, name)//昵称
+                .setTextColor(R.id.chat_tv_nickname, mContext.getResources().getColor(R.color.color_primary_dark))
                 .setText(R.id.chat_tv_content, content);//弹幕内容
-        if (name.equals(mContext.getString(R.string.chat_name))){
-            viewHolder.setTextColor(R.id.chat_tv_nickname, mContext.getResources().getColor(R.color.color_accent));
+        if (!TextUtils.isEmpty(name) && mContext != null) {
+            if (name.equals(mContext.getString(R.string.chat_name))) {
+                viewHolder.setTextColor(R.id.chat_tv_nickname, mContext.getResources().getColor(R.color.color_accent));
+            }
         }
     }
 }

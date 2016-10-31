@@ -40,6 +40,7 @@ import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -325,6 +326,7 @@ public class LivePlayActivity extends SwipeBackActivity
                 }
             }
         });
+
     }
 
     /**
@@ -526,6 +528,7 @@ public class LivePlayActivity extends SwipeBackActivity
     @Override
     public void updateLiveDetail(LiveDetailBean detailBean) {
         try {
+            controllerLandscapeTvRoomname.setText(detailBean.getLive_title());
             streamList = detailBean.getStream_list();
             LiveDetailBean.StreamListBean stream = streamList.get(streamList.size() - 1);
             live_url = stream.getUrl();
@@ -560,6 +563,8 @@ public class LivePlayActivity extends SwipeBackActivity
             e.printStackTrace();
         }
 
+        //把LiveDetail传入主播页面Fragment
+        avatarFragment.updateLiveDetail(detailBean);
     }
 
     @Override

@@ -2,18 +2,19 @@ package com.c9mj.platform.live.ui;
 
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
-import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
+import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,6 +25,8 @@ import butterknife.ButterKnife;
 public class LivePlayAvatarFragment extends LazyFragment {
 
     private static final String AVATAR = "avatar";
+    @BindView(R.id.live_play_avatar_iv_backbround)
+    ImageView livePlayAvatarIvBackbround;
 
     private Context context;
 
@@ -55,7 +58,16 @@ public class LivePlayAvatarFragment extends LazyFragment {
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
+
         }
+    }
+
+    public void updateLiveDetail(LiveDetailBean detailBean) {
+        Glide.with(context)//主播头像
+                .load(detailBean.getLive_userimg())
+                .crossFade()
+                .fitCenter()
+                .into(livePlayAvatarIvBackbround);
     }
 
 }
