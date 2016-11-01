@@ -871,7 +871,7 @@ public class LivePlayActivity extends SwipeBackActivity
     }
 
     /**
-     * ListPlayChatFragment调用，往DanmakuView添加弹幕
+     * ListPlayChatFragment调用，添加弹幕到DanmakuView
      * @param danmuBean
      * @param withBorder
      */

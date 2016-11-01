@@ -125,7 +125,7 @@ public class LivePlayChatFragment extends LazyFragment {
     }
 
     /**
-     * ListPlayActivity调用，添加弹幕
+     * ListPlayActivity调用，添加弹幕到RecyclerView
      * @param danmuBean
      */
     public void addDanmuOnRecyclerView(DanmuBean danmuBean) {

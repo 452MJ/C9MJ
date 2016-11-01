@@ -29,8 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="游客"
                 android:id="@+id/chat_tv_nickname"
-                android:textSize="14sp"
-                android:textColor="@color/color_primary_dark"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:layout_width="wrap_content"

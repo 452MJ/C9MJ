@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
@@ -25,6 +26,13 @@ import butterknife.ButterKnife;
 public class LivePlayAvatarFragment extends LazyFragment {
 
     private static final String AVATAR = "avatar";
+
+    @BindView(R.id.live_play_avatar_tv_name)
+    TextView livePlayAvatarTvName;
+    @BindView(R.id.live_play_avatar_tv_live_type)
+    TextView livePlayAvatarTvLiveType;
+    @BindView(R.id.live_play_avatar_tv_game_type)
+    TextView livePlayAvatarTvGameType;
     @BindView(R.id.live_play_avatar_iv_backbround)
     ImageView livePlayAvatarIvBackbround;
 
@@ -63,6 +71,9 @@ public class LivePlayAvatarFragment extends LazyFragment {
     }
 
     public void updateLiveDetail(LiveDetailBean detailBean) {
+        livePlayAvatarTvName.setText(detailBean.getLive_nickname());
+        livePlayAvatarTvLiveType.setText(detailBean.getLive_type());
+        livePlayAvatarTvGameType.setText(detailBean.getGame_type());
         Glide.with(context)//主播头像
                 .load(detailBean.getLive_userimg())
                 .crossFade()
