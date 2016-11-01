@@ -19,12 +19,6 @@ import rx.Observable;
 public interface LiveAPI {
 
     public static final int LIMIT = 20;
-    public static final String MAX_ID = "0";
-    public static final String IMEI = "123456789101234";
-    public static final String OS_TYPE = "Android";
-    public static final String OS_VERSION = "5.1.1";
-    public static final String VERSION = "3.6.6";
-    public static final String LANG = "zh-cn";
 
     //请求获取不同游戏的直播列表
     @GET("/api/live/list/")

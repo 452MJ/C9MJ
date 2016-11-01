@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.PhotoUtil;
+import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
@@ -84,9 +85,12 @@ public class UserFragment extends LazyFragment {
         }
     }
 
-    @OnClick({R.id.user_btn_photo})
+    @OnClick({R.id.toolbar, R.id.user_btn_photo})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.toolbar:
+                SnackbarUtil.show(toolbar, "ToolBar");
+                break;
             case R.id.user_btn_photo: {
                 final Context context = view.getContext();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
