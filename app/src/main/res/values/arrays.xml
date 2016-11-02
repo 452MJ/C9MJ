@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--发现-->
+    <string-array name="explore_type_id">
+        <item>T1348648517839</item>
+        <item>T1348649079062</item>
+        <item>T1348648756099</item>
+        <item>T1348649580692</item>
+        <item>T1370583240249</item>
+        <item>T1348654151579</item>
+        <item>T1414142214384</item>
+        <item>T1348649145984</item>
+        <item>T1348648037603</item>
+        <item>T1368497029546</item>
+        <item>T1348648141035</item>
+        <item>T1474271789612</item>
+        <item>T1348649654285</item>
+        <item>T1348649776727</item>
+        <item>T1348654204705</item>
+        <item>T1397016069906</item>
+    </string-array>
+
+    <string-array name="explore_type_alias">
+        <item>Entertainment</item>
+        <item>Sports</item>
+        <item>Business</item>
+        <item>Tech</item>
+        <item>The Truth</item>
+        <item>Games</item>
+        <item>Gov</item>
+        <item>NBA</item>
+        <item>Region</item>
+        <item>History</item>
+        <item>Military</item>
+        <item>aviation</item>
+        <item>Mobiles</item>
+        <item>Digitals</item>
+        <item>Travel</item>
+        <item>Blizzard</item>
+    </string-array>
+
+    <string-array name="explore_type_ename">
+        <item>yule</item>
+        <item>tiyu</item>
+        <item>caijing</item>
+        <item>keji</item>
+        <item>zhenhua</item>
+        <item>youxi</item>
+        <item>zhengwu</item>
+        <item>NBA</item>
+        <item>shehui</item>
+        <item>lishi</item>
+        <item>junshi</item>
+        <item>hangkong</item>
+        <item>shouji</item>
+        <item>shuma</item>
+        <item>lvyou</item>
+        <item>baoxue</item>
+    </string-array>
+
+    <string-array name="explore_type_tname">
+        <item>娱乐</item>
+        <item>体育</item>
+        <item>财经</item>
+        <item>科技</item>
+        <item>真话</item>
+        <item>游戏</item>
+        <item>政务</item>
+        <item>NBA</item>
+        <item>社会</item>
+        <item>历史</item>
+        <item>军事</item>
+        <item>航空</item>
+        <item>手机</item>
+        <item>数码</item>
+        <item>旅游</item>
+        <item>暴雪游戏</item>
+    </string-array>
+</resources>

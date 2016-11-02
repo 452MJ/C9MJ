@@ -60,10 +60,10 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
         return newInstance("");
     }
 
-    public static ExploreListFragment newInstance(String game_type) {
+    public static ExploreListFragment newInstance(String explore_type) {
         ExploreListFragment fragment = new ExploreListFragment();
         Bundle args = new Bundle();
-        args.putString(EXPLORE_TYPE, game_type);
+        args.putString(EXPLORE_TYPE, explore_type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -95,11 +95,11 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
-            refreshLayout.setRefreshing(true);
-
-            //根据game_type分类请求直播数据
-            presenter.getLiveList(offset, LiveAPI.LIMIT, explore_type);
+//            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
+//            refreshLayout.setRefreshing(true);
+//
+//            //根据game_type分类请求直播数据
+//            presenter.getLiveList(offset, LiveAPI.LIMIT, explore_type);
         }
     }
 

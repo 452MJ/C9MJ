@@ -5,7 +5,7 @@
     <dimen name="svg_default_size">40dp</dimen>
 
     <dimen name="toobar_height">50dp</dimen>
-    <dimen name="tab_live_height">42dp</dimen>
+    <dimen name="tab_height">42dp</dimen>
     <dimen name="appbar_height">250dp</dimen>
     <dimen name="divider_height">0.5dp</dimen>
     <dimen name="divider_margin">5dp</dimen>

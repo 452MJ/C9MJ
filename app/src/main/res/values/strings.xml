@@ -8,10 +8,6 @@
     <string name="second_exit">"再按一次Back键退出程序"</string>
 
     <!--发现-->
-    <string-array name="explore_type">
-        <item name="Tuesday">周二</item>
-
-    </string-array>
 
     <!--直播-->
     <string name="live_lol">英雄联盟</string>

@@ -8,7 +8,7 @@
     
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:layout_width="match_parent"
-        android:layout_height="@dimen/tab_live_height"
+        android:layout_height="@dimen/tab_height"
         android:id="@id/magic_indicator"
         android:elevation="@dimen/cardview_elevation"
         android:background="@color/color_primary"/>
