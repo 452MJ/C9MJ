@@ -16,11 +16,17 @@ import com.c9mj.platform.R;
  */
 public class SnackbarUtil {
 
-    private static Context context;
+    private static View  view;
 
-    public static void show(@NonNull View view,CharSequence content, int duration){
+    public static void init(View decorView) {
+        view = decorView;
+    }
 
-//        View Window = LayoutInflater.from(context).inflate(context.g)
+    public static void show(CharSequence content, int duration){
+
+        if (view == null){
+            return;
+        }
         Snackbar snackbar = Snackbar
                 .make(view, content, duration)
                 .setAction("确定", new View.OnClickListener() {
@@ -32,8 +38,8 @@ public class SnackbarUtil {
         snackbar.show();
     }
 
-    public static void show(@NonNull View view, CharSequence content){
-        show(view, content, Snackbar.LENGTH_SHORT);
+    public static void show(CharSequence content){
+        show(content, Snackbar.LENGTH_SHORT);
     }
 
 }

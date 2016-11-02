@@ -35,12 +35,12 @@ import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
 import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
-import com.c9mj.platform.util.ToastUtil;
+import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
+import com.c9mj.platform.widget.activity.BaseActivity;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -67,14 +67,13 @@ import master.flame.danmaku.danmaku.model.android.DanmakuContext;
 import master.flame.danmaku.danmaku.model.android.Danmakus;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.ui.widget.DanmakuView;
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
  * author: LMJ
  * date: 2016/9/12
  * 观看直播Activity
  */
-public class LivePlayActivity extends SwipeBackActivity
+public class LivePlayActivity extends BaseActivity
         implements ILivePlayActivity,
         PLMediaPlayer.OnPreparedListener,
         PLMediaPlayer.OnVideoSizeChangedListener,
@@ -582,7 +581,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
     @Override
     public void showError(String message) {
-        ToastUtil.show(message);
+        SnackbarUtil.show(message);
     }
 
 
@@ -797,7 +796,7 @@ public class LivePlayActivity extends SwipeBackActivity
 
                 String danmu = controllerLandscapeEtDanmu.getText().toString();
                 if (TextUtils.isEmpty(danmu)) {
-                    ToastUtil.show("发送弹幕内容不能为空");
+                    SnackbarUtil.show("发送弹幕内容不能为空");
                     return;
                 }
 
@@ -824,12 +823,12 @@ public class LivePlayActivity extends SwipeBackActivity
                     isShowDanmu = false;
                     controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已关闭！");
+                    SnackbarUtil.show("弹幕已关闭！");
                 } else if (isShowDanmu == false) {//已关闭弹幕
                     isShowDanmu = true;
                     controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已开启！");
+                    SnackbarUtil.show("弹幕已开启！");
                 }
 
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
@@ -852,12 +851,12 @@ public class LivePlayActivity extends SwipeBackActivity
                     isShowDanmu = false;
                     controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已关闭！");
+                    SnackbarUtil.show("弹幕已关闭！");
                 } else if (isShowDanmu == false) {//已关闭弹幕
                     isShowDanmu = true;
                     controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已开启！");
+                    SnackbarUtil.show("弹幕已开启！");
                 }
 
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);

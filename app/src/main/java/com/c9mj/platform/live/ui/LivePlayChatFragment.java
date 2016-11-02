@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LivePlayChatAdapter;
 import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
+import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -101,10 +102,10 @@ public class LivePlayChatFragment extends LazyFragment {
     public void onClick() {
         String danmu = livePlayChatFragmentEtDanmu.getText().toString();
         if (TextUtils.isEmpty(danmu)) {
-            ToastUtil.show("发送弹幕内容不能为空");
+            SnackbarUtil.show("发送弹幕内容不能为空");
             return;
         }else if (activity == null){
-            ToastUtil.show("发送弹幕内容失败");
+            SnackbarUtil.show("发送弹幕内容失败");
             return;
         }
 

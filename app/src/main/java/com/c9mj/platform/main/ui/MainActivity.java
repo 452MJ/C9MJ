@@ -6,13 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.ui.ExploreFragment;
 import com.c9mj.platform.live.ui.LiveFragment;
+import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.user.ui.UserFragment;
+import com.c9mj.platform.widget.activity.BaseActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -29,13 +30,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
-public class MainActivity extends SupportActivity {
+public class MainActivity extends BaseActivity {
 
     public int TAB_INDEX;
     public static final int EXPLORE = 0;
@@ -151,7 +151,8 @@ public class MainActivity extends SupportActivity {
     public void onBackPressedSupport() {
         if (System.currentTimeMillis() - exitTime > 2000) {
             exitTime = System.currentTimeMillis();
-            Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
+            SnackbarUtil.show(getString(R.string.second_exit));
+//            Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressedSupport();
         }

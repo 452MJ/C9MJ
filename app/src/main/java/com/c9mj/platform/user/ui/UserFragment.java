@@ -89,7 +89,7 @@ public class UserFragment extends LazyFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar:
-                SnackbarUtil.show(toolbar, "ToolBar");
+//                SnackbarUtil.show("ToolBar");
                 break;
             case R.id.user_btn_photo: {
                 final Context context = view.getContext();
@@ -142,9 +142,9 @@ public class UserFragment extends LazyFragment {
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {
-                    ToastUtil.show(getString(R.string.user_carema_cancel));
+                    SnackbarUtil.show(getString(R.string.user_carema_cancel));
                 } else {
-                    ToastUtil.show( getString(R.string.error_unknown));
+                    SnackbarUtil.show( getString(R.string.error_unknown));
                 }
             }
             break;
@@ -154,9 +154,9 @@ public class UserFragment extends LazyFragment {
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {
-                    ToastUtil.show( getString(R.string.user_carema_cancel));
+                    SnackbarUtil.show( getString(R.string.user_carema_cancel));
                 } else {
-                    ToastUtil.show(getString(R.string.error_unknown));
+                    SnackbarUtil.show(getString(R.string.error_unknown));
                 }
             }
             break;

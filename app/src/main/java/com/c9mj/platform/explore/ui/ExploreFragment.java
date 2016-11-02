@@ -51,7 +51,6 @@ public class ExploreFragment extends LazyFragment {
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_explore));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        Log.e("explore", "initToolBar: ");
     }
 
     @Override

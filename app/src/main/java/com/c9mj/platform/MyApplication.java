@@ -3,6 +3,7 @@ package com.c9mj.platform;
 import android.app.Application;
 import android.content.Context;
 
+import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.ToastUtil;
 
 /**

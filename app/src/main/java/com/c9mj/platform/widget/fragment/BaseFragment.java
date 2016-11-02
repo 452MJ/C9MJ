@@ -1,5 +1,9 @@
 package com.c9mj.platform.widget.fragment;
 
+import android.app.Activity;
+
+import com.c9mj.platform.util.SnackbarUtil;
+
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -8,4 +12,9 @@ import me.yokeyword.fragmentation.SupportFragment;
  * Fragment基类
  */
 public class BaseFragment extends SupportFragment{
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        SnackbarUtil.init(activity.getWindow().getDecorView());
+    }
 }
