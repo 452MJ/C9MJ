@@ -30,12 +30,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends SupportActivity {
 
     public int TAB_INDEX;
     public static final int EXPLORE = 0;
