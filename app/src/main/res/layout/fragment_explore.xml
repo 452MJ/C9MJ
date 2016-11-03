@@ -25,16 +25,45 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:elevation="@dimen/cardview_default_elevation"
         >
 
-        <net.lucode.hackware.magicindicator.MagicIndicator
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_icons"
-            android:layout_weight="1"
-            android:id="@id/magic_indicator"/>
+            android:layout_weight="1">
+
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_icons"
+                android:focusable="true"
+                android:id="@+id/magic_indicator"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_primary_light"
+                android:text="切换栏目"
+                android:id="@+id/explore_tv_section"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:textColor="@color/color_icons"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:alpha="0.3"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background_shadow"/>
+
+
+        </FrameLayout>
+
 
         <ImageView
             android:layout_width="@dimen/tab_height"
             android:layout_height="@dimen/tab_height"
+            android:id="@+id/explore_iv_expand"
             android:background="?selectableItemBackgroundBorderless"
             android:layout_weight="0"
             android:scaleType="centerCrop"
@@ -43,9 +72,30 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/viewpager" />
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewpager" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cardview_dark_background"
+            android:id="@+id/scroll_view">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </LinearLayout>
+
+        </ScrollView>
+    </FrameLayout>
+
 
 </LinearLayout>

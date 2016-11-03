@@ -1,22 +1,27 @@
 package com.c9mj.platform.explore.ui;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.live.ui.LiveListFragment;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
@@ -29,13 +34,13 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * author: LMJ
@@ -43,7 +48,10 @@ import butterknife.ButterKnife;
  */
 public class ExploreFragment extends LazyFragment {
 
-    private String[] array;
+    private String[] idArray;
+    private String[] aliasArray;
+    private String[] enameArray;
+    private String[] tnameArray;
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
 
@@ -55,6 +63,14 @@ public class ExploreFragment extends LazyFragment {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     FragmentAdapter fragmentAdapter;
+
+    @BindView(R.id.explore_tv_section)
+    TextView exploreTvSection;
+    @BindView(R.id.scroll_view)
+    ScrollView scrollView;
+    @BindView(R.id.explore_iv_expand)
+    ImageView exploreIvExpand;
+    boolean isExpanded = false;
 
     public static ExploreFragment newInstance() {
         ExploreFragment fragment = new ExploreFragment();
@@ -72,8 +88,7 @@ public class ExploreFragment extends LazyFragment {
 
         context = view.getContext();
 
-        array = context.getResources().getStringArray(R.array.explore_type_tname);
-
+        initData();
         initFragment();
         initViewPager();
         initIndicator();
@@ -86,11 +101,35 @@ public class ExploreFragment extends LazyFragment {
 
     }
 
+    private void initData() {
+        idArray = context.getResources().getStringArray(R.array.explore_type_id);
+        aliasArray = context.getResources().getStringArray(R.array.explore_type_alias);
+        enameArray = context.getResources().getStringArray(R.array.explore_type_ename);
+        tnameArray = context.getResources().getStringArray(R.array.explore_type_tname);
+
+        exploreIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
+
+        exploreTvSection.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                ObjectAnimator animator0 = ObjectAnimator.ofFloat(exploreTvSection, "translationX", exploreTvSection.getWidth());
+                ObjectAnimator animator1 = ObjectAnimator.ofFloat(scrollView, "translationY", -scrollView.getHeight());
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.playTogether(animator0, animator1);
+                animatorSet.setDuration(0);
+                animatorSet.start();
+
+                exploreTvSection.getViewTreeObserver().removeGlobalOnLayoutListener(this);//得到后取消监听
+            }
+        });
+
+    }
+
     private void initFragment() {
-        for (int i = 0; i < array.length; i++) {
-            titleList.add(array[i]);
+        for (int i = 0; i < tnameArray.length; i++) {
+            titleList.add(tnameArray[i]);
         }
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < tnameArray.length; i++) {
             fragmentList.add(ExploreListFragment.newInstance(getString(R.string.game_type_lol)));
         }
     }
@@ -98,14 +137,13 @@ public class ExploreFragment extends LazyFragment {
     private void initViewPager() {
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private void initIndicator() {
         CommonNavigator navigator = new CommonNavigator(context);
         navigator.setAdjustMode(false);
-        navigator.setFollowTouch(true);
-        navigator.setScrollPivotX(0.15f);
+        navigator.setScrollPivotX(0.2f);
         navigatorAdapter = new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -121,13 +159,13 @@ public class ExploreFragment extends LazyFragment {
                 titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
                     @Override
                     public void onSelected(int i, int i1) {
-                        tab_textview.setText(array[i]);
+                        tab_textview.setText(tnameArray[i]);
                         tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
                     }
 
                     @Override
                     public void onDeselected(int i, int i1) {
-                        tab_textview.setText(array[i]);
+                        tab_textview.setText(tnameArray[i]);
                         tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
                     }
 
@@ -165,5 +203,33 @@ public class ExploreFragment extends LazyFragment {
         navigator.setAdapter(navigatorAdapter);
         indicator.setNavigator(navigator);
         ViewPagerHelper.bind(indicator, viewPager);
+    }
+
+    @OnClick({
+            R.id.explore_iv_expand,
+            R.id.explore_tv_section,
+            R.id.scroll_view
+    })
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.explore_iv_expand:
+                isExpanded = !isExpanded;
+                exploreIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
+
+                ObjectAnimator animator0 = ObjectAnimator.ofFloat(exploreTvSection, "translationX", isExpanded ? 0 : exploreTvSection.getWidth());
+
+                ObjectAnimator animator1 = ObjectAnimator.ofFloat(scrollView, "translationY", isExpanded ? 0 : -scrollView.getHeight());
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.playTogether(animator0, animator1);
+                animatorSet.setDuration(500);
+                animatorSet.setInterpolator(new BounceInterpolator());
+                animatorSet.start();
+                break;
+
+            case R.id.explore_tv_section:
+                break;
+            case R.id.scroll_view:
+                break;
+        }
     }
 }
