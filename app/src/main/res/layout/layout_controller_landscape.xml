@@ -19,7 +19,7 @@
             android:padding="@dimen/controller_widget_padding"
             android:src="@drawable/selector_btn_back"
             android:scaleType="centerCrop"
-            android:background="@null"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:id="@+id/controller_landscape_iv_back" />
@@ -42,6 +42,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:id="@+id/controller_landscape_layout_stream"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="6dp">
@@ -85,7 +86,7 @@
             android:padding="@dimen/controller_widget_padding"
             android:src="@drawable/selector_btn_play"
             android:scaleType="centerCrop"
-            android:background="@null"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:id="@+id/controller_landscape_iv_play_pause" />
@@ -96,7 +97,7 @@
             android:padding="@dimen/controller_widget_padding"
             android:src="@drawable/selector_btn_refresh"
             android:scaleType="centerCrop"
-            android:background="@null"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_toRightOf="@+id/controller_landscape_iv_play_pause"
             android:id="@+id/controller_landscape_iv_refresh" />
 
@@ -139,7 +140,7 @@
             android:padding="7.5dp"
             android:src="@drawable/selector_btn_danmu_on"
             android:scaleType="centerCrop"
-            android:background="@null"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_toLeftOf="@+id/controller_landscape_iv_fullscreen_exit"
             android:id="@+id/controller_landscape_iv_danmu_visible" />
 
@@ -150,7 +151,7 @@
             android:padding="@dimen/controller_widget_padding"
             android:src="@drawable/selector_btn_fullscreen_exit"
             android:scaleType="centerCrop"
-            android:background="@null"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentRight="true"
             android:id="@+id/controller_landscape_iv_fullscreen_exit" />
 
