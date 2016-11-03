@@ -1,43 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@color/color_layout_background">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_icons"
+    android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/app_bar"
-        android:fitsSystemWindows="true"
-        app:layout_behavior="@string/appbar_spring_behavior"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
-
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="@dimen/tab_height"
+        android:background="@color/color_primary"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:text="发现"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:padding="5dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
+        android:background="@color/color_icons"
         android:orientation="horizontal"
+        android:elevation="@dimen/cardview_default_elevation"
         >
 
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_icons"
             android:layout_weight="1"
             android:id="@id/magic_indicator"/>
 
         <ImageView
             android:layout_width="@dimen/tab_height"
             android:layout_height="@dimen/tab_height"
-            android:layout_weight="0"
-            android:src="@color/color_primary_dark"/>
+            android:background="?selectableItemBackgroundBorderless"
+            android:layout_weight="0"/>
+
     </LinearLayout>
 
 

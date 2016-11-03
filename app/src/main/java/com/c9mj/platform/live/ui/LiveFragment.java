@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
@@ -22,6 +23,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.util.ArrayList;
@@ -107,17 +109,38 @@ public class LiveFragment extends LazyFragment{
 
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
-                SimplePagerTitleView titleView = new SimplePagerTitleView(context);
-                titleView.setText(titleList.get(index));
-                titleView.setNormalColor(getResources().getColor(R.color.color_tab_normal_dark));
-                titleView.setSelectedColor(getResources().getColor(R.color.color_tab_pressed_dark));
-                titleView.setTextSize(12);
+                CommonPagerTitleView titleView = new CommonPagerTitleView(context);
+                titleView.setContentView(R.layout.item_live_tab_indicator_layout);//加载自定义布局作为Tab
+
+                final TextView tab_textview = (TextView) titleView.findViewById(R.id.tab_text);
+                titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
+                    @Override
+                    public void onSelected(int i, int i1) {
+                        tab_textview.setText(titleList.get(i));
+                    }
+
+                    @Override
+                    public void onDeselected(int i, int i1) {
+                        tab_textview.setText(titleList.get(i));
+                    }
+
+                    @Override
+                    public void onLeave(int i, int i1, float v, boolean b) {
+
+                    }
+
+                    @Override
+                    public void onEnter(int i, int i1, float v, boolean b) {
+
+                    }
+                });
                 titleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(index);
                     }
                 });
+
                 return titleView;
             }
 
