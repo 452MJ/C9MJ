@@ -1,29 +1,38 @@
 package com.c9mj.platform.explore.ui;
 
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.SizeUtils;
 import com.c9mj.platform.R;
+import com.c9mj.platform.explore.adapter.ExploreSectionAdapter;
+import com.c9mj.platform.live.adapter.LiveListAdapter;
+import com.c9mj.platform.live.api.LiveAPI;
+import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
+import com.c9mj.platform.live.ui.LivePlayActivity;
+import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
+import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -33,7 +42,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +56,7 @@ import butterknife.OnClick;
  * date: 2016/9/1
  */
 public class ExploreFragment extends LazyFragment {
+
 
     private String[] idArray;
     private String[] aliasArray;
@@ -64,6 +74,7 @@ public class ExploreFragment extends LazyFragment {
     ViewPager viewPager;
     FragmentAdapter fragmentAdapter;
 
+    //用于展开显示栏目切换
     @BindView(R.id.explore_tv_section)
     TextView exploreTvSection;
     @BindView(R.id.scroll_view)
@@ -71,6 +82,18 @@ public class ExploreFragment extends LazyFragment {
     @BindView(R.id.explore_iv_expand)
     ImageView exploreIvExpand;
     boolean isExpanded = false;
+
+    //栏目切换的Top、Bottom两个列表
+    @BindView(R.id.recyclerview_top)
+    RecyclerView recyclerViewTop;
+    ExploreSectionAdapter adapterTop;
+    String topColumnResult;//用于保存记录已选择栏目
+    List<String> topColumnList = new ArrayList<>();//已选择的栏目
+    @BindView(R.id.recyclerview_bottom)
+    RecyclerView recyclerViewBottom;
+    ExploreSectionAdapter adapterBottom;
+    List<String> bottomColumnList = new ArrayList<>();//未选择栏目
+
 
     public static ExploreFragment newInstance() {
         ExploreFragment fragment = new ExploreFragment();
@@ -92,6 +115,7 @@ public class ExploreFragment extends LazyFragment {
         initFragment();
         initViewPager();
         initIndicator();
+        initRecyclerView();
 
         return view;
     }
@@ -123,6 +147,20 @@ public class ExploreFragment extends LazyFragment {
             }
         });
 
+        //筛选出已选择的栏目
+
+        topColumnResult = SpHelper.getString(SpHelper.STRING_COLUMN);
+
+        //为空则添加tname
+        if (TextUtils.isEmpty(topColumnResult)){
+            topColumnResult = tnameArray[0];
+        }
+        String[] resultArray = topColumnResult.split(":");
+        for (int i = 0; i < resultArray.length; i++) {
+            topColumnList.add(resultArray[i]);
+
+        }
+
     }
 
     private void initFragment() {
@@ -143,50 +181,65 @@ public class ExploreFragment extends LazyFragment {
     private void initIndicator() {
         CommonNavigator navigator = new CommonNavigator(context);
         navigator.setAdjustMode(false);
+        navigator.setIndicatorOnTop(true);
+        navigator.setSkimOver(true);
         navigator.setScrollPivotX(0.2f);
         navigatorAdapter = new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return fragmentList == null ? 0 : fragmentList.size();
+                return titleList == null ? 0 : titleList.size();
             }
 
             @Override
             public IPagerTitleView getTitleView(final Context context, final int index) {
-                CommonPagerTitleView titleView = new CommonPagerTitleView(context);
-                titleView.setContentView(R.layout.item_explore_tab_indicator_layout);//加载自定义布局作为Tab
-
-                final TextView tab_textview = (TextView) titleView.findViewById(R.id.tab_text);
-                titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
-                    @Override
-                    public void onSelected(int i, int i1) {
-                        tab_textview.setText(tnameArray[i]);
-                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
-                    }
-
-                    @Override
-                    public void onDeselected(int i, int i1) {
-                        tab_textview.setText(tnameArray[i]);
-                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
-                    }
-
-                    @Override
-                    public void onLeave(int i, int i1, float v, boolean b) {
-
-                    }
-
-                    @Override
-                    public void onEnter(int i, int i1, float v, boolean b) {
-
-                    }
-                });
+                ClipPagerTitleView titleView = new ClipPagerTitleView(context);
+                titleView.setText(titleList.get(index));
+                titleView.setBackground(context.getResources().getDrawable(R.drawable.ripple_tab));
+                titleView.setTextSize(SizeUtils.sp2px(context, 12));
+                titleView.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+                titleView.setClipColor(context.getResources().getColor(R.color.color_primary));
                 titleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(index);
                     }
                 });
-
                 return titleView;
+
+//                CommonPagerTitleView titleView = new CommonPagerTitleView(context);
+//                titleView.setContentView(R.layout.item_explore_tab_indicator_layout);//加载自定义布局作为Tab
+//
+//                final TextView tab_textview = (TextView) titleView.findViewById(R.id.tab_text);
+//                titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
+//                    @Override
+//                    public void onSelected(int i, int i1) {
+//                        tab_textview.setText(tnameArray[i]);
+//                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
+//                    }
+//
+//                    @Override
+//                    public void onDeselected(int i, int i1) {
+//                        tab_textview.setText(tnameArray[i]);
+//                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+//                    }
+//
+//                    @Override
+//                    public void onLeave(int i, int i1, float v, boolean b) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onEnter(int i, int i1, float v, boolean b) {
+//
+//                    }
+//                });
+//                titleView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        viewPager.setCurrentItem(index);
+//                    }
+//                });
+//                return titleView;
             }
 
             @Override
@@ -205,6 +258,15 @@ public class ExploreFragment extends LazyFragment {
         ViewPagerHelper.bind(indicator, viewPager);
     }
 
+    private void initRecyclerView(){
+        adapterTop = new ExploreSectionAdapter(null);
+        adapterBottom = new ExploreSectionAdapter(null);
+        recyclerViewTop.setLayoutManager(new GridLayoutManager(context, 4));
+        recyclerViewBottom.setLayoutManager(new GridLayoutManager(context, 4));
+        recyclerViewTop.setAdapter(adapterTop);
+        recyclerViewBottom.setAdapter(adapterBottom);
+    }
+
     @OnClick({
             R.id.explore_iv_expand,
             R.id.explore_tv_section,
@@ -215,9 +277,8 @@ public class ExploreFragment extends LazyFragment {
             case R.id.explore_iv_expand:
                 isExpanded = !isExpanded;
                 exploreIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
-
+                //栏目切换的动画
                 ObjectAnimator animator0 = ObjectAnimator.ofFloat(exploreTvSection, "translationX", isExpanded ? 0 : exploreTvSection.getWidth());
-
                 ObjectAnimator animator1 = ObjectAnimator.ofFloat(scrollView, "translationY", isExpanded ? 0 : -scrollView.getHeight());
                 AnimatorSet animatorSet = new AnimatorSet();
                 animatorSet.playTogether(animator0, animator1);
