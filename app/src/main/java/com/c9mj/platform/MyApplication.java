@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.c9mj.platform.util.SnackbarUtil;
+import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.ToastUtil;
 
 /**
@@ -19,6 +20,7 @@ public class MyApplication extends Application{
         super.onCreate();
         context = getApplicationContext();
         ToastUtil.init(getApplicationContext());
+        SpHelper.init(getApplicationContext());
     }
 
 

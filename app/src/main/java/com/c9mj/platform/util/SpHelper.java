@@ -21,64 +21,67 @@ public class SpHelper {
     public static final String INT_XX = "int_XX";        //int型value
 
     public static final String STRING_USER = "user_background";
+    public static final String STRING_COLUMN = "explore_column";
     /****************************************************************************/
 
     private SpHelper(Context ctx){
         context = ctx;
     }
 
-    public static SpHelper with(Context ctx){
+    public static void init(Context ctx){
         if(instance == null){
             synchronized (SpHelper.class){
                 if(instance == null){
+                    context = ctx;
                     instance = new SpHelper(ctx.getApplicationContext());
                 }
             }
         }
-        return instance;
     }
 
-    private SharedPreferences getSP(){
+    private static SharedPreferences getSP(){
         return context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE | Context.MODE_APPEND | Context.MODE_MULTI_PROCESS);
     }
 
     /************字符串String(key-value)*************/
-    public void setString(String key, String value){
+    public static void setString(String key, String value){
         getSP().edit().putString(key, value).commit();
     }
-    public String getString(String key){
+    public static String getString(String key){
         return getSP().getString(key, "");
     }
 
     /***************整型int(key-value)****************/
-    public void setInt(String key, int value){
+    public static void setInt(String key, int value){
         getSP().edit().putInt(key, value).commit();
     }
-    public int getInt(String key){
+    public static int getInt(String key){
         return getSP().getInt(key, 0);
     }
 
     /**********布尔值boolean(key-value)****************/
-    public void setBoolean(String key, boolean value){
+    public static void setBoolean(String key, boolean value){
         getSP().edit().putBoolean(key, value).commit();
     }
-    public Boolean getBoolean(String key){
+    public static Boolean getBoolean(String key){
         return getSP().getBoolean(key, false);
     }
 
     /**********浮点值float(key-value)****************/
-    public void setFloat(String key, float value){
+    public static void setFloat(String key, float value){
         getSP().edit().putFloat(key, value).commit();
     }
-    public float getFloat(String key){
+    public static float getFloat(String key){
         return getSP().getFloat(key, 0);
     }
 
     /**********长浮点值long(key-value)****************/
-    public void setLong(String key, long value){
+    public static void setLong(String key, long value){
         getSP().edit().putLong(key, value).commit();
     }
-    public float getLong(String key){
+    public static float getLong(String key){
         return getSP().getLong(key, 0);
     }
+
+
 }

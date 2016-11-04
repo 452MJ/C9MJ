@@ -23,7 +23,6 @@ import com.c9mj.platform.R;
 import com.c9mj.platform.util.PhotoUtil;
 import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.SpHelper;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
 import org.joda.time.DateTime;
@@ -77,7 +76,7 @@ public class UserFragment extends LazyFragment {
         toolbar.setTitle(getString(R.string.title_user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        String filePath = SpHelper.with(this.getContext()).getString(SpHelper.STRING_USER);//查询保存的背景图片路径
+        String filePath = SpHelper.getString(SpHelper.STRING_USER);//查询保存的背景图片路径
         if (!TextUtils.isEmpty(filePath)) {
             Glide.with(this).load(filePath).into(iv_appbar);
         } else {
@@ -140,7 +139,7 @@ public class UserFragment extends LazyFragment {
                     PhotoUtil.updateGallery(this.getContext(), savePath);
                     String filePath = temp.getAbsolutePath();
                     Glide.with(this).load(filePath).into(iv_appbar);
-                    SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                    SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     SnackbarUtil.show(getString(R.string.user_carema_cancel));
                 } else {
@@ -152,7 +151,7 @@ public class UserFragment extends LazyFragment {
                 if (resultCode == Activity.RESULT_OK) {
                     String filePath = PhotoUtil.getRealPathFromURI(this.getContext(), data.getData());
                     Glide.with(this).load(filePath).into(iv_appbar);
-                    SpHelper.with(this.getContext()).setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                    SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     SnackbarUtil.show( getString(R.string.user_carema_cancel));
                 } else {
