@@ -223,6 +223,9 @@ public class LivePlayActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         if (mediaPlayer != null && isPause == true && !TextUtils.isEmpty(live_url)) {
             try {
 //                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -244,6 +247,9 @@ public class LivePlayActivity extends BaseActivity
     @Override
     protected void onPause() {
         super.onPause();
+
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             isPause = true;
