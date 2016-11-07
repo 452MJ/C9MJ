@@ -123,8 +123,8 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         recyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                LiveListItemBean liveItemBean = liveList.get(i);
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
+                LiveListItemBean liveItemBean = liveList.get(pos);
                 Intent intent = new Intent(getActivity(), LivePlayActivity.class);
                 intent.putExtra(LivePlayActivity.LIVE_TYPE, liveItemBean.getLive_type());
                 intent.putExtra(LivePlayActivity.LIVE_ID, liveItemBean.getLive_id());

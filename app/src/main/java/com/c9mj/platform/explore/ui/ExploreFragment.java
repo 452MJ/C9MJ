@@ -4,13 +4,14 @@ package com.c9mj.platform.explore.ui;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,16 +24,15 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.SizeUtils;
 import com.c9mj.platform.R;
-import com.c9mj.platform.explore.adapter.ExploreSectionAdapter;
-import com.c9mj.platform.live.adapter.LiveListAdapter;
-import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
-import com.c9mj.platform.live.ui.LivePlayActivity;
+import com.c9mj.platform.explore.adapter.ExploreTitleListAdapter;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
-import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemDragListener;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
+import com.orhanobut.logger.Logger;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -43,7 +43,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ import butterknife.OnClick;
  * author: LMJ
  * date: 2016/9/1
  */
-public class ExploreFragment extends LazyFragment {
+public class ExploreFragment extends LazyFragment implements OnItemDragListener, OnItemSwipeListener {
 
 
     private String[] idArray;
@@ -64,13 +63,20 @@ public class ExploreFragment extends LazyFragment {
     private String[] enameArray;
     private String[] tnameArray;
     private List<Fragment> fragmentList = new ArrayList<>();
-    private List<String> titleList = new ArrayList<>();
+
+    private String titleString = "";//用于保存记录所有栏目
+    private String selectedTitleString = "";//用于保存记录已选择栏目
+    private String unselectedTitleString = "";//用于保存记录未选择栏目
+
+    private List<String> titleList = new ArrayList<>();//所有TitleList
+    private List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
+    private List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
 
     private Context context;
 
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    CommonNavigatorAdapter navigatorAdapter;
+    CommonNavigator navigator;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     FragmentAdapter fragmentAdapter;
@@ -84,16 +90,14 @@ public class ExploreFragment extends LazyFragment {
     ImageView exploreIvExpand;
     boolean isExpanded = false;
 
-    //栏目切换的Top、Bottom两个列表
-    @BindView(R.id.recyclerview_top)
-    RecyclerView recyclerViewTop;
-    ExploreSectionAdapter adapterTop;
-    String topColumnResult;//用于保存记录已选择栏目
-    List<String> topColumnList = new ArrayList<>();//已选择的栏目
-    @BindView(R.id.recyclerview_bottom)
-    RecyclerView recyclerViewBottom;
-    ExploreSectionAdapter adapterBottom;
-    List<String> bottomColumnList = new ArrayList<>();//未选择栏目
+    //栏目切换的Top列表
+    @BindView(R.id.recyclerview_selected)
+    RecyclerView recyclerViewSelected;
+    ExploreTitleListAdapter selectedAdapter;
+    //栏目切换的Bottom列表
+    @BindView(R.id.recyclerview_unselected)
+    RecyclerView recyclerViewUnSelected;
+    ExploreTitleListAdapter unselectedAdapter;
 
 
     public static ExploreFragment newInstance() {
@@ -148,27 +152,51 @@ public class ExploreFragment extends LazyFragment {
             }
         });
 
-        //筛选出已选择的栏目
-
-        topColumnResult = SpHelper.getString(SpHelper.STRING_COLUMN);
-
-        //为空则添加tname
-        if (TextUtils.isEmpty(topColumnResult)){
-            topColumnResult = tnameArray[0];
+        SpHelper.setString(SpHelper.STRING_TITLE, "");//开发时用于重置数据
+        if (TextUtils.isEmpty(SpHelper.getString(SpHelper.STRING_TITLE))){
+            for (int i = 0; i < tnameArray.length; i++) {
+                titleString = titleString + tnameArray[i] + ":";
+            }
+            SpHelper.setString(SpHelper.STRING_TITLE, titleString);
+        }else {
+            titleString = SpHelper.getString(SpHelper.STRING_TITLE);
         }
-        String[] resultArray = topColumnResult.split(":");
-        for (int i = 0; i < resultArray.length; i++) {
-            topColumnList.add(resultArray[i]);
 
+        //得到所保存的Seclected&UnSelected的Title信息
+        selectedTitleString = SpHelper.getString(SpHelper.STRING_TITLE_SELECTED);
+        unselectedTitleString = SpHelper.getString(SpHelper.STRING_TITLE_UNSELECTED);
+
+        //为空则添加第一个tname到topColumnResult，比如初始化的时候
+        if (TextUtils.isEmpty(selectedTitleString)){
+            selectedTitleString = selectedTitleString + tnameArray[0] + ":";
+            selectedTitleString = selectedTitleString + tnameArray[1] + ":";
+            selectedTitleString = selectedTitleString + tnameArray[2] + ":";
+            selectedTitleString = selectedTitleString + tnameArray[3] + ":";
+            selectedTitleString = selectedTitleString + tnameArray[4] + ":";
         }
+
+        //Title之间以:进行区分， 得到
+        titleList = parseToListByColons(titleString);
+        selectedTitleList = parseToListByColons(selectedTitleString);
+        unSelectedTitleList = parseToListByColons(unselectedTitleString);
 
     }
 
-    private void initFragment() {
-        for (int i = 0; i < tnameArray.length; i++) {
-            titleList.add(tnameArray[i]);
+    /**
+     * 以:进行间隔区分，得到List
+     */
+    private List<String> parseToListByColons(String result) {
+        List<String> resultList = new ArrayList<>();
+        String[] resultArray = selectedTitleString.split(":");
+        for (int i = 0; i < resultArray.length; i++) {
+            resultList.add(resultArray[i]);//得到的Title
         }
-        for (int i = 0; i < tnameArray.length; i++) {
+        return resultList;
+    }
+
+
+    private void initFragment() {
+        for (int i = 0; i < selectedTitleList.size(); i++) {
             fragmentList.add(ExploreListFragment.newInstance(getString(R.string.game_type_lol)));
         }
     }
@@ -180,21 +208,21 @@ public class ExploreFragment extends LazyFragment {
     }
 
     private void initIndicator() {
-        CommonNavigator navigator = new CommonNavigator(context);
+        navigator = new CommonNavigator(context);
         navigator.setAdjustMode(false);
         navigator.setIndicatorOnTop(true);
         navigator.setSkimOver(true);
         navigator.setScrollPivotX(0.2f);
-        navigatorAdapter = new CommonNavigatorAdapter() {
+        CommonNavigatorAdapter navigatorAdapter = new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return titleList == null ? 0 : titleList.size();
+                return selectedTitleList == null ? 0 : selectedTitleList.size();
             }
 
             @Override
             public IPagerTitleView getTitleView(final Context context, final int index) {
                 ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-                clipPagerTitleView.setText(titleList.get(index));
+                clipPagerTitleView.setText(selectedTitleList.get(index));
                 clipPagerTitleView.setBackground(context.getResources().getDrawable(R.drawable.ripple_tab));
                 clipPagerTitleView.setTextSize(SizeUtils.sp2px(context, 12));
                 clipPagerTitleView.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
@@ -214,13 +242,13 @@ public class ExploreFragment extends LazyFragment {
 //                commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
 //                    @Override
 //                    public void onSelected(int i, int i1) {
-//                        tab_textview.setText(tnameArray[i]);
+//                        tab_textview.setText(selectedTitleList.get(i));
 //                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
 //                    }
 //
 //                    @Override
 //                    public void onDeselected(int i, int i1) {
-//                        tab_textview.setText(tnameArray[i]);
+//                        tab_textview.setText(selectedTitleList.get(i));
 //                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
 //                    }
 //
@@ -260,12 +288,36 @@ public class ExploreFragment extends LazyFragment {
     }
 
     private void initRecyclerView(){
-        adapterTop = new ExploreSectionAdapter(null);
-        adapterBottom = new ExploreSectionAdapter(null);
-        recyclerViewTop.setLayoutManager(new GridLayoutManager(context, 4));
-        recyclerViewBottom.setLayoutManager(new GridLayoutManager(context, 4));
-        recyclerViewTop.setAdapter(adapterTop);
-        recyclerViewBottom.setAdapter(adapterBottom);
+        selectedAdapter = new ExploreTitleListAdapter(selectedTitleList);
+        unselectedAdapter = new ExploreTitleListAdapter(unSelectedTitleList);
+
+        ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(selectedAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerViewSelected);
+        // 开启拖拽
+        selectedAdapter.enableDragItem(itemTouchHelper, R.id.explore_cardview, true);
+        selectedAdapter.setOnItemDragListener(this);
+        // 开启滑动删除
+        selectedAdapter.enableSwipeItem();
+        selectedAdapter.setOnItemSwipeListener(this);
+
+        unselectedAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
+                selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(pos));
+                unselectedAdapter.remove(pos);
+
+                fragmentList.add(ExploreListFragment.newInstance(getString(R.string.game_type_lol)));
+                navigator.notifyDataSetChanged();    // must call firstly
+                fragmentAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+        recyclerViewSelected.setLayoutManager(new GridLayoutManager(context, 4));
+        recyclerViewUnSelected.setLayoutManager(new GridLayoutManager(context, 4));
+        recyclerViewSelected.setAdapter(selectedAdapter);
+        recyclerViewUnSelected.setAdapter(unselectedAdapter);
     }
 
     @OnClick({
@@ -276,6 +328,7 @@ public class ExploreFragment extends LazyFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.explore_iv_expand:
+
                 isExpanded = !isExpanded;
                 exploreIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
                 //栏目切换的动画
@@ -286,6 +339,7 @@ public class ExploreFragment extends LazyFragment {
                 animatorSet.setDuration(500);
                 animatorSet.setInterpolator(new BounceInterpolator());
                 animatorSet.start();
+
                 break;
 
             case R.id.explore_tv_section:
@@ -293,5 +347,49 @@ public class ExploreFragment extends LazyFragment {
             case R.id.scroll_view:
                 break;
         }
+    }
+
+    @Override
+    public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
+
+    }
+
+    @Override
+    public void onItemDragMoving(RecyclerView.ViewHolder viewHolder, int pos, RecyclerView.ViewHolder viewHolder1, int to) {
+        fragmentList.add(to, fragmentList.remove(pos));//拖拽移动fragment
+    }
+
+    @Override
+    public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+        //拖拽结束后刷新
+        navigator.notifyDataSetChanged();    // must call firstly
+        fragmentAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
+
+    }
+
+    @Override
+    public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
+        List<String> data = selectedAdapter.getData();
+
+        Logger.d(data);
+    }
+
+    @Override
+    public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
+        unselectedAdapter.add(unselectedAdapter.getData().size(), selectedAdapter.getItem(pos));
+
+        fragmentList.remove(pos);
+        navigator.notifyDataSetChanged();    // must call firstly
+        fragmentAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+
     }
 }

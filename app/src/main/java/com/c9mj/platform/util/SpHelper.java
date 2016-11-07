@@ -20,8 +20,12 @@ public class SpHelper {
     public static final String STRING_XX = "string_XX";//String型value
     public static final String INT_XX = "int_XX";        //int型value
 
+    //explore
+    public static final String STRING_TITLE = "explore_title";
+    public static final String STRING_TITLE_SELECTED = "explore_title_selected";
+    public static final String STRING_TITLE_UNSELECTED = "explore_title_unselected";
+    //user
     public static final String STRING_USER = "user_background";
-    public static final String STRING_COLUMN = "explore_column";
     /****************************************************************************/
 
     private SpHelper(Context ctx){

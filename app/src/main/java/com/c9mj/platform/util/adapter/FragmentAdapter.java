@@ -3,6 +3,8 @@ package com.c9mj.platform.util.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,18 @@ public class FragmentAdapter extends FragmentStatePagerAdapter{
     }
 
     @Override
+    public int getCount() {
+        return fragmentList.size();
+    }
+
+    @Override
     public Fragment getItem(int position) {
         return fragmentList.get(position);
     }
 
     @Override
-    public int getCount() {
-        return fragmentList.size();
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
 }

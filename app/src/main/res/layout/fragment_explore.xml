@@ -95,7 +95,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/recyclerview_top"
+                    android:id="@+id/recyclerview_selected"
                     android:layout_weight="1"/>
 
                 <TextView
@@ -104,7 +104,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:padding="5dp"
                     android:textSize="10sp"
                     android:gravity="right"
-                    android:text="长按排序或删除"
+                    android:text="1.长按排序 2.向右侧滑删除"
                     android:layout_weight="0"/>
 
                 <ImageView
@@ -126,7 +126,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/recyclerview_bottom"
+                    android:id="@+id/recyclerview_unselected"
                     android:layout_weight="1"/>
 
             </LinearLayout>
