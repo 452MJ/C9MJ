@@ -43,6 +43,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -192,25 +193,25 @@ public class ExploreFragment extends LazyFragment {
 
             @Override
             public IPagerTitleView getTitleView(final Context context, final int index) {
-                ClipPagerTitleView titleView = new ClipPagerTitleView(context);
-                titleView.setText(titleList.get(index));
-                titleView.setBackground(context.getResources().getDrawable(R.drawable.ripple_tab));
-                titleView.setTextSize(SizeUtils.sp2px(context, 12));
-                titleView.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
-                titleView.setClipColor(context.getResources().getColor(R.color.color_primary));
-                titleView.setOnClickListener(new View.OnClickListener() {
+                ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
+                clipPagerTitleView.setText(titleList.get(index));
+                clipPagerTitleView.setBackground(context.getResources().getDrawable(R.drawable.ripple_tab));
+                clipPagerTitleView.setTextSize(SizeUtils.sp2px(context, 12));
+                clipPagerTitleView.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+                clipPagerTitleView.setClipColor(context.getResources().getColor(R.color.color_primary));
+                clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(index);
                     }
                 });
-                return titleView;
+                return clipPagerTitleView;
 
-//                CommonPagerTitleView titleView = new CommonPagerTitleView(context);
-//                titleView.setContentView(R.layout.item_explore_tab_indicator_layout);//加载自定义布局作为Tab
+//                CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
+//                commonPagerTitleView.setContentView(R.layout.item_explore_tab_indicator_layout);//加载自定义布局作为Tab
 //
-//                final TextView tab_textview = (TextView) titleView.findViewById(R.id.tab_text);
-//                titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
+//                final TextView tab_textview = (TextView) commonPagerTitleView.findViewById(R.id.tab_text);
+//                commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
 //                    @Override
 //                    public void onSelected(int i, int i1) {
 //                        tab_textview.setText(tnameArray[i]);
@@ -233,13 +234,13 @@ public class ExploreFragment extends LazyFragment {
 //
 //                    }
 //                });
-//                titleView.setOnClickListener(new View.OnClickListener() {
+//                commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
 //                        viewPager.setCurrentItem(index);
 //                    }
 //                });
-//                return titleView;
+//                return commonPagerTitleView;
             }
 
             @Override
