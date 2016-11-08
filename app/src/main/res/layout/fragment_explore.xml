@@ -89,23 +89,40 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/recyclerview_selected"
+                    android:background="@color/color_icons"
                     android:layout_weight="1"/>
 
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="10sp"
-                    android:gravity="right"
-                    android:text="1.长按排序 2.向右侧滑删除"
-                    android:layout_weight="0"/>
+                    android:orientation="horizontal"
+                    android:layout_weight="0"
+                    android:layout_gravity="end">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_accent"
+                        android:text="1.长按排序 "/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/color_error"
+                        android:text="2.向右侧滑删除"/>
+
+                </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -119,7 +136,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:text="点击添加更多栏目"
                     android:layout_weight="0"/>
 
@@ -127,6 +144,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/recyclerview_unselected"
+                    android:background="@color/color_layout_background"
                     android:layout_weight="1"/>
 
             </LinearLayout>

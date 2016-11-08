@@ -10,6 +10,7 @@
     <color name="color_divider">@color/divider</color>
 
     <color name="color_layout_background">#f3f6f5</color>
+    <color name="color_error">#ff4182</color>
     <!--导航栏-->
     <color name="color_tab_pressed">@color/color_primary</color>
     <color name="color_tab_normal">@color/color_secondary_text</color>

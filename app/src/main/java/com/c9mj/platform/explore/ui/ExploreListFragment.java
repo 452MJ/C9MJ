@@ -41,7 +41,7 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
-    private static final String EXPLORE_TYPE = "explore_type";
+    private static final String EXPLORE_TYPE_ID = "explore_type_id";
 
     private String explore_type;
     private int offset = 0;//用于记录分页偏移量
@@ -60,10 +60,10 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
         return newInstance("");
     }
 
-    public static ExploreListFragment newInstance(String explore_type) {
+    public static ExploreListFragment newInstance(String explore_type_id) {
         ExploreListFragment fragment = new ExploreListFragment();
         Bundle args = new Bundle();
-        args.putString(EXPLORE_TYPE, explore_type);
+        args.putString(EXPLORE_TYPE_ID, explore_type_id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,7 +77,7 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
         ButterKnife.bind(this, view);
 
         context = view.getContext();
-        explore_type = getArguments().getString(EXPLORE_TYPE);//得到传入的cate_id
+        explore_type = getArguments().getString(EXPLORE_TYPE_ID);//得到传入的cate_id
 
         initMVP();
         initRefreshView();

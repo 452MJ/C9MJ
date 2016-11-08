@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -24,15 +25,16 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.SizeUtils;
 import com.c9mj.platform.R;
-import com.c9mj.platform.explore.adapter.ExploreTitleListAdapter;
+import com.c9mj.platform.explore.adapter.ExploreSelectedTitleListAdapter;
+import com.c9mj.platform.explore.adapter.ExploreUnSelectedTitleListAdapter;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
-import com.orhanobut.logger.Logger;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -93,11 +95,11 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
     //栏目切换的Top列表
     @BindView(R.id.recyclerview_selected)
     RecyclerView recyclerViewSelected;
-    ExploreTitleListAdapter selectedAdapter;
+    ExploreSelectedTitleListAdapter selectedAdapter;
     //栏目切换的Bottom列表
     @BindView(R.id.recyclerview_unselected)
     RecyclerView recyclerViewUnSelected;
-    ExploreTitleListAdapter unselectedAdapter;
+    ExploreUnSelectedTitleListAdapter unselectedAdapter;
 
 
     public static ExploreFragment newInstance() {
@@ -152,7 +154,6 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
             }
         });
 
-        SpHelper.setString(SpHelper.STRING_TITLE, "");//开发时用于重置数据
         if (TextUtils.isEmpty(SpHelper.getString(SpHelper.STRING_TITLE))){
             for (int i = 0; i < tnameArray.length; i++) {
                 titleString = titleString + tnameArray[i] + ":";
@@ -166,37 +167,34 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
         selectedTitleString = SpHelper.getString(SpHelper.STRING_TITLE_SELECTED);
         unselectedTitleString = SpHelper.getString(SpHelper.STRING_TITLE_UNSELECTED);
 
-        //为空则添加第一个tname到topColumnResult，比如初始化的时候
-        if (TextUtils.isEmpty(selectedTitleString)){
-            selectedTitleString = selectedTitleString + tnameArray[0] + ":";
-            selectedTitleString = selectedTitleString + tnameArray[1] + ":";
-            selectedTitleString = selectedTitleString + tnameArray[2] + ":";
-            selectedTitleString = selectedTitleString + tnameArray[3] + ":";
-            selectedTitleString = selectedTitleString + tnameArray[4] + ":";
+        //初始化，已选择栏目&未选择栏目
+        if (TextUtils.isEmpty(selectedTitleString) || TextUtils.isEmpty(unselectedTitleString)){
+
+            SpHelper.setString(SpHelper.STRING_TITLE_SELECTED, "");
+            SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, "");
+
+            for (int i = 0; i < tnameArray.length; i++) {
+                if (i < tnameArray.length / 2){
+                    selectedTitleString = selectedTitleString + tnameArray[i] + ":";
+                }else {
+                    unselectedTitleString = unselectedTitleString + tnameArray[i] + ":";
+                }
+            }
+            SpHelper.setString(SpHelper.STRING_TITLE_SELECTED, selectedTitleString);
+            SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, unselectedTitleString);
         }
 
-        //Title之间以:进行区分， 得到
-        titleList = parseToListByColons(titleString);
-        selectedTitleList = parseToListByColons(selectedTitleString);
-        unSelectedTitleList = parseToListByColons(unselectedTitleString);
+        //Title之间以:进行区分， 得到List
+        titleList = parseStringToListByColons(titleString);
+        selectedTitleList = parseStringToListByColons(selectedTitleString);
+        unSelectedTitleList = parseStringToListByColons(unselectedTitleString);
 
     }
-
-    /**
-     * 以:进行间隔区分，得到List
-     */
-    private List<String> parseToListByColons(String result) {
-        List<String> resultList = new ArrayList<>();
-        String[] resultArray = selectedTitleString.split(":");
-        for (int i = 0; i < resultArray.length; i++) {
-            resultList.add(resultArray[i]);//得到的Title
-        }
-        return resultList;
-    }
-
 
     private void initFragment() {
         for (int i = 0; i < selectedTitleList.size(); i++) {
+            int index = titleList.indexOf(selectedTitleList.get(i));
+            String id = idArray[index];
             fragmentList.add(ExploreListFragment.newInstance(getString(R.string.game_type_lol)));
         }
     }
@@ -288,8 +286,8 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
     }
 
     private void initRecyclerView(){
-        selectedAdapter = new ExploreTitleListAdapter(selectedTitleList);
-        unselectedAdapter = new ExploreTitleListAdapter(unSelectedTitleList);
+        selectedAdapter = new ExploreSelectedTitleListAdapter(selectedTitleList);
+        unselectedAdapter = new ExploreUnSelectedTitleListAdapter(unSelectedTitleList);
 
         ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(selectedAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
@@ -329,6 +327,9 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
         switch (view.getId()) {
             case R.id.explore_iv_expand:
 
+                navigator.notifyDataSetChanged();    // must call firstly
+                fragmentAdapter.notifyDataSetChanged();
+
                 isExpanded = !isExpanded;
                 exploreIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
                 //栏目切换的动画
@@ -340,6 +341,11 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
                 animatorSet.setInterpolator(new BounceInterpolator());
                 animatorSet.start();
 
+                //保存已选择&未选择的栏目列表
+                selectedTitleString = parseListToStringByColons(selectedTitleList);
+                unselectedTitleString = parseListToStringByColons(unSelectedTitleList);
+                SpHelper.setString(SpHelper.STRING_TITLE_SELECTED, selectedTitleString);
+                SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, unselectedTitleString);
                 break;
 
             case R.id.explore_tv_section:
@@ -351,7 +357,9 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
 
     @Override
     public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
-
+        BaseViewHolder holder = (BaseViewHolder) viewHolder;
+        CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+        cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_accent));
     }
 
     @Override
@@ -361,21 +369,21 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
 
     @Override
     public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-        //拖拽结束后刷新
-        navigator.notifyDataSetChanged();    // must call firstly
-        fragmentAdapter.notifyDataSetChanged();
+        BaseViewHolder holder = (BaseViewHolder) viewHolder;
+        CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+        cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_primary));
     }
 
     @Override
     public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
-
+        BaseViewHolder holder = (BaseViewHolder) viewHolder;
+        CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+        cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_error));
     }
 
     @Override
     public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-        List<String> data = selectedAdapter.getData();
 
-        Logger.d(data);
     }
 
     @Override
@@ -385,11 +393,36 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
         fragmentList.remove(pos);
         navigator.notifyDataSetChanged();    // must call firstly
         fragmentAdapter.notifyDataSetChanged();
-
     }
 
     @Override
     public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+        if (isCurrentlyActive == false){
+            BaseViewHolder holder = (BaseViewHolder) viewHolder;
+            CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+            cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_primary));
+        }
+    }
+    /**
+     * 以:进行间隔区分，String->List
+     */
+    private List<String> parseStringToListByColons(String result) {
+        List<String> resultList = new ArrayList<>();
+        String[] resultArray = result.split(":");
+        for (int i = 0; i < resultArray.length; i++) {
+            resultList.add(resultArray[i]);//得到的Title
+        }
+        return resultList;
+    }
 
+    /**
+     * 以:进行间隔区分，List->String
+     */
+    private String parseListToStringByColons(List<String> list){
+        String resultString = "";
+        for (int i = 0; i < list.size(); i++) {
+            resultString = resultString + list.get(i) + ":";
+        }
+        return resultString;
     }
 }
