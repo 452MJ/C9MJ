@@ -12,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LivePlayChatAdapter;
 import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
 import com.c9mj.platform.util.SnackbarUtil;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -47,8 +47,8 @@ public class LivePlayChatFragment extends LazyFragment {
 
     @BindView(R.id.live_play_chat_fragment_et_danmu)
     EditText livePlayChatFragmentEtDanmu;
-    @BindView(R.id.live_play_chat_fragment_btn_send)
-    Button livePlayChatFragmentBtnSend;
+    @BindView(R.id.live_play_chat_fragment_tv_send)
+    TextView livePlayChatFragmentTvSend;
 
     private Context context;
     private LivePlayActivity activity;
@@ -98,7 +98,7 @@ public class LivePlayChatFragment extends LazyFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
-    @OnClick(R.id.live_play_chat_fragment_btn_send)
+    @OnClick(R.id.live_play_chat_fragment_tv_send)
     public void onClick() {
         String danmu = livePlayChatFragmentEtDanmu.getText().toString();
         if (TextUtils.isEmpty(danmu)) {

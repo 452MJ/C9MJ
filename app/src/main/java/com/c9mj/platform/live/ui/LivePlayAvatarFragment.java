@@ -4,6 +4,7 @@ package com.c9mj.platform.live.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,11 +75,17 @@ public class LivePlayAvatarFragment extends LazyFragment {
         livePlayAvatarTvName.setText(detailBean.getLive_nickname());
         livePlayAvatarTvLiveType.setText(detailBean.getLive_type());
         livePlayAvatarTvGameType.setText(detailBean.getGame_type());
-        Glide.with(context)//主播头像
-                .load(detailBean.getLive_userimg())
-                .crossFade()
-                .fitCenter()
-                .into(livePlayAvatarIvBackbround);
+
+        String imgUrl = detailBean.getLive_userimg();
+        if (!TextUtils.isEmpty(imgUrl)){
+
+            Glide.with(context)//主播头像
+                    .load(imgUrl)
+                    .crossFade()
+                    .centerCrop()
+                    .thumbnail(0.1f)
+                    .into(livePlayAvatarIvBackbround);
+        }
     }
 
 }

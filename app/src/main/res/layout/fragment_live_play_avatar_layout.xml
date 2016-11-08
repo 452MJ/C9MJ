@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@null">
+    android:background="@color/color_layout_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,7 +11,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -21,9 +20,7 @@
                 android:layout_height="wrap_content"
                 android:foreground="?android:selectableItemBackground"
                 android:clickable="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="@dimen/cardview_margin"
                 android:elevation="@dimen/widget_elevation"
                 app:cardUseCompatPadding="true"
                 app:cardPreventCornerOverlap="true"
@@ -102,9 +99,7 @@
                 android:layout_height="wrap_content"
                 android:foreground="?android:selectableItemBackground"
                 android:clickable="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_margin="@dimen/cardview_margin"
                 android:elevation="@dimen/widget_elevation"
                 app:cardUseCompatPadding="true"
                 app:cardPreventCornerOverlap="true"
@@ -115,6 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/live_play_avatar_iv_backbround"
+                    android:scaleType="fitCenter"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true" />
             </android.support.v7.widget.CardView>

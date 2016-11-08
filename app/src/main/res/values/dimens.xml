@@ -19,7 +19,7 @@
     <dimen name="textsize_secondary">12sp</dimen>
 
     <!--MediaController相关-->
-    <dimen name="controller_widget_size">35dp</dimen>
+    <dimen name="controller_widget_size">40dp</dimen>
     <dimen name="controller_widget_padding">5dp</dimen>
     <dimen name="controller_stroke_width">0.5dp</dimen>
     <dimen name="controller_normal_corner_radius">1dp</dimen>
