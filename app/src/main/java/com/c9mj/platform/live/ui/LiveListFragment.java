@@ -117,9 +117,9 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
         adapter.openLoadMore(LiveAPI.LIMIT, true);//加载更多的触发条件
-        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_loading, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_live_loading, (ViewGroup) recyclerView.getParent(), false));
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
-        adapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.layout_live_empty, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
         adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
             @Override

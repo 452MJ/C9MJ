@@ -78,7 +78,10 @@ public class RetrofitHelper{
     };
 
     public static Retrofit getExploreHelper() {
-        if (explore == null){
+//        if (explore == null){
+        try {
+
+
             synchronized (RetrofitHelper.class){
 
                 File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "exploreCache");
@@ -95,7 +98,10 @@ public class RetrofitHelper{
                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                         .build();
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+//        }
         return explore;
     }
 

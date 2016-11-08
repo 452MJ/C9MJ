@@ -2,7 +2,7 @@ package com.c9mj.platform.explore.mvp.model.bean;
 
 import java.util.List;
 
-public class NewsListItemBean {
+public class ExploreListItemBean {
         private String postid;
         private boolean hasCover;
         private int hasHead;

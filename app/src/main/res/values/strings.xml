@@ -8,6 +8,8 @@
     <string name="second_exit">"再按一次Back键退出程序"</string>
 
     <!--发现-->
+    <string name="explore_end">无更多内容</string>
+    <string name="explore_empty">暂无内容</string>
 
     <!--直播-->
     <string name="live_lol">英雄联盟</string>

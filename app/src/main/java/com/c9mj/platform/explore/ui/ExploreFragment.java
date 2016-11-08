@@ -194,8 +194,8 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
     private void initFragment() {
         for (int i = 0; i < selectedTitleList.size(); i++) {
             int index = titleList.indexOf(selectedTitleList.get(i));
-            String id = idArray[index];
-            fragmentList.add(ExploreListFragment.newInstance(getString(R.string.game_type_lol)));
+            String explore_type_id = idArray[index];
+            fragmentList.add(ExploreListFragment.newInstance(explore_type_id));
         }
     }
 

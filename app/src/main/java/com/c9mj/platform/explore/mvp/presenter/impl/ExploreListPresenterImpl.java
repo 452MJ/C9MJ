@@ -2,6 +2,9 @@ package com.c9mj.platform.explore.mvp.presenter.impl;
 
 import android.content.Context;
 
+import com.c9mj.platform.explore.api.ExploreAPI;
+import com.c9mj.platform.explore.mvp.model.bean.ExploreListBean;
+import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
 import com.c9mj.platform.explore.mvp.presenter.IExploreListPresenter;
 import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
 import com.c9mj.platform.live.api.LiveAPI;
@@ -12,6 +15,11 @@ import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static android.R.attr.offset;
+import static android.R.id.message;
 
 /**
  * author: LMJ
@@ -29,14 +37,17 @@ public class ExploreListPresenterImpl implements IExploreListPresenter {
 
 
     @Override
-    public void getLiveList(int offset, int limit, String game_type) {
-        RetrofitHelper.getLiveHelper().create(LiveAPI.class)
-                .getLiveList(offset, limit, game_type, "panda")
-                .compose(RetrofitHelper.<List<LiveListItemBean>>handleLiveResult())
-                .subscribe(new HttpSubscriber<List<LiveListItemBean>>() {
+    public void getExploreList(String explore_id, int offset, int limit) {
+        RetrofitHelper.getExploreHelper().create(ExploreAPI.class)
+                .getExploreList(explore_id, offset, limit)
+                .subscribe(new HttpSubscriber<ExploreListBean>() {
                     @Override
-                    public void _onNext(List<LiveListItemBean> roomBeanList) {
-                        view.updateRecyclerView(roomBeanList);
+                    public void _onNext(ExploreListBean exploreListBean) {
+                        Map<String, List<ExploreListItemBean>> data = exploreListBean.getNewsListItem();
+                        for (Map.Entry<String, List<ExploreListItemBean>> entry :
+                                data.entrySet()) {
+                            view.updateRecyclerView(entry.getValue());
+                        }
                     }
 
                     @Override
