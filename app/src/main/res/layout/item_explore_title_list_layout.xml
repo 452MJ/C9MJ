@@ -13,6 +13,7 @@
         android:layout_weight="1"
         android:layout_margin="@dimen/cardview_margin"
         app:cardCornerRadius="@dimen/cardview_default_radius"
+        app:cardBackgroundColor="@color/color_icons"
         android:foreground="?selectableItemBackground"
         android:clickable="true"
         app:cardElevation="@dimen/cardview_elevation"

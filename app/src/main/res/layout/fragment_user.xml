@@ -23,6 +23,13 @@
             app:expandedTitleGravity="bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:layout_collapseMode="parallax"
+                android:id="@+id/user_iv_appbar"
+                android:scaleType="centerCrop" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -32,13 +39,7 @@
                 app:layout_collapseMode="pin">
             </android.support.v7.widget.Toolbar>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                app:layout_collapseMode="parallax"
-                android:id="@+id/user_iv_appbar"
-                android:scaleType="centerCrop" />
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
