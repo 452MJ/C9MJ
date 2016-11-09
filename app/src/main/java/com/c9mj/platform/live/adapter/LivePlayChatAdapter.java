@@ -19,7 +19,7 @@ import java.util.Queue;
  * date: 2016/9/12
  * 直播弹幕聊天室的Adapter
  */
-public class LivePlayChatAdapter extends BaseQuickAdapter<DanmuBean>{
+public class LivePlayChatAdapter extends BaseQuickAdapter<DanmuBean, BaseViewHolder>{
     public LivePlayChatAdapter(List<DanmuBean> data) {
         super(R.layout.item_live_play_chat_list_layout, data);
     }

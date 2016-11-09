@@ -7,6 +7,7 @@ import com.c9mj.platform.R;
 import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * date: 2016/9/12
  * 直播房间列表的Adapter
  */
-public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean>{
+public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean, BaseViewHolder>{
     public LiveListAdapter(List<LiveListItemBean> data) {
         super(R.layout.item_live_list_layout, data);
     }
@@ -25,7 +26,7 @@ public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean>{
         viewHolder.setText(R.id.live_tv_roomname, bean.getLive_title())//房间名称
                 .setText(R.id.live_tv_nickname, bean.getLive_nickname())//主播昵称
                 .setText(R.id.live_tv_online, String.valueOf(bean.getLive_online()))//在线人数
-                .setOnClickListener(R.id.live_cardview, new OnItemChildClickListener());//添加子Item点击监听，在UI中实现回调接口
+                .addOnClickListener(R.id.live_cardview);//添加子Item点击监听，在UI中实现回调接口
 
         Glide.with(mContext)//直播房间截图
                 .load(bean.getLive_img())

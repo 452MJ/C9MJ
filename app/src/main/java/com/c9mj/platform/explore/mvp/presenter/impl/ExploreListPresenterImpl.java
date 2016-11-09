@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 import static android.R.attr.offset;
 import static android.R.id.message;
 
@@ -40,6 +43,8 @@ public class ExploreListPresenterImpl implements IExploreListPresenter {
     public void getExploreList(String explore_id, int offset, int limit) {
         RetrofitHelper.getExploreHelper().create(ExploreAPI.class)
                 .getExploreList(explore_id, offset, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new HttpSubscriber<ExploreListBean>() {
                     @Override
                     public void _onNext(ExploreListBean exploreListBean) {

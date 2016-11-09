@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Administrator on 2016/11/4.
  */
 
-public class ExploreListAdapter extends BaseItemDraggableAdapter<ExploreListItemBean> {
+public class ExploreListAdapter extends BaseItemDraggableAdapter<ExploreListItemBean, BaseViewHolder> {
     public ExploreListAdapter(List data) {
         super(R.layout.item_explore_title_list_layout, data);
     }

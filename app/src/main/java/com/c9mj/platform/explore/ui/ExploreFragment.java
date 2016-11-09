@@ -33,6 +33,7 @@ import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 
@@ -299,16 +300,15 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
         selectedAdapter.enableSwipeItem();
         selectedAdapter.setOnItemSwipeListener(this);
 
-        unselectedAdapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+        recyclerViewUnSelected.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
+            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
                 selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(pos));
                 unselectedAdapter.remove(pos);
 
                 fragmentList.add(ExploreListFragment.newInstance(getString(R.string.game_type_lol)));
                 navigator.notifyDataSetChanged();    // must call firstly
                 fragmentAdapter.notifyDataSetChanged();
-
             }
         });
 

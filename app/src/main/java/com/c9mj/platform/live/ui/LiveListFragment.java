@@ -24,6 +24,7 @@ import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,15 +117,17 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
-        adapter.openLoadMore(LiveAPI.LIMIT, true);//加载更多的触发条件
-        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_live_loading, (ViewGroup) recyclerView.getParent(), false));
+        adapter.openLoadMore(LiveAPI.LIMIT);//加载更多的触发条件
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
+        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_live_loading, (ViewGroup) recyclerView.getParent(), false));
         adapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.layout_live_empty, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
-        adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+
+        recyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
-                LiveListItemBean liveItemBean = liveList.get(pos);
+            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
+                LiveListItemBean liveItemBean = adapter.getData().get(pos);
                 Intent intent = new Intent(getActivity(), LivePlayActivity.class);
                 intent.putExtra(LivePlayActivity.LIVE_TYPE, liveItemBean.getLive_type());
                 intent.putExtra(LivePlayActivity.LIVE_ID, liveItemBean.getLive_id());
@@ -132,24 +135,26 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
     public void updateRecyclerView(List<LiveListItemBean> list) {
         refreshLayout.setRefreshing(false);
-        liveList.addAll(offset, list);//在roomBeanList的尾部添加
-        offset = liveList.size();
+        adapter.addData(list);//在roomBeanList的尾部添加
+        offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
-            adapter.notifyDataChangedAfterLoadMore(false);//下一次不再加载更多，并显示FooterView
+            adapter.loadComplete();//下一次不再加载更多，并显示FooterView
             adapter.addFooterView(LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false));
             return;
         }
-        adapter.notifyDataChangedAfterLoadMore(true);
+//        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showError(String message) {
         refreshLayout.setRefreshing(false);
+        adapter.showLoadMoreFailedView();//在加载失败的时候调用showLoadMoreFailedView()就能显示加载失败的footer了，点击footer会重新加载
         ToastUtil.show(message);
     }
 
@@ -157,6 +162,7 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
     public void onRefresh() {
         offset = 0;//重置偏移量
         liveList.clear();//清空原数据
+        adapter.setNewData(liveList);
         adapter.removeAllFooterView();
         refreshLayout.setRefreshing(true);
         //根据game_type分类请求直播数据

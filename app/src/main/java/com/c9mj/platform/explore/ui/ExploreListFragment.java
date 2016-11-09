@@ -26,6 +26,7 @@ import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,15 +119,17 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
-        adapter.openLoadMore(ExploreAPI.LIMIT, true);//加载更多的触发条件
-        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_explore_loading, (ViewGroup) recyclerView.getParent(), false));
+        adapter.openLoadMore(ExploreAPI.LIMIT);//加载更多的触发条件
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
+        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_explore_loading, (ViewGroup) recyclerView.getParent(), false));
         adapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.layout_explore_empty, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
-        adapter.setOnRecyclerViewItemChildClickListener(new BaseQuickAdapter.OnRecyclerViewItemChildClickListener() {
+
+        recyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                ExploreListItemBean exploreItemBean = exploreList.get(i);
+            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                ExploreListItemBean exploreItemBean = adapter.getData().get(i);
                 Intent intent = new Intent(getActivity(), LivePlayActivity.class);
 //                intent.putExtra(LivePlayActivity.LIVE_TYPE, liveItemBean.getLive_type());
 //                intent.putExtra(LivePlayActivity.LIVE_ID, liveItemBean.getLive_id());
@@ -134,24 +137,26 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
     public void updateRecyclerView(List<ExploreListItemBean> list) {
         refreshLayout.setRefreshing(false);
-        exploreList.addAll(offset, list);//在roomBeanList的尾部添加
-        offset = exploreList.size();
+        adapter.addData(list);//在roomBeanList的尾部添加
+        offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
-            adapter.notifyDataChangedAfterLoadMore(false);//下一次不再加载更多，并显示FooterView
+            adapter.loadComplete();//下一次不再加载更多，并显示FooterView
             adapter.addFooterView(LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false));
             return;
         }
-        adapter.notifyDataChangedAfterLoadMore(true);
+//        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showError(String message) {
         refreshLayout.setRefreshing(false);
+        adapter.showLoadMoreFailedView();//在加载失败的时候调用showLoadMoreFailedView()就能显示加载失败的footer了，点击footer会重新加载
         ToastUtil.show(message);
     }
 
@@ -159,6 +164,7 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
     public void onRefresh() {
         offset = 0;//重置偏移量
         exploreList.clear();//清空原数据
+        adapter.setNewData(exploreList);
         adapter.removeAllFooterView();
         refreshLayout.setRefreshing(true);
         //根据explore_type_id请求更多新闻数据
