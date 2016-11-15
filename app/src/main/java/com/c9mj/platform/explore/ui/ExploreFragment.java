@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -46,6 +47,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -220,54 +222,57 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
 
             @Override
             public IPagerTitleView getTitleView(final Context context, final int index) {
-                ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
-                clipPagerTitleView.setText(selectedTitleList.get(index));
-                clipPagerTitleView.setBackground(context.getResources().getDrawable(R.drawable.ripple_tab));
-                clipPagerTitleView.setTextSize(SizeUtils.sp2px(context, 12));
-                clipPagerTitleView.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
-                clipPagerTitleView.setClipColor(context.getResources().getColor(R.color.color_primary));
-                clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+
+                if (Build.VERSION.SDK_INT >= 21) {
+                    ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
+                    clipPagerTitleView.setText(selectedTitleList.get(index));
+                    clipPagerTitleView.setBackground(context.getResources().getDrawable(R.drawable.ripple_tab));
+                    clipPagerTitleView.setTextSize(SizeUtils.sp2px(context, 12));
+                    clipPagerTitleView.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+                    clipPagerTitleView.setClipColor(context.getResources().getColor(R.color.color_primary));
+                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            viewPager.setCurrentItem(index);
+                        }
+                    });
+                    return clipPagerTitleView;
+                }
+
+                CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
+                commonPagerTitleView.setContentView(R.layout.item_explore_tab_indicator_layout);//加载自定义布局作为Tab
+
+                final TextView tab_textview = (TextView) commonPagerTitleView.findViewById(R.id.tab_text);
+                commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
+                    @Override
+                    public void onSelected(int i, int i1) {
+                        tab_textview.setText(selectedTitleList.get(i));
+                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
+                    }
+
+                    @Override
+                    public void onDeselected(int i, int i1) {
+                        tab_textview.setText(selectedTitleList.get(i));
+                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+                    }
+
+                    @Override
+                    public void onLeave(int i, int i1, float v, boolean b) {
+
+                    }
+
+                    @Override
+                    public void onEnter(int i, int i1, float v, boolean b) {
+
+                    }
+                });
+                commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         viewPager.setCurrentItem(index);
                     }
                 });
-                return clipPagerTitleView;
-
-//                CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
-//                commonPagerTitleView.setContentView(R.layout.item_explore_tab_indicator_layout);//加载自定义布局作为Tab
-//
-//                final TextView tab_textview = (TextView) commonPagerTitleView.findViewById(R.id.tab_text);
-//                commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
-//                    @Override
-//                    public void onSelected(int i, int i1) {
-//                        tab_textview.setText(selectedTitleList.get(i));
-//                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
-//                    }
-//
-//                    @Override
-//                    public void onDeselected(int i, int i1) {
-//                        tab_textview.setText(selectedTitleList.get(i));
-//                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
-//                    }
-//
-//                    @Override
-//                    public void onLeave(int i, int i1, float v, boolean b) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onEnter(int i, int i1, float v, boolean b) {
-//
-//                    }
-//                });
-//                commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        viewPager.setCurrentItem(index);
-//                    }
-//                });
-//                return commonPagerTitleView;
+                return commonPagerTitleView;
             }
 
             @Override
