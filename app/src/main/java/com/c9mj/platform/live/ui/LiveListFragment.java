@@ -47,13 +47,13 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
 
     private static final String GAME_TYPE = "game_type";
 
-    private String game_type;
-    private int offset = 0;//用于记录分页偏移量
-    private List<LiveListItemBean> liveList = new ArrayList<>();
-    private Set<String> platformList = new HashSet<>();//douyu, huomaotv, yy, panda, longzhu, cc, quanmin, zhanqi
+    String game_type;
+    int offset = 0;//用于记录分页偏移量
+    List<LiveListItemBean> liveList = new ArrayList<>();
+    Set<String> platformList = new HashSet<>();//douyu, huomaotv, yy, panda, longzhu, cc, quanmin, zhanqi
 
-    private Context context;
-    private LiveListPresenterImpl presenter;
+    Context context;
+    LiveListPresenterImpl presenter;
 
     @BindView(R.id.refreshlayout)
     SwipeRefreshLayout refreshLayout;

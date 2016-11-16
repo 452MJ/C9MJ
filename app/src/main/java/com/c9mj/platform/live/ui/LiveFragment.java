@@ -39,10 +39,10 @@ import butterknife.ButterKnife;
  */
 public class LiveFragment extends LazyFragment{
 
-    private List<Fragment> fragmentList = new ArrayList<>();
-    private List<String> titleList = new ArrayList<>();
+    List<Fragment> fragmentList = new ArrayList<>();
+    List<String> titleList = new ArrayList<>();
 
-    private Context context;
+    Context context;
 
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;

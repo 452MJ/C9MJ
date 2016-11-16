@@ -42,7 +42,7 @@ public class UserFragment extends LazyFragment {
     private static final int REQUEST_CAMERA = 100;
     private static final int REQUEST_GALLERY = REQUEST_CAMERA + 1;
 
-    private String savePath;//调用系统Camera相片保存的路径
+    String savePath;//调用系统Camera相片保存的路径
 
     @BindView(R.id.user_iv_appbar)
     ImageView iv_appbar;

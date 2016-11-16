@@ -38,14 +38,9 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 public class MainActivity extends SupportActivity {
 
-    public int TAB_INDEX;
-    public static final int EXPLORE = 0;
-    public static final int LIVE = 1;
-    public static final int USER = 2;
 
-
-    private long exitTime;//用于按两次Back键退出
-    private List<Fragment> fragmentList = new ArrayList<>();
+    long exitTime;//用于按两次Back键退出
+    List<Fragment> fragmentList = new ArrayList<>();
 
     final int[] normalResId = new int[]{
             R.drawable.ic_explore_normal,

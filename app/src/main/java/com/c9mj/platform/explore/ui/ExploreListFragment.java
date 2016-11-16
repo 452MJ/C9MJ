@@ -45,12 +45,12 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
 
     private static final String EXPLORE_TYPE_ID = "explore_type_id";
 
-    private String explore_type_id;
-    private int offset = 0;//用于记录分页偏移量
-    private List<ExploreListItemBean> exploreList = new ArrayList<>();
+    String explore_type_id;
+    int offset = 0;//用于记录分页偏移量
+    List<ExploreListItemBean> exploreList = new ArrayList<>();
 
-    private Context context;
-    private ExploreListPresenterImpl presenter;
+    Context context;
+    ExploreListPresenterImpl presenter;
 
     @BindView(R.id.refreshlayout)
     SwipeRefreshLayout refreshLayout;

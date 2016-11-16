@@ -34,8 +34,8 @@ import rx.schedulers.Schedulers;
 
 public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
-    private Context context;
-    private ILivePlayActivity view;
+    Context context;
+    ILivePlayActivity view;
 
     public LivePlayPresenterImpl(Context context, ILivePlayActivity view) {
         this.context = context;

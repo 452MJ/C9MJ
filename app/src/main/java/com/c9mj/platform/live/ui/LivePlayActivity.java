@@ -89,29 +89,29 @@ public class LivePlayActivity extends BaseActivity
     public static final int HANDLER_HIDE_CONTROLLER = 100;//隐藏MediaController
     public static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
 
-    private boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
-    private boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
-    private boolean isPause = false;         //直播暂停标志位
-    private boolean isFullscreen = false;   //全屏标志位
-    private boolean isControllerHiden = false;   //MediaController显示隐藏标志位
+    boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
+    boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
+    boolean isPause = false;         //直播暂停标志位
+    boolean isFullscreen = false;   //全屏标志位
+    boolean isControllerHiden = false;   //MediaController显示隐藏标志位
 
-    private String live_type;   //直播平台
-    private String live_id;     //直播房间号ID
-    private String game_type;   //直播游戏类型
-    private String live_url;   //直播url
+    String live_type;   //直播平台
+    String live_id;     //直播房间号ID
+    String game_type;   //直播游戏类型
+    String live_url;   //直播url
 
-    private int surfacePortraitWidth;
-    private int surfacePortraitHeight;
-    private int videoWidth;
-    private int videoHeight;
-    private int playWidth;
-    private int playHeight;
+    int surfacePortraitWidth;
+    int surfacePortraitHeight;
+    int videoWidth;
+    int videoHeight;
+    int playWidth;
+    int playHeight;
 
-    private List<LiveDetailBean.StreamListBean> streamList = new ArrayList<>();//直播流列表
+    List<LiveDetailBean.StreamListBean> streamList = new ArrayList<>();//直播流列表
 
-    private Context context;
-    private LivePlayPresenterImpl presenter;
-    private Handler controllerHandler;
+    Context context;
+    LivePlayPresenterImpl presenter;
+    Handler controllerHandler;
 
     @BindView(R.id.surfaceview)
     SurfaceView surfaceView;                  //用于显示播放画面
@@ -120,9 +120,9 @@ public class LivePlayActivity extends BaseActivity
 
     @BindView(R.id.danmuview)
     DanmakuView danmuView;
-    private boolean isShowDanmu = false;// 弹幕显示标志位
-    private DanmakuContext danmakuContext;
-    private BaseDanmakuParser parser = new BaseDanmakuParser() {
+    boolean isShowDanmu = false;// 弹幕显示标志位
+    DanmakuContext danmakuContext;
+    BaseDanmakuParser parser = new BaseDanmakuParser() {
         @Override
         protected IDanmakus parse() {
             return new Danmakus();

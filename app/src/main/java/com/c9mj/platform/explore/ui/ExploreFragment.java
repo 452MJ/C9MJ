@@ -63,21 +63,21 @@ import butterknife.OnClick;
 public class ExploreFragment extends LazyFragment implements OnItemDragListener, OnItemSwipeListener {
 
 
-    private String[] idArray;
-    private String[] aliasArray;
-    private String[] enameArray;
-    private String[] tnameArray;
-    private List<Fragment> fragmentList = new ArrayList<>();
+    String[] idArray;
+    String[] aliasArray;
+    String[] enameArray;
+    String[] tnameArray;
+    List<Fragment> fragmentList = new ArrayList<>();
 
-    private String titleString = "";//用于保存记录所有栏目
-    private String selectedTitleString = "";//用于保存记录已选择栏目
-    private String unselectedTitleString = "";//用于保存记录未选择栏目
+    String titleString = "";//用于保存记录所有栏目
+    String selectedTitleString = "";//用于保存记录已选择栏目
+    String unselectedTitleString = "";//用于保存记录未选择栏目
 
-    private List<String> titleList = new ArrayList<>();//所有TitleList
-    private List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
-    private List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
+    List<String> titleList = new ArrayList<>();//所有TitleList
+    List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
+    List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
 
-    private Context context;
+    Context context;
 
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
