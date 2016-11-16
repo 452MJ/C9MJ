@@ -10,6 +10,5 @@
         android:padding="10dp"
         android:id="@+id/tab_text"
         android:textSize="12sp"
-        android:layout_gravity="center"
-        android:clickable="false" />
+        android:layout_gravity="center" />
 </FrameLayout>

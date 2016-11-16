@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +26,12 @@ import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +50,7 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
     private String game_type;
     private int offset = 0;//用于记录分页偏移量
     private List<LiveListItemBean> liveList = new ArrayList<>();
+    private Set<String> platformList = new HashSet<>();//douyu, huomaotv, yy, panda, longzhu, cc, quanmin, zhanqi
 
     private Context context;
     private LiveListPresenterImpl presenter;
@@ -140,6 +145,7 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
 
     @Override
     public void updateRecyclerView(List<LiveListItemBean> list) {
+
         refreshLayout.setRefreshing(false);
         adapter.addData(list);//在roomBeanList的尾部添加
         offset = adapter.getData().size();
