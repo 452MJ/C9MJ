@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import android.view.ViewGroup;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveListAdapter;
 import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
+import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveListFragment;
 import com.c9mj.platform.util.ToastUtil;
@@ -26,7 +25,6 @@ import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,7 +45,8 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
 
     private static final String GAME_TYPE = "game_type";
 
-    String game_type;
+    String live_type;//直播平台
+    String game_type;//游戏类型
     int offset = 0;//用于记录分页偏移量
     List<LiveListItemBean> liveList = new ArrayList<>();
     Set<String> platformList = new HashSet<>();//douyu, huomaotv, yy, panda, longzhu, cc, quanmin, zhanqi

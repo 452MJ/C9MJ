@@ -4,9 +4,9 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
+import com.c9mj.platform.live.mvp.model.DanmuBean;
+import com.c9mj.platform.live.mvp.model.LiveDetailBean;
+import com.c9mj.platform.live.mvp.model.LivePandaBean;
 import com.c9mj.platform.live.mvp.presenter.ILivePlayPresenter;
 import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
 import com.c9mj.platform.util.DanmuUtil;

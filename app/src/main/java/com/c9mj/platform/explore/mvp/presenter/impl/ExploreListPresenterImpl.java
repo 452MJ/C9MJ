@@ -3,26 +3,18 @@ package com.c9mj.platform.explore.mvp.presenter.impl;
 import android.content.Context;
 
 import com.c9mj.platform.explore.api.ExploreAPI;
-import com.c9mj.platform.explore.mvp.model.bean.ExploreListBean;
-import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
+import com.c9mj.platform.explore.mvp.model.ExploreListBean;
+import com.c9mj.platform.explore.mvp.model.ExploreListItemBean;
 import com.c9mj.platform.explore.mvp.presenter.IExploreListPresenter;
 import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
-import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
-import com.c9mj.platform.live.mvp.presenter.ILiveListPresenter;
-import com.c9mj.platform.live.mvp.view.ILiveListFragment;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static android.R.attr.offset;
-import static android.R.id.message;
 
 /**
  * author: LMJ

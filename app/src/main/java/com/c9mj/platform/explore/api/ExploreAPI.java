@@ -1,7 +1,7 @@
 package com.c9mj.platform.explore.api;
 
 
-import com.c9mj.platform.explore.mvp.model.bean.ExploreListBean;
+import com.c9mj.platform.explore.mvp.model.ExploreListBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;

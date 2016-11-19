@@ -1,10 +1,10 @@
 package com.c9mj.platform.live.api;
 
 
-import com.c9mj.platform.live.mvp.model.bean.LiveBaseBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
+import com.c9mj.platform.live.mvp.model.LiveBaseBean;
+import com.c9mj.platform.live.mvp.model.LiveDetailBean;
+import com.c9mj.platform.live.mvp.model.LivePandaBean;
+import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
+import com.c9mj.platform.live.mvp.model.LiveDetailBean;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
 import butterknife.BindView;

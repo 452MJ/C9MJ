@@ -4,10 +4,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
-import com.c9mj.platform.live.mvp.model.bean.LiveListItemBean;
+import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
 import java.util.List;
 

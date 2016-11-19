@@ -1,8 +1,8 @@
 package com.c9mj.platform.live.mvp.view;
 
-import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
-import com.c9mj.platform.live.mvp.model.bean.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
+import com.c9mj.platform.live.mvp.model.DanmuBean;
+import com.c9mj.platform.live.mvp.model.LiveDetailBean;
+import com.c9mj.platform.live.mvp.model.LivePandaBean;
 import com.c9mj.platform.util.retrofit.exception.IErrorView;
 
 /**

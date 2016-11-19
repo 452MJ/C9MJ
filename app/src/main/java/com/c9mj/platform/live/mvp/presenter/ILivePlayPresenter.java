@@ -1,6 +1,6 @@
 package com.c9mj.platform.live.mvp.presenter;
 
-import com.c9mj.platform.live.mvp.model.bean.LivePandaBean;
+import com.c9mj.platform.live.mvp.model.LivePandaBean;
 
 /**
  * author: LMJ

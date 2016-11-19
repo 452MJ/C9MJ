@@ -5,14 +5,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/color_layout_background">
-    
-    <net.lucode.hackware.magicindicator.MagicIndicator
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
-        android:id="@id/magic_indicator"
-        android:elevation="@dimen/cardview_elevation"
-        android:background="@color/color_primary"/>
-    
+        android:background="@color/color_primary"
+        android:orientation="horizontal"
+        android:elevation="@dimen/cardview_default_elevation"
+        >
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_height"
+            android:id="@id/magic_indicator"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:alpha="0.5"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_shadow_dark"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/tab_height"
+            android:text="平台"
+            android:textColor="@color/color_icons"
+            android:gravity="center"
+            android:id="@+id/live_tv_live_type"
+            android:background="?selectableItemBackground"
+            android:layout_weight="0"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"

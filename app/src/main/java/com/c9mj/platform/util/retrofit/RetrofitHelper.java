@@ -2,7 +2,7 @@ package com.c9mj.platform.util.retrofit;
 
 import com.blankj.utilcode.utils.NetworkUtils;
 import com.c9mj.platform.MyApplication;
-import com.c9mj.platform.live.mvp.model.bean.LiveBaseBean;
+import com.c9mj.platform.live.mvp.model.LiveBaseBean;
 import com.c9mj.platform.util.retrofit.exception.RetrofitException;
 
 import java.io.File;

@@ -1,7 +1,7 @@
 package com.c9mj.platform.explore.adapter;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
+import com.c9mj.platform.explore.mvp.model.ExploreListItemBean;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 

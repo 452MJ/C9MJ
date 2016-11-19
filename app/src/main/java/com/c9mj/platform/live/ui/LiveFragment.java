@@ -2,16 +2,21 @@ package com.c9mj.platform.live.ui;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.c9mj.platform.R;
+import com.c9mj.platform.user.ui.UserFragment;
+import com.c9mj.platform.util.PhotoUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 
@@ -24,20 +29,22 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  * 直播主页面
  */
-public class LiveFragment extends LazyFragment{
+public class LiveFragment extends LazyFragment {
 
     List<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList = new ArrayList<>();
@@ -50,6 +57,8 @@ public class LiveFragment extends LazyFragment{
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     FragmentAdapter fragmentAdapter;
+    @BindView(R.id.live_tv_live_type)
+    TextView liveTvLiveType;
 
     public static LiveFragment newInstance() {
         LiveFragment fragment = new LiveFragment();
@@ -113,15 +122,15 @@ public class LiveFragment extends LazyFragment{
                 titleView.setContentView(R.layout.item_live_tab_indicator_layout);//加载自定义布局作为Tab
 
                 final TextView tab_textview = (TextView) titleView.findViewById(R.id.tab_text);
+                tab_textview.setText(titleList.get(index));
                 titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
                     @Override
                     public void onSelected(int i, int i1) {
-                        tab_textview.setText(titleList.get(i));
                     }
 
                     @Override
                     public void onDeselected(int i, int i1) {
-                        tab_textview.setText(titleList.get(i));
+
                     }
 
                     @Override
@@ -161,4 +170,28 @@ public class LiveFragment extends LazyFragment{
         ViewPagerHelper.bind(indicator, viewPager);
     }
 
+    @OnClick(R.id.live_tv_live_type)
+    public void onClick() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(R.layout.layout_live_type_picker)
+                .setPositiveButton(getString(R.string.user_gallery), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(getString(R.string.user_carema), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
+        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+
+    }
 }

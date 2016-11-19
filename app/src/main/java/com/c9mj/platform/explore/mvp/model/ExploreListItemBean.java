@@ -1,4 +1,4 @@
-package com.c9mj.platform.explore.mvp.model.bean;
+package com.c9mj.platform.explore.mvp.model;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.c9mj.platform.live.mvp.model.bean;
+package com.c9mj.platform.live.mvp.model;
 
 /**
  * Created by Administrator on 2016/10/19.

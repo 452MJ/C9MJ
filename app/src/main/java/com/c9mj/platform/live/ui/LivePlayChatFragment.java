@@ -10,13 +10,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LivePlayChatAdapter;
-import com.c9mj.platform.live.mvp.model.bean.DanmuBean;
+import com.c9mj.platform.live.mvp.model.DanmuBean;
 import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;

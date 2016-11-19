@@ -56,7 +56,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:scaleType="centerCrop"
                 android:src="@drawable/background_shadow"/>
 
-
         </FrameLayout>
 
 
