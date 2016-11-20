@@ -49,7 +49,6 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
     String game_type;//游戏类型
     int offset = 0;//用于记录分页偏移量
     List<LiveListItemBean> liveList = new ArrayList<>();
-    Set<String> platformList = new HashSet<>();//douyu, huomaotv, yy, panda, longzhu, cc, quanmin, zhanqi
 
     Context context;
     LiveListPresenterImpl presenter;

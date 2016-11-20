@@ -9,9 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.c9mj.platform.R;
@@ -46,6 +48,20 @@ import butterknife.OnClick;
  */
 public class LiveFragment extends LazyFragment {
 
+    String[] liveTypeIdArray;
+    String[] liveTypeNameArray;
+    Integer[] logoArrays = new Integer[]{
+            R.mipmap.ic_launcher,
+            R.drawable.logo_douyu,
+            R.drawable.logo_panda,
+            R.drawable.logo_zhanqi,
+            R.drawable.logo_yy,
+            R.drawable.logo_longzhu,
+            R.drawable.logo_quanmin,
+            R.drawable.logo_cc,
+            R.drawable.logo_huomao
+    };
+
     List<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList = new ArrayList<>();
 
@@ -76,11 +92,18 @@ public class LiveFragment extends LazyFragment {
 
         context = view.getContext();
 
+        initData();
         initFragment();
         initViewPager();
         initIndicator();
 
         return view;
+    }
+
+    private void initData() {
+        liveTypeIdArray = context.getResources().getStringArray(R.array.live_type_id);
+        liveTypeNameArray = context.getResources().getStringArray(R.array.live_type_name);
+
     }
 
     @Override
@@ -107,6 +130,7 @@ public class LiveFragment extends LazyFragment {
     }
 
     private void initIndicator() {
+
         CommonNavigator navigator = new CommonNavigator(context);
         navigator.setAdjustMode(true);
         navigator.setFollowTouch(true);
@@ -173,14 +197,20 @@ public class LiveFragment extends LazyFragment {
     @OnClick(R.id.live_tv_live_type)
     public void onClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setView(R.layout.layout_live_type_picker)
-                .setPositiveButton(getString(R.string.user_gallery), new DialogInterface.OnClickListener() {
+        View contentView = View.inflate(context, R.layout.layout_live_type_picker, null);
+        ImageView iv_logo = (ImageView) contentView.findViewById(R.id.layout_live_type_picker_iv_logo);
+        RecyclerView recylcerView = (RecyclerView) contentView.findViewById(R.id.layout_live_type_picker_recyclerview);
+
+
+
+        builder.setView(contentView)
+                .setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(getString(R.string.user_carema), new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -190,8 +220,7 @@ public class LiveFragment extends LazyFragment {
         dialog.show();
 
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.color_secondary_text));
 
     }
 }

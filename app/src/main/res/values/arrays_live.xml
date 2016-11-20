@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--直播-->
+    <string-array name="live_type_id">
+        <item></item>
+        <item>douyu</item>
+        <item>panda</item>
+        <item>zhanqi</item>
+        <item>yy</item>
+        <item>longzhu</item>
+        <item>quanmin</item>
+        <item>cc</item>
+        <item>huomaotv</item>
+    </string-array>
+
+    <string-array name="live_type_name">
+        <item>全部</item>
+        <item>斗鱼</item>
+        <item>熊猫</item>
+        <item>战旗</item>
+        <item>虎牙</item>
+        <item>龙珠</item>
+        <item>全民</item>
+        <item>CC</item>
+        <item>火猫</item>
+    </string-array>
+
+</resources>

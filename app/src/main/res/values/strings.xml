@@ -4,6 +4,7 @@
     <string name="title_explore">发现</string>
     <string name="title_live">直播</string>
     <string name="title_user">我的</string>
+    <string name="enter">确定</string>
     <string name="cancel">取消</string>
     <string name="second_exit">"再按一次Back键退出程序"</string>
 
