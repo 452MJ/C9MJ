@@ -40,7 +40,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    //RxJava+Retrofit
+    //RxJava + Retrofit
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -50,7 +50,7 @@ dependencies {
     //Fragment库
     compile 'me.yokeyword:fragmentation:0.7.10'
     compile 'me.yokeyword:fragmentation-swipeback:0.7.9'
-    //phtoview
+    //photoview
     compile 'com.bm.photoview:library:1.4.1'
     //RecyclerView Adapter库
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.4.7'
@@ -68,8 +68,7 @@ dependencies {
     compile 'com.qiniu.pili:pili-android-qos:0.8.13'
     //弹幕烈焰使
     compile 'com.github.ctiao:DanmakuFlameMaster:0.5.4'
-    //Toolbar滑动动画
+    //Appbar滑动动画
     compile 'com.github.todou:appbarspring:1.0.2'
 
-    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 }

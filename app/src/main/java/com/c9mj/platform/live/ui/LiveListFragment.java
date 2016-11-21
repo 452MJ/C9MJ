@@ -102,7 +102,7 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
             refreshLayout.setRefreshing(true);
 
             //根据game_type分类请求直播数据
-            presenter.getLiveList(offset, LiveAPI.LIMIT, game_type );
+            presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
         }
     }
 
@@ -170,12 +170,12 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         adapter.removeAllFooterView();
         refreshLayout.setRefreshing(true);
         //根据game_type分类请求直播数据
-        presenter.getLiveList(offset, LiveAPI.LIMIT, game_type );
+        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
     }
 
     @Override
     public void onLoadMoreRequested() {
         //根据game_type分类请求直播数据
-        presenter.getLiveList(offset, LiveAPI.LIMIT, game_type );
+        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
     }
 }

@@ -25,8 +25,8 @@ public interface LiveAPI {
     Observable<LiveBaseBean<List<LiveListItemBean>>> getLiveList(
             @Query("offset") int offset,
             @Query("limit") int limit,
-            @Query("game_type") String game_type,
-            @Query("live_type") String live_type
+            @Query("live_type") String live_type,
+            @Query("game_type") String game_type
     );
 
     //请求获取直播详情

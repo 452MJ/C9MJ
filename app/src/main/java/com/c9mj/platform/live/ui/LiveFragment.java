@@ -4,11 +4,11 @@ package com.c9mj.platform.live.ui;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +16,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
-import com.c9mj.platform.user.ui.UserFragment;
-import com.c9mj.platform.util.PhotoUtil;
+import com.c9mj.platform.live.adapter.LiveTypeAdapter;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.chad.library.adapter.base.listener.SimpleClickListener;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -31,8 +34,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
-
-import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +49,11 @@ import butterknife.OnClick;
  */
 public class LiveFragment extends LazyFragment {
 
-    String[] liveTypeIdArray;
-    String[] liveTypeNameArray;
+    int pos, currentPos;
+    List<String> typeIdList = new ArrayList<>();    //直播平台id
+    List<String> typeNameList = new ArrayList<>();  //直播平台名字
     Integer[] logoArrays = new Integer[]{
-            R.mipmap.ic_launcher,
+            0,
             R.drawable.logo_douyu,
             R.drawable.logo_panda,
             R.drawable.logo_zhanqi,
@@ -61,6 +63,7 @@ public class LiveFragment extends LazyFragment {
             R.drawable.logo_cc,
             R.drawable.logo_huomao
     };
+
 
     List<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList = new ArrayList<>();
@@ -75,6 +78,7 @@ public class LiveFragment extends LazyFragment {
     FragmentAdapter fragmentAdapter;
     @BindView(R.id.live_tv_live_type)
     TextView liveTvLiveType;
+
 
     public static LiveFragment newInstance() {
         LiveFragment fragment = new LiveFragment();
@@ -101,9 +105,13 @@ public class LiveFragment extends LazyFragment {
     }
 
     private void initData() {
-        liveTypeIdArray = context.getResources().getStringArray(R.array.live_type_id);
-        liveTypeNameArray = context.getResources().getStringArray(R.array.live_type_name);
 
+        for (String id : context.getResources().getStringArray(R.array.live_type_id)) {
+            typeIdList.add(id);
+        }
+        for (String name : context.getResources().getStringArray(R.array.live_type_name)) {
+            typeNameList.add(name);
+        }
     }
 
     @Override
@@ -198,15 +206,31 @@ public class LiveFragment extends LazyFragment {
     public void onClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View contentView = View.inflate(context, R.layout.layout_live_type_picker, null);
-        ImageView iv_logo = (ImageView) contentView.findViewById(R.id.layout_live_type_picker_iv_logo);
+        final ImageView iv_logo = (ImageView) contentView.findViewById(R.id.layout_live_type_picker_iv_logo);
         RecyclerView recylcerView = (RecyclerView) contentView.findViewById(R.id.layout_live_type_picker_recyclerview);
+        LiveTypeAdapter adapter = new LiveTypeAdapter(typeNameList);
+        recylcerView.setLayoutManager(new GridLayoutManager(context, 3));
+        recylcerView.setAdapter(adapter);
+        recylcerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
+                Glide.with(context)
+                        .load(logoArrays[pos])
+                        .dontAnimate()
+                        .into(iv_logo);
 
+                iv_logo.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                currentPos = pos;
+            }
+        });
 
 
         builder.setView(contentView)
                 .setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        pos = currentPos;
+                        liveTvLiveType.setText(typeNameList.get(pos));
                         dialog.dismiss();
                     }
                 })
@@ -222,5 +246,9 @@ public class LiveFragment extends LazyFragment {
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
         dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.color_secondary_text));
 
+    }
+
+    public String getLiveType(){
+        return typeIdList.get(pos);
     }
 }

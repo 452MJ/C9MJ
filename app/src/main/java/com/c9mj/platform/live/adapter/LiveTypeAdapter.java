@@ -23,7 +23,7 @@ public class LiveTypeAdapter extends BaseQuickAdapter<String, BaseViewHolder>{
 
     @Override
     protected void convert(BaseViewHolder viewHolder, String platform) {
-        viewHolder.setText(R.id.chat_tv_nickname, platform)//昵称
+        viewHolder.setText(R.id.live_type_picker_tv_platform, platform)//昵称
                 .setTextColor(R.id.live_type_picker_tv_platform, mContext.getResources().getColor(R.color.color_secondary_text));
     }
 }
