@@ -55,7 +55,7 @@ dependencies {
     //RecyclerView Adapter库
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.4.7'
     //Tab指示器
-    compile 'com.github.hackware1993:MagicIndicator:1.4.0'
+    compile 'com.github.hackware1993:MagicIndicator:1.4.1'
     //Circle ImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
     //工具类库
