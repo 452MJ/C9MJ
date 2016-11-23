@@ -19,11 +19,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveTypeAdapter;
+import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.widget.fragment.LazyFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.chad.library.adapter.base.listener.SimpleClickListener;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -41,6 +41,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.R.attr.offset;
 
 /**
  * author: LMJ
@@ -64,7 +66,7 @@ public class LiveFragment extends LazyFragment {
             R.drawable.logo_huomao
     };
 
-
+    boolean isInit = false;
     List<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList = new ArrayList<>();
 
@@ -96,26 +98,33 @@ public class LiveFragment extends LazyFragment {
 
         context = view.getContext();
 
+        return view;
+    }
+
+
+    @Override
+    protected void initLazyView(@Nullable Bundle savedInstanceState) {
         initData();
         initFragment();
         initViewPager();
         initIndicator();
+    }
 
-        return view;
+    public void loadDataWhileInit(){
+        if (isInit == false){
+            LiveListFragment fragment = (LiveListFragment) fragmentList.get(0);
+            fragment.loadDataWhileInit();
+            isInit = true;
+        }
     }
 
     private void initData() {
-
         for (String id : context.getResources().getStringArray(R.array.live_type_id)) {
             typeIdList.add(id);
         }
         for (String name : context.getResources().getStringArray(R.array.live_type_name)) {
             typeNameList.add(name);
         }
-    }
-
-    @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
     }
 
     private void initFragment() {
@@ -135,6 +144,23 @@ public class LiveFragment extends LazyFragment {
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setOffscreenPageLimit(4);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                LiveListFragment fragment = (LiveListFragment) fragmentList.get(position);
+                fragment.loadDataWhileInit();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void initIndicator() {

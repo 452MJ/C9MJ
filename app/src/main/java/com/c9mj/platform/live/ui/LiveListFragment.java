@@ -34,6 +34,8 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.c9mj.platform.R.array.explore_type_id;
+
 /**
  * author: LMJ
  * date: 2016/9/19
@@ -45,6 +47,7 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
 
     private static final String GAME_TYPE = "game_type";
 
+    boolean isInit = false;
     String live_type;//直播平台
     String game_type;//游戏类型
     int offset = 0;//用于记录分页偏移量
@@ -82,10 +85,6 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         context = view.getContext();
         game_type = getArguments().getString(GAME_TYPE);//得到传入的cate_id
 
-        initMVP();
-        initRefreshView();
-        initRecyclerView();
-
         return view;
     }
 
@@ -95,14 +94,22 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
     }
 
+    public void loadDataWhileInit(){
+        if (isInit == false){
+            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
+            refreshLayout.setRefreshing(true);
+            //根据game_type分类请求直播数据
+            presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
+            isInit = true;
+        }
+    }
+
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
-            refreshLayout.setRefreshing(true);
-
-            //根据game_type分类请求直播数据
-            presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
+            initMVP();
+            initRefreshView();
+            initRecyclerView();
         }
     }
 

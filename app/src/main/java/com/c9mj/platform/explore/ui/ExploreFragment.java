@@ -205,7 +205,7 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
     private void initViewPager() {
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
     }
 
     private void initIndicator() {

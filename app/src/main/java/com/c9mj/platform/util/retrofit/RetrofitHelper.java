@@ -78,41 +78,44 @@ public class RetrofitHelper{
     };
 
     public static Retrofit getExploreHelper() {
-//        if (explore == null){
-        try {
+        if (explore == null){
+            try {
+                synchronized (RetrofitHelper.class){
+                    if (explore == null) {
+                        File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "exploreCache");
+                        Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);//缓存10MB
+                        OkHttpClient.Builder httpBuidler = new OkHttpClient().newBuilder();
+                        httpBuidler.cache(cache)
+                                .connectTimeout(5, TimeUnit.SECONDS);//连接超时限制5秒
+                                //添加拦截器
+//                                .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)//离线缓存
+//                                .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
 
-
-            synchronized (RetrofitHelper.class){
-
-                File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "exploreCache");
-                Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);//缓存10MB
-                OkHttpClient.Builder httpBuidler = new OkHttpClient().newBuilder();
-                httpBuidler.cache(cache)
-                        .connectTimeout(5, TimeUnit.SECONDS)//连接超时限制5秒
-                        .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)
-                        .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);//添加拦截器
-                explore = new Retrofit.Builder()
-                        .client(httpBuidler.build())
-                        .baseUrl(BASE_EXPLORE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                        .build();
+                        explore = new Retrofit.Builder()
+                                .client(httpBuidler.build())
+                                .baseUrl(BASE_EXPLORE_URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                .build();
+                    }
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
-//        }
         return explore;
     }
 
     public static Retrofit getLiveHelper() {
         if (live == null){
             synchronized (RetrofitHelper.class){
-                live = new Retrofit.Builder()
-                        .baseUrl(BASE_LIVE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                        .build();
+                if (live == null) {
+                    live = new Retrofit.Builder()
+                            .baseUrl(BASE_LIVE_URL)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .build();
+                }
             }
         }
         return live;

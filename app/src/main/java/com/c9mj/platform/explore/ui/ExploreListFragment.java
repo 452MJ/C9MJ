@@ -45,6 +45,7 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
 
     private static final String EXPLORE_TYPE_ID = "explore_type_id";
 
+    boolean isInit = false;
     String explore_type_id;
     int offset = 0;//用于记录分页偏移量
     List<ExploreListItemBean> exploreList = new ArrayList<>();
@@ -85,6 +86,15 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
         initRefreshView();
         initRecyclerView();
 
+        if (getUserVisibleHint() && isInit == false){
+            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
+            refreshLayout.setRefreshing(true);
+
+            //根据game_type分类请求直播数据
+            presenter.getExploreList(explore_type_id, offset, LiveAPI.LIMIT);
+            isInit = true;
+        }
+
         return view;
     }
 
@@ -97,11 +107,11 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
-            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
-            refreshLayout.setRefreshing(true);
-
-            //根据game_type分类请求直播数据
-            presenter.getExploreList( explore_type_id, offset, LiveAPI.LIMIT);
+//            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
+//            refreshLayout.setRefreshing(true);
+//
+//            //根据game_type分类请求直播数据
+//            presenter.getExploreList( explore_type_id, offset, LiveAPI.LIMIT);
         }
     }
 
