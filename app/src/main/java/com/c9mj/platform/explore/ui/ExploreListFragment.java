@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,12 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
 
         context = view.getContext();
 
+        explore_type_id = getArguments().getString(EXPLORE_TYPE_ID);//得到传入的explore_type_id
+
+        initMVP();
+        initRefreshView();
+        initRecyclerView();
+
         return view;
     }
 
@@ -94,12 +101,6 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-
-        explore_type_id = getArguments().getString(EXPLORE_TYPE_ID);//得到传入的explore_type_id
-
-        initMVP();
-        initRefreshView();
-        initRecyclerView();
 
         refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
         refreshLayout.setRefreshing(true);

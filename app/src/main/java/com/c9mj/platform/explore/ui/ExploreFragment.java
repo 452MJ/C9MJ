@@ -244,16 +244,15 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 commonPagerTitleView.setContentView(R.layout.item_explore_tab_indicator_layout);//加载自定义布局作为Tab
 
                 final TextView tab_textview = (TextView) commonPagerTitleView.findViewById(R.id.tab_text);
+                tab_textview.setText(selectedTitleList.get(index));
                 commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
                     @Override
                     public void onSelected(int i, int i1) {
-                        tab_textview.setText(selectedTitleList.get(i));
                         tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
                     }
 
                     @Override
                     public void onDeselected(int i, int i1) {
-                        tab_textview.setText(selectedTitleList.get(i));
                         tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
                     }
 
@@ -310,9 +309,13 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
             @Override
             public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
                 selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(pos));
+
+                int index = titleList.indexOf(unSelectedTitleList.get(pos));
+                String explore_type_id = idArray[index];
+                fragmentList.add(ExploreListFragment.newInstance(explore_type_id));
+
                 unselectedAdapter.remove(pos);
 
-                fragmentList.add(ExploreListFragment.newInstance(getString(R.string.game_type_lol)));
                 navigator.notifyDataSetChanged();    // must call firstly
                 fragmentAdapter.notifyDataSetChanged();
             }

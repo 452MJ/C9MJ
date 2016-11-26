@@ -15,7 +15,7 @@ public interface ExploreAPI {
 
     public static final int LIMIT = 20;
 
-    @GET("/nc/article/headline/{explore_id}/{offset}-{limit}.html")
+    @GET("/nc/article/list/{explore_id}/{offset}-{limit}.html")
     Observable<ExploreListBean> getExploreList(
             @Path("explore_id") String explore_id,
             @Path("offset") int page,
