@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.mvp.model.LiveDetailBean;
-import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * date: 2016/10/27
  * 直播播放页面（主播资料）
  */
-public class LivePlayAvatarFragment extends LazyFragment {
+public class LivePlayAvatarFragment extends BaseFragment {
 
     private static final String AVATAR = "avatar";
 
@@ -62,13 +62,6 @@ public class LivePlayAvatarFragment extends LazyFragment {
         context = view.getContext();
 
         return view;
-    }
-
-    @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-
-        }
     }
 
     public void updateLiveDetail(LiveDetailBean detailBean) {

@@ -24,7 +24,7 @@ import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.ui.LivePlayActivity;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
-import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
@@ -34,18 +34,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+
 /**
  * author: LMJ
  * date: 2016/9/19
  * 直播列表
  */
-public class ExploreListFragment extends LazyFragment implements IExploreListFragment,
+public class ExploreListFragment extends BaseFragment implements IExploreListFragment,
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String EXPLORE_TYPE_ID = "explore_type_id";
 
-    boolean isInit = false;
     String explore_type_id;
     int offset = 0;//用于记录分页偏移量
     List<ExploreListItemBean> exploreList = new ArrayList<>();
@@ -80,20 +81,6 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
         ButterKnife.bind(this, view);
 
         context = view.getContext();
-        explore_type_id = getArguments().getString(EXPLORE_TYPE_ID);//得到传入的explore_type_id
-
-        initMVP();
-        initRefreshView();
-        initRecyclerView();
-
-        if (getUserVisibleHint() && isInit == false){
-            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
-            refreshLayout.setRefreshing(true);
-
-            //根据game_type分类请求直播数据
-            presenter.getExploreList(explore_type_id, offset, LiveAPI.LIMIT);
-            isInit = true;
-        }
 
         return view;
     }
@@ -105,15 +92,22 @@ public class ExploreListFragment extends LazyFragment implements IExploreListFra
     }
 
     @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-//            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
-//            refreshLayout.setRefreshing(true);
-//
-//            //根据game_type分类请求直播数据
-//            presenter.getExploreList( explore_type_id, offset, LiveAPI.LIMIT);
-        }
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+
+        explore_type_id = getArguments().getString(EXPLORE_TYPE_ID);//得到传入的explore_type_id
+
+        initMVP();
+        initRefreshView();
+        initRecyclerView();
+
+        refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
+        refreshLayout.setRefreshing(true);
+        //根据game_type分类请求直播数据
+        presenter.getExploreList(explore_type_id, offset, LiveAPI.LIMIT);
     }
+
+
 
     private void initMVP() {
         presenter = new ExploreListPresenterImpl(context, this);

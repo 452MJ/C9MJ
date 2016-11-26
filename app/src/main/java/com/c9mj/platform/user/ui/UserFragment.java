@@ -23,7 +23,7 @@ import com.c9mj.platform.R;
 import com.c9mj.platform.util.PhotoUtil;
 import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.SpHelper;
-import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 
 import org.joda.time.DateTime;
 
@@ -37,7 +37,7 @@ import butterknife.OnClick;
  * author: LMJ
  * date: 2016/9/1
  */
-public class UserFragment extends LazyFragment {
+public class UserFragment extends BaseFragment {
 
     private static final int REQUEST_CAMERA = 100;
     private static final int REQUEST_GALLERY = REQUEST_CAMERA + 1;
@@ -68,9 +68,11 @@ public class UserFragment extends LazyFragment {
     }
 
     @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         initToolBar();
     }
+
 
     private void initToolBar() {
         toolbar.setTitle(getString(R.string.title_user));

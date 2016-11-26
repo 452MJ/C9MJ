@@ -17,4 +17,5 @@ public class BaseFragment extends SupportFragment{
         super.onAttach(activity);
         SnackbarUtil.init(activity.getWindow().getDecorView());
     }
+
 }

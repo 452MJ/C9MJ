@@ -30,7 +30,7 @@ import com.c9mj.platform.explore.adapter.ExploreSelectedTitleListAdapter;
 import com.c9mj.platform.explore.adapter.ExploreUnSelectedTitleListAdapter;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
-import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
@@ -60,7 +60,7 @@ import butterknife.OnClick;
  * author: LMJ
  * date: 2016/9/1
  */
-public class ExploreFragment extends LazyFragment implements OnItemDragListener, OnItemSwipeListener {
+public class ExploreFragment extends BaseFragment implements OnItemDragListener, OnItemSwipeListener {
 
 
     String[] idArray;
@@ -121,17 +121,18 @@ public class ExploreFragment extends LazyFragment implements OnItemDragListener,
 
         context = view.getContext();
 
+        return view;
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+
         initData();
         initFragment();
         initViewPager();
         initIndicator();
         initRecyclerView();
-
-        return view;
-    }
-
-    @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
 
     }
 

@@ -22,32 +22,27 @@ import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveListFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
-import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.c9mj.platform.R.array.explore_type_id;
 
 /**
  * author: LMJ
  * date: 2016/9/19
  * 直播列表
  */
-public class LiveListFragment extends LazyFragment implements ILiveListFragment,
+public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String GAME_TYPE = "game_type";
 
-    boolean isInit = false;
     String live_type;//直播平台
     String game_type;//游戏类型
     int offset = 0;//用于记录分页偏移量
@@ -88,29 +83,24 @@ public class LiveListFragment extends LazyFragment implements ILiveListFragment,
         return view;
     }
 
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
     }
 
-    public void loadDataWhileInit(){
-        if (isInit == false){
-            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
-            refreshLayout.setRefreshing(true);
-            //根据game_type分类请求直播数据
-            presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
-            isInit = true;
-        }
-    }
-
     @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            initMVP();
-            initRefreshView();
-            initRecyclerView();
-        }
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initMVP();
+        initRefreshView();
+        initRecyclerView();
+
+        refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
+        refreshLayout.setRefreshing(true);
+        //根据game_type分类请求直播数据
+        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
     }
 
     private void initMVP() {

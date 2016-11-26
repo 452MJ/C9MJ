@@ -17,7 +17,7 @@ import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LivePlayChatAdapter;
 import com.c9mj.platform.live.mvp.model.DanmuBean;
 import com.c9mj.platform.util.SnackbarUtil;
-import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import butterknife.OnClick;
  * date: 2016/10/27
  * 直播播放页面（聊天室）
  */
-public class LivePlayChatFragment extends LazyFragment {
+public class LivePlayChatFragment extends BaseFragment {
 
     private static final String KEY = "key";
 
@@ -84,10 +84,9 @@ public class LivePlayChatFragment extends LazyFragment {
     }
 
     @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            initRecyclerView();
-        }
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initRecyclerView();
     }
 
     private void initRecyclerView() {

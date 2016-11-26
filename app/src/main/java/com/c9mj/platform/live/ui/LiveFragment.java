@@ -19,9 +19,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveTypeAdapter;
-import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
-import com.c9mj.platform.widget.fragment.LazyFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
@@ -42,14 +41,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.R.attr.offset;
-
 /**
  * author: LMJ
  * date: 2016/9/1
  * 直播主页面
  */
-public class LiveFragment extends LazyFragment {
+public class LiveFragment extends BaseFragment {
 
     int pos, currentPos;
     List<String> typeIdList = new ArrayList<>();    //直播平台id
@@ -66,7 +63,6 @@ public class LiveFragment extends LazyFragment {
             R.drawable.logo_huomao
     };
 
-    boolean isInit = false;
     List<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList = new ArrayList<>();
 
@@ -103,19 +99,12 @@ public class LiveFragment extends LazyFragment {
 
 
     @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         initData();
         initFragment();
         initViewPager();
         initIndicator();
-    }
-
-    public void loadDataWhileInit(){
-        if (isInit == false){
-            LiveListFragment fragment = (LiveListFragment) fragmentList.get(0);
-            fragment.loadDataWhileInit();
-            isInit = true;
-        }
     }
 
     private void initData() {
@@ -144,23 +133,6 @@ public class LiveFragment extends LazyFragment {
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setOffscreenPageLimit(4);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                LiveListFragment fragment = (LiveListFragment) fragmentList.get(position);
-                fragment.loadDataWhileInit();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private void initIndicator() {
@@ -250,7 +222,6 @@ public class LiveFragment extends LazyFragment {
             }
         });
 
-
         builder.setView(contentView)
                 .setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
                     @Override
@@ -274,6 +245,10 @@ public class LiveFragment extends LazyFragment {
 
     }
 
+    /**
+     * 暴露给内嵌子Fragment获取直播平台id
+     * @return
+     */
     public String getLiveType(){
         return typeIdList.get(pos);
     }
