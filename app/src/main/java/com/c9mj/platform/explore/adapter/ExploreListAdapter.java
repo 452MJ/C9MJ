@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ExploreListAdapter extends BaseItemDraggableAdapter<ExploreListItemBean, BaseViewHolder> {
     public ExploreListAdapter(List data) {
-        super(R.layout.item_explore_title_list_layout, data);
+        super(R.layout.item_explore_list_layout, data);
     }
 
 

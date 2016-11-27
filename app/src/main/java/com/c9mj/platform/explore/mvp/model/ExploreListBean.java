@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class ExploreListBean {
 
-    private Map<String, List<ExploreListItemBean>> newslistitem;
+    private List<ExploreListItemBean> list;
 
-    public Map<String, List<ExploreListItemBean>> getNewsListItem() {
-        return newslistitem;
+    public List<ExploreListItemBean> getList() {
+        return list;
     }
 
-    public void setNewsListItem(Map<String, List<ExploreListItemBean>> newslistitem) {
-        this.newslistitem = newslistitem;
+    public void setList(List<ExploreListItemBean> list) {
+        this.list = list;
     }
 }

@@ -1,6 +1,7 @@
 package com.c9mj.platform.util;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 /**
  * author: LMJ
@@ -33,6 +34,21 @@ public class GsonHelper {
 	public static Object parseJson(String jsonStr,Class clazz){
 		gson = getInstance();
 		obj = gson.fromJson(jsonStr, clazz);
+		return obj;
+	}
+
+	/**
+	 *
+	 * @Title: parseJson
+	 * @Description: json 转成对象
+	 * @param jsonElement
+	 * @param clazz
+	 * @return
+	 * @throws
+	 */
+	public static Object parseJson(JsonElement jsonElement, Class clazz){
+		gson = getInstance();
+		obj = gson.fromJson(jsonElement, clazz);
 		return obj;
 	}
 

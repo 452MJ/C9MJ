@@ -206,7 +206,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     private void initViewPager() {
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(2);
+//        viewPager.setOffscreenPageLimit(2);
     }
 
     private void initIndicator() {

@@ -4,6 +4,7 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.c9mj.platform.MyApplication;
 import com.c9mj.platform.live.mvp.model.LiveBaseBean;
 import com.c9mj.platform.util.retrofit.exception.RetrofitException;
+import com.google.gson.JsonObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -177,6 +178,4 @@ public class RetrofitHelper{
             }
         };
     }
-
-
 }
