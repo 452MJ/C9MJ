@@ -27,12 +27,12 @@ public class LivePlayChatAdapter extends BaseQuickAdapter<DanmuBean, BaseViewHol
             name = "游客";
         }
         String content = bean.getData().getContent();
-        viewHolder.setText(R.id.chat_tv_nickname, name)//昵称
-                .setTextColor(R.id.chat_tv_nickname, mContext.getResources().getColor(R.color.color_primary_dark))
-                .setText(R.id.chat_tv_content, content);//弹幕内容
+        viewHolder.setText(R.id.tv_nickname, name)//昵称
+                .setTextColor(R.id.tv_nickname, mContext.getResources().getColor(R.color.color_primary_dark))
+                .setText(R.id.tv_content, content);//弹幕内容
         if (!TextUtils.isEmpty(name) && mContext != null) {
             if (name.equals(mContext.getString(R.string.chat_name))) {
-                viewHolder.setTextColor(R.id.chat_tv_nickname, mContext.getResources().getColor(R.color.color_accent));
+                viewHolder.setTextColor(R.id.tv_nickname, mContext.getResources().getColor(R.color.color_accent));
             }
         }
     }

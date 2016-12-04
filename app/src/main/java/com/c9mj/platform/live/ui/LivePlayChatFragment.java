@@ -44,10 +44,10 @@ public class LivePlayChatFragment extends BaseFragment {
     LivePlayChatAdapter adapter;
     List<DanmuBean> danmuList = new ArrayList<>();
 
-    @BindView(R.id.live_play_chat_fragment_et_danmu)
-    EditText livePlayChatFragmentEtDanmu;
-    @BindView(R.id.live_play_chat_fragment_tv_send)
-    TextView livePlayChatFragmentTvSend;
+    @BindView(R.id.et_danmu)
+    EditText et_danmu;
+    @BindView(R.id.tv_send)
+    TextView tv_send;
 
     private Context context;
     private LivePlayActivity activity;
@@ -96,9 +96,9 @@ public class LivePlayChatFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
-    @OnClick(R.id.live_play_chat_fragment_tv_send)
+    @OnClick(R.id.tv_send)
     public void onClick() {
-        String danmu = livePlayChatFragmentEtDanmu.getText().toString();
+        String danmu = et_danmu.getText().toString();
         if (TextUtils.isEmpty(danmu)) {
             SnackbarUtil.show("发送弹幕内容不能为空");
             return;
@@ -120,7 +120,7 @@ public class LivePlayChatFragment extends BaseFragment {
         activity.addDanmuOnDanmakuView(danmuBean, true);
         this.addDanmuOnRecyclerView(danmuBean);
 
-        livePlayChatFragmentEtDanmu.setText(null);
+        et_danmu.setText(null);
     }
 
     /**

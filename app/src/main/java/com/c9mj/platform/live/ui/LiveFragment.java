@@ -74,8 +74,8 @@ public class LiveFragment extends BaseFragment {
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     FragmentAdapter fragmentAdapter;
-    @BindView(R.id.live_tv_live_type)
-    TextView liveTvLiveType;
+    @BindView(R.id.tv_live_type)
+    TextView tv_live_type;
 
 
     public static LiveFragment newInstance() {
@@ -200,7 +200,7 @@ public class LiveFragment extends BaseFragment {
         ViewPagerHelper.bind(indicator, viewPager);
     }
 
-    @OnClick(R.id.live_tv_live_type)
+    @OnClick(R.id.tv_live_type)
     public void onClick() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View contentView = View.inflate(context, R.layout.layout_live_type_picker, null);
@@ -227,7 +227,7 @@ public class LiveFragment extends BaseFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         pos = currentPos;
-                        liveTvLiveType.setText(typeNameList.get(pos));
+                        tv_live_type.setText(typeNameList.get(pos));
                         dialog.dismiss();
                     }
                 })

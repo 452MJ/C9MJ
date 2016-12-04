@@ -1,17 +1,24 @@
 package com.c9mj.platform.explore.mvp.model;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.util.List;
 
-public class ExploreListItemBean {
+public class ExploreListItemBean implements MultiItemEntity{
+
+        public static final int ADS = 1;
+        public static final int NORMAL = ADS + 1;
+
         private String postid;
         private boolean hasCover;
         private int hasHead;
-        private int replyCount;
+        private int votecount;//发帖
+        private int replyCount;//跟帖
         private int hasImg;
         private String digest;
         private boolean hasIcon;
         private String docid;
-        private String title;
+        private String title;//标题
         private int order;
         private int priority;
         private String lmodify;
@@ -19,16 +26,15 @@ public class ExploreListItemBean {
         private String photosetID;
         private int imgsum;
         private String template;
-        private int votecount;
         private String skipID;
         private String alias;
         private String skipType;
         private String cid;
         private int hasAD;
-        private String source;
+        private String source;//来源
         private String ename;
         private String tname;
-        private String imgsrc;
+        private String imgsrc;//
         private String ptime;
         /**
          * title : 熊黛林深V开衩裙现身  长腿若隐若现
@@ -277,7 +283,12 @@ public class ExploreListItemBean {
             this.imgextra = imgextra;
         }
 
-        public static class AdsBean {
+    @Override
+    public int getItemType() {
+        return ads == null ? NORMAL : ADS;
+    }
+
+    public static class AdsBean {
             private String title;
             private String tag;
             private String imgsrc;

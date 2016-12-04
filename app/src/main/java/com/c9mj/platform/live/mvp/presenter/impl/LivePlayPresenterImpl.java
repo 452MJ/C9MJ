@@ -34,11 +34,9 @@ import rx.schedulers.Schedulers;
 
 public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
-    Context context;
     ILivePlayActivity view;
 
-    public LivePlayPresenterImpl(Context context, ILivePlayActivity view) {
-        this.context = context;
+    public LivePlayPresenterImpl(ILivePlayActivity view) {
         this.view = view;
     }
 
@@ -242,14 +240,16 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                         subscriber.onError(e);
                     }
                 }
+                subscriber.onNext("无法连接至弹幕服务器！");
             }
         })
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
                         closeConnection();
+                        unsubscribe();
                     }
 
                     @Override

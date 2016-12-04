@@ -111,7 +111,7 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
 
 
     private void initMVP() {
-        presenter = new ExploreListPresenterImpl(context, this);
+        presenter = new ExploreListPresenterImpl(this);
     }
 
     private void initRefreshView() {

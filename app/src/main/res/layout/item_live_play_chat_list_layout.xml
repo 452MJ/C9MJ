@@ -17,7 +17,7 @@
         android:clickable="true"
         app:cardElevation="@dimen/cardview_elevation"
         app:cardPreventCornerOverlap="true"
-        android:id="@+id/live_cardview">
+        android:id="@+id/cardview">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="游客"
-                android:id="@+id/chat_tv_nickname"
+                android:id="@+id/tv_nickname"
                 android:textSize="14sp"/>
 
             <TextView
@@ -37,8 +37,8 @@
                 android:text=":"
                 android:textSize="14sp"
                 android:textColor="@color/color_primary_dark"
-                android:id="@+id/chat_tv_divider"
-                android:layout_toRightOf="@+id/chat_tv_nickname" />
+                android:id="@+id/tv_divider"
+                android:layout_toRightOf="@+id/tv_nickname" />
 
 
             <TextView
@@ -47,8 +47,8 @@
                 android:text="弹幕"
                 android:textSize="14sp"
                 android:textColor="@color/color_primary_text"
-                android:id="@+id/chat_tv_content"
-                android:layout_toRightOf="@+id/chat_tv_divider"/>
+                android:id="@+id/tv_content"
+                android:layout_toRightOf="@+id/tv_divider"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

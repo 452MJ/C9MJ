@@ -6,6 +6,7 @@ import android.content.Context;
 import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.ToastUtil;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * author: LMJ
@@ -19,6 +20,7 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        LeakCanary.install(this);
         ToastUtil.init(getApplicationContext());
         SpHelper.init(getApplicationContext());
     }

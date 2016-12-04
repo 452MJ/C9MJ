@@ -18,7 +18,7 @@
         app:cardElevation="@dimen/cardview_elevation"
         app:cardPreventCornerOverlap="true"
         android:elevation="@dimen/widget_elevation"
-        android:id="@+id/live_cardview">
+        android:id="@+id/cardview">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="97dp"
-                android:id="@+id/live_iv_roomsrc_background"
+                android:id="@+id/iv_roomsrc_background"
                 android:background="@color/divider"
                 android:src="@drawable/ic_live_placeholder"
                 android:layout_alignParentTop="true"
@@ -38,7 +38,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="97dp"
-                android:id="@+id/live_iv_roomsrc"
+                android:id="@+id/iv_roomsrc"
                 android:background="@null"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
@@ -46,7 +46,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:id="@+id/live_iv_avatar"
+                android:id="@+id/iv_avatar"
                 android:layout_marginLeft="5dp"
                 app:civ_border_overlay="true"
                 app:civ_fill_color="#ffffff"
@@ -66,7 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="房间名称"
-                    android:id="@+id/live_tv_roomname"
+                    android:id="@+id/tv_roomname"
                     android:textSize="@dimen/textsize_secondary"
                     android:textColor="@color/color_icons"
                     android:singleLine="true"
@@ -77,8 +77,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_below="@+id/live_iv_roomsrc"
-                android:layout_toEndOf="@+id/live_iv_avatar"
+                android:layout_below="@+id/iv_roomsrc"
+                android:layout_toEndOf="@+id/iv_avatar"
                 android:id="@+id/relativeLayout"
                 android:paddingRight="5dp">
 
@@ -86,27 +86,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="主播名称"
-                    android:id="@+id/live_tv_nickname"
+                    android:id="@+id/tv_nickname"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/textsize_secondary"
                     android:textColor="@color/color_primary_text"
-                    android:layout_toLeftOf="@+id/controller_landscape_iv_refresh"
+                    android:layout_toLeftOf="@+id/iv_online"
                     android:scrollIndicators="end"
                     android:singleLine="true" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:id="@+id/controller_landscape_iv_refresh"
+                    android:id="@+id/iv_online"
                     android:src="@drawable/ic_visitor"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/live_tv_online" />
+                    android:layout_toStartOf="@+id/tv_online" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="1234"
-                    android:id="@+id/live_tv_online"
+                    android:id="@+id/tv_online"
                     android:textSize="@dimen/textsize_secondary"
                     android:gravity="center"
                     android:textColor="@color/color_secondary_text"

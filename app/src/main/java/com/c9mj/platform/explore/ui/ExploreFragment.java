@@ -87,21 +87,21 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     FragmentAdapter fragmentAdapter;
 
     //用于展开显示栏目切换
-    @BindView(R.id.explore_tv_section)
-    TextView exploreTvSection;
+    @BindView(R.id.tv_section)
+    TextView tv_section;
     @BindView(R.id.scroll_view)
     ScrollView scrollView;
-    @BindView(R.id.explore_iv_expand)
-    ImageView exploreIvExpand;
+    @BindView(R.id.iv_expandable)
+    ImageView iv_expandable;
     boolean isExpanded = false;
 
     //栏目切换的Top列表
     @BindView(R.id.recyclerview_selected)
-    RecyclerView recyclerViewSelected;
+    RecyclerView rv_selected;
     ExploreSelectedTitleListAdapter selectedAdapter;
     //栏目切换的Bottom列表
     @BindView(R.id.recyclerview_unselected)
-    RecyclerView recyclerViewUnSelected;
+    RecyclerView rv_unselected;
     ExploreUnSelectedTitleListAdapter unselectedAdapter;
 
 
@@ -142,19 +142,19 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
         enameArray = context.getResources().getStringArray(R.array.explore_type_ename);
         tnameArray = context.getResources().getStringArray(R.array.explore_type_tname);
 
-        exploreIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
+        iv_expandable.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
 
-        exploreTvSection.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        tv_section.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                ObjectAnimator animator0 = ObjectAnimator.ofFloat(exploreTvSection, "translationX", exploreTvSection.getWidth());
+                ObjectAnimator animator0 = ObjectAnimator.ofFloat(tv_section, "translationX", tv_section.getWidth());
                 ObjectAnimator animator1 = ObjectAnimator.ofFloat(scrollView, "translationY", -scrollView.getHeight());
                 AnimatorSet animatorSet = new AnimatorSet();
                 animatorSet.playTogether(animator0, animator1);
                 animatorSet.setDuration(0);
                 animatorSet.start();
 
-                exploreTvSection.getViewTreeObserver().removeGlobalOnLayoutListener(this);//得到后取消监听
+                tv_section.getViewTreeObserver().removeGlobalOnLayoutListener(this);//得到后取消监听
             }
         });
 
@@ -297,15 +297,15 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
 
         ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(selectedAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerViewSelected);
+        itemTouchHelper.attachToRecyclerView(rv_selected);
         // 开启拖拽
-        selectedAdapter.enableDragItem(itemTouchHelper, R.id.explore_cardview, true);
+        selectedAdapter.enableDragItem(itemTouchHelper, R.id.cardview, true);
         selectedAdapter.setOnItemDragListener(this);
         // 开启滑动删除
         selectedAdapter.enableSwipeItem();
         selectedAdapter.setOnItemSwipeListener(this);
 
-        recyclerViewUnSelected.addOnItemTouchListener(new OnItemChildClickListener() {
+        rv_unselected.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
                 selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(pos));
@@ -321,28 +321,28 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
             }
         });
 
-        recyclerViewSelected.setLayoutManager(new GridLayoutManager(context, 4));
-        recyclerViewUnSelected.setLayoutManager(new GridLayoutManager(context, 4));
-        recyclerViewSelected.setAdapter(selectedAdapter);
-        recyclerViewUnSelected.setAdapter(unselectedAdapter);
+        rv_selected.setLayoutManager(new GridLayoutManager(context, 4));
+        rv_unselected.setLayoutManager(new GridLayoutManager(context, 4));
+        rv_selected.setAdapter(selectedAdapter);
+        rv_unselected.setAdapter(unselectedAdapter);
     }
 
     @OnClick({
-            R.id.explore_iv_expand,
-            R.id.explore_tv_section,
+            R.id.iv_expandable,
+            R.id.tv_section,
             R.id.scroll_view
     })
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.explore_iv_expand:
+            case R.id.iv_expandable:
 
                 navigator.notifyDataSetChanged();    // must call firstly
                 fragmentAdapter.notifyDataSetChanged();
 
                 isExpanded = !isExpanded;
-                exploreIvExpand.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
+                iv_expandable.setImageResource(isExpanded ? R.drawable.ic_expand_close : R.drawable.ic_expand_open);
                 //栏目切换的动画
-                ObjectAnimator animator0 = ObjectAnimator.ofFloat(exploreTvSection, "translationX", isExpanded ? 0 : exploreTvSection.getWidth());
+                ObjectAnimator animator0 = ObjectAnimator.ofFloat(tv_section, "translationX", isExpanded ? 0 : tv_section.getWidth());
                 ObjectAnimator animator1 = ObjectAnimator.ofFloat(scrollView, "translationY", isExpanded ? 0 : -scrollView.getHeight());
                 AnimatorSet animatorSet = new AnimatorSet();
                 animatorSet.playTogether(animator0, animator1);
@@ -357,7 +357,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, unselectedTitleString);
                 break;
 
-            case R.id.explore_tv_section:
+            case R.id.tv_section:
                 break;
             case R.id.scroll_view:
                 break;
@@ -367,7 +367,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     @Override
     public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
-        CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+        CardView cardView = (CardView) holder.getView(R.id.cardview);
         cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_accent));
     }
 
@@ -379,14 +379,14 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     @Override
     public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
-        CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+        CardView cardView = (CardView) holder.getView(R.id.cardview);
         cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_primary));
     }
 
     @Override
     public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
-        CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+        CardView cardView = (CardView) holder.getView(R.id.cardview);
         cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_error));
     }
 
@@ -408,7 +408,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
         if (isCurrentlyActive == false){
             BaseViewHolder holder = (BaseViewHolder) viewHolder;
-            CardView cardView = (CardView) holder.getView(R.id.explore_cardview);
+            CardView cardView = (CardView) holder.getView(R.id.cardview);
             cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_primary));
         }
     }

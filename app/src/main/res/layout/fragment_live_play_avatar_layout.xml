@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_toEndOf="@+id/textView12"
-                        android:id="@+id/live_play_avatar_tv_name"
+                        android:id="@+id/tv_name"
                         android:textColor="@color/color_primary_text"/>
 
                     <TextView
@@ -76,7 +76,7 @@
                         android:text="live_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/live_play_avatar_tv_live_type"
+                        android:id="@+id/tv_live_type"
                         android:layout_alignBaseline="@+id/textView14"
                         android:layout_alignBottom="@+id/textView14"
                         android:layout_toEndOf="@+id/textView14"
@@ -86,7 +86,7 @@
                         android:text="game_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/live_play_avatar_tv_game_type"
+                        android:id="@+id/tv_game_type"
                         android:layout_alignBaseline="@+id/textView16"
                         android:layout_alignBottom="@+id/textView16"
                         android:layout_toEndOf="@+id/textView16"
@@ -109,7 +109,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/live_play_avatar_iv_backbround"
+                    android:id="@+id/iv_background"
                     android:scaleType="fitCenter"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true" />

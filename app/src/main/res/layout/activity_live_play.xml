@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/live_play_top_layout"
+        android:id="@+id/layout_top"
         android:layout_weight="4">
 
         <SurfaceView
@@ -21,7 +21,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/live_play_progressbar"
+            android:id="@+id/progressbar"
             android:background="@color/divider"
             android:foreground="?selectableItemBackgroundBorderless"
             android:visibility="gone">
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/live_play_bottom_layout"
+        android:id="@+id/layout_bottom"
         android:layout_weight="2"
         android:visibility="visible">
 

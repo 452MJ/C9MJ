@@ -3,7 +3,6 @@ package com.c9mj.platform.live.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,14 +27,14 @@ public class LivePlayAvatarFragment extends BaseFragment {
 
     private static final String AVATAR = "avatar";
 
-    @BindView(R.id.live_play_avatar_tv_name)
-    TextView livePlayAvatarTvName;
-    @BindView(R.id.live_play_avatar_tv_live_type)
-    TextView livePlayAvatarTvLiveType;
-    @BindView(R.id.live_play_avatar_tv_game_type)
-    TextView livePlayAvatarTvGameType;
-    @BindView(R.id.live_play_avatar_iv_backbround)
-    ImageView livePlayAvatarIvBackbround;
+    @BindView(R.id.tv_name)
+    TextView tv_name;
+    @BindView(R.id.tv_live_type)
+    TextView tv_live_type;
+    @BindView(R.id.tv_game_type)
+    TextView tv_game_type;
+    @BindView(R.id.iv_background)
+    ImageView iv_background;
 
     private Context context;
 
@@ -65,9 +64,9 @@ public class LivePlayAvatarFragment extends BaseFragment {
     }
 
     public void updateLiveDetail(LiveDetailBean detailBean) {
-        livePlayAvatarTvName.setText(detailBean.getLive_nickname());
-        livePlayAvatarTvLiveType.setText(detailBean.getLive_type());
-        livePlayAvatarTvGameType.setText(detailBean.getGame_type());
+        tv_name.setText(detailBean.getLive_nickname());
+        tv_live_type.setText(detailBean.getLive_type());
+        tv_game_type.setText(detailBean.getGame_type());
 
         String imgUrl = detailBean.getLive_userimg();
         if (!TextUtils.isEmpty(imgUrl)){
@@ -77,7 +76,7 @@ public class LivePlayAvatarFragment extends BaseFragment {
                     .crossFade()
                     .centerCrop()
                     .thumbnail(0.1f)
-                    .into(livePlayAvatarIvBackbround);
+                    .into(iv_background);
         }
     }
 

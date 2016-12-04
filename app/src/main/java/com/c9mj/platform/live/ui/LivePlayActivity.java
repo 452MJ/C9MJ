@@ -130,46 +130,46 @@ public class LivePlayActivity extends BaseActivity
     };
 
     //横屏控件
-    @BindView(R.id.controller_landscape_iv_back)
-    ImageView controllerLandscapeIvBack;
-    @BindView(R.id.controller_landscape_tv_roomname)
-    TextView controllerLandscapeTvRoomname;
-    @BindView(R.id.controller_landscape_btn_stream_1080p)
-    Button controllerLandscapeBtnStream1080P;
-    @BindView(R.id.controller_landscape_btn_stream_360p)
-    Button controllerLandscapeBtnStream360P;
-    @BindView(R.id.controller_landscape_iv_play_pause)
-    ImageView controllerLandscapeIvPlayPause;
-    @BindView(R.id.controller_landscape_iv_refresh)
-    ImageView controllerLandscapeIvRefresh;
-    @BindView(R.id.controller_landscape_et_danmu)
-    EditText controllerLandscapeEtDanmu;
-    @BindView(R.id.controller_landscape_btn_senddanmu)
-    Button controllerLandscapeBtnSenddanmu;
-    @BindView(R.id.controller_landscape_iv_danmu_visible)
-    ImageView controllerLandscapeIvDanmuVisible;
-    @BindView(R.id.controller_landscape_iv_fullscreen_exit)
-    ImageView controllerLandscapeIvFullscreenExit;
-    @BindView(R.id.controller_landscape_layout)
-    RelativeLayout controllerLandscapeLayout;
+    @BindView(R.id.iv_back_landscape)
+    ImageView iv_back_landscape;
+    @BindView(R.id.tv_roomname_landscape)
+    TextView tv_roomname_landscape;
+    @BindView(R.id.btn_stream_1080p_landscape)
+    Button btn_stream_1080p_landscape;
+    @BindView(R.id.btn_stream_360p_landscape)
+    Button btn_stream_360p_landscape;
+    @BindView(R.id.iv_play_pause_landscape)
+    ImageView iv_play_pause_landscape;
+    @BindView(R.id.iv_refresh_landscape)
+    ImageView iv_refresh_landscape;
+    @BindView(R.id.et_danmu_landscape)
+    EditText et_danmu_landscape;
+    @BindView(R.id.btn_send_landscape)
+    Button btn_send_landscape;
+    @BindView(R.id.iv_danmu_visible_landscape)
+    ImageView iv_danmu_visible_landscape;
+    @BindView(R.id.iv_fullscreen_exit_landscape)
+    ImageView iv_fullscreen_exit_landscape;
+    @BindView(R.id.layout_landscape)
+    RelativeLayout layout_landscape;
     //竖屏控件
-    @BindView(R.id.controller_portrait_iv_back)
-    ImageView controllerPortraitIvBack;
-    @BindView(R.id.controller_portrait_iv_danmu_visible)
-    ImageView controllerPortraitIvDanmuVisible;
-    @BindView(R.id.controller_portrait_iv_fullscreen)
-    ImageView controllerPortraitIvFullscreen;
-    @BindView(R.id.controller_portrait_layout)
-    RelativeLayout controllerPortraitLayout;
+    @BindView(R.id.iv_back_portrait)
+    ImageView iv_back_portrait;
+    @BindView(R.id.iv_danmu_visible_portrait)
+    ImageView iv_danmu_visible_portrait;
+    @BindView(R.id.iv_fullscreen_portrait)
+    ImageView iv_fullscreen_portrait;
+    @BindView(R.id.layout_portrait)
+    RelativeLayout layout_portrait;
 
-    @BindView(R.id.live_play_progressbar)
-    FrameLayout livePlayProgreeBar;
-    @BindView(R.id.live_play_top_layout)
-    FrameLayout livePlayTopLayout;
+    @BindView(R.id.progressbar)
+    FrameLayout progressbar;
+    @BindView(R.id.layout_top)
+    FrameLayout layout_top;
 
     //底部Layout相关
-    @BindView(R.id.live_play_bottom_layout)
-    LinearLayout livePlayBottomLayout;
+    @BindView(R.id.layout_bottom)
+    LinearLayout layout_bottom;
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
     CommonNavigatorAdapter navigatorAdapter;
@@ -286,7 +286,7 @@ public class LivePlayActivity extends BaseActivity
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+        progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -299,7 +299,7 @@ public class LivePlayActivity extends BaseActivity
     }
 
     private void initMVP() {
-        presenter = new LivePlayPresenterImpl(context, this);
+        presenter = new LivePlayPresenterImpl(this);
     }
 
     /**
@@ -309,7 +309,7 @@ public class LivePlayActivity extends BaseActivity
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                livePlayProgreeBar.setVisibility(View.VISIBLE);
+                progressbar.setVisibility(View.VISIBLE);
                 prepareMediaPlayer();
             }
 
@@ -342,7 +342,7 @@ public class LivePlayActivity extends BaseActivity
         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
-        controllerLandscapeEtDanmu.setOnTouchListener(new View.OnTouchListener() {
+        et_danmu_landscape.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //点击弹幕编辑时取消隐藏Controller
@@ -358,8 +358,8 @@ public class LivePlayActivity extends BaseActivity
      */
     private void initDanmuView() {
 
-        controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-        controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+        iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+        iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
 
         danmuView.enableDanmakuDrawingCache(true);//打开绘图缓存，提升绘制效率
         danmuView.setCallback(new DrawHandler.Callback() {
@@ -368,8 +368,8 @@ public class LivePlayActivity extends BaseActivity
                 try {
                     isShowDanmu = true;
                     danmuView.start();
-                    controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -533,29 +533,29 @@ public class LivePlayActivity extends BaseActivity
     @Override
     public void updateLiveDetail(LiveDetailBean detailBean) {
         try {
-            controllerLandscapeTvRoomname.setText(detailBean.getLive_title());
+            tv_roomname_landscape.setText(detailBean.getLive_title());
             streamList = detailBean.getStream_list();
             LiveDetailBean.StreamListBean stream = streamList.get(streamList.size() - 1);
             live_url = stream.getUrl();
             if (streamList.size() == 1) {
                 if (stream.getType().equals(getString(R.string.stream_1080p))) {
-                    controllerLandscapeBtnStream360P.setVisibility(View.GONE);
+                    btn_stream_360p_landscape.setVisibility(View.GONE);
                 }
                 if (stream.getType().equals(getString(R.string.stream_360p))) {
-                    controllerLandscapeBtnStream1080P.setVisibility(View.GONE);
+                    btn_stream_1080p_landscape.setVisibility(View.GONE);
                 }
             }
             if (stream.getType().equals(getString(R.string.stream_1080p))) {
-                controllerLandscapeBtnStream1080P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                controllerLandscapeBtnStream360P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                controllerLandscapeBtnStream1080P.setTextColor(getResources().getColor(R.color.color_primary));
-                controllerLandscapeBtnStream360P.setTextColor(getResources().getColor(R.color.color_icons));
+                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
+                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
+                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
+                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
             }
             if (stream.getType().equals(getString(R.string.stream_360p))) {
-                controllerLandscapeBtnStream1080P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                controllerLandscapeBtnStream360P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                controllerLandscapeBtnStream1080P.setTextColor(getResources().getColor(R.color.color_icons));
-                controllerLandscapeBtnStream360P.setTextColor(getResources().getColor(R.color.color_primary));
+                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
+                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
+                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
+                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -596,7 +596,7 @@ public class LivePlayActivity extends BaseActivity
      *********/
     @Override
     public void onPrepared(PLMediaPlayer plMediaPlayer) {
-        livePlayProgreeBar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
+        progressbar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
         mediaPlayer.start();
     }
 
@@ -645,10 +645,10 @@ public class LivePlayActivity extends BaseActivity
                 Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_AUDIO_RENDERING_START");
                 break;
             case PLMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START://视频缓冲完成可播放
-                livePlayProgreeBar.setVisibility(View.GONE);
+                progressbar.setVisibility(View.GONE);
                 isVideoPrepared = true;
                 isPause = false;
-                controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
+                iv_play_pause_landscape.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
                 Log.d("PLMediaPlayer", "onInfo: MEDIA_INFO_VIDEO_RENDERING_START");
                 break;
             default:
@@ -666,17 +666,17 @@ public class LivePlayActivity extends BaseActivity
 
     @OnClick({
             R.id.surfaceview,
-            R.id.controller_landscape_iv_back,
-            R.id.controller_landscape_btn_stream_1080p,
-            R.id.controller_landscape_btn_stream_360p,
-            R.id.controller_landscape_iv_play_pause,
-            R.id.controller_landscape_iv_refresh,
-            R.id.controller_landscape_btn_senddanmu,
-            R.id.controller_landscape_iv_danmu_visible,
-            R.id.controller_landscape_iv_fullscreen_exit,
-            R.id.controller_portrait_iv_back,
-            R.id.controller_portrait_iv_danmu_visible,
-            R.id.controller_portrait_iv_fullscreen
+            R.id.iv_back_landscape,
+            R.id.btn_stream_1080p_landscape,
+            R.id.btn_stream_360p_landscape,
+            R.id.iv_play_pause_landscape,
+            R.id.iv_refresh_landscape,
+            R.id.btn_send_landscape,
+            R.id.iv_danmu_visible_landscape,
+            R.id.iv_fullscreen_exit_landscape,
+            R.id.iv_back_portrait,
+            R.id.iv_danmu_visible_portrait,
+            R.id.iv_fullscreen_portrait
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -684,8 +684,8 @@ public class LivePlayActivity extends BaseActivity
             case R.id.surfaceview:
                 if (isFullscreen == true) {
                     if (isControllerHiden == true) {//全屏&&隐藏
-                        controllerLandscapeLayout.setVisibility(View.VISIBLE);
-                        controllerPortraitLayout.setVisibility(View.GONE);
+                        layout_landscape.setVisibility(View.VISIBLE);
+                        layout_portrait.setVisibility(View.GONE);
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                         isControllerHiden = false;
@@ -695,8 +695,8 @@ public class LivePlayActivity extends BaseActivity
                     }
                 } else if (isFullscreen == false) {
                     if (isControllerHiden == true) {//非全屏&&隐藏
-                        controllerLandscapeLayout.setVisibility(View.GONE);
-                        controllerPortraitLayout.setVisibility(View.VISIBLE);
+                        layout_landscape.setVisibility(View.GONE);
+                        layout_portrait.setVisibility(View.VISIBLE);
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                         isControllerHiden = false;
@@ -708,18 +708,18 @@ public class LivePlayActivity extends BaseActivity
                 break;
 
             //全屏Back
-            case R.id.controller_landscape_iv_back:
+            case R.id.iv_back_landscape:
                 onBackPressedSupport();
                 break;
 
             //直播流连接切换（超清）
-            case R.id.controller_landscape_btn_stream_1080p:
+            case R.id.btn_stream_1080p_landscape:
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
-                controllerLandscapeBtnStream1080P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                controllerLandscapeBtnStream360P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                controllerLandscapeBtnStream1080P.setTextColor(getResources().getColor(R.color.color_primary));
-                controllerLandscapeBtnStream360P.setTextColor(getResources().getColor(R.color.color_icons));
+                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
+                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
+                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
+                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
 
                 for (LiveDetailBean.StreamListBean stream :
                         streamList) {
@@ -730,7 +730,7 @@ public class LivePlayActivity extends BaseActivity
                 mediaPlayer.reset();
                 //显示ProgressBar
                 isVideoPrepared = false;
-                livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+                progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
                 try {
                     mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
                 } catch (IOException e) {
@@ -740,13 +740,13 @@ public class LivePlayActivity extends BaseActivity
                 break;
 
             //直播流连接切换（普清）
-            case R.id.controller_landscape_btn_stream_360p:
+            case R.id.btn_stream_360p_landscape:
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
-                controllerLandscapeBtnStream1080P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                controllerLandscapeBtnStream360P.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                controllerLandscapeBtnStream1080P.setTextColor(getResources().getColor(R.color.color_icons));
-                controllerLandscapeBtnStream360P.setTextColor(getResources().getColor(R.color.color_primary));
+                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
+                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
+                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
+                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
 
                 for (LiveDetailBean.StreamListBean stream :
                         streamList) {
@@ -757,7 +757,7 @@ public class LivePlayActivity extends BaseActivity
                 mediaPlayer.reset();
                 //显示ProgressBar
                 isVideoPrepared = false;
-                livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+                progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
                 try {
                     mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
                 } catch (IOException e) {
@@ -767,24 +767,24 @@ public class LivePlayActivity extends BaseActivity
                 break;
 
             //播放&暂停
-            case R.id.controller_landscape_iv_play_pause:
+            case R.id.iv_play_pause_landscape:
                 if (isPause == true) {
                     onResume();
                 } else if (isPause == false) {
                     onPause();
                 }
-                controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
+                iv_play_pause_landscape.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
 
             //重新加载
-            case R.id.controller_landscape_iv_refresh:
+            case R.id.iv_refresh_landscape:
                 try {
                     mediaPlayer.reset();
 
                     isVideoPrepared = false;
-                    livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+                    progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
 
                     mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
                     mediaPlayer.prepareAsync();
@@ -796,11 +796,11 @@ public class LivePlayActivity extends BaseActivity
                 break;
 
             //横屏发送弹幕
-            case R.id.controller_landscape_btn_senddanmu:
+            case R.id.btn_send_landscape:
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
-                String danmu = controllerLandscapeEtDanmu.getText().toString();
+                String danmu = et_danmu_landscape.getText().toString();
                 if (TextUtils.isEmpty(danmu)) {
                     SnackbarUtil.show("发送弹幕内容不能为空");
                     return;
@@ -819,21 +819,21 @@ public class LivePlayActivity extends BaseActivity
                 this.addDanmuOnDanmakuView(danmuBean, true); //添加弹幕至DanmakuView
                 chatFragment.addDanmuOnRecyclerView(danmuBean);//添加弹幕至RecyclerView
 
-                controllerLandscapeEtDanmu.setText(null);
+                et_danmu_landscape.setText(null);
                 break;
 
             //横屏弹幕显示&隐藏
-            case R.id.controller_landscape_iv_danmu_visible:
+            case R.id.iv_danmu_visible_landscape:
 
                 if (isShowDanmu == true) {//已开启弹幕
                     isShowDanmu = false;
-                    controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     SnackbarUtil.show("弹幕已关闭！");
                 } else if (isShowDanmu == false) {//已关闭弹幕
                     isShowDanmu = true;
-                    controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     SnackbarUtil.show("弹幕已开启！");
                 }
 
@@ -842,26 +842,26 @@ public class LivePlayActivity extends BaseActivity
                 break;
 
             //退出全屏
-            case R.id.controller_landscape_iv_fullscreen_exit:
+            case R.id.iv_fullscreen_exit_landscape:
                 exitFullscreen();
                 break;
 
             //竖屏Back
-            case R.id.controller_portrait_iv_back:
+            case R.id.iv_back_portrait:
                 onBackPressedSupport();
                 break;
 
             //竖屏弹幕显示隐藏
-            case R.id.controller_portrait_iv_danmu_visible:
+            case R.id.iv_danmu_visible_portrait:
                 if (isShowDanmu == true) {//已开启弹幕
                     isShowDanmu = false;
-                    controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     SnackbarUtil.show("弹幕已关闭！");
                 } else if (isShowDanmu == false) {//已关闭弹幕
                     isShowDanmu = true;
-                    controllerLandscapeIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    controllerPortraitIvDanmuVisible.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
+                    iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     SnackbarUtil.show("弹幕已开启！");
                 }
 
@@ -869,7 +869,7 @@ public class LivePlayActivity extends BaseActivity
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                 break;
 
-            case R.id.controller_portrait_iv_fullscreen://进入全屏
+            case R.id.iv_fullscreen_portrait://进入全屏
                 enterFullscreen();
                 break;
         }
@@ -898,11 +898,11 @@ public class LivePlayActivity extends BaseActivity
     //进入全屏
     private void enterFullscreen() {
 
-        livePlayTopLayout.removeView(surfaceView);
-        livePlayTopLayout.removeView(livePlayProgreeBar);
-        livePlayTopLayout.removeView(danmuView);
-        livePlayTopLayout.removeView(controllerLandscapeLayout);
-        livePlayTopLayout.removeView(controllerPortraitLayout);
+        layout_top.removeView(surfaceView);
+        layout_top.removeView(progressbar);
+        layout_top.removeView(danmuView);
+        layout_top.removeView(layout_landscape);
+        layout_top.removeView(layout_portrait);
 
         ScreenUtils.setLandscape(this);
 
@@ -911,33 +911,33 @@ public class LivePlayActivity extends BaseActivity
         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
-        livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(progressbar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(layout_landscape, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(layout_portrait, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         //全屏隐藏状态栏
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         getWindow().setAttributes(lp);
 
-        livePlayBottomLayout.setVisibility(View.GONE);
-//        livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
-        controllerLandscapeLayout.setVisibility(View.VISIBLE);
-        controllerPortraitLayout.setVisibility(View.GONE);
-        controllerLandscapeIvPlayPause.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
+        layout_bottom.setVisibility(View.GONE);
+//        progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+        layout_landscape.setVisibility(View.VISIBLE);
+        layout_portrait.setVisibility(View.GONE);
+        iv_play_pause_landscape.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
 
     }
 
     //退出全屏
     private void exitFullscreen() {
 
-        livePlayTopLayout.removeView(surfaceView);
-        livePlayTopLayout.removeView(livePlayProgreeBar);
-        livePlayTopLayout.removeView(danmuView);
-        livePlayTopLayout.removeView(controllerLandscapeLayout);
-        livePlayTopLayout.removeView(controllerPortraitLayout);
+        layout_top.removeView(surfaceView);
+        layout_top.removeView(progressbar);
+        layout_top.removeView(danmuView);
+        layout_top.removeView(layout_landscape);
+        layout_top.removeView(layout_portrait);
 
         ScreenUtils.setPortrait(this);
 
@@ -946,11 +946,11 @@ public class LivePlayActivity extends BaseActivity
         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
-        livePlayTopLayout.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(livePlayProgreeBar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(controllerLandscapeLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        livePlayTopLayout.addView(controllerPortraitLayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(surfaceView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(progressbar, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(danmuView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(layout_landscape, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        layout_top.addView(layout_portrait, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         onVideoSizeChanged(mediaPlayer, videoWidth, videoHeight);
 
@@ -960,18 +960,18 @@ public class LivePlayActivity extends BaseActivity
         getWindow().setAttributes(lp);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        livePlayBottomLayout.setVisibility(View.VISIBLE);
-//        livePlayProgreeBar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
-        controllerLandscapeLayout.setVisibility(View.GONE);
-        controllerPortraitLayout.setVisibility(View.VISIBLE);
+        layout_bottom.setVisibility(View.VISIBLE);
+//        progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+        layout_landscape.setVisibility(View.GONE);
+        layout_portrait.setVisibility(View.VISIBLE);
     }
 
     @Override
     public boolean handleMessage(Message msg) {
         if (msg.what == HANDLER_HIDE_CONTROLLER) {
             //hide controller
-            controllerLandscapeLayout.setVisibility(View.GONE);
-            controllerPortraitLayout.setVisibility(View.GONE);
+            layout_landscape.setVisibility(View.GONE);
+            layout_portrait.setVisibility(View.GONE);
             isControllerHiden = true;
         }
         return true;

@@ -104,7 +104,7 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
     }
 
     private void initMVP() {
-        presenter = new LiveListPresenterImpl(context, this);
+        presenter = new LiveListPresenterImpl(this);
     }
 
     private void initRefreshView() {

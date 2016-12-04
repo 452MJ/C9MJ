@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/live_type_picker_tv_platform"
+        android:id="@+id/tv_platform"
         android:gravity="center"
         android:textSize="14sp"
         android:padding="5dp"/>

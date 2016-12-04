@@ -13,7 +13,6 @@ import com.c9mj.platform.live.ui.LiveFragment;
 import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.user.ui.UserFragment;
-import com.c9mj.platform.widget.activity.BaseActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;

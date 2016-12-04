@@ -45,7 +45,7 @@
                 android:hint="输入发送弹幕(15字以内)"
                 android:maxLength="15"
                 android:textSize="14sp"
-                android:id="@+id/live_play_chat_fragment_et_danmu"/>
+                android:id="@+id/et_danmu"/>
 
         </android.support.v7.widget.CardView>
 
@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:id="@+id/live_play_chat_fragment_tv_send"
+                android:id="@+id/tv_send"
                 android:background="?selectableItemBackground"
                 android:textColor="@color/color_icons"
                 android:gravity="center"

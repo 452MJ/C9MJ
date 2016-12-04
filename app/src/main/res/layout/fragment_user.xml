@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 app:layout_collapseMode="parallax"
-                android:id="@+id/user_iv_appbar"
+                android:id="@+id/iv_appbar"
                 android:scaleType="centerCrop" />
 
             <android.support.v7.widget.Toolbar
@@ -47,7 +47,7 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/user_btn_photo"
+        android:id="@+id/btn_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"

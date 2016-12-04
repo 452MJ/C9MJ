@@ -19,13 +19,13 @@
         app:cardElevation="@dimen/cardview_elevation"
         app:cardPreventCornerOverlap="true"
         android:elevation="@dimen/widget_elevation"
-        android:id="@+id/explore_cardview">
+        android:id="@+id/cardview">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:id="@+id/explore_tv_title"
+            android:id="@+id/tv_title"
             android:text="Title"
             android:padding="5dp"
             />

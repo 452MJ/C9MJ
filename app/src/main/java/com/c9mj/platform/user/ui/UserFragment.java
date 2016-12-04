@@ -44,11 +44,11 @@ public class UserFragment extends BaseFragment {
 
     String savePath;//调用系统Camera相片保存的路径
 
-    @BindView(R.id.user_iv_appbar)
+    @BindView(R.id.iv_appbar)
     ImageView iv_appbar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.user_btn_photo)
+    @BindView(R.id.btn_photo)
     FloatingActionButton btn_photo;
 
     public static UserFragment newInstance() {
@@ -86,13 +86,13 @@ public class UserFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.toolbar, R.id.user_btn_photo})
+    @OnClick({R.id.toolbar, R.id.btn_photo})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar:
 //                SnackbarUtil.show("ToolBar");
                 break;
-            case R.id.user_btn_photo: {
+            case R.id.btn_photo: {
                 final Context context = view.getContext();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Tips:")

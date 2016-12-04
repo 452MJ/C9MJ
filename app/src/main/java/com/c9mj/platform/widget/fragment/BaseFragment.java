@@ -15,7 +15,6 @@ public class BaseFragment extends SupportFragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        SnackbarUtil.init(activity.getWindow().getDecorView());
     }
 
 }

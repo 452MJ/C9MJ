@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/controller_landscape_layout">
+    android:id="@+id/layout_landscape">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,16 +22,16 @@
             android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:id="@+id/controller_landscape_iv_back" />
+            android:id="@+id/iv_back_landscape" />
 
         <TextView
             android:text="直播间名称"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="@dimen/controller_widget_padding"
-            android:id="@+id/controller_landscape_tv_roomname"
+            android:id="@+id/tv_roomname_landscape"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/controller_landscape_iv_back"
+            android:layout_toEndOf="@+id/iv_back_landscape"
             android:layout_toStartOf="@+id/controller_landscape_layout_stream"
             android:gravity="center_vertical"
             android:textColor="@color/color_icons"
@@ -57,7 +57,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/color_icons"
                 android:textSize="14sp"
-                android:id="@+id/controller_landscape_btn_stream_1080p" />
+                android:id="@+id/btn_stream_1080p_landscape" />
 
             <Button
                 android:layout_width="40dp"
@@ -69,7 +69,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/color_icons"
                 android:textSize="14sp"
-                android:id="@+id/controller_landscape_btn_stream_360p" />
+                android:id="@+id/btn_stream_360p_landscape" />
         </LinearLayout>
 
 
@@ -91,7 +91,7 @@
             android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:id="@+id/controller_landscape_iv_play_pause" />
+            android:id="@+id/iv_play_pause_landscape" />
 
         <ImageView
             android:layout_width="@dimen/controller_widget_size"
@@ -100,8 +100,8 @@
             android:src="@drawable/selector_btn_refresh"
             android:scaleType="centerCrop"
             android:background="?selectableItemBackgroundBorderless"
-            android:layout_toEndOf="@+id/controller_landscape_iv_play_pause"
-            android:id="@+id/controller_landscape_iv_refresh" />
+            android:layout_toEndOf="@+id/iv_play_pause_landscape"
+            android:id="@+id/iv_refresh_landscape" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,8 +110,8 @@
             android:background="@drawable/background_layout_danmu"
             android:layout_margin="3dp"
             android:gravity="center_vertical"
-            android:layout_toStartOf="@+id/controller_landscape_iv_danmu_visible"
-            android:layout_toEndOf="@+id/controller_landscape_iv_refresh">
+            android:layout_toStartOf="@+id/iv_danmu_visible_landscape"
+            android:layout_toEndOf="@+id/iv_refresh_landscape">
 
             <EditText
                 android:layout_width="match_parent"
@@ -122,7 +122,7 @@
                 android:maxLength="25"
                 android:textSize="14sp"
                 android:layout_weight="1"
-                android:id="@+id/controller_landscape_et_danmu" />
+                android:id="@+id/et_danmu_landscape" />
 
             <Button
                 android:layout_width="40dp"
@@ -132,7 +132,7 @@
                 android:text="发送"
                 android:textColor="@color/color_icons"
                 android:textSize="14sp"
-                android:id="@+id/controller_landscape_btn_senddanmu" />
+                android:id="@+id/btn_send_landscape" />
 
         </LinearLayout>
 
@@ -143,8 +143,8 @@
             android:src="@drawable/selector_btn_danmu_on"
             android:scaleType="centerCrop"
             android:background="?selectableItemBackgroundBorderless"
-            android:layout_toStartOf="@+id/controller_landscape_iv_fullscreen_exit"
-            android:id="@+id/controller_landscape_iv_danmu_visible" />
+            android:layout_toStartOf="@+id/iv_fullscreen_exit_landscape"
+            android:id="@+id/iv_danmu_visible_landscape" />
 
 
         <ImageView
@@ -155,7 +155,7 @@
             android:scaleType="centerCrop"
             android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentEnd="true"
-            android:id="@+id/controller_landscape_iv_fullscreen_exit" />
+            android:id="@+id/iv_fullscreen_exit_landscape" />
 
     </RelativeLayout>
 

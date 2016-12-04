@@ -30,11 +30,9 @@ import static android.R.id.list;
  */
 public class ExploreListPresenterImpl implements IExploreListPresenter {
 
-    Context context;
     IExploreListFragment view;
 
-    public ExploreListPresenterImpl(Context context, IExploreListFragment view) {
-        this.context = context;
+    public ExploreListPresenterImpl(IExploreListFragment view) {
         this.view = view;
     }
 

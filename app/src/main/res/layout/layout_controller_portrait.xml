@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:id="@+id/controller_portrait_layout">
+    android:id="@+id/layout_portrait">
 
 
     <ImageView
@@ -16,7 +16,7 @@
         android:background="@drawable/background_iv_circle"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/controller_portrait_iv_back" />
+        android:id="@+id/iv_back_portrait" />
 
     <ImageView
         android:layout_width="@dimen/controller_widget_size"
@@ -27,7 +27,7 @@
         android:background="@drawable/background_iv_circle"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/controller_portrait_iv_fullscreen" />
+        android:id="@+id/iv_fullscreen_portrait" />
 
     <ImageView
         android:layout_width="@dimen/controller_widget_size"
@@ -38,5 +38,5 @@
         android:background="@drawable/background_iv_circle"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/controller_portrait_iv_danmu_visible" />
+        android:id="@+id/iv_danmu_visible_portrait" />
 </RelativeLayout>

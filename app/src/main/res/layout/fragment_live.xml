@@ -34,7 +34,7 @@
             android:text="平台"
             android:textColor="@color/color_icons"
             android:gravity="center"
-            android:id="@+id/live_tv_live_type"
+            android:id="@+id/tv_live_type"
             android:background="?selectableItemBackground"
             android:layout_weight="0"
             android:padding="8dp"/>
