@@ -240,7 +240,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                         subscriber.onError(e);
                     }
                 }
-                subscriber.onNext("无法连接至弹幕服务器！");
+                subscriber.onNext("断开弹幕服务器连接！");
             }
         })
                 .subscribeOn(Schedulers.io())
