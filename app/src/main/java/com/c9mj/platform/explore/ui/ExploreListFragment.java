@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * author: LMJ
@@ -152,7 +149,7 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
             adapter.loadComplete();//下一次不再加载更多，并显示FooterView
-            adapter.addFooterView(LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false));
+            adapter.addFooterView(LayoutInflater.from(context).inflate(R.layout.layout_explore_footer, (ViewGroup) recyclerView.getParent(), false));
             return;
         }
 //        adapter.notifyDataSetChanged();
