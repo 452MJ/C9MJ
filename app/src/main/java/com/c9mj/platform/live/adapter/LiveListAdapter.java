@@ -10,6 +10,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+
 /**
  * author: LMJ
  * date: 2016/9/12
@@ -35,8 +37,8 @@ public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean, BaseView
 
         Glide.with(mContext)//主播头像
                 .load(bean.getLive_userimg())
-                .crossFade()
-                .centerCrop()
+                .placeholder(R.drawable.ic_avatar_default)
+                .bitmapTransform(new CropCircleTransformation(mContext))
                 .into((ImageView) viewHolder.getView(R.id.iv_avatar));
     }
 }

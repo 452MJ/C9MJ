@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -43,15 +42,14 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:id="@+id/iv_avatar"
+                android:padding="1dp"
+                android:background="@drawable/shape_circle"
+                android:src="@drawable/ic_avatar_default"
                 android:layout_marginLeft="5dp"
-                app:civ_border_overlay="true"
-                app:civ_fill_color="#ffffff"
-                app:civ_border_color="#ffffff"
-                app:civ_border_width="2dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignBottom="@+id/relativeLayout" />
 

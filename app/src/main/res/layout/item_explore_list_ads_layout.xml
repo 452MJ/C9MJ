@@ -21,14 +21,36 @@
         android:elevation="@dimen/widget_elevation"
         android:id="@+id/cardview">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/tv_title"
-            android:text="Title"
-            android:padding="5dp"
-            />
+            android:layout_height="174dp">
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_divider"
+                android:id="@id/viewpager"/>
+
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/magic_indicator"
+                android:background="@color/accent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"/>
+
+            <TextView
+                android:text="123"
+                android:textSize="@dimen/textsize_secondary"
+                android:textColor="#ffffff"
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignLeft="@+id/magic_indicator"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/magic_indicator" />
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
