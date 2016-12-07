@@ -29,27 +29,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/color_divider"
-                android:id="@id/viewpager"/>
+                android:id="@id/viewpager"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
 
-            <net.lucode.hackware.magicindicator.MagicIndicator
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:id="@+id/magic_indicator"
-                android:background="@color/accent"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"/>
-
-            <TextView
-                android:text="123"
-                android:textSize="@dimen/textsize_secondary"
-                android:textColor="#ffffff"
-                android:id="@+id/tv_title"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignLeft="@+id/magic_indicator"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/magic_indicator" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true">
+
+                <TextView
+                    android:textSize="@dimen/textsize_primary"
+                    android:textColor="#ffffff"
+                    android:id="@+id/tv_title"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <net.lucode.hackware.magicindicator.MagicIndicator
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:id="@+id/magic_indicator"
+                    android:alpha="0.7" />
+            </LinearLayout>
+
+
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

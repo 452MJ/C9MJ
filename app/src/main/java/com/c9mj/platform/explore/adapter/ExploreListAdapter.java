@@ -1,18 +1,35 @@
 package com.c9mj.platform.explore.adapter;
 
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.mvp.model.ExploreListItemBean;
+import com.c9mj.platform.widget.inicator.ScaleCircleNavigator;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import net.lucode.hackware.magicindicator.MagicIndicator;
+import net.lucode.hackware.magicindicator.ViewPagerHelper;
+
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 import static com.c9mj.platform.R.id.imageView;
 
@@ -21,6 +38,9 @@ import static com.c9mj.platform.R.id.imageView;
  */
 
 public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListItemBean, BaseViewHolder> {
+
+    boolean isAutoScrolled = true;
+
     public ExploreListAdapter(List data) {
         super(data);
         addItemType(ExploreListItemBean.ADS, R.layout.item_explore_list_ads_layout);
@@ -29,9 +49,10 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
 
 
     @Override
-    protected void convert(BaseViewHolder viewHolder, ExploreListItemBean bean) {
+    protected void convert(final BaseViewHolder viewHolder, final ExploreListItemBean bean) {
         switch (viewHolder.getItemViewType()) {
             case ExploreListItemBean.ADS:
+
                 List<View> viewList = new ArrayList<>();
                 ImageView iv_head = new ImageView(mContext);
                 Glide.with(mContext)
@@ -50,10 +71,73 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                     viewList.add(iv_ads);
                 }
 
-                ViewPager viewPager = viewHolder.getView(R.id.viewpager);
-                ExploreAdsAdapter pageAdapter = new ExploreAdsAdapter(viewList);
+                final ViewPager viewPager = viewHolder.getView(R.id.viewpager);
+                final ExploreAdsAdapter pageAdapter = new ExploreAdsAdapter(viewList);
                 viewPager.setOffscreenPageLimit(4);
                 viewPager.setAdapter(pageAdapter);
+                viewHolder.setText(R.id.tv_title, bean.getTitle());
+
+                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        if (position == 0){
+                            viewHolder.setText(R.id.tv_title, bean.getTitle());
+                            return;
+                        }
+                        viewHolder.setText(R.id.tv_title, bean.getAds().get(position - 1).getTitle());
+
+                        Flowable.just(0)
+                                .delay(2, TimeUnit.SECONDS)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<Integer>() {
+
+                                    @Override
+                                    public void accept(Integer integer) throws Exception {
+                                        if (isAutoScrolled == false) {
+                                            return;
+                                        }
+                                        int current = viewPager.getCurrentItem();
+                                        if (current + 1 == viewPager.getChildCount()) {
+                                            viewPager.setCurrentItem(0, true);
+                                        } else {
+                                            viewPager.setCurrentItem(current + 1, true);
+                                        }
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                        switch (state){
+                            case ViewPager.SCROLL_STATE_DRAGGING:
+                                isAutoScrolled = false;
+                                break;
+                            case ViewPager.SCROLL_STATE_SETTLING:
+                                isAutoScrolled = false;
+                                break;
+                            case ViewPager.SCROLL_STATE_IDLE:
+                                isAutoScrolled = true;
+                                break;
+                        }
+                    }
+                });
+
+                viewPager.setCurrentItem(0, false);
+
+
+                //MagicIndicator
+                MagicIndicator magicIndicator = viewHolder.getView(R.id.magic_indicator);
+                ScaleCircleNavigator navigator = new ScaleCircleNavigator(mContext);
+                navigator.setFollowTouch(true);
+                navigator.setCircleCount(viewList.size());
+                magicIndicator.setNavigator(navigator);
+                ViewPagerHelper.bind(magicIndicator, viewPager);
 
                 break;
             case ExploreListItemBean.NORMAL:
@@ -67,4 +151,5 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 break;
         }
     }
+
 }
