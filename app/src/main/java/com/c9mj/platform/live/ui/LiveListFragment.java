@@ -20,6 +20,7 @@ import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveListFragment;
+import com.c9mj.platform.main.ui.MainFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
@@ -93,6 +94,7 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
+
         initMVP();
         initRefreshView();
         initRecyclerView();
@@ -128,11 +130,14 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
             @Override
             public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
                 LiveListItemBean liveItemBean = adapter.getData().get(pos);
+
                 Intent intent = new Intent(getActivity(), LivePlayActivity.class);
                 intent.putExtra(LivePlayActivity.LIVE_TYPE, liveItemBean.getLive_type());
                 intent.putExtra(LivePlayActivity.LIVE_ID, liveItemBean.getLive_id());
                 intent.putExtra(LivePlayActivity.GAME_TYPE, liveItemBean.getGame_type());
                 startActivity(intent);
+
+
             }
         });
 

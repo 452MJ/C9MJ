@@ -64,6 +64,7 @@ public class LivePlayAvatarFragment extends BaseFragment {
     }
 
     public void updateLiveDetail(LiveDetailBean detailBean) {
+
         tv_name.setText(detailBean.getLive_nickname());
         tv_live_type.setText(detailBean.getLive_type());
         tv_game_type.setText(detailBean.getGame_type());

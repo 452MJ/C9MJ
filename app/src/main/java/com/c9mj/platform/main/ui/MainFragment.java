@@ -4,16 +4,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.ui.ExploreFragment;
 import com.c9mj.platform.live.ui.LiveFragment;
+import com.c9mj.platform.live.ui.LiveListFragment;
+import com.c9mj.platform.user.ui.UserFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
-import com.c9mj.platform.user.ui.UserFragment;
+import com.c9mj.platform.widget.fragment.BaseFragment;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -30,16 +36,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
-public class MainActivity extends SupportActivity {
+public class MainFragment extends BaseFragment {
 
+    private static final String KEY = "key";
 
-    long exitTime;//用于按两次Back键退出
-    List<Fragment> fragmentList = new ArrayList<>();
+    Context context;
+
+    SupportFragment[] fragments = new SupportFragment[3];
+    int current;
 
     final int[] normalResId = new int[]{
             R.drawable.ic_explore_normal,
@@ -52,44 +62,62 @@ public class MainActivity extends SupportActivity {
             R.drawable.ic_user_pressed
     };
 
+    @BindView(R.id.layout_container)
+    FrameLayout layout_container;
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
+
+    public static MainFragment newInstance() {
+        return newInstance("");
+    }
+
+    public static MainFragment newInstance(String value) {
+        MainFragment fragment = new MainFragment();
+        Bundle args = new Bundle();
+        args.putString(KEY, value);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this, view);
+
+        context = view.getContext();
 
         initFragment();
-        initViewPager();
         initIndicator();
 
+        return view;
     }
 
     private void initFragment() {
-        fragmentList.add(ExploreFragment.newInstance());
-        fragmentList.add(LiveFragment.newInstance());
-        fragmentList.add(UserFragment.newInstance());
-    }
+        fragments[0] = ExploreFragment.newInstance();
+        fragments[1] = LiveFragment.newInstance();
+        fragments[2] = UserFragment.newInstance();
 
-    private void initViewPager() {
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
-        viewPager.setAdapter(fragmentAdapter);
-        viewPager.setOffscreenPageLimit(2);
-    }
+        loadMultipleRootFragment(R.id.layout_container, 0,
+                fragments[0],
+                fragments[1],
+                fragments[2]);
 
+        current = 0;
+    }
 
     private void initIndicator() {
-        CommonNavigator navigator = new CommonNavigator(this);
+
+
+        CommonNavigator navigator = new CommonNavigator(context);
         navigator.setAdjustMode(true);
         navigator.setFollowTouch(true);
         navigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return fragmentList == null ? 0 : fragmentList.size();
+                return  fragments.length;
             }
 
             @Override
@@ -122,7 +150,9 @@ public class MainActivity extends SupportActivity {
                 titleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        viewPager.setCurrentItem(index);
+                        fragmentContainerHelper.handlePageSelected(index);
+                        showHideFragment(fragments[index], fragments[current]);
+                        current = index;
                     }
                 });
 
@@ -138,19 +168,8 @@ public class MainActivity extends SupportActivity {
             }
         });
         indicator.setNavigator(navigator);
-        ViewPagerHelper.bind(indicator, viewPager);
+        fragmentContainerHelper.attachMagicIndicator(indicator);
     }
 
-
-    @Override
-    public void onBackPressedSupport() {
-        if (System.currentTimeMillis() - exitTime > 2000) {
-            exitTime = System.currentTimeMillis();
-            ToastUtil.show(getString(R.string.second_exit));
-//            Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
-        } else {
-            super.onBackPressedSupport();
-        }
-    }
 
 }

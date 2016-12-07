@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -42,6 +41,7 @@ import com.c9mj.platform.widget.activity.BaseActivity;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 
+import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -67,8 +67,7 @@ import master.flame.danmaku.danmaku.model.android.DanmakuContext;
 import master.flame.danmaku.danmaku.model.android.Danmakus;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.ui.widget.DanmakuView;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
@@ -175,6 +174,7 @@ public class LivePlayActivity extends BaseActivity
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
     CommonNavigatorAdapter navigatorAdapter;
+    FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
     List<String> titleList = new ArrayList<>();
     final String[] indicatorText = new String[]{
             "聊天",
@@ -189,11 +189,10 @@ public class LivePlayActivity extends BaseActivity
             R.drawable.ic_avatar_pressed
     };
 
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
     LivePlayChatFragment chatFragment;//弹幕聊天室Fragment
     LivePlayAvatarFragment avatarFragment;//主播详情Fragment
-    List<Fragment> fragmentList = new ArrayList<>();
+    SupportFragment[] fragments = new SupportFragment[2];
+    int current;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -404,12 +403,11 @@ public class LivePlayActivity extends BaseActivity
         chatFragment = LivePlayChatFragment.newInstance();
         avatarFragment = LivePlayAvatarFragment.newInstance();
 
-        fragmentList.add(chatFragment);
-        fragmentList.add(avatarFragment);
+        fragments[0] = chatFragment;
+        fragments[1] = avatarFragment;
 
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragmentList);
-        viewPager.setAdapter(fragmentAdapter);
-
+        loadMultipleRootFragment(R.id.layout_container, 0, fragments);
+        current = 0;
     }
 
     private void initIndicator(){
@@ -419,7 +417,7 @@ public class LivePlayActivity extends BaseActivity
         navigatorAdapter = new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return fragmentList == null ? 0 : fragmentList.size();
+                return fragments.length;
             }
 
             @Override
@@ -431,20 +429,18 @@ public class LivePlayActivity extends BaseActivity
                 final LinearLayout live_play_indicator_layout = (LinearLayout) titleView.findViewById(R.id.live_play_indicator_layout);
                 final ImageView live_play_iv_icon = (ImageView) titleView.findViewById(R.id.live_play_iv_icon);
                 final TextView live_play_tv_title = (TextView) titleView.findViewById(R.id.live_play_tv_title);
-
+                live_play_tv_title.setText(indicatorText[index]);
                 titleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
                     @Override
                     public void onSelected(int index, int totalCount) {
                         live_play_iv_icon.setImageResource(pressedResId[index]);
                         live_play_tv_title.setTextColor(getResources().getColor(R.color.color_primary));
-                        live_play_tv_title.setText(indicatorText[index]);
                     }
 
                     @Override
                     public void onDeselected(int index, int totalCount) {
                         live_play_iv_icon.setImageResource(normalResId[index]);
                         live_play_tv_title.setTextColor(getResources().getColor(R.color.color_secondary_text));
-                        live_play_tv_title.setText(indicatorText[index]);
                     }
 
                     @Override
@@ -461,7 +457,9 @@ public class LivePlayActivity extends BaseActivity
                 titleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        viewPager.setCurrentItem(index);
+                        fragmentContainerHelper.handlePageSelected(index);
+                        showHideFragment(fragments[index], fragments[current]);
+                        current = index;
                     }
                 });
                 return titleView;
@@ -481,7 +479,7 @@ public class LivePlayActivity extends BaseActivity
 
         navigator.setAdapter(navigatorAdapter);
         indicator.setNavigator(navigator);
-        ViewPagerHelper.bind(indicator, viewPager);
+        fragmentContainerHelper.attachMagicIndicator(indicator);
     }
 
 
