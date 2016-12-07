@@ -41,6 +41,11 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
 
     boolean isAutoScrolled = true;
 
+    ViewPager viewPager;
+    BaseViewHolder viewHolder;
+    ExploreListItemBean bean;
+
+
     public ExploreListAdapter(List data) {
         super(data);
         addItemType(ExploreListItemBean.ADS, R.layout.item_explore_list_ads_layout);
@@ -50,8 +55,11 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
 
     @Override
     protected void convert(final BaseViewHolder viewHolder, final ExploreListItemBean bean) {
+
         switch (viewHolder.getItemViewType()) {
             case ExploreListItemBean.ADS:
+
+
 
                 List<View> viewList = new ArrayList<>();
                 ImageView iv_head = new ImageView(mContext);
@@ -71,65 +79,18 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                     viewList.add(iv_ads);
                 }
 
-                final ViewPager viewPager = viewHolder.getView(R.id.viewpager);
+                this.viewPager = viewHolder.getView(R.id.viewpager);
+                this.viewHolder = viewHolder;
+                this.bean = bean;
                 final ExploreAdsAdapter pageAdapter = new ExploreAdsAdapter(viewList);
                 viewPager.setOffscreenPageLimit(4);
                 viewPager.setAdapter(pageAdapter);
                 viewHolder.setText(R.id.tv_title, bean.getTitle());
 
-                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                viewPager.addOnPageChangeListener(pageChangeListener);
 
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        if (position == 0){
-                            viewHolder.setText(R.id.tv_title, bean.getTitle());
-                            return;
-                        }
-                        viewHolder.setText(R.id.tv_title, bean.getAds().get(position - 1).getTitle());
-
-                        Flowable.just(0)
-                                .delay(2, TimeUnit.SECONDS)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<Integer>() {
-
-                                    @Override
-                                    public void accept(Integer integer) throws Exception {
-                                        if (isAutoScrolled == false) {
-                                            return;
-                                        }
-                                        int current = viewPager.getCurrentItem();
-                                        if (current + 1 == viewPager.getChildCount()) {
-                                            viewPager.setCurrentItem(0, true);
-                                        } else {
-                                            viewPager.setCurrentItem(current + 1, true);
-                                        }
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        switch (state){
-                            case ViewPager.SCROLL_STATE_DRAGGING:
-                                isAutoScrolled = false;
-                                break;
-                            case ViewPager.SCROLL_STATE_SETTLING:
-                                isAutoScrolled = false;
-                                break;
-                            case ViewPager.SCROLL_STATE_IDLE:
-                                isAutoScrolled = true;
-                                break;
-                        }
-                    }
-                });
-
-                viewPager.setCurrentItem(0, false);
-
+                viewPager.setCurrentItem(0);
+                pageChangeListener.onPageScrollStateChanged(ViewPager.SCROLL_STATE_IDLE);
 
                 //MagicIndicator
                 MagicIndicator magicIndicator = viewHolder.getView(R.id.magic_indicator);
@@ -151,5 +112,56 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 break;
         }
     }
+    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (position == 0) {
+                viewHolder.setText(R.id.tv_title, bean.getTitle());
+                return;
+            }
+            viewHolder.setText(R.id.tv_title, bean.getAds().get(position - 1).getTitle());
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            switch (state) {
+                case ViewPager.SCROLL_STATE_DRAGGING:
+                    isAutoScrolled = false;
+                    break;
+                case ViewPager.SCROLL_STATE_SETTLING:
+                    isAutoScrolled = false;
+                    break;
+                case ViewPager.SCROLL_STATE_IDLE:
+                    isAutoScrolled = true;
+                    Flowable.just(0)
+                            .delay(3, TimeUnit.SECONDS)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<Integer>() {
+
+                                @Override
+                                public void accept(Integer integer) throws Exception {
+                                    if (isAutoScrolled == false) {
+                                        return;
+                                    }
+                                    int current = viewPager.getCurrentItem();
+                                    if (current + 1 == viewPager.getChildCount()) {
+                                        viewPager.setCurrentItem(0, true);
+                                    } else {
+                                        viewPager.setCurrentItem(current + 1, true);
+                                    }
+                                }
+                            });
+                    break;
+            }
+        }
+
+        ;
+    };
 }
