@@ -1,8 +1,8 @@
 # C9MJ
-该项目是本人为熟悉开发流程而设，不得用于商业用途。包含新闻浏览与视频直播（仍在开发中）
+    该项目是本人为熟悉开发流程而设，不得用于商业用途。包含新闻浏览与视频直播（仍在开发中）
 
 ##基本架构
-MVP+Glide+Retrofit+RxJava2
+    MVP + Glide + Retrofit + RxJava2
 ###本项目所用开源库如下
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
@@ -57,4 +57,4 @@ MVP+Glide+Retrofit+RxJava2
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_with_controller_2.jpg" width = "100%"/>
 
 ## 关于
-本项目所有接口Api均利用Fiddler抓包分析所得，只用于分享、学习。
+    本项目所有接口Api均利用Fiddler抓包分析所得，只用于分享、学习。
