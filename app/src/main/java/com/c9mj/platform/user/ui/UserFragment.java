@@ -21,8 +21,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.PhotoUtil;
-import com.c9mj.platform.util.SnackbarUtil;
 import com.c9mj.platform.util.SpHelper;
+import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 
 import org.joda.time.DateTime;
@@ -143,9 +143,9 @@ public class UserFragment extends BaseFragment {
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {
-                    SnackbarUtil.show(getString(R.string.user_carema_cancel));
+                    ToastUtil.show(getString(R.string.user_carema_cancel));
                 } else {
-                    SnackbarUtil.show( getString(R.string.error_unknown));
+                    ToastUtil.show( getString(R.string.error_unknown));
                 }
             }
             break;
@@ -155,9 +155,9 @@ public class UserFragment extends BaseFragment {
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {
-                    SnackbarUtil.show( getString(R.string.user_carema_cancel));
+                    ToastUtil.show( getString(R.string.user_carema_cancel));
                 } else {
-                    SnackbarUtil.show(getString(R.string.error_unknown));
+                    ToastUtil.show(getString(R.string.error_unknown));
                 }
             }
             break;

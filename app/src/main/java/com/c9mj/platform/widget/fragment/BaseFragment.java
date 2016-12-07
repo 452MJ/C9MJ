@@ -2,8 +2,6 @@ package com.c9mj.platform.widget.fragment;
 
 import android.app.Activity;
 
-import com.c9mj.platform.util.SnackbarUtil;
-
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**

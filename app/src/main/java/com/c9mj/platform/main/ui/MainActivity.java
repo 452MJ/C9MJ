@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.ui.ExploreFragment;
 import com.c9mj.platform.live.ui.LiveFragment;
-import com.c9mj.platform.util.SnackbarUtil;
+import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.user.ui.UserFragment;
 
@@ -62,8 +62,6 @@ public class MainActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        SnackbarUtil.init(getWindow().getDecorView());
 
         initFragment();
         initViewPager();
@@ -148,7 +146,7 @@ public class MainActivity extends SupportActivity {
     public void onBackPressedSupport() {
         if (System.currentTimeMillis() - exitTime > 2000) {
             exitTime = System.currentTimeMillis();
-            SnackbarUtil.show(getString(R.string.second_exit));
+            ToastUtil.show(getString(R.string.second_exit));
 //            Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
         } else {
             super.onBackPressedSupport();

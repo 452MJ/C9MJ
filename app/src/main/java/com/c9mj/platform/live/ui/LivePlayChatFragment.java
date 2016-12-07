@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LivePlayChatAdapter;
 import com.c9mj.platform.live.mvp.model.DanmuBean;
-import com.c9mj.platform.util.SnackbarUtil;
+import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -100,10 +100,10 @@ public class LivePlayChatFragment extends BaseFragment {
     public void onClick() {
         String danmu = et_danmu.getText().toString();
         if (TextUtils.isEmpty(danmu)) {
-            SnackbarUtil.show("发送弹幕内容不能为空");
+            ToastUtil.show("发送弹幕内容不能为空");
             return;
         }else if (activity == null){
-            SnackbarUtil.show("发送弹幕内容失败");
+            ToastUtil.show("发送弹幕内容失败");
             return;
         }
 
