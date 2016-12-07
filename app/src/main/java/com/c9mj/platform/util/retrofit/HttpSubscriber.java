@@ -1,12 +1,12 @@
 package com.c9mj.platform.util.retrofit;
 
-import rx.Subscriber;
+import io.reactivex.subscribers.DefaultSubscriber;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
-public abstract class HttpSubscriber<T> extends Subscriber<T>{
+public abstract class HttpSubscriber<T> extends DefaultSubscriber<T> {
 
     public abstract void _onNext(T t);
     public abstract void _onError(String message);
@@ -17,7 +17,7 @@ public abstract class HttpSubscriber<T> extends Subscriber<T>{
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
 
     }
 

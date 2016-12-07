@@ -5,12 +5,9 @@ import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.adapter.rxjava.Result;
+import io.reactivex.Flowable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  * author: LMJ
@@ -21,7 +18,7 @@ public interface ExploreAPI {
     public static final int LIMIT = 20;
 
     @GET("/nc/article/list/{explore_id}/{offset}-{limit}.html")
-    Observable<JsonObject> getExploreList(
+    Flowable<JsonObject> getExploreList(
             @Path("explore_id") String explore_id,
             @Path("offset") int page,
             @Path("limit") int limit
@@ -29,6 +26,6 @@ public interface ExploreAPI {
     );
 
     @GET("/nc/article/{docid}/full.html")
-    Observable<String> getExploreDetail(@Path("docid") String docid);
+    Flowable<String> getExploreDetail(@Path("docid") String docid);
 
 }

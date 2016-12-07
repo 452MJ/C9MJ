@@ -4,12 +4,19 @@ import com.blankj.utilcode.utils.NetworkUtils;
 import com.c9mj.platform.MyApplication;
 import com.c9mj.platform.live.mvp.model.LiveBaseBean;
 import com.c9mj.platform.util.retrofit.exception.RetrofitException;
-import com.google.gson.JsonObject;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import org.reactivestreams.Publisher;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Flowable;
+import io.reactivex.FlowableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -17,19 +24,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * author: LMJ
  * date: 2016/9/1
  */
-public class RetrofitHelper{
+public class RetrofitHelper {
 
     public static final String BASE_EXPLORE_URL = "http://c.m.163.com";
     public static final String BASE_LIVE_URL = "http://api.maxjia.com";
@@ -96,7 +97,7 @@ public class RetrofitHelper{
                                 .client(httpBuidler.build())
                                 .baseUrl(BASE_EXPLORE_URL)
                                 .addConverterFactory(GsonConverterFactory.create())
-                                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                                 .build();
                     }
                 }
@@ -114,7 +115,7 @@ public class RetrofitHelper{
                     live = new Retrofit.Builder()
                             .baseUrl(BASE_LIVE_URL)
                             .addConverterFactory(GsonConverterFactory.create())
-                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                             .build();
                 }
             }
@@ -129,7 +130,7 @@ public class RetrofitHelper{
                         .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
                         .baseUrl(BASE_USER_URL)
                         .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build();
             }
         }
@@ -143,36 +144,30 @@ public class RetrofitHelper{
                         .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
                         .baseUrl(BASE_PANDA_URL)
                         .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build();
             }
         }
         return panda;
     }
 
-    public static <T> Observable.Transformer<LiveBaseBean<T>, T> handleLiveResult(){
-        return new Observable.Transformer<LiveBaseBean<T>, T>() {//被观察者：XXBasrBean<T> --> T
+    public static <T> FlowableTransformer<LiveBaseBean<T>, T> handleLiveResult(){
+        return new FlowableTransformer<LiveBaseBean<T>, T>() {
             @Override
-            public Observable<T> call(Observable<LiveBaseBean<T>> baseBeanObservable) {//Step 1：获取Observable<XXBaseBean<T>>
-                return baseBeanObservable.flatMap(new Func1<LiveBaseBean<T>, Observable<T>>() {//Step 2：把Observable<XXBaseBean<T>>转换为Observable<T>
+            public Publisher<T> apply(final Flowable<LiveBaseBean<T>> upstream) {
+                return upstream.flatMap(new Function<LiveBaseBean<T>, Publisher<T>>() {
                     @Override
-                    public Observable<T> call(final LiveBaseBean<T> baseBean) {//Step 3:根据返回码决定是否发送事件
-                        if (baseBean.getStatus().equals("ok")){// ok：成功
-                            return Observable.create(new Observable.OnSubscribe<T>() {
-                                @Override
-                                public void call(Subscriber<? super T> subscriber) {
-                                    try {
-                                        subscriber.onNext(baseBean.getResult());//发送事件给Subscriber
-                                        subscriber.onCompleted();
-                                    }catch (Exception e){
-                                        subscriber.onError(e);
-                                    }
+                    public Publisher<T> apply(final LiveBaseBean<T> baseBean) throws Exception {
+                        return new Publisher<T>() {
+                            @Override
+                            public void subscribe(org.reactivestreams.Subscriber<? super T> subscriber) {
+                                if (baseBean.getStatus().equals("ok")){
+                                    subscriber.onNext(baseBean.getResult());
+                                }else {
+                                    subscriber.onError(new RetrofitException(baseBean.getMsg()));
                                 }
-                            });
-                        }else {//error:错误Exception
-                            return Observable.error(new RetrofitException(baseBean.getMsg()));
-                        }
-
+                            }
+                        };
                     }
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
             }

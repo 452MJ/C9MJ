@@ -1,7 +1,5 @@
 package com.c9mj.platform.live.mvp.presenter.impl;
 
-import android.content.Context;
-
 import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 import com.c9mj.platform.live.mvp.presenter.ILiveListPresenter;

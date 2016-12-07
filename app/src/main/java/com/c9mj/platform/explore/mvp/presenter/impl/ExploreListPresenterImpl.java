@@ -13,14 +13,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.reactivestreams.Publisher;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.R.id.list;
 
@@ -36,15 +39,14 @@ public class ExploreListPresenterImpl implements IExploreListPresenter {
         this.view = view;
     }
 
-
     @Override
     public void getExploreList(String explore_id, int offset, int limit) {
         RetrofitHelper.getExploreHelper().create(ExploreAPI.class)
                 .getExploreList(explore_id, offset, limit)
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Func1<JsonObject, Observable<List<ExploreListItemBean>>>() {
+                .flatMap(new Function<JsonObject, Publisher<List<ExploreListItemBean>>>() {
                     @Override
-                    public Observable<List<ExploreListItemBean>> call(JsonObject jsonObject) {
+                    public Publisher<List<ExploreListItemBean>> apply(JsonObject jsonObject) throws Exception {
                         for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
                             if (entry.getValue().isJsonArray()) {
                                 JsonArray array = entry.getValue().getAsJsonArray();
@@ -53,7 +55,7 @@ public class ExploreListPresenterImpl implements IExploreListPresenter {
                                 for (JsonElement element : array) {
                                     list.add((ExploreListItemBean) GsonHelper.parseJson(element, ExploreListItemBean.class));
                                 }
-                                return Observable.just(list);
+                                return Flowable.just(list);
                             }
                         }
                         return null;
