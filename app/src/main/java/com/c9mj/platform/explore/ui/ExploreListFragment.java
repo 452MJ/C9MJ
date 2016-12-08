@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.adapter.ExploreListAdapter;
 import com.c9mj.platform.explore.api.ExploreAPI;
-import com.c9mj.platform.explore.mvp.model.ExploreListItemBean;
+import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
 import com.c9mj.platform.explore.mvp.presenter.impl.ExploreListPresenterImpl;
 import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
 import com.c9mj.platform.live.api.LiveAPI;

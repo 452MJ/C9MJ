@@ -1,6 +1,6 @@
 package com.c9mj.platform.explore.mvp.view;
 
-import com.c9mj.platform.explore.mvp.model.ExploreListItemBean;
+import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
 import com.c9mj.platform.util.retrofit.exception.IErrorView;
 
 import java.util.List;

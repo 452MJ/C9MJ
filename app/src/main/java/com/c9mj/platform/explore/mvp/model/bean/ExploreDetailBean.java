@@ -1,4 +1,4 @@
-package com.c9mj.platform.explore.mvp.model;
+package com.c9mj.platform.explore.mvp.model.bean;
 
 import com.google.gson.annotations.SerializedName;
 

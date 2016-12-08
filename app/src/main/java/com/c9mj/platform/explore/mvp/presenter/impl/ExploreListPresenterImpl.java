@@ -1,9 +1,7 @@
 package com.c9mj.platform.explore.mvp.presenter.impl;
 
-import android.content.Context;
-
 import com.c9mj.platform.explore.api.ExploreAPI;
-import com.c9mj.platform.explore.mvp.model.ExploreListItemBean;
+import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
 import com.c9mj.platform.explore.mvp.presenter.IExploreListPresenter;
 import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
 import com.c9mj.platform.util.GsonHelper;
@@ -20,12 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-
-import static android.R.id.list;
 
 /**
  * author: LMJ
