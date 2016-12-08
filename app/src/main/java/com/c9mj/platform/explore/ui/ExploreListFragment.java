@@ -123,10 +123,10 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
 
         adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_loading, (ViewGroup) recyclerView.getParent(), false));
-        View view_empty = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
-        TextView tv_empty = (TextView) view_empty.findViewById(R.id.tv_empty);
+        View emptyView = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
+        TextView tv_empty = (TextView) emptyView.findViewById(R.id.tv_empty);
         tv_empty.setText(getString(R.string.explore_empty));
-        adapter.setEmptyView(view_empty);
+        adapter.setEmptyView(emptyView);
         adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
 
@@ -152,10 +152,10 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
             adapter.loadComplete();//下一次不再加载更多，并显示FooterView
-            View view_footer = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
-            TextView tv_footer = (TextView) view_footer.findViewById(R.id.tv_footer);
+            View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
+            TextView tv_footer = (TextView) footerView.findViewById(R.id.tv_footer);
             tv_footer.setText(getString(R.string.explore_footer));
-            adapter.addFooterView(view_footer);
+            adapter.addFooterView(footerView);
             return;
         }
 //        adapter.notifyDataSetChanged();
