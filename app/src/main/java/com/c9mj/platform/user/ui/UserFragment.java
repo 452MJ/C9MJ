@@ -67,6 +67,16 @@ public class UserFragment extends BaseFragment {
         return view;
     }
 
+    private void initView() {
+        //初始化MVP
+
+        //设置RefreshLayout
+
+        //设置RecyclerView
+
+        /***设置其他View***/
+    }
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);

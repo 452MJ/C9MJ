@@ -127,16 +127,16 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-
-        initData();
-        initFragment();
-        initViewPager();
-        initIndicator();
-        initRecyclerView();
-
+        initView();
     }
 
-    private void initData() {
+    private void initView() {
+        //初始化MVP
+
+        //设置RefreshLayout
+
+        /***设置其他View***/
+        //不同栏目分组
         idArray = context.getResources().getStringArray(R.array.explore_type_id);
         aliasArray = context.getResources().getStringArray(R.array.explore_type_alias);
         enameArray = context.getResources().getStringArray(R.array.explore_type_ename);
@@ -192,24 +192,52 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
         titleList = parseStringToListByColons(titleString);
         selectedTitleList = parseStringToListByColons(selectedTitleString);
         unSelectedTitleList = parseStringToListByColons(unselectedTitleString);
+        //设置栏目RecyclerView
+        selectedAdapter = new ExploreSelectedTitleListAdapter(selectedTitleList);
+        unselectedAdapter = new ExploreUnSelectedTitleListAdapter(unSelectedTitleList);
 
-    }
+        ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(selectedAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+        itemTouchHelper.attachToRecyclerView(rv_selected);
+        // 开启拖拽
+        selectedAdapter.enableDragItem(itemTouchHelper, R.id.cardview, true);
+        selectedAdapter.setOnItemDragListener(this);
+        // 开启滑动删除
+        selectedAdapter.enableSwipeItem();
+        selectedAdapter.setOnItemSwipeListener(this);
 
-    private void initFragment() {
+        rv_unselected.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
+                selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(pos));
+
+                int index = titleList.indexOf(unSelectedTitleList.get(pos));
+                String explore_type_id = idArray[index];
+                fragmentList.add(ExploreListFragment.newInstance(explore_type_id));
+
+                unselectedAdapter.remove(pos);
+
+                navigator.notifyDataSetChanged();    // must call firstly
+                fragmentAdapter.notifyDataSetChanged();
+            }
+        });
+
+        rv_selected.setLayoutManager(new GridLayoutManager(context, 4));
+        rv_unselected.setLayoutManager(new GridLayoutManager(context, 4));
+        rv_selected.setAdapter(selectedAdapter);
+        rv_unselected.setAdapter(unselectedAdapter);
+
+        //ViewPager + Indicator
         for (int i = 0; i < selectedTitleList.size(); i++) {
             int index = titleList.indexOf(selectedTitleList.get(i));
             String explore_type_id = idArray[index];
             fragmentList.add(ExploreListFragment.newInstance(explore_type_id));
         }
-    }
 
-    private void initViewPager() {
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
 //        viewPager.setOffscreenPageLimit(2);
-    }
 
-    private void initIndicator() {
         navigator = new CommonNavigator(context);
         navigator.setAdjustMode(false);
         navigator.setIndicatorOnTop(true);
@@ -289,42 +317,8 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
         navigator.setAdapter(navigatorAdapter);
         indicator.setNavigator(navigator);
         ViewPagerHelper.bind(indicator, viewPager);
-    }
 
-    private void initRecyclerView(){
-        selectedAdapter = new ExploreSelectedTitleListAdapter(selectedTitleList);
-        unselectedAdapter = new ExploreUnSelectedTitleListAdapter(unSelectedTitleList);
 
-        ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(selectedAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
-        itemTouchHelper.attachToRecyclerView(rv_selected);
-        // 开启拖拽
-        selectedAdapter.enableDragItem(itemTouchHelper, R.id.cardview, true);
-        selectedAdapter.setOnItemDragListener(this);
-        // 开启滑动删除
-        selectedAdapter.enableSwipeItem();
-        selectedAdapter.setOnItemSwipeListener(this);
-
-        rv_unselected.addOnItemTouchListener(new OnItemChildClickListener() {
-            @Override
-            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
-                selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(pos));
-
-                int index = titleList.indexOf(unSelectedTitleList.get(pos));
-                String explore_type_id = idArray[index];
-                fragmentList.add(ExploreListFragment.newInstance(explore_type_id));
-
-                unselectedAdapter.remove(pos);
-
-                navigator.notifyDataSetChanged();    // must call firstly
-                fragmentAdapter.notifyDataSetChanged();
-            }
-        });
-
-        rv_selected.setLayoutManager(new GridLayoutManager(context, 4));
-        rv_unselected.setLayoutManager(new GridLayoutManager(context, 4));
-        rv_selected.setAdapter(selectedAdapter);
-        rv_unselected.setAdapter(unselectedAdapter);
     }
 
     @OnClick({

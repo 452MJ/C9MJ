@@ -63,6 +63,10 @@ public class LivePlayAvatarFragment extends BaseFragment {
         return view;
     }
 
+    /**
+     * ListPlayActivity调用，更新主播详情
+     * @param detailBean
+     */
     public void updateLiveDetail(LiveDetailBean detailBean) {
 
         tv_name.setText(detailBean.getLive_nickname());

@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveListAdapter;
@@ -20,7 +21,6 @@ import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveListFragment;
-import com.c9mj.platform.main.ui.MainFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
@@ -95,9 +95,7 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        initMVP();
-        initRefreshView();
-        initRecyclerView();
+        initView();
 
         refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
         refreshLayout.setRefreshing(true);
@@ -105,27 +103,27 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
     }
 
-    private void initMVP() {
+    private void initView() {
+        //初始化MVP
         presenter = new LiveListPresenterImpl(this);
-    }
 
-    private void initRefreshView() {
+        //设置RefreshLayout
         refreshLayout.setColorSchemeResources(R.color.color_primary);
         refreshLayout.setOnRefreshListener(this);
-    }
 
-    private void initRecyclerView() {
+        //设置RecyclerView
         adapter = new LiveListAdapter(liveList);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
         adapter.openLoadMore(LiveAPI.LIMIT);//加载更多的触发条件
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
-        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_live_loading, (ViewGroup) recyclerView.getParent(), false));
-        adapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.layout_live_empty, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_loading, (ViewGroup) recyclerView.getParent(), false));
+        View view_empty = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
+        TextView tv_empty = (TextView) view_empty.findViewById(R.id.tv_empty);
+        tv_empty.setText(getString(R.string.live_empty));
         adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
-
         recyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
@@ -141,6 +139,7 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
             }
         });
 
+        /***设置其他View***/
     }
 
     @Override
@@ -151,7 +150,10 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
             adapter.loadComplete();//下一次不再加载更多，并显示FooterView
-            adapter.addFooterView(LayoutInflater.from(context).inflate(R.layout.layout_live_footer, (ViewGroup) recyclerView.getParent(), false));
+            View view_footer = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
+            TextView tv_footer = (TextView) view_footer.findViewById(R.id.tv_footer);
+            tv_footer.setText(getString(R.string.live_footer));
+            adapter.addFooterView(view_footer);
             return;
         }
 //        adapter.notifyDataSetChanged();

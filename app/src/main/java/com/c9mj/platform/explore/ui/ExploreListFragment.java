@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.adapter.ExploreListAdapter;
@@ -82,12 +83,12 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
 
         explore_type_id = getArguments().getString(EXPLORE_TYPE_ID);//得到传入的explore_type_id
 
-        initMVP();
-        initRefreshView();
-        initRecyclerView();
+        initView();
 
         return view;
     }
+
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -105,26 +106,27 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         presenter.getExploreList(explore_type_id, offset, LiveAPI.LIMIT);
     }
 
-
-
-    private void initMVP() {
+    private void initView() {
+        //初始化MVP
         presenter = new ExploreListPresenterImpl(this);
-    }
 
-    private void initRefreshView() {
+        //设置RefreshLayout
         refreshLayout.setColorSchemeResources(R.color.color_primary);
         refreshLayout.setOnRefreshListener(this);
-    }
 
-    private void initRecyclerView() {
+        //设置RecyclerView
         adapter = new ExploreListAdapter(exploreList);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
         adapter.openLoadMore(ExploreAPI.LIMIT);//加载更多的触发条件
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
-        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_explore_loading, (ViewGroup) recyclerView.getParent(), false));
-        adapter.setEmptyView(LayoutInflater.from(context).inflate(R.layout.layout_explore_empty, (ViewGroup) recyclerView.getParent(), false));
+
+        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_loading, (ViewGroup) recyclerView.getParent(), false));
+        View view_empty = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
+        TextView tv_empty = (TextView) view_empty.findViewById(R.id.tv_empty);
+        tv_empty.setText(getString(R.string.explore_empty));
+        adapter.setEmptyView(view_empty);
         adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
 
@@ -140,6 +142,7 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
             }
         });
 
+        /***设置其他View***/
     }
 
     @Override
@@ -149,7 +152,10 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
             adapter.loadComplete();//下一次不再加载更多，并显示FooterView
-            adapter.addFooterView(LayoutInflater.from(context).inflate(R.layout.layout_explore_footer, (ViewGroup) recyclerView.getParent(), false));
+            View view_footer = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
+            TextView tv_footer = (TextView) view_footer.findViewById(R.id.tv_footer);
+            tv_footer.setText(getString(R.string.explore_footer));
+            adapter.addFooterView(view_footer);
             return;
         }
 //        adapter.notifyDataSetChanged();

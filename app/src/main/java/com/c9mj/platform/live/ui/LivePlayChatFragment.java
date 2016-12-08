@@ -86,15 +86,23 @@ public class LivePlayChatFragment extends BaseFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        initRecyclerView();
+        initView();
     }
 
-    private void initRecyclerView() {
+    private void initView() {
+        //初始化MVP
+
+        //设置RefreshLayout
+
+        //设置RecyclerView
         adapter = new LivePlayChatAdapter(danmuList);
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        /***设置其他View***/
+
     }
     @OnClick(R.id.tv_send)
     public void onClick() {

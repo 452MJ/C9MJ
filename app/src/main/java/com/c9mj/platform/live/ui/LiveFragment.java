@@ -101,22 +101,26 @@ public class LiveFragment extends BaseFragment {
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
-        initData();
-        initFragment();
-        initViewPager();
-        initIndicator();
+        initView();
     }
 
-    private void initData() {
+    private void initView() {
+        //初始化MVP
+
+        //设置RefreshLayout
+
+        //设置RecyclerView
+
+        /***设置其他View***/
+        //直播平台ID
         for (String id : context.getResources().getStringArray(R.array.live_type_id)) {
             typeIdList.add(id);
         }
+        //直播平台名称
         for (String name : context.getResources().getStringArray(R.array.live_type_name)) {
             typeNameList.add(name);
         }
-    }
-
-    private void initFragment() {
+        //顶部栏标题
         titleList.add(getString(R.string.live_lol));
         titleList.add(getString(R.string.live_ow));
         titleList.add(getString(R.string.live_dota2));
@@ -127,15 +131,10 @@ public class LiveFragment extends BaseFragment {
         fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_dota2)));
         fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_hs)));
         fragmentList.add(LiveListFragment.newInstance(getString(R.string.game_type_csgo)));
-    }
-
-    private void initViewPager() {
+        //ViewPager + Indicator
         fragmentAdapter = new FragmentAdapter(this.getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setOffscreenPageLimit(4);
-    }
-
-    private void initIndicator() {
 
         CommonNavigator navigator = new CommonNavigator(context);
         navigator.setAdjustMode(true);

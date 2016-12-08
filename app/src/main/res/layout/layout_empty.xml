@@ -14,13 +14,13 @@
         android:textSize="@dimen/textsize_primary"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView11" />
+        android:id="@+id/tv_empty" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView6"
-        android:layout_above="@+id/textView11"
+        android:id="@+id/iv_empty"
+        android:layout_above="@+id/tv_empty"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_empty" />
 

@@ -9,7 +9,7 @@
     <string name="second_exit">"再按一次Back键退出程序"</string>
 
     <!--发现-->
-    <string name="explore_end">无更多内容</string>
+    <string name="explore_footer">无更多内容</string>
     <string name="explore_empty">暂无内容</string>
 
     <!--直播-->
@@ -18,7 +18,7 @@
     <string name="live_dota2">DOTA2</string>
     <string name="live_hs">炉石传说</string>
     <string name="live_csgo">CSGO</string>
-    <string name="live_end">无更多直播</string>
+    <string name="live_footer">无更多直播</string>
     <string name="live_loadmore_error">点击尝试加载更多</string>
     <string name="live_empty">暂无直播</string>
     <string name="game_type_lol">lol</string>

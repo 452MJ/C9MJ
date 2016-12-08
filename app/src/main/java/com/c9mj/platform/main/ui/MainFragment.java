@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,18 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.c9mj.platform.R;
+import com.c9mj.platform.demo.adapter.DemoAdapter;
+import com.c9mj.platform.demo.mvp.model.bean.DemoBean;
+import com.c9mj.platform.demo.mvp.presenter.impl.DemoPresenterImpl;
 import com.c9mj.platform.explore.ui.ExploreFragment;
 import com.c9mj.platform.live.ui.LiveFragment;
 import com.c9mj.platform.live.ui.LiveListFragment;
 import com.c9mj.platform.user.ui.UserFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
+import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -37,6 +43,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
+
+import static android.R.id.list;
+import static com.c9mj.platform.R.id.layout_refresh;
 
 /**
  * author: LMJ
@@ -89,13 +98,20 @@ public class MainFragment extends BaseFragment {
 
         context = view.getContext();
 
-        initFragment();
-        initIndicator();
+        initView();
 
         return view;
     }
 
-    private void initFragment() {
+    private void initView() {
+        //初始化MVP
+
+        //设置RefreshLayout
+
+        //设置RecyclerView
+
+        /***设置其他View***/
+        //Fragment相关
         fragments[0] = ExploreFragment.newInstance();
         fragments[1] = LiveFragment.newInstance();
         fragments[2] = UserFragment.newInstance();
@@ -106,11 +122,7 @@ public class MainFragment extends BaseFragment {
                 fragments[2]);
 
         current = 0;
-    }
-
-    private void initIndicator() {
-
-
+        //MagicIndicator
         CommonNavigator navigator = new CommonNavigator(context);
         navigator.setAdjustMode(true);
         navigator.setFollowTouch(true);
@@ -170,6 +182,5 @@ public class MainFragment extends BaseFragment {
         indicator.setNavigator(navigator);
         fragmentContainerHelper.attachMagicIndicator(indicator);
     }
-
 
 }

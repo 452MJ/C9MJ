@@ -210,12 +210,7 @@ public class LivePlayActivity extends BaseActivity
         live_id = intent.getStringExtra(LIVE_ID);
         game_type = intent.getStringExtra(GAME_TYPE);
 
-        initMVP();
-        initSurfaceView();
-        initController();
-        initDanmuView();
-        initViewPager();
-        initIndicator();
+        initView();
 
         presenter.getLiveDetail(live_type, live_id, game_type);     //请求直播详情
         presenter.getDanmuDetail(live_id, live_type);                          //请求弹幕服务器相关参数
@@ -299,14 +294,16 @@ public class LivePlayActivity extends BaseActivity
         }
     }
 
-    private void initMVP() {
+    private void initView() {
+        //初始化MVP
         presenter = new LivePlayPresenterImpl(this);
-    }
 
-    /**
-     * 监听SurfaceView回调
-     */
-    private void initSurfaceView() {
+        //设置RefreshLayout
+
+        //设置RecyclerView
+
+        /***设置其他View***/
+        //SurfaceView监听回调
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -333,13 +330,7 @@ public class LivePlayActivity extends BaseActivity
             }
         });
 
-    }
-
-    /**
-     * 初始化控制器
-     */
-    private void initController() {
-
+        //MediaController
         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
@@ -352,13 +343,7 @@ public class LivePlayActivity extends BaseActivity
             }
         });
 
-    }
-
-    /**
-     * 初始化弹幕引擎
-     */
-    private void initDanmuView() {
-
+        //弹幕烈焰使
         iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
         iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
 
@@ -394,9 +379,8 @@ public class LivePlayActivity extends BaseActivity
         danmakuContext = DanmakuContext.create();
         danmakuContext.setDuplicateMergingEnabled(true);//设置合并重复弹幕
         danmuView.prepare(parser, danmakuContext);
-    }
 
-    private void initViewPager(){
+        //ViewPager + Indicator
         titleList.add(indicatorText[0]);
         titleList.add(indicatorText[1]);
 
@@ -408,9 +392,7 @@ public class LivePlayActivity extends BaseActivity
 
         loadMultipleRootFragment(R.id.layout_container, 0, fragments);
         current = 0;
-    }
 
-    private void initIndicator(){
         CommonNavigator navigator = new CommonNavigator(context);
         navigator.setAdjustMode(true);
         navigator.setFollowTouch(true);
@@ -481,7 +463,6 @@ public class LivePlayActivity extends BaseActivity
         indicator.setNavigator(navigator);
         fragmentContainerHelper.attachMagicIndicator(indicator);
     }
-
 
     /**
      * 配置MediaPlayer相关参数
