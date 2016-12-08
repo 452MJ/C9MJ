@@ -106,17 +106,14 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
 
     @Override
     public void updateWebView(String html) {
-        Logger.d("web");
     }
 
     @Override
     public void updateExploreDetail(ExploreDetailBean detailBean) {
-        Logger.d("detail");
     }
 
     @Override
     public void updateRecyclerView(List<ExploreDetailBean.RelativeSysBean> relative_sys) {
-        Logger.d("recycler");
         adapter.setNewData(relative_sys);
     }
 

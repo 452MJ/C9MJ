@@ -45,7 +45,4 @@ public class RootActivity extends SupportActivity {
 
         loadRootFragment(R.id.layout_container, MainFragment.newInstance());
     }
-
-
-
 }
