@@ -5,4 +5,5 @@ package com.c9mj.platform.explore.mvp.presenter;
  */
 
 public interface IExploreDetailPresenter {
+    void getExploreDetail(String doc_id);//请求新闻详情
 }

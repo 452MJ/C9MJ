@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '24.0.2'
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.c9mj.platform"
         minSdkVersion 19
@@ -29,7 +29,6 @@ allprojects {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:design:25.0.0'
@@ -73,5 +72,4 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-
 }

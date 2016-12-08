@@ -49,8 +49,6 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
         switch (viewHolder.getItemViewType()) {
             case ExploreListItemBean.ADS:
 
-
-
                 List<View> viewList = new ArrayList<>();
                 ImageView iv_head = new ImageView(mContext);
                 Glide.with(mContext)

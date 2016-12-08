@@ -23,17 +23,20 @@ import com.c9mj.platform.explore.mvp.presenter.impl.ExploreListPresenterImpl;
 import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
 import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.ui.LivePlayActivity;
+import com.c9mj.platform.main.ui.MainFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * author: LMJ
@@ -130,15 +133,13 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 ExploreListItemBean exploreItemBean = adapter.getData().get(i);
-                Intent intent = new Intent(getActivity(), LivePlayActivity.class);
-//                intent.putExtra(LivePlayActivity.LIVE_TYPE, liveItemBean.getLive_type());
-//                intent.putExtra(LivePlayActivity.LIVE_ID, liveItemBean.getLive_id());
-//                intent.putExtra(LivePlayActivity.GAME_TYPE, liveItemBean.getGame_type());
-                startActivity(intent);
+                SupportFragment exploreFragment = (ExploreFragment) getParentFragment();
+                SupportFragment mainFragment = (MainFragment) exploreFragment.getParentFragment();
+                mainFragment.start(ExploreDetailFragment.newInstance(exploreItemBean.getDocid()));
             }
         });
 

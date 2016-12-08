@@ -12,15 +12,15 @@ import java.util.List;
  * Created by Administrator on 2016/11/16.
  */
 
-public class ExploreDetailListAdapter extends BaseQuickAdapter<ExploreDetailBean.DetailBean.TopiclistNewsBean, BaseViewHolder> {
+public class ExploreDetailTopicListAdapter extends BaseQuickAdapter<ExploreDetailBean.RelativeSysBean, BaseViewHolder> {
 
 
-    public ExploreDetailListAdapter(List<ExploreDetailBean.DetailBean.TopiclistNewsBean> data) {
-        super(R.layout.item_demo_list_layout, data);
+    public ExploreDetailTopicListAdapter(List<ExploreDetailBean.RelativeSysBean> data) {
+        super(R.layout.item_explore_list_topic_layout, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder viewHolder, ExploreDetailBean.DetailBean.TopiclistNewsBean bean) {
+    protected void convert(BaseViewHolder viewHolder, ExploreDetailBean.RelativeSysBean bean) {
 
     }
 }

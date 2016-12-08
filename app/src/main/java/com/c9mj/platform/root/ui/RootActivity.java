@@ -38,9 +38,6 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 public class RootActivity extends SupportActivity {
 
-
-    long exitTime;//用于按两次Back键退出
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +47,5 @@ public class RootActivity extends SupportActivity {
     }
 
 
-    @Override
-    public void onBackPressedSupport() {
-        if (System.currentTimeMillis() - exitTime > 2000) {
-            exitTime = System.currentTimeMillis();
-            ToastUtil.show(getString(R.string.second_exit));
-//            Toast.makeText(this, getString(R.string.second_exit), Toast.LENGTH_SHORT).show();
-        } else {
-            super.onBackPressedSupport();
-        }
-    }
 
 }

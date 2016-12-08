@@ -2,6 +2,7 @@ package com.c9mj.platform.explore.api;
 
 
 import com.google.gson.JsonObject;
+import com.jakewharton.retrofit2.adapter.rxjava2.Result;
 
 import java.util.HashMap;
 
@@ -26,6 +27,6 @@ public interface ExploreAPI {
     );
 
     @GET("/nc/article/{docid}/full.html")
-    Flowable<String> getExploreDetail(@Path("docid") String docid);
+    Flowable<JsonObject> getExploreDetail(@Path("docid") String docid);
 
 }

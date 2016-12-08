@@ -55,6 +55,8 @@ public class MainFragment extends BaseFragment {
 
     private static final String KEY = "key";
 
+    long exitTime;//用于按两次Back键退出
+
     Context context;
 
     SupportFragment[] fragments = new SupportFragment[3];
@@ -183,4 +185,14 @@ public class MainFragment extends BaseFragment {
         fragmentContainerHelper.attachMagicIndicator(indicator);
     }
 
+    @Override
+    public boolean onBackPressedSupport() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            exitTime = System.currentTimeMillis();
+            ToastUtil.show(getString(R.string.second_exit));
+            return true;
+        } else {
+            return super.onBackPressedSupport();
+        }
+    }
 }
