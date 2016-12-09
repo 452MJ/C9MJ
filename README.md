@@ -57,10 +57,10 @@
 
 * 发现 
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "50%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "50%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "50%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "45%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "45%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "45%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "45%"/>
 <br>
 
 * 直播 
