@@ -54,14 +54,23 @@
         releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
         testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 ##部分截图
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_roomlist.jpg" width = "33%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "33%"/>
+发现 
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "50%"/>
+<br>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "50%"/>
+<br>
+直播 
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list.jpg" width = "33%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list_platform.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_portrait.jpg" width = "33%"/>
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape.jpg" width = "100%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_with_controller.jpg" width = "100%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_with_controller_2.jpg" width = "100%"/>
-
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_controller.jpg" width = "100%"/>
+<br>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "100%"/>
+<br>
 ## 关于
   本项目所有接口Api均利用Fiddler抓包分析所得，只用于分享、学习。
-  该项目是本人为熟悉开发流程而设，不得用于商业用途。包含新闻浏览与视频直播（仍在开发中）
+  该项目是本人为熟悉开发流程而设，不得用于商业用途，若有损他人利益则立即删除。
+  主要功能包括新闻浏览与视频直播（仍在开发中，bug可能会比较多...）
