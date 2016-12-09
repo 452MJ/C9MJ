@@ -14,6 +14,7 @@ import com.c9mj.platform.util.GsonHelper;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
 
+import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 
 import java.io.BufferedInputStream;
@@ -31,6 +32,8 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DefaultSubscriber;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -230,8 +233,8 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                         connectToChatRoom(roomid, pandaBean); //连接断开，自动重新连接
                         autoConnectedTime++;
                         if (autoConnectedTime > maxConnectedTime){//超过最大重连次数
-                            e.onNext("无法连接至弹幕服务器！");
                             autoConnectedTime = 0;
+                            e.onNext("无法连接至弹幕服务器！");
                         }else {
                             Thread.sleep(3 * 1000);//3s后再次尝试发送心跳包
                             continue;
@@ -328,12 +331,13 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                     }
                 }
             }
-        }, BackpressureStrategy.BUFFER)
-                .subscribeOn(Schedulers.newThread())
+        }, BackpressureStrategy.DROP)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultSubscriber<String>() {
                     @Override
                     public void onComplete() {
+
                     }
 
                     @Override
@@ -384,4 +388,5 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                     }
                 });
     }
+
 }
