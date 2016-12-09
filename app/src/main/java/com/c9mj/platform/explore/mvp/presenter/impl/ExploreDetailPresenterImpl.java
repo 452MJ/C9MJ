@@ -63,13 +63,13 @@ public class ExploreDetailPresenterImpl implements IExploreDetailPresenter {
                 .flatMap(new Function<ExploreDetailBean, Publisher<String>>() {
                     @Override
                     public Publisher<String> apply(ExploreDetailBean detailBean) throws Exception {
-                        //在这里加工html代码
+                        //在这里处理html代码
                         String html = detailBean.getBody();
 
-                        //添加JS脚本
+                        //添加Javascript脚本
                         html = "<script type=\"text/javascript\" language=\"javascript\"> \n" +
-                                "    function startGallary(){\n" +
-                                "        window.jsObj.startGallaryOnAndroid();\n" +
+                                "    function startGallary(e){\n" +
+                                "        window.jsObj.startGallaryOnAndroid(e);\n" +
                                 "    }\n" +
                                 "</script>\n" + "\n" + html;
 
@@ -77,9 +77,8 @@ public class ExploreDetailPresenterImpl implements IExploreDetailPresenter {
 
                         for (int i = 0; i < imgList.size(); i++) {
                             ExploreDetailBean.ImgBean imgBean = imgList.get(i);
-                            String ref = imgBean.getRef();//注释标签
-
-                            String imgCode = "<img src=\"" + imgBean.getSrc() + "\" id=\"img"+ i +"\" alt=\"" + imgBean.getAlt() + "\" width=100% onclick=\"startGallary()\"/><p>  </p>";
+                            String ref = imgBean.getRef();//标志
+                            String imgCode = "<img src=\"" + imgBean.getSrc() + "\" id=\"img" + i + "\" width=100% onclick=\"startGallary(" + i +")\"/><p style=color:757575;font-size:12px align=center>"+ imgBean.getAlt() +"</p>";
                             //查找到需要插入的位置，并添加图片url
                             StringBuffer buffer = new StringBuffer(html);
                             int pos = buffer.indexOf(ref);

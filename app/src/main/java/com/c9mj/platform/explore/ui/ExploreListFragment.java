@@ -2,7 +2,6 @@ package com.c9mj.platform.explore.ui;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,13 +21,11 @@ import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
 import com.c9mj.platform.explore.mvp.presenter.impl.ExploreListPresenterImpl;
 import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
 import com.c9mj.platform.live.api.LiveAPI;
-import com.c9mj.platform.live.ui.LivePlayActivity;
 import com.c9mj.platform.main.ui.MainFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -139,7 +136,10 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
                 ExploreListItemBean exploreItemBean = adapter.getData().get(i);
                 SupportFragment exploreFragment = (ExploreFragment) getParentFragment();
                 SupportFragment mainFragment = (MainFragment) exploreFragment.getParentFragment();
-                mainFragment.start(ExploreDetailFragment.newInstance(exploreItemBean.getDocid()));
+                mainFragment.start(ExploreDetailFragment.newInstance(
+                        exploreItemBean.getDocid(),
+                        exploreItemBean.getTitle(),
+                        exploreItemBean.getImgsrc()));
             }
         });
 

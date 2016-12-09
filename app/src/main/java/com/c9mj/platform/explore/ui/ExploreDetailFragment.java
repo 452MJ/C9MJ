@@ -3,17 +3,17 @@ package com.c9mj.platform.explore.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,27 +35,34 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.c9mj.platform.R.id.webview;
-
 /**
  * Created by Administrator on 2016/11/16.
  */
 
 public class ExploreDetailFragment extends BaseFragment implements IExploreDetailView {
 
-    private static final String DOC_ID = "key";
+    private static final String DOC_ID = "doc_id";
+    private static final String TITLE = "title";
+    private static final String IMG = "img";
 
     Context context;
-    String doc_id;
+    String doc_id, title, img;
 
     ExploreDetailPresenterImpl presenter;
 
     List<ExploreDetailBean.RelativeSysBean> relativeSysList = new ArrayList<>();
     JsInterface jsInterface = new JsInterface();
 
+    @BindView(R.id.iv_appbar)
+    ImageView iv_appbar;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView tv_title;
+
     @BindView(R.id.cardview_webview)
     CardView cv_webview;
-    @BindView(webview)
+    @BindView(R.id.webview)
     WebView webView;
 
     @BindView(R.id.iv_img_0)
@@ -85,19 +92,15 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
     @BindView(R.id.cardview_relative)
     CardView cv_relative;
     @BindView(R.id.layout_scroller)
-    ScrollView layout_scroller;
-    @BindView(R.id.layout_progressbar)
-    FrameLayout layout_progressbar;
+    NestedScrollView layout_scroller;
 
 
-    public static ExploreDetailFragment newInstance() {
-        return newInstance("");
-    }
-
-    public static ExploreDetailFragment newInstance(String doc_id) {
+    public static ExploreDetailFragment newInstance(String doc_id, String title, String img) {
         ExploreDetailFragment fragment = new ExploreDetailFragment();
         Bundle args = new Bundle();
         args.putString(DOC_ID, doc_id);
+        args.putString(TITLE, title);
+        args.putString(IMG, img);
         fragment.setArguments(args);
         return fragment;
     }
@@ -110,9 +113,11 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
 
         context = view.getContext();
 
-        initView();
-
         doc_id = getArguments().getString(DOC_ID);
+        title = getArguments().getString(TITLE);
+        img = getArguments().getString(IMG);
+
+        initView();
 
         presenter.getExploreDetail(doc_id);
         return attachToSwipeBack(view);
@@ -123,21 +128,32 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
         //初始化MVP
         presenter = new ExploreDetailPresenterImpl(this);
 
+        //设置ToolBar
+        tv_title.setText(title);
+        tv_title.setSelected(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow_normal);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pop();
+            }
+        });
+        Glide.with(this).load(img).into(iv_appbar);
+
         //设置RefreshLayout
 
         //设置RecyclerView
 
         //设置其他View
         // 设置android下容许执行js的脚本
-        // 编码方式
         webView.getSettings().setJavaScriptEnabled(true);
-//        webView.getSettings().setDefaultTextEncodingName("utf-8");
         webView.addJavascriptInterface(jsInterface, "jsObj");
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress >= 80) {
-                    layout_progressbar.setVisibility(View.GONE);
                     layout_scroller.setVisibility(View.VISIBLE);
                 }
             }
@@ -196,28 +212,39 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
     }
 
 
-    @OnClick({R.id.iv_back, R.id.layout_relative_0, R.id.layout_relative_1, R.id.layout_relative_2})
+    @OnClick({R.id.layout_relative_0, R.id.layout_relative_1, R.id.layout_relative_2})
     public void onClick(View view) {
+        ExploreDetailBean.RelativeSysBean relativeSysBean;
         switch (view.getId()) {
-            case R.id.iv_back:
-                pop();
-                break;
             case R.id.layout_relative_0:
-                start(ExploreDetailFragment.newInstance(relativeSysList.get(0).getDocID()));
+                relativeSysBean = relativeSysList.get(0);
+                start(ExploreDetailFragment.newInstance(
+                        relativeSysBean.getDocID(),
+                        relativeSysBean.getTitle(),
+                        relativeSysBean.getImgsrc()));
                 break;
             case R.id.layout_relative_1:
-                start(ExploreDetailFragment.newInstance(relativeSysList.get(1).getDocID()));
+                relativeSysBean = relativeSysList.get(1);
+                start(ExploreDetailFragment.newInstance(
+                        relativeSysBean.getDocID(),
+                        relativeSysBean.getTitle(),
+                        relativeSysBean.getImgsrc()));
                 break;
             case R.id.layout_relative_2:
-                start(ExploreDetailFragment.newInstance(relativeSysList.get(2).getDocID()));
+                relativeSysBean = relativeSysList.get(2);
+                start(ExploreDetailFragment.newInstance(
+                        relativeSysBean.getDocID(),
+                        relativeSysBean.getTitle(),
+                        relativeSysBean.getImgsrc()));
                 break;
         }
     }
 
-    class JsInterface{
+
+    class JsInterface {
         @JavascriptInterface
-        public void startGallaryOnAndroid() {
-            Flowable.just(0)
+        public void startGallaryOnAndroid(int index) {
+            Flowable.just(index)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Integer>() {

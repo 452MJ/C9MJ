@@ -13,4 +13,5 @@
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/color_primary</item>
     </style>
+
 </resources>

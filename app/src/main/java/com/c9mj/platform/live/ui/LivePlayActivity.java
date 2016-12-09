@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,7 +34,6 @@ import com.c9mj.platform.live.mvp.model.LivePandaBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
 import com.c9mj.platform.util.ToastUtil;
-import com.c9mj.platform.util.adapter.FragmentAdapter;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
 import com.c9mj.platform.widget.activity.BaseActivity;
 import com.pili.pldroid.player.AVOptions;
@@ -43,7 +41,6 @@ import com.pili.pldroid.player.PLMediaPlayer;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
@@ -303,6 +300,8 @@ public class LivePlayActivity extends BaseActivity
         //设置RecyclerView
 
         /***设置其他View***/
+        tv_roomname_landscape.setSelected(true);
+
         //SurfaceView监听回调
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
