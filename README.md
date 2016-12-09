@@ -54,18 +54,25 @@
         releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
         testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 ##部分截图
-发现 
+
+* 发现 
+<br>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "33%"/>
 <br>
-直播 
+
+* 直播 
+<br>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list_platform.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_portrait.jpg" width = "33%"/>
 <br>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_controller.jpg" width = "33%"/>
+<br>
+
+* 个人用户
 <br>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "33%"/>
 <br>
