@@ -57,10 +57,10 @@
 
 * 发现 
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "33%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "33%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "33%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "33%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "50%"/>
 <br>
 
 * 直播 
@@ -69,7 +69,7 @@
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list_platform.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_portrait.jpg" width = "33%"/>
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_controller.jpg" width = "33%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_controller.jpg" width = "100%"/>
 <br>
 
 * 个人用户
