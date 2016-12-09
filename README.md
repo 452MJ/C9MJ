@@ -55,20 +55,19 @@
         testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 ##部分截图
 发现 
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "50%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "50%"/>
-<br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "50%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "33%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "33%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "33%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "33%"/>
 <br>
 直播 
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list_platform.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_portrait.jpg" width = "33%"/>
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_controller.jpg" width = "100%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_controller.jpg" width = "33%"/>
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "100%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "33%"/>
 <br>
 ## 关于
   本项目所有接口Api均利用Fiddler抓包分析所得，只用于分享、学习。
