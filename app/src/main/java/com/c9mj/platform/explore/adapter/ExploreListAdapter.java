@@ -94,8 +94,7 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 break;
             case ExploreListItemBean.NORMAL:
                 viewHolder.setText(R.id.tv_title, bean.getTitle())
-                        .setText(R.id.tv_source, bean.getSource())
-                        .setText(R.id.tv_time, bean.getPtime());
+                        .setText(R.id.tv_source, bean.getSource());
                 Glide.with(mContext)
                         .load(bean.getImgsrc())
                         .crossFade()
