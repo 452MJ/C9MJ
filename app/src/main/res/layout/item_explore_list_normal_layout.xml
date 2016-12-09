@@ -50,23 +50,36 @@
                 android:text="TextView"
                 android:textSize="16sp"
                 android:textColor="@color/color_primary_text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/iv_img"
                 android:layout_toEndOf="@+id/iv_img"
                 android:id="@+id/tv_title"
-                android:layout_marginTop="5dp" />
+                android:layout_above="@+id/tv_source"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
 
             <TextView
-                android:text="TextView"
+            android:text="TextView"
+            android:textSize="12sp"
+            android:textColor="@color/color_secondary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_img"
+            android:layout_toEndOf="@+id/iv_img"
+            android:id="@+id/tv_source"
+            android:layout_marginBottom="5dp" />
+
+            <TextView
                 android:textSize="12sp"
                 android:textColor="@color/color_secondary_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/iv_img"
-                android:layout_toEndOf="@+id/iv_img"
-                android:id="@+id/tv_source"
-                android:layout_marginBottom="5dp" />
+                android:id="@+id/tv_time"
+                android:layout_below="@+id/tv_title"
+                android:layout_toEndOf="@+id/tv_source"
+                android:layout_marginLeft="5dp" />
         </RelativeLayout>
 
 

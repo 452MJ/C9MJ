@@ -57,14 +57,16 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                         .centerCrop()
                         .into(iv_head);
                 viewList.add(iv_head);
-                for (ExploreListItemBean.AdsBean ads : bean.getAds()) {
-                    ImageView iv_ads = new ImageView(mContext);
-                    Glide.with(mContext)
-                            .load(ads.getImgsrc())
-                            .crossFade()
-                            .centerCrop()
-                            .into(iv_ads);
-                    viewList.add(iv_ads);
+                if (bean.getAds() != null){
+                    for (ExploreListItemBean.AdsBean ads : bean.getAds()) {
+                        ImageView iv_ads = new ImageView(mContext);
+                        Glide.with(mContext)
+                                .load(ads.getImgsrc())
+                                .crossFade()
+                                .centerCrop()
+                                .into(iv_ads);
+                        viewList.add(iv_ads);
+                    }
                 }
 
                 this.viewPager = viewHolder.getView(R.id.viewpager);
@@ -82,6 +84,7 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
 
                 //MagicIndicator
                 MagicIndicator magicIndicator = viewHolder.getView(R.id.magic_indicator);
+                magicIndicator.setVisibility(viewList.size() != 1 ? View.VISIBLE : View.GONE);
                 ScaleCircleNavigator navigator = new ScaleCircleNavigator(mContext);
                 navigator.setFollowTouch(true);
                 navigator.setCircleCount(viewList.size());
@@ -91,7 +94,8 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 break;
             case ExploreListItemBean.NORMAL:
                 viewHolder.setText(R.id.tv_title, bean.getTitle())
-                        .setText(R.id.tv_source, bean.getSource());
+                        .setText(R.id.tv_source, bean.getSource())
+                        .setText(R.id.tv_time, bean.getPtime());
                 Glide.with(mContext)
                         .load(bean.getImgsrc())
                         .crossFade()

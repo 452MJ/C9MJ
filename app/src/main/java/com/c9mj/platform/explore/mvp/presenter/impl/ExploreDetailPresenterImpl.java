@@ -3,32 +3,24 @@ package com.c9mj.platform.explore.mvp.presenter.impl;
 
 import com.c9mj.platform.explore.api.ExploreAPI;
 import com.c9mj.platform.explore.mvp.model.bean.ExploreDetailBean;
-import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
 import com.c9mj.platform.explore.mvp.presenter.IExploreDetailPresenter;
 import com.c9mj.platform.explore.mvp.view.IExploreDetailView;
 import com.c9mj.platform.util.GsonHelper;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.jakewharton.retrofit2.adapter.rxjava2.Result;
 
 import org.reactivestreams.Publisher;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-
-import static android.R.attr.offset;
-import static android.R.id.list;
 
 /**
  * Created by Administrator on 2016/11/30.
@@ -59,31 +51,43 @@ public class ExploreDetailPresenterImpl implements IExploreDetailPresenter {
                     }
                 })
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(new Consumer<ExploreDetailBean>() {
                     @Override
                     public void accept(ExploreDetailBean detailBean) throws Exception {
                         //成功得到新闻详情后，先保存bean，并刷新相关新闻列表
                         view.updateExploreDetail(detailBean);
-                        view.updateRecyclerView(detailBean.getRelative_sys());
+                        view.updateRelativeSys(detailBean.getRelative_sys());
                     }
                 })
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .flatMap(new Function<ExploreDetailBean, Publisher<String>>() {
                     @Override
                     public Publisher<String> apply(ExploreDetailBean detailBean) throws Exception {
                         //在这里加工html代码
                         String html = detailBean.getBody();
+
+                        //添加JS脚本
+                        html = "<script type=\"text/javascript\" language=\"javascript\"> \n" +
+                                "    function startGallary(){\n" +
+                                "        window.jsObj.startGallaryOnAndroid();\n" +
+                                "    }\n" +
+                                "</script>\n" + "\n" + html;
+
                         List<ExploreDetailBean.ImgBean> imgList = detailBean.getImg();
 
-                        for (ExploreDetailBean.ImgBean imgBean : imgList) {
+                        for (int i = 0; i < imgList.size(); i++) {
+                            ExploreDetailBean.ImgBean imgBean = imgList.get(i);
                             String ref = imgBean.getRef();//注释标签
-                            String imgCode = "<img src=\"" + imgBean.getSrc() + "\"  alt=\"" + imgBean.getAlt() + "\" />";
-                            //查找到需要插入的位置，并添加图片url
-                            int pos = html.indexOf(ref);
 
+                            String imgCode = "<img src=\"" + imgBean.getSrc() + "\" id=\"img"+ i +"\" alt=\"" + imgBean.getAlt() + "\" width=100% onclick=\"startGallary()\"/><p>  </p>";
+                            //查找到需要插入的位置，并添加图片url
+                            StringBuffer buffer = new StringBuffer(html);
+                            int pos = buffer.indexOf(ref);
+                            buffer.insert(pos, imgCode);
+                            html = buffer.toString();
                         }
 
-                        return Flowable.just("html");
+                        return Flowable.just(html);
                     }
                 })
                 .subscribeOn(Schedulers.io())

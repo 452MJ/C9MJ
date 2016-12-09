@@ -11,6 +11,7 @@
     <!--发现-->
     <string name="explore_footer">无更多内容</string>
     <string name="explore_empty">暂无内容</string>
+    <string name="explore_relative_sys">相关新闻</string>
 
     <!--直播-->
     <string name="live_lol">英雄联盟</string>

@@ -1,5 +1,7 @@
 package com.c9mj.platform.explore.mvp.model.bean;
 
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
@@ -285,7 +287,7 @@ public class ExploreListItemBean implements MultiItemEntity{
 
     @Override
     public int getItemType() {
-        return ads == null ? NORMAL : ADS;
+        return ads == null && !TextUtils.isEmpty(digest) ? NORMAL : ADS;
     }
 
     public static class AdsBean {
