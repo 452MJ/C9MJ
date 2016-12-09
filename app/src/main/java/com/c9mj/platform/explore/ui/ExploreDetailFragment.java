@@ -147,7 +147,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
         //设置RecyclerView
 
         //设置其他View
-        // 设置android下容许执行js的脚本
+        // 设置android下允许执行js的脚本
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(jsInterface, "jsObj");
         webView.setWebChromeClient(new WebChromeClient() {
