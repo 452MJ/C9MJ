@@ -5,7 +5,7 @@
     
 
 ##基本架构
-* 主流框架：Glide + Retrofit + RxJava2 + butterknife  
+* 主流框架：Glide + Retrofit + RxJava2.0 + butterknife  
 
 * 采用MVP模式进行解耦
 
