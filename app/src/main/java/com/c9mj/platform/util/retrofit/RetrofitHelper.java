@@ -88,10 +88,12 @@ public class RetrofitHelper {
                         Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);//缓存10MB
                         OkHttpClient.Builder httpBuidler = new OkHttpClient().newBuilder();
                         httpBuidler.cache(cache)
-                                .connectTimeout(5, TimeUnit.SECONDS);//连接超时限制5秒
+                                .connectTimeout(10, TimeUnit.SECONDS)//连接超时限制5秒
+                                .writeTimeout(10, TimeUnit.SECONDS)
+                                .readTimeout(10, TimeUnit.SECONDS)
                                 //添加拦截器
-//                                .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)//离线缓存
-//                                .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+                                .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)//离线缓存
+                                .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
 
                         explore = new Retrofit.Builder()
                                 .client(httpBuidler.build())
@@ -121,20 +123,6 @@ public class RetrofitHelper {
             }
         }
         return live;
-    }
-
-    public static Retrofit getUserHelper() {
-        if (user == null){
-            synchronized (RetrofitHelper.class){
-                user = new Retrofit.Builder()
-                        .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
-                        .baseUrl(BASE_USER_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .build();
-            }
-        }
-        return user;
     }
 
     public static Retrofit getPandaHelper() {
