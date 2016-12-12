@@ -1,11 +1,11 @@
 # C9MJ
   A personal app demo named  C9MJ TV(news + video live) and based on MVP + Glide + Retrofit + RxJava2 + butterknife(you can watch douyu / panda / zhanqi / yy / longzhu /  quanmin / Netease cc / huomao TV live ) . PS: Only watch the Panda TV have a barrage (danmu / bullet) chat. This English is translated by Google.
     
-  个人练手项目(新闻 + 视频直播)： 基于 MVP + Glide + Retrofit + RxJava2 + butterknife 的C9MJ TV (斗鱼/熊猫/战旗/虎牙/龙珠/全民/网易/火猫) App。ps：只有观看熊猫Panda TV才有弹幕播放功能。
+  个人练手项目(新闻 + 视频直播)： 基于 MVP + Glide + Retrofit + RxJava2.0 + butterknife 的C9MJ TV (斗鱼/熊猫/战旗/虎牙/龙珠/全民/网易/火猫) App。ps：只有观看熊猫Panda TV才有弹幕播放功能。
     
 
 ##基本架构
-* 主流框架：Glide + Retrofit + RxJava2 + butterknife  
+* 主流框架：Glide + Retrofit + RxJava2.0 + butterknife  
 
 * 采用MVP模式进行解耦
 
@@ -54,21 +54,27 @@
         releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
         testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 ##部分截图
-发现 
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "50%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "50%"/>
+
+* 发现 
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "50%"/>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "50%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_list.jpg" width = "45%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_selected.jpg" width = "45%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail.jpg" width = "45%"/>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/explore_detail_relative.jpg" width = "45%"/>
 <br>
-直播 
+
+* 直播 
+<br>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_list_platform.jpg" width = "33%"/>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_portrait.jpg" width = "33%"/>
 <br>
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/live_play_landscape_controller.jpg" width = "100%"/>
 <br>
-<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "100%"/>
+
+* 个人用户
+<br>
+<img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "33%"/>
 <br>
 ## 关于
   本项目所有接口Api均利用Fiddler抓包分析所得，只用于分享、学习。
