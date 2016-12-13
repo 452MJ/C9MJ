@@ -127,7 +127,7 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         TextView tv_empty = (TextView) emptyView.findViewById(R.id.tv_empty);
         tv_empty.setText(getString(R.string.explore_empty));
         adapter.setEmptyView(emptyView);
-        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_failed, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {

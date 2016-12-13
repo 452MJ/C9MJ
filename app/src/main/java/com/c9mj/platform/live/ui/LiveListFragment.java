@@ -33,6 +33,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+
 /**
  * author: LMJ
  * date: 2016/9/19
@@ -122,7 +124,7 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         View emptyView = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
         TextView tv_empty = (TextView) emptyView.findViewById(R.id.tv_empty);
         tv_empty.setText(getString(R.string.live_empty));
-        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_error, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_failed, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
