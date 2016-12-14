@@ -23,15 +23,19 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -170,8 +174,8 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                 }
 
             }
-        }, BackpressureStrategy.BUFFER)
-                .subscribeOn(Schedulers.io())
+        }, BackpressureStrategy.DROP)
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultSubscriber<String>() {
                     @Override
@@ -184,7 +188,6 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showError(e.getMessage());
                     }
 
                     @Override
@@ -221,54 +224,52 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
     private void runHeartDanmuOnRxJava(){
         //心跳包
 
-        Flowable.create(new FlowableOnSubscribe<String>() {
-            @Override
-            public void subscribe(FlowableEmitter<String> e) throws Exception {
-                int autoConnectedTime = 0;
-                int maxConnectedTime = 5;//自动断线重连次数
-                while (!isHeartStop){
-                    bos.write(DanmuUtil.getHeartData());//发送心跳包
-                    bos.flush();
-                    if (isAlreadySendHeart == true){
-                        connectToChatRoom(roomid, pandaBean); //连接断开，自动重新连接
-                        autoConnectedTime++;
-                        if (autoConnectedTime > maxConnectedTime){//超过最大重连次数
-                            autoConnectedTime = 0;
-                            e.onNext("无法连接至弹幕服务器！");
-                        }else {
-                            Thread.sleep(3 * 1000);//3s后再次尝试发送心跳包
-                            continue;
-                        }
-                    }
-                    isAlreadySendHeart = true;//修改标志已发送心跳包
-                    autoConnectedTime = 0;//断线重连计数置零
-
-                    //等到300s再次发送心跳包
-                    Thread.sleep(300 * 1000);
-                }
-                e.onNext("断开弹幕服务器连接！");
-            }
-        }, BackpressureStrategy.BUFFER)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSubscriber<String>() {
-
-                    @Override
-                    public void onComplete() {
-                        closeConnection();
-                        dispose();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        view.showError(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(String result) {
-                        System.out.println(result);
-                    }
-                });
+//        Flowable.create(new FlowableOnSubscribe<String>() {
+//            @Override
+//            public void subscribe(FlowableEmitter<String> e) throws Exception {
+//                int autoConnectedTime = 0;
+//                int maxConnectedTime = 5;//自动断线重连次数
+//                while (!isHeartStop){
+//                    bos.write(DanmuUtil.getHeartData());//发送心跳包
+//                    bos.flush();
+//                    if (isAlreadySendHeart == true){
+//                        connectToChatRoom(roomid, pandaBean); //连接断开，自动重新连接
+//                        autoConnectedTime++;
+//                        if (autoConnectedTime > maxConnectedTime){//超过最大重连次数
+//                            autoConnectedTime = 0;
+//                            e.onNext("无法连接至弹幕服务器！");
+//                        }else {
+//                            Thread.sleep(3 * 1000);//3s后再次尝试发送心跳包
+//                            continue;
+//                        }
+//                    }
+//                    isAlreadySendHeart = true;//修改标志已发送心跳包
+//                    autoConnectedTime = 0;//断线重连计数置零
+//
+//                    //等到300s再次发送心跳包
+//                    Thread.sleep(300 * 1000);
+//                }
+////                e.onNext("断开弹幕服务器连接！");
+//            }
+//        }, BackpressureStrategy.DROP)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new DefaultSubscriber<String>() {
+//
+//                    @Override
+//                    public void onComplete() {
+//                        closeConnection();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+////                        view.showError(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(String result) {
+//                    }
+//                });
 
         //接收弹幕
         Flowable.create(new FlowableOnSubscribe<String>() {
@@ -334,7 +335,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
         }, BackpressureStrategy.DROP)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultSubscriber<String>() {
+                .subscribe(new DisposableSubscriber<String>() {
                     @Override
                     public void onComplete() {
 
@@ -342,11 +343,17 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showError(e.getMessage());
+//                        view.showError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(String result) {
+                        if (isReceiveStop == true){
+                            if (isDisposed() == false){
+                                dispose();
+                                return;
+                            }
+                        }
                         parseDanmu(result);
                     }
                 });
