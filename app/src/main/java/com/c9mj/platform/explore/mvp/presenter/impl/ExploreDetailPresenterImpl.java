@@ -67,7 +67,7 @@ public class ExploreDetailPresenterImpl implements IExploreDetailPresenter {
                         String html = detailBean.getBody();
 
                         //添加Javascript脚本
-                        html = "<script type=\"text/javascript\" language=\"javascript\"> \n" +
+                        html = "<script type=\"application/javascript\" language=\"javascript\"> \n" +
                                 "    function startGallary(e){\n" +
                                 "        window.jsObj.startGallaryOnAndroid(e);\n" +
                                 "    }\n" +
