@@ -24,6 +24,7 @@ import java.io.IOException;
 public class PhotoUtil {
     /**
      * 裁剪图片方法实现
+     *
      * @param uri
      */
     public static void startPhotoZoom(Activity activity, int requestCode, Uri uri) {
@@ -40,6 +41,7 @@ public class PhotoUtil {
         intent.putExtra("return-data", true);
         activity.startActivityForResult(intent, requestCode);
     }
+
     public static void startPhotoZoom(Fragment fragment, int requestCode, Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
@@ -57,7 +59,7 @@ public class PhotoUtil {
 
 
     //计算图片的缩放值
-    public static int calculateInSampleSize(BitmapFactory.Options options,int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
@@ -85,22 +87,23 @@ public class PhotoUtil {
 
     /**
      * 根据fromPath获取图片进行压缩保存至toPath
+     *
      * @param fromPath 源路径
-     * @param toPath 目的路径
-     * @param quality 压缩比例
+     * @param toPath   目的路径
+     * @param quality  压缩比例
      * @return
      */
     public static String compressImageFromPathToPath(String fromPath, String toPath, int quality) {
         Bitmap bitmap = decodeBitmapFromFile(fromPath);
         File bitmapFile = new File(toPath);
 
-        if (!bitmapFile.getParentFile().exists()){
+        if (!bitmapFile.getParentFile().exists()) {
             bitmapFile.getParentFile().mkdirs();
         }
         FileOutputStream bitmapWtriter = null;
         try {
             bitmapWtriter = new FileOutputStream(bitmapFile);
-            if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bitmapWtriter)){
+            if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bitmapWtriter)) {
                 bitmapWtriter.flush();
                 bitmapWtriter.close();
             }
@@ -112,25 +115,26 @@ public class PhotoUtil {
 
     /**
      * 根据uri获取图片进行压缩保存至toPath
+     *
      * @param context
      * @param uri
      * @param toPath
      * @param quality
      * @return
      */
-    public static String compressImageFromUriToPath(Context context,Uri uri, String toPath, int quality) {
+    public static String compressImageFromUriToPath(Context context, Uri uri, String toPath, int quality) {
 
         String fromPath = getRealPathFromURI(context, uri);
         Bitmap bitmap = decodeBitmapFromFile(fromPath);
         File bitmapFile = new File(toPath);
 
-        if (!bitmapFile.getParentFile().exists()){
+        if (!bitmapFile.getParentFile().exists()) {
             bitmapFile.getParentFile().mkdirs();
         }
         FileOutputStream bitmapWtriter = null;
         try {
             bitmapWtriter = new FileOutputStream(bitmapFile);
-            if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bitmapWtriter)){
+            if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bitmapWtriter)) {
                 bitmapWtriter.flush();
                 bitmapWtriter.close();
             }
@@ -142,10 +146,11 @@ public class PhotoUtil {
 
     /**
      * 将imagePath路径中的图片转换为二进制
+     *
      * @param imagePath
      * @return
      */
-    public static byte[] convertImageToByte(String imagePath){
+    public static byte[] convertImageToByte(String imagePath) {
         Bitmap bitmap = decodeBitmapFromFile(imagePath);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
@@ -162,15 +167,16 @@ public class PhotoUtil {
 
     /**
      * 根据Uri获取到文件路径
+     *
      * @param context
      * @param contentUri
      * @return
      */
     public static String getRealPathFromURI(Context context, Uri contentUri) {
         String res = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){;
+        if (cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
         }
@@ -180,10 +186,11 @@ public class PhotoUtil {
 
     /**
      * 发送广播更新图库
+     *
      * @param context
      * @param imagePath
      */
-    public static void updateGallery(Context context,String imagePath) {
+    public static void updateGallery(Context context, String imagePath) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri contentUri = Uri.fromFile(new File(imagePath));
         mediaScanIntent.setData(contentUri);
@@ -199,6 +206,7 @@ public class PhotoUtil {
                 Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera/" + photoName)));
         activity.startActivityForResult(intent, requestCode);
     }
+
     public static void startTakePhoto(Fragment fragment, int requestCode, String photoName) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -215,6 +223,7 @@ public class PhotoUtil {
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         activity.startActivityForResult(intent, requestCode);
     }
+
     public static void startGallery(Fragment fragment, int requestCode) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");

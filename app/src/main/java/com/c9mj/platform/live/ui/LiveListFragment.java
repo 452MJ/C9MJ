@@ -33,8 +33,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-
 /**
  * author: LMJ
  * date: 2016/9/19
@@ -102,7 +100,7 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
         refreshLayout.setRefreshing(true);
         //根据game_type分类请求直播数据
-        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
+        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment) getParentFragment()).getLiveType(), game_type);
     }
 
     private void initView() {
@@ -150,13 +148,12 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         refreshLayout.setRefreshing(false);
         adapter.addData(list);//在roomBeanList的尾部添加
         offset = adapter.getData().size();
-        if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
+        if (list.size() < LiveAPI.LIMIT) {//分页数据size比每页数据的limit小，说明已全部加载数据
             adapter.loadComplete();//下一次不再加载更多，并显示FooterView
             View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
             TextView tv_footer = (TextView) footerView.findViewById(R.id.tv_footer);
             tv_footer.setText(getString(R.string.live_footer));
             adapter.addFooterView(footerView);
-            return;
         }
 //        adapter.notifyDataSetChanged();
     }
@@ -176,12 +173,12 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         adapter.removeAllFooterView();
         refreshLayout.setRefreshing(true);
         //根据game_type分类请求直播数据
-        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
+        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment) getParentFragment()).getLiveType(), game_type);
     }
 
     @Override
     public void onLoadMoreRequested() {
         //根据game_type分类请求直播数据
-        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment)getParentFragment()).getLiveType(), game_type);
+        presenter.getLiveList(offset, LiveAPI.LIMIT, ((LiveFragment) getParentFragment()).getLiveType(), game_type);
     }
 }

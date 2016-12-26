@@ -104,13 +104,14 @@ public class LivePlayChatFragment extends BaseFragment {
         /***设置其他View***/
 
     }
+
     @OnClick(R.id.tv_send)
     public void onClick() {
         String danmu = et_danmu.getText().toString();
         if (TextUtils.isEmpty(danmu)) {
             ToastUtil.show("发送弹幕内容不能为空");
             return;
-        }else if (activity == null){
+        } else if (activity == null) {
             ToastUtil.show("发送弹幕内容失败");
             return;
         }
@@ -133,14 +134,15 @@ public class LivePlayChatFragment extends BaseFragment {
 
     /**
      * ListPlayActivity调用，添加弹幕到RecyclerView
+     *
      * @param danmuBean
      */
     public void addDanmuOnRecyclerView(DanmuBean danmuBean) {
 
-        if (adapter == null){
+        if (adapter == null) {
             return;
         }
-        if (adapter.getData().size() >= DANMU_LIMIT){
+        if (adapter.getData().size() >= DANMU_LIMIT) {
             adapter.remove(0);
         }
         adapter.add(adapter.getData().size(), danmuBean);

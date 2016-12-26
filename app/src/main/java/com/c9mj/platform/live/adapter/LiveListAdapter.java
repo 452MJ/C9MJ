@@ -17,7 +17,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * date: 2016/9/12
  * 直播房间列表的Adapter
  */
-public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean, BaseViewHolder>{
+public class LiveListAdapter extends BaseQuickAdapter<LiveListItemBean, BaseViewHolder> {
     public LiveListAdapter(List<LiveListItemBean> data) {
         super(R.layout.item_live_list_layout, data);
     }

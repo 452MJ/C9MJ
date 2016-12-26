@@ -46,7 +46,7 @@ public class ExploreListPresenterImpl implements IExploreListPresenter {
                             if (entry.getValue().isJsonArray()) {
                                 JsonArray array = entry.getValue().getAsJsonArray();
 
-                                List<ExploreListItemBean> list = new ArrayList<ExploreListItemBean>();
+                                List<ExploreListItemBean> list = new ArrayList<>();
                                 for (JsonElement element : array) {
                                     list.add((ExploreListItemBean) GsonHelper.parseJson(element, ExploreListItemBean.class));
                                 }

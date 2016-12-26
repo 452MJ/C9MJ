@@ -1,5 +1,6 @@
 package com.c9mj.platform.explore.adapter;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 
 import com.c9mj.platform.R;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 public class ExploreSelectedTitleListAdapter extends BaseItemDraggableAdapter<String, BaseViewHolder> {
-    public ExploreSelectedTitleListAdapter(List data) {
+    public ExploreSelectedTitleListAdapter(List<String> data) {
         super(R.layout.item_explore_title_list_layout, data);
     }
 
@@ -21,9 +22,9 @@ public class ExploreSelectedTitleListAdapter extends BaseItemDraggableAdapter<St
     @Override
     protected void convert(BaseViewHolder viewHolder, String title) {
         viewHolder.setText(R.id.tv_title, title)
-                .setTextColor(R.id.tv_title, mContext.getResources().getColor(R.color.color_icons))
+                .setTextColor(R.id.tv_title, ContextCompat.getColor(mContext, R.color.color_icons))
                 .addOnClickListener(R.id.cardview);
         CardView cardView = (CardView) viewHolder.getView(R.id.cardview);
-        cardView.setCardBackgroundColor(mContext.getResources().getColor(R.color.color_primary));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.color_primary));
     }
 }

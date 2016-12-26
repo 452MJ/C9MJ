@@ -255,7 +255,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
                         @Override
                         public void accept(Integer integer) throws Exception {
                             Intent intent = new Intent(getActivity(), GalleryActivity.class);
-                            ArrayList<String> imgList = new ArrayList<String>();
+                            ArrayList<String> imgList = new ArrayList<>();
                             for (ExploreDetailBean.ImgBean imgBean : detailBean.getImg()) {
                                 imgList.add(imgBean.getSrc());
                             }

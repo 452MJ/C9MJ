@@ -12,6 +12,8 @@ import java.util.List;
 
 public interface IExploreDetailView extends IErrorView {
     void updateWebView(String html);
+
     void updateExploreDetail(ExploreDetailBean detailBean);
+
     void updateRelativeSys(List<ExploreDetailBean.RelativeSysBean> relative_sys);//相关新闻
 }

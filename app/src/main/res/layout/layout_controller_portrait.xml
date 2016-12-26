@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:id="@+id/layout_portrait">
+                android:id="@+id/layout_portrait"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
 
 
     <ImageView
+        android:id="@+id/iv_back_portrait"
         android:layout_width="@dimen/controller_widget_size"
         android:layout_height="@dimen/controller_widget_size"
-        android:padding="@dimen/controller_widget_padding"
-        android:scaleType="centerCrop"
-        android:src="@drawable/selector_btn_back"
-        android:background="@drawable/background_iv_circle"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/iv_back_portrait" />
-
-    <ImageView
-        android:layout_width="@dimen/controller_widget_size"
-        android:layout_height="@dimen/controller_widget_size"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_iv_circle"
         android:padding="@dimen/controller_widget_padding"
         android:scaleType="centerCrop"
-        android:src="@drawable/selector_btn_fullscreen"
-        android:background="@drawable/background_iv_circle"
+        android:src="@drawable/selector_btn_back"/>
+
+    <ImageView
+        android:id="@+id/iv_fullscreen_portrait"
+        android:layout_width="@dimen/controller_widget_size"
+        android:layout_height="@dimen/controller_widget_size"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/iv_fullscreen_portrait" />
+        android:background="@drawable/background_iv_circle"
+        android:padding="@dimen/controller_widget_padding"
+        android:scaleType="centerCrop"
+        android:src="@drawable/selector_btn_fullscreen"/>
 
     <ImageView
+        android:id="@+id/iv_danmu_visible_portrait"
         android:layout_width="@dimen/controller_widget_size"
         android:layout_height="@dimen/controller_widget_size"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_iv_circle"
         android:padding="8.5dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/selector_btn_danmu_on"
-        android:background="@drawable/background_iv_circle"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/iv_danmu_visible_portrait" />
+        android:src="@drawable/selector_btn_danmu_on"/>
 </RelativeLayout>

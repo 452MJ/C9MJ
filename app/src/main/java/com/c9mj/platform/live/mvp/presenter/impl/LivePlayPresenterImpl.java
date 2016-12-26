@@ -1,6 +1,5 @@
 package com.c9mj.platform.live.mvp.presenter.impl;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.c9mj.platform.live.api.LiveAPI;
@@ -14,30 +13,17 @@ import com.c9mj.platform.util.GsonHelper;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DefaultSubscriber;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -50,6 +36,24 @@ import io.reactivex.subscribers.DisposableSubscriber;
 public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
     ILivePlayActivity view;
+    /**********************
+     * 以下是弹幕Socket连接相关
+     *****************/
+    private ArrayList<String> chatRoomList = new ArrayList<>();
+    private String socketIP;
+    private int socketPort;
+    //建立连接相关
+    private String roomid;
+    private LivePandaBean pandaBean;
+    private boolean isConnectSuccess = false;
+    //心跳包相关
+    private boolean isAlreadySendHeart = false;  //是否已发送心跳包
+    private boolean isHeartStop = false;     //用于外部控制心跳线程结束
+    //弹幕接收相关
+    private boolean isReceiveStop = false;     //用于外部控制接收线程结束
+    private Socket socket = null;
+    private BufferedInputStream bis;
+    private BufferedOutputStream bos;
 
     public LivePlayPresenterImpl(ILivePlayActivity view) {
         this.view = view;
@@ -101,32 +105,10 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                             }
                         }
                     });
-        }else {
-            view.showError("直播平台：" + live_type +"！不是熊猫TV的弹幕池！");
+        } else {
+            view.showError("直播平台：" + live_type + "！不是熊猫TV的弹幕池！");
         }
     }
-
-
-    /********************** 以下是弹幕Socket连接相关 *****************/
-    private List<String> chatRoomList = new ArrayList(){};
-    private String socketIP;
-    private int socketPort;
-
-    //建立连接相关
-    private String roomid;
-    private LivePandaBean pandaBean;
-    private boolean isConnectSuccess = false;
-
-    //心跳包相关
-    private boolean isAlreadySendHeart = false;  //是否已发送心跳包
-    private boolean isHeartStop = false;     //用于外部控制心跳线程结束
-
-    //弹幕接收相关
-    private boolean isReceiveStop = false;     //用于外部控制接收线程结束
-
-    private Socket socket = null;
-    private BufferedInputStream bis;
-    private BufferedOutputStream bos;
 
     @Override
     public void connectToChatRoom(String roomid, final LivePandaBean pandaBean) {
@@ -135,7 +117,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
         this.pandaBean = pandaBean;
 
         chatRoomList = pandaBean.getData().getChat_addr_list();
-        if (chatRoomList == null || chatRoomList.size() == 0){
+        if (chatRoomList == null || chatRoomList.size() == 0) {
             view.showError("无法连接至弹幕服务器！");
             return;
         }
@@ -159,17 +141,17 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                 bis.read(readData);
                 int isLength = bis.read();
 
-                if (isLength >= 6){
-                    if(!(readData[0] == DanmuUtil.RESPONSE[0] &&
+                if (isLength >= 6) {
+                    if (!(readData[0] == DanmuUtil.RESPONSE[0] &&
                             readData[1] == DanmuUtil.RESPONSE[1] &&
                             readData[2] == DanmuUtil.RESPONSE[2] &&
                             readData[3] == DanmuUtil.RESPONSE[3]))
                         isConnectSuccess = false;
-                    else{
+                    else {
                         isConnectSuccess = true;
                         e.onNext("connect success!");
                     }
-                }else {
+                } else {
                     isConnectSuccess = false;
                 }
 
@@ -181,7 +163,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                     @Override
                     public void onNext(String result) {
                         //连接成功
-                        if (isConnectSuccess){
+                        if (isConnectSuccess) {
                             runHeartDanmuOnRxJava();
                         }
                     }
@@ -201,10 +183,10 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
     @Override
     public void closeConnection() {
 
-        if(socket != null &&
+        if (socket != null &&
                 bis != null &&
                 bos != null &&
-                socket.isConnected()){
+                socket.isConnected()) {
             try {
                 isHeartStop = true;//停止心跳线程
                 isReceiveStop = true;//停止弹幕消息接收
@@ -221,7 +203,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
      * 1.心跳包
      * 2.接收弹幕
      */
-    private void runHeartDanmuOnRxJava(){
+    private void runHeartDanmuOnRxJava() {
         //心跳包
 
 //        Flowable.create(new FlowableOnSubscribe<String>() {
@@ -277,7 +259,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
             public void subscribe(FlowableEmitter<String> e) throws Exception {
                 byte[] messege = new byte[1024];
 
-                while (!isReceiveStop){
+                while (!isReceiveStop) {
                     //读取服务器返回信息，并获取返回信息的整体字节长度
                     int recvLen = bis.read(messege, 0, messege.length);
                     //根据实际获取的字节数初始化返回信息内容长度
@@ -285,12 +267,12 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                     //按照实际获取的字节长度读取返回信息
                     System.arraycopy(messege, 0, realBuf, 0, recvLen);
 
-                    if (recvLen >= 4){//成功接收到数据
+                    if (recvLen >= 4) {//成功接收到数据
                         //分析帧头
-                        if(realBuf[0] == DanmuUtil.RECEIVE_MSG[0] &&//1.弹幕
+                        if (realBuf[0] == DanmuUtil.RECEIVE_MSG[0] &&//1.弹幕
                                 realBuf[1] == DanmuUtil.RECEIVE_MSG[1] &&
                                 realBuf[2] == DanmuUtil.RECEIVE_MSG[2] &&
-                                realBuf[3] == DanmuUtil.RECEIVE_MSG[3]){
+                                realBuf[3] == DanmuUtil.RECEIVE_MSG[3]) {
 
                             //{"type":"1","time":1477356608,"data":{"from":{"__plat":"android","identity":"30","level":"4","msgcolor":"","nickName":"看了还说了","rid":"45560306","sp_identity":"0","userName":""},"to":{"toroom":"15161"},"content":"我去"}}
                             String content = new String(realBuf, "UTF-8");
@@ -313,7 +295,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                             //如果存在第二条弹幕
                             if (!(danmuFromIndex == danmuFromIndex_2 &&
-                                    danmuToIndex == danmuToIndex_2)){
+                                    danmuToIndex == danmuToIndex_2)) {
                                 danmu = content.substring(danmuFromIndex_2, danmuToIndex_2 + 2);
                                 if (TextUtils.isEmpty(danmu)) {
                                     continue;
@@ -325,7 +307,7 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
                         } else if (messege[0] == DanmuUtil.HEART_BEAT_RESPONSE[0] &&//2.心跳包
                                 messege[1] == DanmuUtil.HEART_BEAT_RESPONSE[1] &&
                                 messege[2] == DanmuUtil.HEART_BEAT_RESPONSE[2] &&
-                                messege[3] == DanmuUtil.HEART_BEAT_RESPONSE[3]){
+                                messege[3] == DanmuUtil.HEART_BEAT_RESPONSE[3]) {
                             //接收到响应，重置心跳包发送标志位
                             isAlreadySendHeart = false;
                         }
@@ -348,8 +330,8 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
                     @Override
                     public void onNext(String result) {
-                        if (isReceiveStop == true){
-                            if (isDisposed() == false){
+                        if (isReceiveStop) {
+                            if (!isDisposed()) {
                                 dispose();
                                 return;
                             }
@@ -362,9 +344,10 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
     /**
      * 解析所接收弹幕的Json
+     *
      * @param danmu
      */
-    private void parseDanmu(final String danmu){
+    private void parseDanmu(final String danmu) {
 
         Flowable.create(new FlowableOnSubscribe<DanmuBean>() {
             @Override

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -85,7 +86,7 @@ public class UserFragment extends BaseFragment {
 
 
     private void initToolBar() {
-        toolbar.setTitle(getString(R.string.title_user));
+        toolbar.setTitle(getString(R.string.user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         String filePath = SpHelper.getString(SpHelper.STRING_USER);//查询保存的背景图片路径
@@ -132,9 +133,9 @@ public class UserFragment extends BaseFragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
-                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
-                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
-                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.color_primary));
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.color_primary));
+                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(ContextCompat.getColor(context, R.color.color_secondary_text));
                 break;
             }
         }
@@ -155,7 +156,7 @@ public class UserFragment extends BaseFragment {
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     ToastUtil.show(getString(R.string.user_carema_cancel));
                 } else {
-                    ToastUtil.show( getString(R.string.error_unknown));
+                    ToastUtil.show(getString(R.string.error_unknown));
                 }
             }
             break;
@@ -165,7 +166,7 @@ public class UserFragment extends BaseFragment {
                     Glide.with(this).load(filePath).into(iv_appbar);
                     SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
                 } else if (resultCode == Activity.RESULT_CANCELED) {
-                    ToastUtil.show( getString(R.string.user_carema_cancel));
+                    ToastUtil.show(getString(R.string.user_carema_cancel));
                 } else {
                     ToastUtil.show(getString(R.string.error_unknown));
                 }

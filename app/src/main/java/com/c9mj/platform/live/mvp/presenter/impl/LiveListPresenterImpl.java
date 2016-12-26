@@ -23,7 +23,7 @@ public class LiveListPresenterImpl implements ILiveListPresenter {
 
 
     @Override
-    public void getLiveList(int offset, int limit, String live_type,String game_type) {
+    public void getLiveList(int offset, int limit, String live_type, String game_type) {
         RetrofitHelper.getLiveHelper().create(LiveAPI.class)
                 .getLiveList(offset, limit, live_type, game_type)
                 .compose(RetrofitHelper.<List<LiveListItemBean>>handleLiveResult())

@@ -2,9 +2,7 @@ package com.c9mj.platform.main.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +10,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.c9mj.platform.R;
-import com.c9mj.platform.demo.adapter.DemoAdapter;
-import com.c9mj.platform.demo.mvp.model.bean.DemoBean;
-import com.c9mj.platform.demo.mvp.presenter.impl.DemoPresenterImpl;
 import com.c9mj.platform.explore.ui.ExploreFragment;
 import com.c9mj.platform.live.ui.LiveFragment;
-import com.c9mj.platform.live.ui.LiveListFragment;
 import com.c9mj.platform.user.ui.UserFragment;
 import com.c9mj.platform.util.ToastUtil;
-import com.c9mj.platform.util.adapter.FragmentAdapter;
-import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
@@ -36,16 +26,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.BezierPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
-
-import static android.R.id.list;
-import static com.c9mj.platform.R.id.layout_refresh;
 
 /**
  * author: LMJ
@@ -54,14 +37,6 @@ import static com.c9mj.platform.R.id.layout_refresh;
 public class MainFragment extends BaseFragment {
 
     private static final String KEY = "key";
-
-    long exitTime;//用于按两次Back键退出
-
-    Context context;
-
-    SupportFragment[] fragments = new SupportFragment[3];
-    int current;
-
     final int[] normalResId = new int[]{
             R.drawable.ic_explore_normal,
             R.drawable.ic_live_normal,
@@ -72,7 +47,10 @@ public class MainFragment extends BaseFragment {
             R.drawable.ic_live_pressed,
             R.drawable.ic_user_pressed
     };
-
+    long exitTime;//用于按两次Back键退出
+    Context context;
+    SupportFragment[] fragments = new SupportFragment[3];
+    int current;
     @BindView(R.id.layout_container)
     FrameLayout layout_container;
     @BindView(R.id.magic_indicator)
@@ -131,7 +109,7 @@ public class MainFragment extends BaseFragment {
         navigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return  fragments.length;
+                return fragments.length;
             }
 
             @Override
@@ -177,7 +155,7 @@ public class MainFragment extends BaseFragment {
             public IPagerIndicator getIndicator(Context context) {
                 BezierPagerIndicator indicator = new BezierPagerIndicator(context);
                 indicator.setMaxCircleRadius(UIUtil.dip2px(context, 3));
-                indicator.setColors(getResources().getColor(R.color.color_primary));
+                indicator.setColors(ContextCompat.getColor(context, R.color.color_primary));
                 return indicator;
             }
         });

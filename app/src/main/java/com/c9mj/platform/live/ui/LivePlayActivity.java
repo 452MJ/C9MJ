@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,7 +36,6 @@ import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
-import com.c9mj.platform.widget.activity.BaseActivity;
 import com.c9mj.platform.widget.activity.BaseSwipeActivity;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
@@ -87,36 +87,39 @@ public class LivePlayActivity extends BaseSwipeActivity
 
     public static final int HANDLER_HIDE_CONTROLLER = 100;//隐藏MediaController
     public static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
-
+    final String[] indicatorText = new String[]{
+            "聊天",
+            "主播"
+    };
+    final int[] normalResId = new int[]{
+            R.drawable.ic_danmu_on_normal_dark,
+            R.drawable.ic_avatar_normal
+    };
+    final int[] pressedResId = new int[]{
+            R.drawable.ic_danmu_on_pressed,
+            R.drawable.ic_avatar_pressed
+    };
     boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
     boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
     boolean isPause = false;         //直播暂停标志位
     boolean isFullscreen = false;   //全屏标志位
     boolean isControllerHiden = false;   //MediaController显示隐藏标志位
-
     String live_type;   //直播平台
     String live_id;     //直播房间号ID
     String game_type;   //直播游戏类型
     String live_url;   //直播url
-
     int surfacePortraitWidth;
     int surfacePortraitHeight;
     int videoWidth;
     int videoHeight;
     int playWidth;
     int playHeight;
-
     List<LiveDetailBean.StreamListBean> streamList = new ArrayList<>();//直播流列表
-
     Context context;
     LivePlayPresenterImpl presenter;
     Handler controllerHandler;
-
     @BindView(R.id.surfaceview)
     SurfaceView surfaceView;                  //用于显示播放画面
-    private PLMediaPlayer mediaPlayer;  //媒体控制器
-    private AVOptions avOptions;        //播放参数配置
-
     @BindView(R.id.danmuview)
     DanmakuView danmuView;
     boolean isShowDanmu = false;// 弹幕显示标志位
@@ -127,7 +130,6 @@ public class LivePlayActivity extends BaseSwipeActivity
             return new Danmakus();
         }
     };
-
     //横屏控件
     @BindView(R.id.iv_back_landscape)
     ImageView iv_back_landscape;
@@ -160,12 +162,10 @@ public class LivePlayActivity extends BaseSwipeActivity
     ImageView iv_fullscreen_portrait;
     @BindView(R.id.layout_portrait)
     RelativeLayout layout_portrait;
-
     @BindView(R.id.progressbar)
     FrameLayout progressbar;
     @BindView(R.id.layout_top)
     FrameLayout layout_top;
-
     //底部Layout相关
     @BindView(R.id.layout_bottom)
     LinearLayout layout_bottom;
@@ -174,23 +174,11 @@ public class LivePlayActivity extends BaseSwipeActivity
     CommonNavigatorAdapter navigatorAdapter;
     FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
     List<String> titleList = new ArrayList<>();
-    final String[] indicatorText = new String[]{
-            "聊天",
-            "主播"
-    };
-    final int[] normalResId = new int[]{
-            R.drawable.ic_danmu_on_normal_dark,
-            R.drawable.ic_avatar_normal
-    };
-    final int[] pressedResId = new int[]{
-            R.drawable.ic_danmu_on_pressed,
-            R.drawable.ic_avatar_pressed
-    };
-
     LivePlayChatFragment chatFragment;//弹幕聊天室Fragment
     LivePlayAvatarFragment avatarFragment;//主播详情Fragment
     SupportFragment[] fragments = new SupportFragment[2];
     int current;
+    private PLMediaPlayer mediaPlayer;  //媒体控制器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +208,7 @@ public class LivePlayActivity extends BaseSwipeActivity
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        if (mediaPlayer != null && isPause == true && !TextUtils.isEmpty(live_url)) {
+        if (mediaPlayer != null && isPause && !TextUtils.isEmpty(live_url)) {
             try {
 //                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 //                audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
@@ -280,12 +268,12 @@ public class LivePlayActivity extends BaseSwipeActivity
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+        progressbar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void onBackPressedSupport() {
-        if (isFullscreen == true) {
+        if (isFullscreen) {
             exitFullscreen();
         } else {
             super.onBackPressedSupport();
@@ -313,7 +301,7 @@ public class LivePlayActivity extends BaseSwipeActivity
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                if (isSurfaceViewInit == false) {
+                if (!isSurfaceViewInit) {
                     //竖屏
                     surfacePortraitWidth = width;
                     surfacePortraitHeight = height;
@@ -403,7 +391,7 @@ public class LivePlayActivity extends BaseSwipeActivity
             }
 
             @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
+            public IPagerTitleView getTitleView(final Context context, final int index) {
                 CommonPagerTitleView titleView = new CommonPagerTitleView(context);
 
                 titleView.setContentView(R.layout.item_live_play_indicator_layout);//加载自定义布局作为Tab
@@ -416,13 +404,13 @@ public class LivePlayActivity extends BaseSwipeActivity
                     @Override
                     public void onSelected(int index, int totalCount) {
                         live_play_iv_icon.setImageResource(pressedResId[index]);
-                        live_play_tv_title.setTextColor(getResources().getColor(R.color.color_primary));
+                        live_play_tv_title.setTextColor(ContextCompat.getColor(context, R.color.color_primary));
                     }
 
                     @Override
                     public void onDeselected(int index, int totalCount) {
                         live_play_iv_icon.setImageResource(normalResId[index]);
-                        live_play_tv_title.setTextColor(getResources().getColor(R.color.color_secondary_text));
+                        live_play_tv_title.setTextColor(ContextCompat.getColor(context, R.color.color_secondary_text));
                     }
 
                     @Override
@@ -454,7 +442,7 @@ public class LivePlayActivity extends BaseSwipeActivity
                 indicator.setLineHeight(UIUtil.dip2px(context, 3));
                 indicator.setRoundRadius(UIUtil.dip2px(context, 2));
 //                indicator.setYOffset(UIUtil.dip2px(context, 0.5));
-                indicator.setColors(getResources().getColor(R.color.color_primary));
+                indicator.setColors(ContextCompat.getColor(context, R.color.color_primary));
                 return indicator;
             }
         };
@@ -475,7 +463,7 @@ public class LivePlayActivity extends BaseSwipeActivity
         }
 
         try {
-            avOptions = new AVOptions();
+            AVOptions avOptions = new AVOptions();
             avOptions.setInteger(AVOptions.KEY_LIVE_STREAMING, 0);  //直播流：1->是 0->否
             avOptions.setInteger(AVOptions.KEY_MEDIACODEC, 0);      //解码类型 1->硬解 0->软解
             avOptions.setInteger(AVOptions.KEY_START_ON_PREPARED, 0);//缓冲结束后自动播放
@@ -503,8 +491,6 @@ public class LivePlayActivity extends BaseSwipeActivity
             mediaPlayer.prepareAsync();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -527,16 +513,16 @@ public class LivePlayActivity extends BaseSwipeActivity
                 }
             }
             if (stream.getType().equals(getString(R.string.stream_1080p))) {
-                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
-                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
+                btn_stream_1080p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_pressed));
+                btn_stream_360p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_normal));
+                btn_stream_1080p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_primary));
+                btn_stream_360p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_icons));
             }
             if (stream.getType().equals(getString(R.string.stream_360p))) {
-                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
-                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
+                btn_stream_1080p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_normal));
+                btn_stream_360p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_pressed));
+                btn_stream_1080p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_icons));
+                btn_stream_360p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_primary));
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -561,10 +547,11 @@ public class LivePlayActivity extends BaseSwipeActivity
     @Override
     public void receiveDanmu(DanmuBean danmuBean, boolean withBorder) {
         this.addDanmuOnDanmakuView(danmuBean, false);
-        if (chatFragment != null){
+        if (chatFragment != null) {
             chatFragment.addDanmuOnRecyclerView(danmuBean);
         }
     }
+
     @Override
     public void showError(String message) {
         ToastUtil.show(message);
@@ -662,25 +649,25 @@ public class LivePlayActivity extends BaseSwipeActivity
         switch (view.getId()) {
 
             case R.id.surfaceview:
-                if (isFullscreen == true) {
-                    if (isControllerHiden == true) {//全屏&&隐藏
+                if (isFullscreen) {
+                    if (isControllerHiden) {//全屏&&隐藏
                         layout_landscape.setVisibility(View.VISIBLE);
                         layout_portrait.setVisibility(View.GONE);
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                         isControllerHiden = false;
-                    } else if (isControllerHiden == false) {//全屏&&显示
+                    } else if (!isControllerHiden) {//全屏&&显示
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessage(HANDLER_HIDE_CONTROLLER);
                     }
-                } else if (isFullscreen == false) {
-                    if (isControllerHiden == true) {//非全屏&&隐藏
+                } else if (!isFullscreen) {
+                    if (isControllerHiden) {//非全屏&&隐藏
                         layout_landscape.setVisibility(View.GONE);
                         layout_portrait.setVisibility(View.VISIBLE);
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
                         isControllerHiden = false;
-                    } else if (isControllerHiden == false) {//非全屏&&显示
+                    } else if (!isControllerHiden) {//非全屏&&显示
                         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                         controllerHandler.sendEmptyMessage(HANDLER_HIDE_CONTROLLER);
                     }
@@ -696,10 +683,10 @@ public class LivePlayActivity extends BaseSwipeActivity
             case R.id.btn_stream_1080p_landscape:
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
-                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
-                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
+                btn_stream_1080p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_pressed));
+                btn_stream_360p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_normal));
+                btn_stream_1080p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_primary));
+                btn_stream_360p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_icons));
 
                 for (LiveDetailBean.StreamListBean stream :
                         streamList) {
@@ -710,7 +697,7 @@ public class LivePlayActivity extends BaseSwipeActivity
                 mediaPlayer.reset();
                 //显示ProgressBar
                 isVideoPrepared = false;
-                progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+                progressbar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
                 try {
                     mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
                 } catch (IOException e) {
@@ -723,10 +710,10 @@ public class LivePlayActivity extends BaseSwipeActivity
             case R.id.btn_stream_360p_landscape:
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
                 controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
-                btn_stream_1080p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_normal));
-                btn_stream_360p_landscape.setBackground(getResources().getDrawable(R.drawable.background_btn_stream_pressed));
-                btn_stream_1080p_landscape.setTextColor(getResources().getColor(R.color.color_icons));
-                btn_stream_360p_landscape.setTextColor(getResources().getColor(R.color.color_primary));
+                btn_stream_1080p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_normal));
+                btn_stream_360p_landscape.setBackground(ContextCompat.getDrawable(context, R.drawable.background_btn_stream_pressed));
+                btn_stream_1080p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_icons));
+                btn_stream_360p_landscape.setTextColor(ContextCompat.getColor(context, R.color.color_primary));
 
                 for (LiveDetailBean.StreamListBean stream :
                         streamList) {
@@ -737,7 +724,7 @@ public class LivePlayActivity extends BaseSwipeActivity
                 mediaPlayer.reset();
                 //显示ProgressBar
                 isVideoPrepared = false;
-                progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+                progressbar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
                 try {
                     mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
                 } catch (IOException e) {
@@ -748,9 +735,9 @@ public class LivePlayActivity extends BaseSwipeActivity
 
             //播放&暂停
             case R.id.iv_play_pause_landscape:
-                if (isPause == true) {
+                if (isPause) {
                     onResume();
-                } else if (isPause == false) {
+                } else if (!isPause) {
                     onPause();
                 }
                 iv_play_pause_landscape.setImageResource(isPause ? R.drawable.selector_btn_play : R.drawable.selector_btn_pause);
@@ -764,7 +751,7 @@ public class LivePlayActivity extends BaseSwipeActivity
                     mediaPlayer.reset();
 
                     isVideoPrepared = false;
-                    progressbar.setVisibility(isVideoPrepared == true ? View.GONE : View.VISIBLE);
+                    progressbar.setVisibility(isVideoPrepared ? View.GONE : View.VISIBLE);
 
                     mediaPlayer.setDataSource(live_url);//加载直播链接进行播放
                     mediaPlayer.prepareAsync();
@@ -805,12 +792,12 @@ public class LivePlayActivity extends BaseSwipeActivity
             //横屏弹幕显示&隐藏
             case R.id.iv_danmu_visible_landscape:
 
-                if (isShowDanmu == true) {//已开启弹幕
+                if (isShowDanmu) {//已开启弹幕
                     isShowDanmu = false;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     ToastUtil.show("弹幕已关闭！");
-                } else if (isShowDanmu == false) {//已关闭弹幕
+                } else if (!isShowDanmu) {//已关闭弹幕
                     isShowDanmu = true;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
@@ -833,12 +820,12 @@ public class LivePlayActivity extends BaseSwipeActivity
 
             //竖屏弹幕显示隐藏
             case R.id.iv_danmu_visible_portrait:
-                if (isShowDanmu == true) {//已开启弹幕
+                if (isShowDanmu) {//已开启弹幕
                     isShowDanmu = false;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     ToastUtil.show("弹幕已关闭！");
-                } else if (isShowDanmu == false) {//已关闭弹幕
+                } else if (!isShowDanmu) {//已关闭弹幕
                     isShowDanmu = true;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
@@ -857,11 +844,12 @@ public class LivePlayActivity extends BaseSwipeActivity
 
     /**
      * ListPlayChatFragment调用，添加弹幕到DanmakuView
+     *
      * @param danmuBean
      * @param withBorder
      */
     public void addDanmuOnDanmakuView(DanmuBean danmuBean, boolean withBorder) {
-        if (isShowDanmu == false) {
+        if (!isShowDanmu) {
             return;
         }
         BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
@@ -870,7 +858,7 @@ public class LivePlayActivity extends BaseSwipeActivity
         danmaku.textColor = Color.WHITE;
         danmaku.setTime(danmuView.getCurrentTime());
         if (withBorder) {
-            danmaku.borderColor = getResources().getColor(R.color.color_primary);
+            danmaku.borderColor = ContextCompat.getColor(context, R.color.color_primary);
         }
         danmuView.addDanmaku(danmaku);
     }

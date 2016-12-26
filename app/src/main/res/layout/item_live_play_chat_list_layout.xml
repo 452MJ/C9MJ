@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@null">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@null"
+              android:orientation="horizontal">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_margin="@dimen/cardview_margin"
-        app:cardCornerRadius="@dimen/cardview_default_radius"
-        android:foreground="?selectableItemBackground"
+        android:layout_weight="1"
         android:clickable="true"
+        android:foreground="?selectableItemBackground"
+        app:cardCornerRadius="@dimen/cardview_default_radius"
         app:cardElevation="@dimen/cardview_elevation"
-        app:cardPreventCornerOverlap="true"
-        android:id="@+id/cardview">
+        app:cardPreventCornerOverlap="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -25,30 +25,30 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="游客"
-                android:id="@+id/tv_nickname"
+                android:text="@string/live_visitor"
                 android:textSize="14sp"/>
 
             <TextView
+                android:id="@+id/tv_divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=":"
-                android:textSize="14sp"
+                android:layout_toRightOf="@+id/tv_nickname"
+                android:text="@string/live_quote"
                 android:textColor="@color/color_primary_dark"
-                android:id="@+id/tv_divider"
-                android:layout_toRightOf="@+id/tv_nickname" />
+                android:textSize="14sp"/>
 
 
             <TextView
+                android:id="@+id/tv_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="弹幕"
-                android:textSize="14sp"
+                android:layout_toRightOf="@+id/tv_divider"
+                android:text="@string/live_danmu"
                 android:textColor="@color/color_primary_text"
-                android:id="@+id/tv_content"
-                android:layout_toRightOf="@+id/tv_divider"/>
+                android:textSize="14sp"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

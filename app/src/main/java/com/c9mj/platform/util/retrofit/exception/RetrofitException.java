@@ -5,7 +5,7 @@ package com.c9mj.platform.util.retrofit.exception;
  * date: 2016/9/1
  * 统一处理网络异常errorCode
  */
-public class RetrofitException extends RuntimeException{
+public class RetrofitException extends RuntimeException {
 
     public static final int ERROR_TOKEN = 100;
     public static final int ERROR_NETWORK = ERROR_TOKEN + 1;
@@ -15,13 +15,13 @@ public class RetrofitException extends RuntimeException{
         this(getErrorMessage(code));
     }
 
-    public RetrofitException(String msg){
+    public RetrofitException(String msg) {
         super(msg);
     }
 
-    private static String getErrorMessage(int code){
+    private static String getErrorMessage(int code) {
         String msg = "";
-        switch (code){
+        switch (code) {
             case ERROR_TOKEN:
                 msg = "token过期，请重新登陆！";
                 break;

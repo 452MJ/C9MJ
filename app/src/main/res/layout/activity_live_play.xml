@@ -1,75 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.c9mj.platform.live.ui.LivePlayActivity"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.c9mj.platform.live.ui.LivePlayActivity">
 
     <FrameLayout
+        android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/layout_top"
         android:layout_weight="4">
 
         <SurfaceView
+            android:id="@+id/surfaceview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:id="@+id/surfaceview" />
+            android:background="?selectableItemBackgroundBorderless"/>
 
         <FrameLayout
+            android:id="@+id/progressbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/progressbar"
             android:background="@color/divider"
             android:foreground="?selectableItemBackgroundBorderless"
             android:visibility="gone">
 
             <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:padding="10dp"
                 android:layout_gravity="center"
-                style="@style/Widget.AppCompat.ProgressBar"
+                android:padding="10dp"
                 android:theme="@style/CircularProgress"/>
 
         </FrameLayout>
 
         <master.flame.danmaku.ui.widget.DanmakuView
+            android:id="@+id/danmuview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"
-            android:id="@+id/danmuview"/>
+            android:background="?selectableItemBackgroundBorderless"/>
 
-        <include layout="@layout/layout_controller_landscape"
+        <include
+            layout="@layout/layout_controller_landscape"
             android:background="?selectableItemBackgroundBorderless"
             android:visibility="gone"/>
 
-        <include layout="@layout/layout_controller_portrait"
+        <include
+            layout="@layout/layout_controller_portrait"
             android:background="?selectableItemBackgroundBorderless"/>
 
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/layout_bottom"
         android:layout_weight="2"
+        android:orientation="vertical"
         android:visibility="visible">
 
         <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:elevation="@dimen/cardview_elevation"
             android:background="@color/color_icons"
-            android:id="@+id/magic_indicator"/>
+            android:elevation="@dimen/cardview_elevation"/>
 
         <FrameLayout
+            android:id="@+id/layout_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/layout_container" />
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </LinearLayout>

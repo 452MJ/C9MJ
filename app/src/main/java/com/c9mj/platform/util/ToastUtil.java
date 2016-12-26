@@ -19,16 +19,16 @@ public class ToastUtil {
     }
 
     private static void initToast(Context context) {
-        if (toast == null){
-            synchronized (ToastUtil.class){
+        if (toast == null) {
+            synchronized (ToastUtil.class) {
                 toast = new Toast(context);
             }
         }
     }
 
-    public static void show(CharSequence content, int duration){
+    public static void show(CharSequence content, int duration) {
         initToast(context);
-        if (isShow == true){
+        if (isShow) {
             isShow = false;
             toast.cancel();
         }
@@ -37,14 +37,13 @@ public class ToastUtil {
         isShow = true;
     }
 
-    public static void show(CharSequence content){
+    public static void show(CharSequence content) {
         show(content, Toast.LENGTH_SHORT);
     }
 
-    public static void show(int resId){
+    public static void show(int resId) {
         show(context.getString(resId), Toast.LENGTH_SHORT);
     }
-
 
 
 }

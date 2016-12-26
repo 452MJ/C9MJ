@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -189,7 +190,7 @@ public class LiveFragment extends BaseFragment {
                 indicator.setLineHeight(UIUtil.dip2px(context, 2));
                 indicator.setRoundRadius(UIUtil.dip2px(context, 2));
                 indicator.setYOffset(UIUtil.dip2px(context, 0.5));
-                indicator.setColors(getResources().getColor(R.color.color_icons));
+                indicator.setColors(ContextCompat.getColor(context, R.color.color_icons));
                 return indicator;
             }
         };
@@ -239,16 +240,17 @@ public class LiveFragment extends BaseFragment {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.color_primary));
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.color_primary));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.color_secondary_text));
 
     }
 
     /**
      * 暴露给内嵌子Fragment获取直播平台id
+     *
      * @return
      */
-    public String getLiveType(){
+    public String getLiveType() {
         return typeIdList.get(pos);
     }
 }

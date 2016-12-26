@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@null">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@null"
+              android:orientation="horizontal">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_margin="@dimen/cardview_margin"
-        app:cardCornerRadius="@dimen/cardview_default_radius"
-        android:foreground="?selectableItemBackground"
+        android:layout_weight="1"
         android:clickable="true"
-        app:cardElevation="@dimen/cardview_elevation"
-        app:cardPreventCornerOverlap="true"
         android:elevation="@dimen/widget_elevation"
-        android:id="@+id/cardview">
+        android:foreground="?selectableItemBackground"
+        app:cardCornerRadius="@dimen/cardview_default_radius"
+        app:cardElevation="@dimen/cardview_elevation"
+        app:cardPreventCornerOverlap="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,91 +25,90 @@
             android:paddingBottom="1.5dp">
 
             <ImageView
+                android:id="@+id/iv_roomsrc_background"
                 android:layout_width="match_parent"
                 android:layout_height="97dp"
-                android:id="@+id/iv_roomsrc_background"
-                android:background="@color/divider"
-                android:src="@drawable/ic_live_placeholder"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:padding="25dp" />
+                android:background="@color/divider"
+                android:padding="25dp"
+                android:src="@drawable/ic_live_placeholder"/>
 
             <ImageView
+                android:id="@+id/iv_roomsrc"
                 android:layout_width="match_parent"
                 android:layout_height="97dp"
-                android:id="@+id/iv_roomsrc"
-                android:background="@null"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:background="@null"/>
 
             <ImageView
+                android:id="@+id/iv_avatar"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:id="@+id/iv_avatar"
-                android:padding="1dp"
-                android:background="@drawable/shape_circle"
-                android:src="@drawable/ic_avatar_default"
-                android:layout_marginLeft="5dp"
+                android:layout_alignBottom="@+id/relativeLayout"
                 android:layout_alignParentStart="true"
-                android:layout_alignBottom="@+id/relativeLayout" />
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/shape_circle"
+                android:padding="1dp"
+                android:src="@drawable/ic_avatar_default"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#80757575"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:background="#80757575">
 
                 <TextView
+                    android:id="@+id/tv_roomname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="房间名称"
-                    android:id="@+id/tv_roomname"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:textColor="@color/color_icons"
-                    android:singleLine="true"
+                    android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:paddingLeft="5dp" />
+                    android:text="房间名称"
+                    android:textColor="@color/color_icons"
+                    android:textSize="@dimen/textsize_secondary"
+                    android:maxLines="1"/>
             </FrameLayout>
 
             <RelativeLayout
+                android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_below="@+id/iv_roomsrc"
                 android:layout_toEndOf="@+id/iv_avatar"
-                android:id="@+id/relativeLayout"
                 android:paddingRight="5dp">
 
                 <TextView
+                    android:id="@+id/tv_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="主播名称"
-                    android:id="@+id/tv_nickname"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:textColor="@color/color_primary_text"
                     android:layout_toLeftOf="@+id/iv_online"
+                    android:gravity="center_vertical"
                     android:scrollIndicators="end"
-                    android:singleLine="true" />
+                    android:textColor="@color/color_primary_text"
+                    android:textSize="@dimen/textsize_secondary"
+                    android:maxLines="1"/>
 
                 <ImageView
+                    android:id="@+id/iv_online"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:id="@+id/iv_online"
-                    android:src="@drawable/ic_visitor"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@+id/tv_online" />
+                    android:layout_toStartOf="@+id/tv_online"
+                    android:src="@drawable/ic_visitor"/>
 
                 <TextView
+                    android:id="@+id/tv_online"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="1234"
-                    android:id="@+id/tv_online"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:gravity="center"
-                    android:textColor="@color/color_secondary_text"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true" />
+                    android:gravity="center"
+                    android:text="1234"
+                    android:textColor="@color/color_secondary_text"
+                    android:textSize="@dimen/textsize_secondary"/>
             </RelativeLayout>
         </RelativeLayout>
 

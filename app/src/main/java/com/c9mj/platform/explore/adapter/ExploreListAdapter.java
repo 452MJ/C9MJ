@@ -34,14 +34,64 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
     ViewPager viewPager;
     BaseViewHolder viewHolder;
     ExploreListItemBean bean;
+    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (position == 0) {
+                viewHolder.setText(R.id.tv_title, bean.getTitle());
+                return;
+            }
+            viewHolder.setText(R.id.tv_title, bean.getAds().get(position - 1).getTitle());
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            switch (state) {
+                case ViewPager.SCROLL_STATE_DRAGGING:
+                    isAutoScrolled = false;
+                    break;
+                case ViewPager.SCROLL_STATE_SETTLING:
+                    isAutoScrolled = false;
+                    break;
+                case ViewPager.SCROLL_STATE_IDLE:
+                    isAutoScrolled = true;
+                    Flowable.just(0)
+                            .delay(3, TimeUnit.SECONDS)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<Integer>() {
+
+                                @Override
+                                public void accept(Integer integer) throws Exception {
+                                    if (!isAutoScrolled) {
+                                        return;
+                                    }
+                                    int current = viewPager.getCurrentItem();
+                                    if (current + 1 == viewPager.getChildCount()) {
+                                        viewPager.setCurrentItem(0, true);
+                                    } else {
+                                        viewPager.setCurrentItem(current + 1, true);
+                                    }
+                                }
+                            });
+                    break;
+            }
+        }
+
+    };
 
 
-    public ExploreListAdapter(List data) {
+    public ExploreListAdapter(List<ExploreListItemBean> data) {
         super(data);
         addItemType(ExploreListItemBean.ADS, R.layout.item_explore_list_ads_layout);
         addItemType(ExploreListItemBean.NORMAL, R.layout.item_explore_list_normal_layout);
     }
-
 
     @Override
     protected void convert(final BaseViewHolder viewHolder, final ExploreListItemBean bean) {
@@ -57,7 +107,7 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                         .centerCrop()
                         .into(iv_head);
                 viewList.add(iv_head);
-                if (bean.getAds() != null){
+                if (bean.getAds() != null) {
                     for (ExploreListItemBean.AdsBean ads : bean.getAds()) {
                         ImageView iv_ads = new ImageView(mContext);
                         Glide.with(mContext)
@@ -103,56 +153,4 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 break;
         }
     }
-    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            if (position == 0) {
-                viewHolder.setText(R.id.tv_title, bean.getTitle());
-                return;
-            }
-            viewHolder.setText(R.id.tv_title, bean.getAds().get(position - 1).getTitle());
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-            switch (state) {
-                case ViewPager.SCROLL_STATE_DRAGGING:
-                    isAutoScrolled = false;
-                    break;
-                case ViewPager.SCROLL_STATE_SETTLING:
-                    isAutoScrolled = false;
-                    break;
-                case ViewPager.SCROLL_STATE_IDLE:
-                    isAutoScrolled = true;
-                    Flowable.just(0)
-                            .delay(3, TimeUnit.SECONDS)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<Integer>() {
-
-                                @Override
-                                public void accept(Integer integer) throws Exception {
-                                    if (isAutoScrolled == false) {
-                                        return;
-                                    }
-                                    int current = viewPager.getCurrentItem();
-                                    if (current + 1 == viewPager.getChildCount()) {
-                                        viewPager.setCurrentItem(0, true);
-                                    } else {
-                                        viewPager.setCurrentItem(current + 1, true);
-                                    }
-                                }
-                            });
-                    break;
-            }
-        }
-
-        ;
-    };
 }

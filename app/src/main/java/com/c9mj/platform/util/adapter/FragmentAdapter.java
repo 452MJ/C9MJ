@@ -3,8 +3,6 @@ package com.c9mj.platform.util.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,7 @@ import java.util.List;
  * date: 2016/9/1
  * 用于管理FragmentViewPager
  */
-public class FragmentAdapter extends FragmentStatePagerAdapter{
+public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> fragmentList = new ArrayList<>();
 

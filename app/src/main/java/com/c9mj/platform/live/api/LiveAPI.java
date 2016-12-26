@@ -3,8 +3,8 @@ package com.c9mj.platform.live.api;
 
 import com.c9mj.platform.live.mvp.model.LiveBaseBean;
 import com.c9mj.platform.live.mvp.model.LiveDetailBean;
-import com.c9mj.platform.live.mvp.model.LivePandaBean;
 import com.c9mj.platform.live.mvp.model.LiveListItemBean;
+import com.c9mj.platform.live.mvp.model.LivePandaBean;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import retrofit2.http.Query;
  */
 public interface LiveAPI {
 
-    public static final int LIMIT = 20;
+    int LIMIT = 20;
 
     //请求获取不同游戏的直播列表
     @GET("/api/live/list/")

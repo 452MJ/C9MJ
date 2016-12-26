@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/layout_landscape">
+                android:id="@+id/layout_landscape"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,68 +12,69 @@
         android:background="#80000000">
 
         <ImageView
+            android:id="@+id/iv_back_landscape"
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
-            android:padding="@dimen/controller_widget_padding"
-            android:src="@drawable/selector_btn_back"
-            android:scaleType="centerCrop"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:id="@+id/iv_back_landscape" />
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="@dimen/controller_widget_padding"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_btn_back"/>
 
         <TextView
-            android:text="直播间名称"
+            android:id="@+id/tv_roomname_landscape"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="@dimen/controller_widget_padding"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:singleLine="true"
-            android:id="@+id/tv_roomname_landscape"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/iv_back_landscape"
             android:layout_toStartOf="@+id/controller_landscape_layout_stream"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="1"
+            android:padding="@dimen/controller_widget_padding"
+            android:scrollHorizontally="true"
+            android:text="@string/live_roomname"
             android:textColor="@color/color_icons"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
 
         <LinearLayout
+            android:id="@+id/controller_landscape_layout_stream"
+            style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:id="@+id/controller_landscape_layout_stream"
-            android:foreground="?selectableItemBackgroundBorderless"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:orientation="horizontal"
             android:padding="6dp">
 
             <Button
+                android:id="@+id/btn_stream_1080p_landscape"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="2.5dp"
                 android:background="@drawable/background_btn_stream_normal"
                 android:foreground="?selectableItemBackgroundBorderless"
-                android:layout_marginEnd="2.5dp"
-                android:text="超清"
-                android:layout_centerVertical="true"
+                android:text="@string/live_1080p"
                 android:textColor="@color/color_icons"
-                android:textSize="14sp"
-                android:id="@+id/btn_stream_1080p_landscape" />
+                android:textSize="14sp"/>
 
             <Button
+                android:id="@+id/btn_stream_360p_landscape"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="2.5dp"
                 android:background="@drawable/background_btn_stream_normal"
                 android:foreground="?selectableItemBackgroundBorderless"
-                android:layout_marginStart="2.5dp"
-                android:text="高清"
-                android:layout_centerVertical="true"
+                android:text="@string/live_720p"
                 android:textColor="@color/color_icons"
-                android:textSize="14sp"
-                android:id="@+id/btn_stream_360p_landscape" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
 
@@ -89,79 +88,79 @@
         android:background="#80000000">
 
         <ImageView
+            android:id="@+id/iv_play_pause_landscape"
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
-            android:padding="@dimen/controller_widget_padding"
-            android:src="@drawable/selector_btn_play"
-            android:scaleType="centerCrop"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:id="@+id/iv_play_pause_landscape" />
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="@dimen/controller_widget_padding"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_btn_play"/>
 
         <ImageView
+            android:id="@+id/iv_refresh_landscape"
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
-            android:padding="@dimen/controller_widget_padding"
-            android:src="@drawable/selector_btn_refresh"
-            android:scaleType="centerCrop"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_toEndOf="@+id/iv_play_pause_landscape"
-            android:id="@+id/iv_refresh_landscape" />
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="@dimen/controller_widget_padding"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_btn_refresh"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:background="@drawable/background_layout_danmu"
             android:layout_margin="3dp"
-            android:gravity="center_vertical"
+            android:layout_toEndOf="@+id/iv_refresh_landscape"
             android:layout_toStartOf="@+id/iv_danmu_visible_landscape"
-            android:layout_toEndOf="@+id/iv_refresh_landscape">
+            android:background="@drawable/background_layout_danmu"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/et_danmu_landscape"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/background_landscape_et_danmu"
                 android:hint="输入发送弹幕"
-                android:padding="3dp"
                 android:maxLength="25"
-                android:textSize="14sp"
-                android:layout_weight="1"
-                android:id="@+id/et_danmu_landscape" />
+                android:padding="3dp"
+                android:textSize="14sp"/>
 
             <Button
+                android:id="@+id/btn_send_landscape"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:background="@null"
                 android:text="发送"
                 android:textColor="@color/color_icons"
-                android:textSize="14sp"
-                android:id="@+id/btn_send_landscape" />
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/iv_danmu_visible_landscape"
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
-            android:padding="7.5dp"
-            android:src="@drawable/selector_btn_danmu_on"
-            android:scaleType="centerCrop"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_toStartOf="@+id/iv_fullscreen_exit_landscape"
-            android:id="@+id/iv_danmu_visible_landscape" />
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="7.5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_btn_danmu_on"/>
 
 
         <ImageView
+            android:id="@+id/iv_fullscreen_exit_landscape"
             android:layout_width="@dimen/controller_widget_size"
             android:layout_height="@dimen/controller_widget_size"
-            android:padding="@dimen/controller_widget_padding"
-            android:src="@drawable/selector_btn_fullscreen_exit"
-            android:scaleType="centerCrop"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_alignParentEnd="true"
-            android:id="@+id/iv_fullscreen_exit_landscape" />
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="@dimen/controller_widget_padding"
+            android:scaleType="centerCrop"
+            android:src="@drawable/selector_btn_fullscreen_exit"/>
 
     </RelativeLayout>
 

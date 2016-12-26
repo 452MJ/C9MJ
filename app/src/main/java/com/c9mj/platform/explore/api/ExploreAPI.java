@@ -2,9 +2,6 @@ package com.c9mj.platform.explore.api;
 
 
 import com.google.gson.JsonObject;
-import com.jakewharton.retrofit2.adapter.rxjava2.Result;
-
-import java.util.HashMap;
 
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -16,7 +13,7 @@ import retrofit2.http.Path;
  */
 public interface ExploreAPI {
 
-    public static final int LIMIT = 20;
+    int LIMIT = 20;
 
     @GET("/nc/article/list/{explore_id}/{offset}-{limit}.html")
     Flowable<JsonObject> getExploreList(

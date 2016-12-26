@@ -36,12 +36,6 @@ public class RetrofitHelper {
     public static final String BASE_LIVE_URL = "http://api.maxjia.com";
     public static final String BASE_USER_URL = "http://api.douban.com/v2/movie/";
     public static final String BASE_PANDA_URL = "http://www.panda.tv";
-
-    private static Retrofit explore = null;
-    private static Retrofit live = null;
-    private static Retrofit user = null;
-    private static Retrofit panda = null;
-
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
@@ -49,7 +43,7 @@ public class RetrofitHelper {
             Request request = chain.request();
             if (!NetworkUtils.isAvailable(MyApplication.getContext())) {
                 CacheControl cacheControl = new CacheControl.Builder()
-                        .maxStale(30, TimeUnit.SECONDS )
+                        .maxStale(30, TimeUnit.SECONDS)
                         .build();
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
@@ -58,17 +52,17 @@ public class RetrofitHelper {
 
             Response response = chain.proceed(request);
 
-            if (NetworkUtils.isAvailable(MyApplication.getContext())){
+            if (NetworkUtils.isAvailable(MyApplication.getContext())) {
                 /**
                  * If you have problems in testing on which side is problem (server or app).
                  * You can use such feauture to set headers received from server.
                  */
                 int maxAge = 60 * 60; // 有网络时,设置缓存超时时间1个小时
-                response =  response.newBuilder()
+                response = response.newBuilder()
                         .removeHeader("Pragma")
                         .header("Cache-Control", "public, max-age=" + maxAge)//设置缓存超时时间
                         .build();
-            }else {
+            } else {
                 int maxStale = 60 * 60 * 24 * 28;//无网络时，设置超时为4周
                 response = response.newBuilder()
                         .removeHeader("Pragma")
@@ -78,11 +72,15 @@ public class RetrofitHelper {
             return response;
         }
     };
+    private static Retrofit explore = null;
+    private static Retrofit live = null;
+    private static Retrofit user = null;
+    private static Retrofit panda = null;
 
     public static Retrofit getExploreHelper() {
-        if (explore == null){
+        if (explore == null) {
             try {
-                synchronized (RetrofitHelper.class){
+                synchronized (RetrofitHelper.class) {
                     if (explore == null) {
                         File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "exploreCache");
                         Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);//缓存10MB
@@ -103,7 +101,7 @@ public class RetrofitHelper {
                                 .build();
                     }
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -111,8 +109,8 @@ public class RetrofitHelper {
     }
 
     public static Retrofit getLiveHelper() {
-        if (live == null){
-            synchronized (RetrofitHelper.class){
+        if (live == null) {
+            synchronized (RetrofitHelper.class) {
                 if (live == null) {
                     live = new Retrofit.Builder()
                             .baseUrl(BASE_LIVE_URL)
@@ -126,8 +124,8 @@ public class RetrofitHelper {
     }
 
     public static Retrofit getPandaHelper() {
-        if (panda == null){
-            synchronized (RetrofitHelper.class){
+        if (panda == null) {
+            synchronized (RetrofitHelper.class) {
                 panda = new Retrofit.Builder()
                         .client(new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build())
                         .baseUrl(BASE_PANDA_URL)
@@ -139,7 +137,7 @@ public class RetrofitHelper {
         return panda;
     }
 
-    public static <T> FlowableTransformer<LiveBaseBean<T>, T> handleLiveResult(){
+    public static <T> FlowableTransformer<LiveBaseBean<T>, T> handleLiveResult() {
         return new FlowableTransformer<LiveBaseBean<T>, T>() {
             @Override
             public Publisher<T> apply(final Flowable<LiveBaseBean<T>> upstream) {
@@ -149,9 +147,9 @@ public class RetrofitHelper {
                         return new Publisher<T>() {
                             @Override
                             public void subscribe(org.reactivestreams.Subscriber<? super T> subscriber) {
-                                if (baseBean.getStatus().equals("ok")){
+                                if (baseBean.getStatus().equals("ok")) {
                                     subscriber.onNext(baseBean.getResult());
-                                }else {
+                                } else {
                                     subscriber.onError(new RetrofitException(baseBean.getMsg()));
                                 }
                             }

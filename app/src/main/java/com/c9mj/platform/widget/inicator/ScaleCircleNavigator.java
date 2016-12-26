@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Administrator on 2016/11/24.
  */
 
-public class ScaleCircleNavigator extends View implements IPagerNavigator, NavigatorHelper.OnNavigatorScrollListener{
+public class ScaleCircleNavigator extends View implements IPagerNavigator, NavigatorHelper.OnNavigatorScrollListener {
     private int mMinRadius;
     private int mMaxRadius;
     private int mNormalCircleColor = Color.parseColor("#bdbdbd");
@@ -33,8 +33,8 @@ public class ScaleCircleNavigator extends View implements IPagerNavigator, Navig
     private int mCircleCount;
 
     private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private List<PointF> mCirclePoints = new ArrayList<PointF>();
-    private SparseArray<Float> mCircleRadiusArray = new SparseArray<Float>();
+    private List<PointF> mCirclePoints = new ArrayList<>();
+    private SparseArray<Float> mCircleRadiusArray = new SparseArray<>();
 
     // 事件回调
     private boolean mTouchable;

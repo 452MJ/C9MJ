@@ -78,9 +78,9 @@ public class ExploreDetailPresenterImpl implements IExploreDetailPresenter {
                         for (int i = 0; i < imgList.size(); i++) {
                             ExploreDetailBean.ImgBean imgBean = imgList.get(i);
                             String ref = imgBean.getRef();//标志
-                            String imgCode = "<img src=\"" + imgBean.getSrc() + "\" id=\"img" + i + "\" width=100% onclick=\"startGallary(" + i +")\"/><p style=color:757575;font-size:12px align=center>"+ imgBean.getAlt() +"</p>";
+                            String imgCode = "<img src=\"" + imgBean.getSrc() + "\" id=\"img" + i + "\" width=100% onclick=\"startGallary(" + i + ")\"/><p style=color:757575;font-size:12px align=center>" + imgBean.getAlt() + "</p>";
                             //查找到需要插入的位置，并添加图片url
-                            StringBuffer buffer = new StringBuffer(html);
+                            StringBuilder buffer = new StringBuilder(html);
                             int pos = buffer.indexOf(ref);
                             buffer.insert(pos, imgCode);
                             html = buffer.toString();

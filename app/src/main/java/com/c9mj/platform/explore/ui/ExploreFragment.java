@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -158,12 +159,12 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
             }
         });
 
-        if (TextUtils.isEmpty(SpHelper.getString(SpHelper.STRING_TITLE))){
-            for (int i = 0; i < tnameArray.length; i++) {
-                titleString = titleString + tnameArray[i] + ":";
+        if (TextUtils.isEmpty(SpHelper.getString(SpHelper.STRING_TITLE))) {
+            for (String aTnameArray : tnameArray) {
+                titleString = titleString + aTnameArray + ":";
             }
             SpHelper.setString(SpHelper.STRING_TITLE, titleString);
-        }else {
+        } else {
             titleString = SpHelper.getString(SpHelper.STRING_TITLE);
         }
 
@@ -172,15 +173,15 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
         unselectedTitleString = SpHelper.getString(SpHelper.STRING_TITLE_UNSELECTED);
 
         //初始化，已选择栏目&未选择栏目
-        if (TextUtils.isEmpty(selectedTitleString) || TextUtils.isEmpty(unselectedTitleString)){
+        if (TextUtils.isEmpty(selectedTitleString) || TextUtils.isEmpty(unselectedTitleString)) {
 
             SpHelper.setString(SpHelper.STRING_TITLE_SELECTED, "");
             SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, "");
 
             for (int i = 0; i < tnameArray.length; i++) {
-                if (i < tnameArray.length / 2){
+                if (i < tnameArray.length / 2) {
                     selectedTitleString = selectedTitleString + tnameArray[i] + ":";
-                }else {
+                } else {
                     unselectedTitleString = unselectedTitleString + tnameArray[i] + ":";
                 }
             }
@@ -255,10 +256,10 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 if (Build.VERSION.SDK_INT >= 21) {
                     ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
                     clipPagerTitleView.setText(selectedTitleList.get(index));
-                    clipPagerTitleView.setBackground(context.getResources().getDrawable(R.drawable.ripple_tab));
+                    clipPagerTitleView.setBackground(ContextCompat.getDrawable(context, R.drawable.ripple_tab));
                     clipPagerTitleView.setTextSize(SizeUtils.sp2px(context, 12));
-                    clipPagerTitleView.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
-                    clipPagerTitleView.setClipColor(context.getResources().getColor(R.color.color_primary));
+                    clipPagerTitleView.setTextColor(ContextCompat.getColor(context, R.color.color_secondary_text));
+                    clipPagerTitleView.setClipColor(ContextCompat.getColor(context, R.color.color_primary));
                     clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -276,12 +277,12 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
                     @Override
                     public void onSelected(int i, int i1) {
-                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_primary));
+                        tab_textview.setTextColor(ContextCompat.getColor(context, R.color.color_primary));
                     }
 
                     @Override
                     public void onDeselected(int i, int i1) {
-                        tab_textview.setTextColor(context.getResources().getColor(R.color.color_secondary_text));
+                        tab_textview.setTextColor(ContextCompat.getColor(context, R.color.color_secondary_text));
                     }
 
                     @Override
@@ -310,7 +311,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 indicator.setLineHeight(UIUtil.dip2px(context, 2));
                 indicator.setRoundRadius(UIUtil.dip2px(context, 2));
                 indicator.setYOffset(UIUtil.dip2px(context, 0.5));
-                indicator.setColors(getResources().getColor(R.color.color_primary));
+                indicator.setColors(ContextCompat.getColor(context, R.color.color_primary));
                 return indicator;
             }
         };
@@ -362,7 +363,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
         CardView cardView = (CardView) holder.getView(R.id.cardview);
-        cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_accent));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_accent));
     }
 
     @Override
@@ -374,14 +375,14 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
         CardView cardView = (CardView) holder.getView(R.id.cardview);
-        cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_primary));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_primary));
     }
 
     @Override
     public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
         CardView cardView = (CardView) holder.getView(R.id.cardview);
-        cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_error));
+        cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_error));
     }
 
     @Override
@@ -400,20 +401,21 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
 
     @Override
     public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-        if (isCurrentlyActive == false){
+        if (!isCurrentlyActive) {
             BaseViewHolder holder = (BaseViewHolder) viewHolder;
             CardView cardView = (CardView) holder.getView(R.id.cardview);
-            cardView.setCardBackgroundColor(context.getResources().getColor(R.color.color_primary));
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_primary));
         }
     }
+
     /**
      * 以:进行间隔区分，String->List
      */
     private List<String> parseStringToListByColons(String result) {
         List<String> resultList = new ArrayList<>();
         String[] resultArray = result.split(":");
-        for (int i = 0; i < resultArray.length; i++) {
-            resultList.add(resultArray[i]);//得到的Title
+        for (String aResultArray : resultArray) {
+            resultList.add(aResultArray);//得到的Title
         }
         return resultList;
     }
@@ -421,7 +423,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     /**
      * 以:进行间隔区分，List->String
      */
-    private String parseListToStringByColons(List<String> list){
+    private String parseListToStringByColons(List<String> list) {
         String resultString = "";
         for (int i = 0; i < list.size(); i++) {
             resultString = resultString + list.get(i) + ":";

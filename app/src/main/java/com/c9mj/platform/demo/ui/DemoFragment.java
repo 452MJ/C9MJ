@@ -9,10 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.demo.adapter.DemoAdapter;
 import com.c9mj.platform.demo.mvp.model.bean.DemoBean;
@@ -28,9 +25,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import static com.c9mj.platform.R.id.tv_title;
 
 /**
  * 快速构建MVP的模板
@@ -113,7 +107,7 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter baseQuikAdapter, View view, int pos) {
-                switch (view.getId()){
+                switch (view.getId()) {
 
                 }
             }
@@ -136,7 +130,6 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void showError(String message) {
 
     }
-
 
 
 }

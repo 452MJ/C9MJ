@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public class ExploreUnSelectedTitleListAdapter extends BaseItemDraggableAdapter<String, BaseViewHolder> {
-    public ExploreUnSelectedTitleListAdapter(List data) {
+    public ExploreUnSelectedTitleListAdapter(List<String> data) {
         super(R.layout.item_explore_title_list_layout, data);
     }
 

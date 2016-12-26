@@ -1,23 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/color_layout_background">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
         android:background="@color/color_primary"
-        android:orientation="horizontal"
         android:elevation="@dimen/cardview_default_elevation"
+        android:orientation="horizontal"
         >
+
         <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@id/magic_indicator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
-            android:id="@id/magic_indicator"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <ImageView
             android:layout_width="2dp"
@@ -29,21 +28,21 @@
 
 
         <TextView
+            android:id="@+id/tv_live_type"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/tab_height"
-            android:text="平台"
-            android:textColor="@color/color_icons"
-            android:gravity="center"
-            android:id="@+id/tv_live_type"
-            android:background="?selectableItemBackground"
             android:layout_weight="0"
-            android:padding="8dp"/>
+            android:background="?selectableItemBackground"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/live_platform"
+            android:textColor="@color/color_icons"/>
 
     </LinearLayout>
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/viewpager" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

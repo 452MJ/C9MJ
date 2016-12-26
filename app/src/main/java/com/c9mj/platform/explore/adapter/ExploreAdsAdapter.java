@@ -36,10 +36,9 @@ public class ExploreAdsAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object)   {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(list.get(position));//删除页卡
     }
-
 
 
 }

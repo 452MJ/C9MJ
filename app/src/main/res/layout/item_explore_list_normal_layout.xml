@@ -4,72 +4,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@null"
+    android:orientation="horizontal"
     >
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_margin="@dimen/cardview_margin"
-        android:elevation="@dimen/widget_elevation"
-        android:id="@+id/cardview"
-        android:foreground="?selectableItemBackground"
+        android:layout_weight="1"
         android:clickable="true"
-        app:cardCornerRadius="@dimen/cardview_default_radius"
+        android:elevation="@dimen/widget_elevation"
+        android:foreground="?selectableItemBackground"
         app:cardBackgroundColor="@color/color_icons"
+        app:cardCornerRadius="@dimen/cardview_default_radius"
         app:cardElevation="@dimen/cardview_elevation"
         app:cardPreventCornerOverlap="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="5dp">
+            android:paddingRight="5dp"
+            android:paddingEnd="5dp">
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:background="@color/color_divider"
-                android:src="@drawable/ic_explore_default"
-                android:padding="15dp"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@null"
-                android:layout_marginRight="10dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:id="@+id/iv_img" />
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@color/color_divider"
+                android:padding="15dp"
+                android:src="@drawable/ic_explore_default"/>
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@null"/>
 
             <TextView
-                android:text="TextView"
-                android:textSize="16sp"
-                android:textColor="@color/color_primary_text"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/tv_source"
                 android:layout_alignTop="@+id/iv_img"
                 android:layout_toEndOf="@+id/iv_img"
-                android:id="@+id/tv_title"
-                android:layout_above="@+id/tv_source"
-                android:paddingRight="5dp"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp" />
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:textColor="@color/color_primary_text"
+                android:textSize="16sp"/>
 
             <TextView
-                android:textSize="12sp"
-                android:textColor="@color/color_secondary_text"
+                android:id="@+id/tv_source"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:layout_alignBottom="@+id/iv_img"
                 android:layout_alignParentRight="true"
-                android:id="@+id/tv_source"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/color_secondary_text"
+                android:textSize="12sp"/>
 
         </RelativeLayout>
 

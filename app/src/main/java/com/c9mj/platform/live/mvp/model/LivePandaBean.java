@@ -1,6 +1,6 @@
 package com.c9mj.platform.live.mvp.model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * author: LMJ
@@ -54,13 +54,20 @@ public class LivePandaBean {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "LivePandaBean{" +
+                "data=" + data +
+                '}';
+    }
+
     public static class DataBean {
         private String appid;
         private int rid;
         private String sign;
         private String authType;
         private long ts;
-        private List<String> chat_addr_list;
+        private ArrayList<String> chat_addr_list;
 
         public String getAppid() {
             return appid;
@@ -102,19 +109,12 @@ public class LivePandaBean {
             this.ts = ts;
         }
 
-        public List<String> getChat_addr_list() {
+        public ArrayList<String> getChat_addr_list() {
             return chat_addr_list;
         }
 
-        public void setChat_addr_list(List<String> chat_addr_list) {
+        public void setChat_addr_list(ArrayList<String> chat_addr_list) {
             this.chat_addr_list = chat_addr_list;
         }
-    }
-
-    @Override
-    public String toString() {
-        return "LivePandaBean{" +
-                "data=" + data +
-                '}';
     }
 }

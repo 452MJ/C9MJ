@@ -65,6 +65,7 @@ public class LivePlayAvatarFragment extends BaseFragment {
 
     /**
      * ListPlayActivity调用，更新主播详情
+     *
      * @param detailBean
      */
     public void updateLiveDetail(LiveDetailBean detailBean) {
@@ -74,7 +75,7 @@ public class LivePlayAvatarFragment extends BaseFragment {
         tv_game_type.setText(detailBean.getGame_type());
 
         String imgUrl = detailBean.getLive_userimg();
-        if (!TextUtils.isEmpty(imgUrl)){
+        if (!TextUtils.isEmpty(imgUrl)) {
 
             Glide.with(context)//主播头像
                     .load(imgUrl)

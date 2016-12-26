@@ -10,13 +10,12 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation.SupportActivity;
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
  * Created by Administrator on 2016/11/2.
  */
 
-public class BaseActivity extends SupportActivity{
+public class BaseActivity extends SupportActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

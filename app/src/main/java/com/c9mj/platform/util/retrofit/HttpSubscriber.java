@@ -9,6 +9,7 @@ import io.reactivex.subscribers.DefaultSubscriber;
 public abstract class HttpSubscriber<T> extends DefaultSubscriber<T> {
 
     public abstract void _onNext(T t);
+
     public abstract void _onError(String message);
 
     @Override

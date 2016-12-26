@@ -89,7 +89,6 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
     }
 
 
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -151,13 +150,12 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         refreshLayout.setRefreshing(false);
         adapter.addData(list);//在roomBeanList的尾部添加
         offset = adapter.getData().size();
-        if (list.size() < LiveAPI.LIMIT){//分页数据size比每页数据的limit小，说明已全部加载数据
+        if (list.size() < LiveAPI.LIMIT) {//分页数据size比每页数据的limit小，说明已全部加载数据
             adapter.loadComplete();//下一次不再加载更多，并显示FooterView
             View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
             TextView tv_footer = (TextView) footerView.findViewById(R.id.tv_footer);
             tv_footer.setText(getString(R.string.explore_footer));
             adapter.addFooterView(footerView);
-            return;
         }
 //        adapter.notifyDataSetChanged();
     }

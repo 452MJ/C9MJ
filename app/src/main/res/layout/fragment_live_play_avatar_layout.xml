@@ -1,123 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/color_layout_background">
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/cardview_margin"
+            android:clickable="true"
+            android:elevation="@dimen/widget_elevation"
+            android:foreground="?android:selectableItemBackground"
+            app:cardCornerRadius="@dimen/cardview_radius"
+            app:cardElevation="@dimen/cardview_elevation"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
 
-            <android.support.v7.widget.CardView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:foreground="?android:selectableItemBackground"
-                android:clickable="true"
-                android:layout_margin="@dimen/cardview_margin"
-                android:elevation="@dimen/widget_elevation"
-                app:cardUseCompatPadding="true"
-                app:cardPreventCornerOverlap="true"
-                app:cardCornerRadius="@dimen/cardview_radius"
-                app:cardElevation="@dimen/cardview_elevation">
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:clickable="false"
+                android:padding="5dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="false"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:text="主播昵称："
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/textView12"
-                        android:textColor="@color/color_primary_dark"/>
-
-                    <TextView
-                        android:text="nickname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/textView12"
-                        android:id="@+id/tv_name"
-                        android:textColor="@color/color_primary_text"/>
-
-                    <TextView
-                        android:text="直播平台："
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/textView12"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/textView14"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/color_primary_dark"/>
-
-                    <TextView
-                        android:text="游戏分类："
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:id="@+id/textView16"
-                        android:layout_below="@+id/textView14"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/color_primary_dark"/>
-
-                    <TextView
-                        android:text="live_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tv_live_type"
-                        android:layout_alignBaseline="@+id/textView14"
-                        android:layout_alignBottom="@+id/textView14"
-                        android:layout_toEndOf="@+id/textView14"
-                        android:textColor="@color/color_primary_text"/>
-
-                    <TextView
-                        android:text="game_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tv_game_type"
-                        android:layout_alignBaseline="@+id/textView16"
-                        android:layout_alignBottom="@+id/textView16"
-                        android:layout_toEndOf="@+id/textView16"
-                        android:textColor="@color/color_primary_text"/>
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:foreground="?android:selectableItemBackground"
-                android:clickable="true"
-                android:layout_margin="@dimen/cardview_margin"
-                android:elevation="@dimen/widget_elevation"
-                app:cardUseCompatPadding="true"
-                app:cardPreventCornerOverlap="true"
-                app:cardCornerRadius="@dimen/cardview_radius"
-                app:cardElevation="@dimen/cardview_elevation">
-
-                <ImageView
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/iv_background"
-                    android:scaleType="fitCenter"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
-            </android.support.v7.widget.CardView>
+                    android:text="@string/live_nickname"
+                    android:textColor="@color/color_primary_dark"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView12"
+                    android:textColor="@color/color_primary_text"/>
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textView12"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/live_live_platform"
+                    android:textColor="@color/color_primary_dark"/>
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textView14"
+                    android:layout_marginTop="5dp"
+                    android:text="游戏分类："
+                    android:textColor="@color/color_primary_dark"/>
+
+                <TextView
+                    android:id="@+id/tv_live_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView14"
+                    android:layout_alignBottom="@+id/textView14"
+                    android:layout_toEndOf="@+id/textView14"
+                    android:textColor="@color/color_primary_text"/>
+
+                <TextView
+                    android:id="@+id/tv_game_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView16"
+                    android:layout_alignBottom="@+id/textView16"
+                    android:layout_toEndOf="@+id/textView16"
+                    android:textColor="@color/color_primary_text"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/cardview_margin"
+            android:clickable="true"
+            android:elevation="@dimen/widget_elevation"
+            android:foreground="?android:selectableItemBackground"
+            app:cardCornerRadius="@dimen/cardview_radius"
+            app:cardElevation="@dimen/cardview_elevation"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+
+            <ImageView
+                android:id="@+id/iv_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitCenter"/>
+        </android.support.v7.widget.CardView>
 
 
-
-        </LinearLayout>
-    </ScrollView>
-
-</FrameLayout>
+    </LinearLayout>
+</ScrollView>

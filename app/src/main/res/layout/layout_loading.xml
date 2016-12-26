@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@null">
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@null">
 
     <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:padding="10dp"
         android:layout_gravity="center"
-        style="@style/Widget.AppCompat.ProgressBar"
+        android:padding="10dp"
         android:theme="@style/CircularProgress"/>
 
 </FrameLayout>

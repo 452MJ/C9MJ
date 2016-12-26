@@ -7,19 +7,19 @@ import com.pili.pldroid.player.PLMediaPlayer;
  * date: 2016/9/1
  * 统一处理网络异常errorCode
  */
-public class MediaException extends RuntimeException{
+public class MediaException extends RuntimeException {
 
     public MediaException(int code) {
         this(getErrorMessage(code));
     }
 
-    public MediaException(String msg){
+    public MediaException(String msg) {
         super(msg);
     }
 
-    private static String getErrorMessage(int code){
+    private static String getErrorMessage(int code) {
         String msg = "";
-        switch (code){
+        switch (code) {
             case PLMediaPlayer.ERROR_CODE_INVALID_URI:
                 msg = "Invalid URL !";
                 break;

@@ -1,15 +1,14 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_layout_background">
+    android:layout_height="match_parent">
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/layout_scroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        android:id="@+id/layout_scroller"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
@@ -19,29 +18,29 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardview_webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/cardview_margin"
                 app:cardCornerRadius="@dimen/cardview_default_radius"
                 app:cardElevation="@dimen/cardview_elevation"
-                app:cardPreventCornerOverlap="true"
-                android:id="@+id/cardview_webview">
+                app:cardPreventCornerOverlap="true">
 
                 <WebView
+                    android:id="@+id/webview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/webview"/>
+                    android:layout_height="match_parent"/>
 
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardview_relative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/cardview_margin"
                 app:cardCornerRadius="@dimen/cardview_default_radius"
                 app:cardElevation="@dimen/cardview_elevation"
-                app:cardPreventCornerOverlap="true"
-                android:id="@+id/cardview_relative">
+                app:cardPreventCornerOverlap="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,211 +62,208 @@
                         android:background="@color/color_divider"/>
 
                     <RelativeLayout
+                        android:id="@+id/layout_relative_0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/layout_relative_0"
-                        android:padding="5dp"
-                        android:background="?selectableItemBackground">
+                        android:background="?selectableItemBackground"
+                        android:padding="5dp">
 
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@color/color_divider"
-                            android:src="@drawable/ic_explore_default"
-                            android:padding="15dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentStart="true" />
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@null"
-                            android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentStart="true"
-                            android:id="@+id/iv_img_0" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/color_divider"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_explore_default"/>
+
+                        <ImageView
+                            android:id="@+id/iv_img_0"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@null"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="16sp"
-                            android:textColor="@color/color_primary_text"
+                            android:id="@+id/tv_title_0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_above="@+id/tv_source_0"
                             android:layout_alignTop="@+id/iv_img_0"
                             android:layout_toEndOf="@+id/iv_img_0"
-                            android:id="@+id/tv_title_0"
                             android:paddingBottom="5dp"
                             android:paddingRight="5dp"
                             android:paddingTop="5dp"
-                            android:layout_above="@+id/tv_source_0" />
+                            android:textColor="@color/color_primary_text"
+                            android:textSize="16sp"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="12sp"
-                            android:textColor="@color/color_secondary_text"
+                            android:id="@+id/tv_source_0"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/iv_img_0"
+                            android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_0"
-                            android:id="@+id/tv_source_0"
-                            android:layout_marginBottom="5dp" />
+                            android:text="TextView"
+                            android:textColor="@color/color_secondary_text"
+                            android:textSize="12sp"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="12sp"
-                            android:textColor="@color/color_secondary_text"
+                            android:id="@+id/tv_time_0"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/tv_time_0"
                             android:layout_alignBaseline="@+id/tv_source_0"
                             android:layout_alignBottom="@+id/tv_source_0"
-                            android:layout_toEndOf="@+id/tv_source_0" />
+                            android:layout_marginLeft="5dp"
+                            android:layout_toEndOf="@+id/tv_source_0"
+                            android:text="TextView"
+                            android:textColor="@color/color_secondary_text"
+                            android:textSize="12sp"/>
 
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="@color/color_divider"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" />
+                        android:layout_marginRight="5dp"
+                        android:background="@color/color_divider"/>
 
                     <RelativeLayout
+                        android:id="@+id/layout_relative_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/layout_relative_1"
-                        android:padding="5dp"
-                        android:background="?selectableItemBackground">
+                        android:background="?selectableItemBackground"
+                        android:padding="5dp">
 
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@color/color_divider"
-                            android:src="@drawable/ic_explore_default"
-                            android:padding="15dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentStart="true" />
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@null"
-                            android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentStart="true"
-                            android:id="@+id/iv_img_1" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/color_divider"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_explore_default"/>
+
+                        <ImageView
+                            android:id="@+id/iv_img_1"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@null"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="16sp"
-                            android:textColor="@color/color_primary_text"
+                            android:id="@+id/tv_title_1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_above="@+id/tv_source_1"
                             android:layout_alignTop="@+id/iv_img_1"
                             android:layout_toEndOf="@+id/iv_img_1"
-                            android:id="@+id/tv_title_1"
-                            android:layout_above="@+id/tv_source_1"
                             android:paddingBottom="5dp"
                             android:paddingRight="5dp"
-                            android:paddingTop="5dp" />
+                            android:paddingTop="5dp"
+                            android:textColor="@color/color_primary_text"
+                            android:textSize="16sp"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="12sp"
-                            android:textColor="@color/color_secondary_text"
+                            android:id="@+id/tv_source_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/iv_img_1"
+                            android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_1"
-                            android:id="@+id/tv_source_1"
-                            android:layout_marginBottom="5dp" />
+                            android:textColor="@color/color_secondary_text"
+                            android:textSize="12sp"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="12sp"
-                            android:textColor="@color/color_secondary_text"
+                            android:id="@+id/tv_time_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/tv_time_1"
                             android:layout_alignBaseline="@+id/tv_source_1"
                             android:layout_alignBottom="@+id/tv_source_1"
-                            android:layout_toEndOf="@+id/tv_source_1" />
+                            android:layout_marginLeft="5dp"
+                            android:layout_toEndOf="@+id/tv_source_1"
+                            android:textColor="@color/color_secondary_text"
+                            android:textSize="12sp"/>
 
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="@color/color_divider"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" />
+                        android:layout_marginRight="5dp"
+                        android:background="@color/color_divider"/>
 
                     <RelativeLayout
+                        android:id="@+id/layout_relative_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/layout_relative_2"
-                        android:padding="5dp"
-                        android:background="?selectableItemBackground">
+                        android:background="?selectableItemBackground"
+                        android:padding="5dp">
 
                         <ImageView
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@color/color_divider"
-                            android:src="@drawable/ic_explore_default"
-                            android:padding="15dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentStart="true" />
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@null"
-                            android:layout_marginRight="10dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentStart="true"
-                            android:id="@+id/iv_img_2" />
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/color_divider"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_explore_default"/>
+
+                        <ImageView
+                            android:id="@+id/iv_img_2"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@null"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="16sp"
-                            android:textColor="@color/color_primary_text"
+                            android:id="@+id/tv_title_2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_above="@+id/tv_source_2"
                             android:layout_alignTop="@+id/iv_img_2"
                             android:layout_toEndOf="@+id/iv_img_2"
-                            android:id="@+id/tv_title_2"
-                            android:layout_above="@+id/tv_source_2"
                             android:paddingBottom="5dp"
+                            android:paddingEnd="5dp"
                             android:paddingRight="5dp"
-                            android:paddingTop="5dp" />
+                            android:paddingTop="5dp"
+                            android:text="TextView"
+                            android:textColor="@color/color_primary_text"
+                            android:textSize="16sp"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="12sp"
-                            android:textColor="@color/color_secondary_text"
+                            android:id="@+id/tv_source_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/iv_img_2"
+                            android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_2"
-                            android:id="@+id/tv_source_2"
-                            android:layout_marginBottom="5dp" />
+                            android:text="TextView"
+                            android:textColor="@color/color_secondary_text"
+                            android:textSize="12sp"/>
 
                         <TextView
-                            android:text="TextView"
-                            android:textSize="12sp"
-                            android:textColor="@color/color_secondary_text"
+                            android:id="@+id/tv_time_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/tv_time_2"
                             android:layout_alignBaseline="@+id/tv_source_2"
                             android:layout_alignBottom="@+id/tv_source_2"
-                            android:layout_toEndOf="@+id/tv_source_2" />
+                            android:layout_marginLeft="5dp"
+                            android:layout_toEndOf="@+id/tv_source_2"
+                            android:text="TextView"
+                            android:textColor="@color/color_secondary_text"
+                            android:textSize="12sp"/>
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -277,13 +273,13 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:id="@+id/app_bar"
         android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:elevation="@dimen/widget_elevation"
-        app:layout_behavior="@string/appbar_spring_behavior"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        app:layout_behavior="@string/appbar_spring_behavior">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
@@ -295,12 +291,12 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
+                android:id="@+id/iv_appbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:layout_collapseMode="parallax"
-                android:id="@+id/iv_appbar"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -311,16 +307,16 @@
 
                 <TextView
                     android:id="@+id/toolbar_title"
-                    android:textSize="16sp"
-                    android:textColor="#ffffff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:singleLine="true" />
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"/>
 
             </android.support.v7.widget.Toolbar>
 

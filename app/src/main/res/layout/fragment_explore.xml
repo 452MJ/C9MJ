@@ -1,9 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_icons"
     android:orientation="vertical">
 
     <TextView
@@ -11,18 +9,18 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="@dimen/tab_height"
         android:background="@color/color_primary"
         android:elevation="@dimen/cardview_default_elevation"
-        android:text="发现"
-        android:textColor="#ffffff"
-        android:textSize="16sp"
         android:gravity="center_vertical"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:text="@string/explore"
+        android:textColor="#ffffff"
+        android:textSize="16sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
         android:background="@color/color_icons"
-        android:orientation="horizontal"
         android:elevation="@dimen/cardview_default_elevation"
+        android:orientation="horizontal"
         >
 
         <FrameLayout
@@ -31,27 +29,27 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_weight="1">
 
             <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/magic_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/color_icons"
-                android:focusable="true"
-                android:id="@+id/magic_indicator"/>
+                android:focusable="true"/>
 
             <TextView
+                android:id="@+id/tv_section"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/color_primary_light"
-                android:text="切换栏目"
-                android:id="@+id/tv_section"
                 android:gravity="center_vertical"
                 android:padding="5dp"
+                android:text="@string/live_exchange"
                 android:textColor="@color/color_icons"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
 
             <ImageView
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:alpha="0.3"
                 android:scaleType="centerCrop"
                 android:src="@drawable/background_shadow"/>
@@ -60,14 +58,14 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 
 
         <ImageView
+            android:id="@+id/iv_expandable"
             android:layout_width="@dimen/tab_height"
             android:layout_height="@dimen/tab_height"
-            android:id="@+id/iv_expandable"
-            android:background="?selectableItemBackgroundBorderless"
             android:layout_weight="0"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_expand_open"
-            android:padding="8dp" />
+            android:src="@drawable/ic_expand_open"/>
 
     </LinearLayout>
 
@@ -76,15 +74,15 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent">
 
         <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/viewpager" />
+            android:layout_height="match_parent"/>
 
         <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_layout_background"
-            android:id="@+id/scroll_view">
+            android:background="@color/color_layout_background">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,36 +91,34 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_selected"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/recyclerview_selected"
-                    android:background="@color/color_icons"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="@color/color_icons"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_gravity="end"
                     android:layout_weight="0"
-                    android:layout_gravity="end">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:textSize="12sp"
-                        android:layout_weight="0"
+                        android:text="@string/explore_drag"
                         android:textColor="@color/color_accent"
-                        android:text="1.长按排序 "/>
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:textSize="12sp"
-                        android:layout_weight="0"
+                        android:text="@string/explore_delete"
                         android:textColor="@color/color_error"
-                        android:text="2.向右侧滑删除"/>
+                        android:textSize="12sp"/>
 
                 </LinearLayout>
 
@@ -137,18 +133,18 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="12sp"
+                    android:layout_weight="0"
                     android:background="@color/color_layout_background"
+                    android:padding="5dp"
                     android:text="点击添加更多栏目"
-                    android:layout_weight="0"/>
+                    android:textSize="12sp"/>
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_unselected"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/recyclerview_unselected"
-                    android:background="@color/color_layout_background"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="@color/color_layout_background"/>
 
             </LinearLayout>
 
