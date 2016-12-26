@@ -7,6 +7,8 @@
     <string name="enter">确定</string>
     <string name="cancel">取消</string>
     <string name="second_exit">"再按一次Back键退出程序"</string>
+    <string name="error_grant">部分所需权限请求被拒绝，程序可能会出现崩溃！</string>
+
 
     <!--发现-->
     <string name="explore_footer">无更多内容</string>
@@ -44,7 +46,7 @@
     <string name="error_server">服务器内部错误，请稍后再试！</string>
     <string name="error_unknown">未知错误！</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--预览图片-->
+    <string name="gallery">预览图片</string>
 
 </resources>

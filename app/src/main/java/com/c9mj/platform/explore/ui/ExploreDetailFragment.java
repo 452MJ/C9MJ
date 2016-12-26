@@ -1,6 +1,7 @@
 package com.c9mj.platform.explore.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
@@ -21,6 +22,7 @@ import com.c9mj.platform.R;
 import com.c9mj.platform.explore.mvp.model.bean.ExploreDetailBean;
 import com.c9mj.platform.explore.mvp.presenter.impl.ExploreDetailPresenterImpl;
 import com.c9mj.platform.explore.mvp.view.IExploreDetailView;
+import com.c9mj.platform.gallery.ui.GalleryActivity;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 
@@ -50,6 +52,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
 
     ExploreDetailPresenterImpl presenter;
 
+    ExploreDetailBean detailBean;
     List<ExploreDetailBean.RelativeSysBean> relativeSysList = new ArrayList<>();
     JsInterface jsInterface = new JsInterface();
 
@@ -168,6 +171,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
 
     @Override
     public void updateExploreDetail(ExploreDetailBean detailBean) {
+        this.detailBean = detailBean;
     }
 
     @Override
@@ -250,10 +254,15 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
                     .subscribe(new Consumer<Integer>() {
                         @Override
                         public void accept(Integer integer) throws Exception {
-                            ToastUtil.show(integer + "");
+                            Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                            ArrayList<String> imgList = new ArrayList<String>();
+                            for (ExploreDetailBean.ImgBean imgBean : detailBean.getImg()) {
+                                imgList.add(imgBean.getSrc());
+                            }
+                            intent.putStringArrayListExtra(GalleryActivity.IMG_LIST, imgList);
+                            startActivity(intent);
                         }
                     });
-//            start(ExploreDetailFragment.newInstance());
         }
     }
 }

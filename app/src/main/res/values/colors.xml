@@ -18,4 +18,5 @@
     <color name="color_tab_normal_dark">@color/primary_light</color>
 
     <color name="color_background_white">#ffffff</color>
+    <color name="color_statusbar">#212121</color>
 </resources>

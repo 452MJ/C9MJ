@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
@@ -10,8 +10,18 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="AppTheme" parent="BaseTheme">
+
+    </style>
+
+    <style name="GalleryTheme" parent="BaseTheme">
+        <item name="colorPrimaryDark">@color/color_statusbar</item>
+    </style>
+
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/color_primary</item>
     </style>
+
+
 
 </resources>

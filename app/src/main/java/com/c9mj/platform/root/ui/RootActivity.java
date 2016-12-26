@@ -14,6 +14,7 @@ import com.c9mj.platform.main.ui.MainFragment;
 import com.c9mj.platform.user.ui.UserFragment;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
+import com.c9mj.platform.widget.activity.BaseActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -36,7 +37,7 @@ import me.yokeyword.fragmentation.SupportActivity;
  * author: LMJ
  * date: 2016/9/1
  */
-public class RootActivity extends SupportActivity {
+public class RootActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

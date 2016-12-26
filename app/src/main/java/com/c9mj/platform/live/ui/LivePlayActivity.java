@@ -36,6 +36,7 @@ import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
 import com.c9mj.platform.widget.activity.BaseActivity;
+import com.c9mj.platform.widget.activity.BaseSwipeActivity;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 
@@ -71,7 +72,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * date: 2016/9/12
  * 观看直播Activity
  */
-public class LivePlayActivity extends BaseActivity
+public class LivePlayActivity extends BaseSwipeActivity
         implements ILivePlayActivity,
         PLMediaPlayer.OnPreparedListener,
         PLMediaPlayer.OnVideoSizeChangedListener,
