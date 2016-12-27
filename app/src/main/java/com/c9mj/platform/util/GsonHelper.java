@@ -58,7 +58,7 @@ public class GsonHelper {
      * @Description: 对象转成json
      */
     public static String toJson(Object obj) {
-        String strJson = "";
+        String strJson;
         gson = getInstance();
         strJson = gson.toJson(obj);
         return strJson;

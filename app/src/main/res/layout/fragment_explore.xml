@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,15 +12,14 @@
         android:padding="5dp"
         android:text="@string/explore"
         android:textColor="#ffffff"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_height"
         android:background="@color/color_icons"
         android:elevation="@dimen/cardview_default_elevation"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -33,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/color_icons"
-                android:focusable="true"/>
+                android:focusable="true" />
 
             <TextView
                 android:id="@+id/tv_section"
@@ -44,7 +42,7 @@
                 android:padding="5dp"
                 android:text="@string/live_exchange"
                 android:textColor="@color/color_icons"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <ImageView
                 android:layout_width="2dp"
@@ -52,7 +50,7 @@
                 android:layout_gravity="end"
                 android:alpha="0.3"
                 android:scaleType="centerCrop"
-                android:src="@drawable/background_shadow"/>
+                android:src="@drawable/background_shadow" />
 
         </FrameLayout>
 
@@ -65,7 +63,7 @@
             android:background="?selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_expand_open"/>
+            android:src="@drawable/ic_expand_open" />
 
     </LinearLayout>
 
@@ -76,7 +74,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -93,8 +91,8 @@
                     android:id="@+id/recyclerview_selected"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="@null" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -109,7 +107,7 @@
                         android:padding="5dp"
                         android:text="@string/explore_drag"
                         android:textColor="@color/color_accent"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -117,7 +115,7 @@
                         android:padding="5dp"
                         android:text="@string/explore_delete"
                         android:textColor="@color/color_error"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -127,7 +125,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="0"
-                    android:src="@color/color_divider"/>
+                    android:src="@color/color_divider" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -135,14 +133,14 @@
                     android:layout_weight="0"
                     android:padding="5dp"
                     android:text="点击添加更多栏目"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview_unselected"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:background="@null" />
 
             </LinearLayout>
 

@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,15 +26,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toobar_height"
                 app:collapseIcon="@mipmap/ic_launcher"
-                app:layout_collapseMode="pin">
-            </android.support.v7.widget.Toolbar>
+                app:layout_collapseMode="pin"></android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -52,13 +50,12 @@
         android:elevation="@dimen/widget_elevation"
         android:src="@drawable/ic_camera"
         app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"/>
+        app:layout_anchorGravity="bottom|end" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -93,7 +90,7 @@
                         android:layout_height="60dp"
                         android:layout_below="@+id/textView"
                         android:padding="15dp"
-                        android:src="@drawable/ic_user"/>
+                        android:src="@drawable/ic_user" />
 
                     <TextView
                         android:id="@+id/textView"
@@ -105,7 +102,7 @@
                         android:gravity="center"
                         android:text="@string/user_name"
                         android:textColor="@color/color_secondary_text"
-                        android:textSize="@dimen/textsize_secondary"/>
+                        android:textSize="@dimen/textsize_secondary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -117,7 +114,7 @@
                         android:padding="5dp"
                         android:text="@string/user_name"
                         android:textColor="@color/color_primary_text"
-                        android:textSize="@dimen/textsize_primary"/>
+                        android:textSize="@dimen/textsize_primary" />
 
                 </RelativeLayout>
 
@@ -126,7 +123,7 @@
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/color_divider"/>
+                    android:background="@color/color_divider" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -140,7 +137,7 @@
                         android:layout_height="60dp"
                         android:layout_below="@+id/textView2"
                         android:padding="15dp"
-                        android:src="@drawable/ic_computer"/>
+                        android:src="@drawable/ic_computer" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -152,7 +149,7 @@
                         android:gravity="center"
                         android:text="@string/user_industry"
                         android:textColor="@color/color_secondary_text"
-                        android:textSize="@dimen/textsize_secondary"/>
+                        android:textSize="@dimen/textsize_secondary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -164,7 +161,7 @@
                         android:padding="5dp"
                         android:text="@string/user_industry"
                         android:textColor="@color/color_primary_text"
-                        android:textSize="@dimen/textsize_primary"/>
+                        android:textSize="@dimen/textsize_primary" />
 
                 </RelativeLayout>
 
@@ -173,7 +170,7 @@
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/color_divider"/>
+                    android:background="@color/color_divider" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -186,7 +183,7 @@
                         android:layout_height="60dp"
                         android:layout_below="@+id/textView3"
                         android:padding="15dp"
-                        android:src="@drawable/ic_android"/>
+                        android:src="@drawable/ic_android" />
 
                     <TextView
                         android:id="@+id/textView3"
@@ -197,7 +194,7 @@
                         android:gravity="center"
                         android:text="@string/user_career"
                         android:textColor="@color/color_secondary_text"
-                        android:textSize="@dimen/textsize_secondary"/>
+                        android:textSize="@dimen/textsize_secondary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -209,7 +206,7 @@
                         android:padding="5dp"
                         android:text="@string/user_job"
                         android:textColor="@color/color_primary_text"
-                        android:textSize="@dimen/textsize_primary"/>
+                        android:textSize="@dimen/textsize_primary" />
 
                 </RelativeLayout>
 
@@ -218,7 +215,7 @@
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/color_divider"/>
+                    android:background="@color/color_divider" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -232,7 +229,7 @@
                         android:layout_height="60dp"
                         android:layout_below="@+id/textView4"
                         android:padding="15dp"
-                        android:src="@drawable/ic_school"/>
+                        android:src="@drawable/ic_school" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -243,7 +240,7 @@
                         android:gravity="center"
                         android:text="@string/user_education"
                         android:textColor="@color/color_secondary_text"
-                        android:textSize="@dimen/textsize_secondary"/>
+                        android:textSize="@dimen/textsize_secondary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -255,7 +252,7 @@
                         android:padding="5dp"
                         android:text="@string/user_school_subject"
                         android:textColor="@color/color_primary_text"
-                        android:textSize="@dimen/textsize_primary"/>
+                        android:textSize="@dimen/textsize_primary" />
 
                 </RelativeLayout>
 
@@ -264,7 +261,7 @@
                     android:layout_height="@dimen/divider_height"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/color_divider"/>
+                    android:background="@color/color_divider" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -277,7 +274,7 @@
                         android:layout_height="60dp"
                         android:layout_below="@+id/textView5"
                         android:padding="15dp"
-                        android:src="@drawable/ic_introduction"/>
+                        android:src="@drawable/ic_introduction" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -288,7 +285,7 @@
                         android:gravity="center"
                         android:text="@string/user_introduce"
                         android:textColor="@color/color_secondary_text"
-                        android:textSize="@dimen/textsize_secondary"/>
+                        android:textSize="@dimen/textsize_secondary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -300,7 +297,7 @@
                         android:padding="5dp"
                         android:text="@string/user_code"
                         android:textColor="@color/color_primary_text"
-                        android:textSize="@dimen/textsize_primary"/>
+                        android:textSize="@dimen/textsize_primary" />
                 </RelativeLayout>
 
             </LinearLayout>

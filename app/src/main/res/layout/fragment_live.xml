@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,14 +8,13 @@
         android:layout_height="@dimen/tab_height"
         android:background="@color/color_primary"
         android:elevation="@dimen/cardview_default_elevation"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@id/magic_indicator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <ImageView
             android:layout_width="2dp"
@@ -24,7 +22,7 @@
             android:layout_weight="0"
             android:alpha="0.5"
             android:scaleType="centerCrop"
-            android:src="@drawable/background_shadow_dark"/>
+            android:src="@drawable/background_shadow_dark" />
 
 
         <TextView
@@ -36,13 +34,13 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="@string/live_platform"
-            android:textColor="@color/color_icons"/>
+            android:textColor="@color/color_icons" />
 
     </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
