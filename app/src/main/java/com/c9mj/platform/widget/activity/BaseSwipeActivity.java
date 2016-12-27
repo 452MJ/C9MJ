@@ -14,7 +14,7 @@ public class BaseSwipeActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getWindow().setBackgroundDrawable(null);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            Window window = getWindow();
 //            // Translucent status bar

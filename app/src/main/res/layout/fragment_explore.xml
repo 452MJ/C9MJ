@@ -87,15 +87,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_icons"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview_selected"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/color_icons"/>
+                    android:background="@null"
+                    android:layout_weight="1"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -134,7 +133,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:background="@color/color_layout_background"
                     android:padding="5dp"
                     android:text="点击添加更多栏目"
                     android:textSize="12sp"/>
@@ -143,8 +141,8 @@
                     android:id="@+id/recyclerview_unselected"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@color/color_layout_background"/>
+                    android:background="@null"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
 

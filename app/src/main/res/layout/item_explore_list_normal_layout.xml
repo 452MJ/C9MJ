@@ -17,7 +17,6 @@
         android:clickable="true"
         android:elevation="@dimen/widget_elevation"
         android:foreground="?selectableItemBackground"
-        app:cardBackgroundColor="@color/color_icons"
         app:cardCornerRadius="@dimen/cardview_default_radius"
         app:cardElevation="@dimen/cardview_elevation"
         app:cardPreventCornerOverlap="true">

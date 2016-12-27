@@ -16,7 +16,6 @@
         android:clickable="true"
         android:elevation="@dimen/widget_elevation"
         android:foreground="?selectableItemBackground"
-        app:cardBackgroundColor="@color/color_icons"
         app:cardCornerRadius="@dimen/cardview_default_radius"
         app:cardElevation="@dimen/cardview_elevation"
         app:cardPreventCornerOverlap="true">
@@ -31,8 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/color_divider"/>
+                android:layout_alignParentTop="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
