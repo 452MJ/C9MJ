@@ -42,15 +42,13 @@ public class UserFragment extends BaseFragment {
 
     private static final int REQUEST_CAMERA = 100;
     private static final int REQUEST_GALLERY = REQUEST_CAMERA + 1;
-
-    private String savePath;//调用系统Camera相片保存的路径
-
     @BindView(R.id.iv_appbar)
     ImageView iv_appbar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.btn_photo)
     FloatingActionButton btn_photo;
+    private String savePath;//调用系统Camera相片保存的路径
 
     public static UserFragment newInstance() {
         UserFragment fragment = new UserFragment();

@@ -37,18 +37,15 @@ public class LivePlayChatFragment extends BaseFragment {
     private static final String KEY = "key";
 
     private static final int DANMU_LIMIT = 30;
-
+    private final List<DanmuBean> danmuList = new ArrayList<>();
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
-    private LivePlayChatAdapter adapter;
-    private final List<DanmuBean> danmuList = new ArrayList<>();
-
     @BindView(R.id.et_danmu)
     EditText et_danmu;
     @BindView(R.id.tv_send)
     TextView tv_send;
-
+    private LinearLayoutManager layoutManager;
+    private LivePlayChatAdapter adapter;
     private Context context;
     private LivePlayActivity activity;
 

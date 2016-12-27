@@ -47,30 +47,17 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
     private static final String DOC_ID = "doc_id";
     private static final String TITLE = "title";
     private static final String IMG = "img";
-
-    private Context context;
-    private String doc_id;
-    private String title;
-    private String img;
-
-    private ExploreDetailPresenterImpl presenter;
-
-    private ExploreDetailBean detailBean;
-    private List<ExploreDetailBean.RelativeSysBean> relativeSysList = new ArrayList<>();
     private final JsInterface jsInterface = new JsInterface();
-
     @BindView(R.id.iv_appbar)
     ImageView iv_appbar;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.toolbar_title)
     TextView tv_title;
-
     @BindView(R.id.cardview_webview)
     CardView cv_webview;
     @BindView(R.id.webview)
     WebView webView;
-
     @BindView(R.id.iv_img_0)
     ImageView iv_img_0;
     @BindView(R.id.tv_title_0)
@@ -99,7 +86,13 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
     CardView cv_relative;
     @BindView(R.id.layout_scroller)
     NestedScrollView layout_scroller;
-
+    private Context context;
+    private String doc_id;
+    private String title;
+    private String img;
+    private ExploreDetailPresenterImpl presenter;
+    private ExploreDetailBean detailBean;
+    private List<ExploreDetailBean.RelativeSysBean> relativeSysList = new ArrayList<>();
 
     public static ExploreDetailFragment newInstance(String doc_id, String title, String img) {
         ExploreDetailFragment fragment = new ExploreDetailFragment();

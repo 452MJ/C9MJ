@@ -43,19 +43,16 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final String GAME_TYPE = "game_type";
-
-    String live_type;//直播平台
-    private String game_type;//游戏类型
-    private int offset = 0;//用于记录分页偏移量
     private final List<LiveListItemBean> liveList = new ArrayList<>();
-
-    private Context context;
-    private LiveListPresenterImpl presenter;
-
+    String live_type;//直播平台
     @BindView(R.id.refreshlayout)
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+    private String game_type;//游戏类型
+    private int offset = 0;//用于记录分页偏移量
+    private Context context;
+    private LiveListPresenterImpl presenter;
     private LiveListAdapter adapter;
 
     public static LiveListFragment newInstance() {

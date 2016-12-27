@@ -50,8 +50,6 @@ import butterknife.OnClick;
  */
 public class LiveFragment extends BaseFragment {
 
-    private int pos;
-    private int currentPos;
     private final List<String> typeIdList = new ArrayList<>();    //直播平台id
     private final List<String> typeNameList = new ArrayList<>();  //直播平台名字
     private final Integer[] logoArrays = new Integer[]{
@@ -65,21 +63,19 @@ public class LiveFragment extends BaseFragment {
             R.drawable.logo_cc,
             R.drawable.logo_huomao
     };
-
     private final List<Fragment> fragmentList = new ArrayList<>();
     private final List<String> titleList = new ArrayList<>();
-
-    private Context context;
-
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    private CommonNavigatorAdapter navigatorAdapter;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    private FragmentAdapter fragmentAdapter;
     @BindView(R.id.tv_live_type)
     TextView tv_live_type;
-
+    private int pos;
+    private int currentPos;
+    private Context context;
+    private CommonNavigatorAdapter navigatorAdapter;
+    private FragmentAdapter fragmentAdapter;
 
     public static LiveFragment newInstance() {
         LiveFragment fragment = new LiveFragment();

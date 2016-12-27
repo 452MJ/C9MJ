@@ -34,19 +34,15 @@ import uk.co.senab.photoview.PhotoView;
 public class GalleryActivity extends BaseSwipeActivity implements IGalleryView {
 
     public static final String IMG_LIST = "img_list";
-
-    private Context context;
-
-    private GalleryPresenterImpl presenter;
-
+    private final List<View> viewList = new ArrayList<>();
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    private GalleryAdapter adapter;
-    private List<String> imgList = new ArrayList<>();
-    private final List<View> viewList = new ArrayList<>();
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
-
+    private Context context;
+    private GalleryPresenterImpl presenter;
+    private GalleryAdapter adapter;
+    private List<String> imgList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

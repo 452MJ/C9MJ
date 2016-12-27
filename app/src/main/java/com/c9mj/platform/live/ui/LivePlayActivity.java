@@ -99,37 +99,19 @@ public class LivePlayActivity extends BaseSwipeActivity
             R.drawable.ic_danmu_on_pressed,
             R.drawable.ic_avatar_pressed
     };
-    private boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
-    private boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
-    private boolean isPause = false;         //直播暂停标志位
-    private boolean isFullscreen = false;   //全屏标志位
-    private boolean isControllerHiden = false;   //MediaController显示隐藏标志位
-    private String live_type;   //直播平台
-    private String live_id;     //直播房间号ID
-    private String game_type;   //直播游戏类型
-    private String live_url;   //直播url
-    private int surfacePortraitWidth;
-    private int surfacePortraitHeight;
-    private int videoWidth;
-    private int videoHeight;
-    private int playWidth;
-    private int playHeight;
-    private List<LiveDetailBean.StreamListBean> streamList = new ArrayList<>();//直播流列表
-    private Context context;
-    private LivePlayPresenterImpl presenter;
-    private Handler controllerHandler;
-    @BindView(R.id.surfaceview)
-    SurfaceView surfaceView;                  //用于显示播放画面
-    @BindView(R.id.danmuview)
-    DanmakuView danmuView;
-    private boolean isShowDanmu = false;// 弹幕显示标志位
-    private DanmakuContext danmakuContext;
     private final BaseDanmakuParser parser = new BaseDanmakuParser() {
         @Override
         protected IDanmakus parse() {
             return new Danmakus();
         }
     };
+    private final FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
+    private final List<String> titleList = new ArrayList<>();
+    private final SupportFragment[] fragments = new SupportFragment[2];
+    @BindView(R.id.surfaceview)
+    SurfaceView surfaceView;                  //用于显示播放画面
+    @BindView(R.id.danmuview)
+    DanmakuView danmuView;
     //横屏控件
     @BindView(R.id.iv_back_landscape)
     ImageView iv_back_landscape;
@@ -171,12 +153,30 @@ public class LivePlayActivity extends BaseSwipeActivity
     LinearLayout layout_bottom;
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
+    private boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
+    private boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
+    private boolean isPause = false;         //直播暂停标志位
+    private boolean isFullscreen = false;   //全屏标志位
+    private boolean isControllerHiden = false;   //MediaController显示隐藏标志位
+    private String live_type;   //直播平台
+    private String live_id;     //直播房间号ID
+    private String game_type;   //直播游戏类型
+    private String live_url;   //直播url
+    private int surfacePortraitWidth;
+    private int surfacePortraitHeight;
+    private int videoWidth;
+    private int videoHeight;
+    private int playWidth;
+    private int playHeight;
+    private List<LiveDetailBean.StreamListBean> streamList = new ArrayList<>();//直播流列表
+    private Context context;
+    private LivePlayPresenterImpl presenter;
+    private Handler controllerHandler;
+    private boolean isShowDanmu = false;// 弹幕显示标志位
+    private DanmakuContext danmakuContext;
     private CommonNavigatorAdapter navigatorAdapter;
-    private final FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
-    private final List<String> titleList = new ArrayList<>();
     private LivePlayChatFragment chatFragment;//弹幕聊天室Fragment
     private LivePlayAvatarFragment avatarFragment;//主播详情Fragment
-    private final SupportFragment[] fragments = new SupportFragment[2];
     private int current;
     private PLMediaPlayer mediaPlayer;  //媒体控制器
 

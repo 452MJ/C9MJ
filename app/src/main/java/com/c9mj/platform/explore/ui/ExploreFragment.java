@@ -65,29 +65,11 @@ import butterknife.OnClick;
 public class ExploreFragment extends BaseFragment implements OnItemDragListener, OnItemSwipeListener {
 
 
-    private String[] idArray;
-    private String[] aliasArray;
-    private String[] enameArray;
-    private String[] tnameArray;
     private final List<Fragment> fragmentList = new ArrayList<>();
-
-    private String titleString = "";//用于保存记录所有栏目
-    private String selectedTitleString = "";//用于保存记录已选择栏目
-    private String unselectedTitleString = "";//用于保存记录未选择栏目
-
-    private List<String> titleList = new ArrayList<>();//所有TitleList
-    private List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
-    private List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
-
-    private Context context;
-
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    private CommonNavigator navigator;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    private FragmentAdapter fragmentAdapter;
-
     //用于展开显示栏目切换
     @BindView(R.id.tv_section)
     TextView tv_section;
@@ -95,15 +77,27 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     ScrollView scrollView;
     @BindView(R.id.iv_expandable)
     ImageView iv_expandable;
-    private boolean isExpanded = false;
-
     //栏目切换的Top列表
     @BindView(R.id.recyclerview_selected)
     RecyclerView rv_selected;
-    private ExploreSelectedTitleListAdapter selectedAdapter;
     //栏目切换的Bottom列表
     @BindView(R.id.recyclerview_unselected)
     RecyclerView rv_unselected;
+    private String[] idArray;
+    private String[] aliasArray;
+    private String[] enameArray;
+    private String[] tnameArray;
+    private String titleString = "";//用于保存记录所有栏目
+    private String selectedTitleString = "";//用于保存记录已选择栏目
+    private String unselectedTitleString = "";//用于保存记录未选择栏目
+    private List<String> titleList = new ArrayList<>();//所有TitleList
+    private List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
+    private List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
+    private Context context;
+    private CommonNavigator navigator;
+    private FragmentAdapter fragmentAdapter;
+    private boolean isExpanded = false;
+    private ExploreSelectedTitleListAdapter selectedAdapter;
     private ExploreUnSelectedTitleListAdapter unselectedAdapter;
 
 

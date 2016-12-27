@@ -34,16 +34,13 @@ import butterknife.ButterKnife;
 public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, IDemoView {
 
     private static final String KEY = "key";
-
-    private Context context;
-
-    private DemoPresenterImpl presenter;
-
+    private final List<DemoBean> list = new ArrayList<>();
     @BindView(R.id.layout_refresh)
     SwipeRefreshLayout layout_refresh;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    private final List<DemoBean> list = new ArrayList<>();
+    private Context context;
+    private DemoPresenterImpl presenter;
     private DemoAdapter adapter;
 
 

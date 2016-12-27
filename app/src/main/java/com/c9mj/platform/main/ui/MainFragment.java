@@ -47,15 +47,15 @@ public class MainFragment extends BaseFragment {
             R.drawable.ic_live_pressed,
             R.drawable.ic_user_pressed
     };
-    private long exitTime;//用于按两次Back键退出
-    private Context context;
     private final SupportFragment[] fragments = new SupportFragment[3];
-    private int current;
+    private final FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
     @BindView(R.id.layout_container)
     FrameLayout layout_container;
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    private final FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
+    private long exitTime;//用于按两次Back键退出
+    private Context context;
+    private int current;
 
     public static MainFragment newInstance() {
         return newInstance("");
