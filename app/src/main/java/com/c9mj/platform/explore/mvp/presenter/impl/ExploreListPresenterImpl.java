@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ExploreListPresenterImpl implements IExploreListPresenter {
 
-    IExploreListFragment view;
+    private final IExploreListFragment view;
 
     public ExploreListPresenterImpl(IExploreListFragment view) {
         this.view = view;

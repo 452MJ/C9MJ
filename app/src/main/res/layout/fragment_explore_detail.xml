@@ -107,7 +107,6 @@
                             android:layout_alignBottom="@+id/iv_img_0"
                             android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_0"
-                            android:text="TextView"
                             android:textColor="@color/color_secondary_text"
                             android:textSize="12sp"/>
 
@@ -119,7 +118,6 @@
                             android:layout_alignBottom="@+id/tv_source_0"
                             android:layout_marginLeft="5dp"
                             android:layout_toEndOf="@+id/tv_source_0"
-                            android:text="TextView"
                             android:textColor="@color/color_secondary_text"
                             android:textSize="12sp"/>
 
@@ -238,7 +236,6 @@
                             android:paddingEnd="5dp"
                             android:paddingRight="5dp"
                             android:paddingTop="5dp"
-                            android:text="TextView"
                             android:textColor="@color/color_primary_text"
                             android:textSize="16sp"/>
 
@@ -249,7 +246,6 @@
                             android:layout_alignBottom="@+id/iv_img_2"
                             android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_2"
-                            android:text="TextView"
                             android:textColor="@color/color_secondary_text"
                             android:textSize="12sp"/>
 
@@ -261,7 +257,6 @@
                             android:layout_alignBottom="@+id/tv_source_2"
                             android:layout_marginLeft="5dp"
                             android:layout_toEndOf="@+id/tv_source_2"
-                            android:text="TextView"
                             android:textColor="@color/color_secondary_text"
                             android:textSize="12sp"/>
 
@@ -282,7 +277,6 @@
         app:layout_behavior="@string/appbar_spring_behavior">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"

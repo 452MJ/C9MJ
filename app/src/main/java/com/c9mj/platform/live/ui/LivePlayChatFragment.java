@@ -40,9 +40,9 @@ public class LivePlayChatFragment extends BaseFragment {
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    LivePlayChatAdapter adapter;
-    List<DanmuBean> danmuList = new ArrayList<>();
+    private LinearLayoutManager layoutManager;
+    private LivePlayChatAdapter adapter;
+    private final List<DanmuBean> danmuList = new ArrayList<>();
 
     @BindView(R.id.et_danmu)
     EditText et_danmu;
@@ -56,7 +56,7 @@ public class LivePlayChatFragment extends BaseFragment {
         return newInstance("");
     }
 
-    public static LivePlayChatFragment newInstance(String game_type) {
+    private static LivePlayChatFragment newInstance(String game_type) {
         LivePlayChatFragment fragment = new LivePlayChatFragment();
         Bundle args = new Bundle();
         args.putString(KEY, game_type);

@@ -35,15 +35,15 @@ public class GalleryActivity extends BaseSwipeActivity implements IGalleryView {
 
     public static final String IMG_LIST = "img_list";
 
-    Context context;
+    private Context context;
 
-    GalleryPresenterImpl presenter;
+    private GalleryPresenterImpl presenter;
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    GalleryAdapter adapter;
-    List<String> imgList = new ArrayList<>();
-    List<View> viewList = new ArrayList<>();
+    private GalleryAdapter adapter;
+    private List<String> imgList = new ArrayList<>();
+    private final List<View> viewList = new ArrayList<>();
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
 

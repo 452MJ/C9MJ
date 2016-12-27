@@ -13,7 +13,7 @@ import java.util.List;
 
 public class GalleryAdapter extends PagerAdapter {
 
-    List<View> viewList = new ArrayList<>();
+    private List<View> viewList = new ArrayList<>();
 
     public GalleryAdapter(List<View> viewList) {
         this.viewList = viewList;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.c9mj.platform">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -18,7 +19,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:fullBackupContent="true"
-        android:theme="@style/BaseTheme">
+        android:theme="@style/BaseTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name=".root.ui.RootActivity"

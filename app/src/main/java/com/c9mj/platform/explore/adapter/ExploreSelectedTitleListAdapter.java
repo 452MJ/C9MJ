@@ -24,7 +24,7 @@ public class ExploreSelectedTitleListAdapter extends BaseItemDraggableAdapter<St
         viewHolder.setText(R.id.tv_title, title)
                 .setTextColor(R.id.tv_title, ContextCompat.getColor(mContext, R.color.color_icons))
                 .addOnClickListener(R.id.cardview);
-        CardView cardView = (CardView) viewHolder.getView(R.id.cardview);
+        CardView cardView = viewHolder.getView(R.id.cardview);
         cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.color_primary));
     }
 }

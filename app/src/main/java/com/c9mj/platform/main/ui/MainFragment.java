@@ -37,31 +37,31 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class MainFragment extends BaseFragment {
 
     private static final String KEY = "key";
-    final int[] normalResId = new int[]{
+    private final int[] normalResId = new int[]{
             R.drawable.ic_explore_normal,
             R.drawable.ic_live_normal,
             R.drawable.ic_user_normal
     };
-    final int[] pressedResId = new int[]{
+    private final int[] pressedResId = new int[]{
             R.drawable.ic_explore_pressed,
             R.drawable.ic_live_pressed,
             R.drawable.ic_user_pressed
     };
-    long exitTime;//用于按两次Back键退出
-    Context context;
-    SupportFragment[] fragments = new SupportFragment[3];
-    int current;
+    private long exitTime;//用于按两次Back键退出
+    private Context context;
+    private final SupportFragment[] fragments = new SupportFragment[3];
+    private int current;
     @BindView(R.id.layout_container)
     FrameLayout layout_container;
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
+    private final FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
 
     public static MainFragment newInstance() {
         return newInstance("");
     }
 
-    public static MainFragment newInstance(String value) {
+    private static MainFragment newInstance(String value) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         args.putString(KEY, value);

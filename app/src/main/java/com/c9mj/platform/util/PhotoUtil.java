@@ -59,7 +59,7 @@ public class PhotoUtil {
 
 
     //计算图片的缩放值
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
@@ -100,7 +100,7 @@ public class PhotoUtil {
         if (!bitmapFile.getParentFile().exists()) {
             bitmapFile.getParentFile().mkdirs();
         }
-        FileOutputStream bitmapWtriter = null;
+        FileOutputStream bitmapWtriter;
         try {
             bitmapWtriter = new FileOutputStream(bitmapFile);
             if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bitmapWtriter)) {
@@ -131,7 +131,7 @@ public class PhotoUtil {
         if (!bitmapFile.getParentFile().exists()) {
             bitmapFile.getParentFile().mkdirs();
         }
-        FileOutputStream bitmapWtriter = null;
+        FileOutputStream bitmapWtriter;
         try {
             bitmapWtriter = new FileOutputStream(bitmapFile);
             if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bitmapWtriter)) {
@@ -176,7 +176,7 @@ public class PhotoUtil {
         String res = null;
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
         }

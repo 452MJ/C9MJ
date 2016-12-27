@@ -25,7 +25,6 @@
             android:paddingBottom="1.5dp">
 
             <ImageView
-                android:id="@+id/iv_roomsrc_background"
                 android:layout_width="match_parent"
                 android:layout_height="97dp"
                 android:layout_alignParentTop="true"
@@ -64,12 +63,13 @@
                     android:id="@+id/tv_roomname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:text="房间名称"
+                    android:text="@string/live_roomname"
                     android:textColor="@color/color_icons"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:maxLines="1"/>
+                    android:textSize="@dimen/textsize_secondary"/>
             </FrameLayout>
 
             <RelativeLayout
@@ -85,11 +85,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/iv_online"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:maxLines="1"
                     android:scrollIndicators="end"
                     android:textColor="@color/color_primary_text"
-                    android:textSize="@dimen/textsize_secondary"
-                    android:maxLines="1"/>
+                    android:textSize="@dimen/textsize_secondary"/>
 
                 <ImageView
                     android:id="@+id/iv_online"
@@ -106,7 +107,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="1234"
                     android:textColor="@color/color_secondary_text"
                     android:textSize="@dimen/textsize_secondary"/>
             </RelativeLayout>

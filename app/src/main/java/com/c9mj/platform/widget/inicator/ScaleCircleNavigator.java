@@ -32,9 +32,9 @@ public class ScaleCircleNavigator extends View implements IPagerNavigator, Navig
     private int mCircleSpacing;
     private int mCircleCount;
 
-    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private List<PointF> mCirclePoints = new ArrayList<>();
-    private SparseArray<Float> mCircleRadiusArray = new SparseArray<>();
+    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final List<PointF> mCirclePoints = new ArrayList<>();
+    private final SparseArray<Float> mCircleRadiusArray = new SparseArray<>();
 
     // 事件回调
     private boolean mTouchable;
@@ -44,7 +44,7 @@ public class ScaleCircleNavigator extends View implements IPagerNavigator, Navig
     private int mTouchSlop;
 
     private boolean mFollowTouch = true;    // 是否跟随手指滑动
-    private NavigatorHelper mNavigatorHelper = new NavigatorHelper();
+    private final NavigatorHelper mNavigatorHelper = new NavigatorHelper();
     private Interpolator mStartInterpolator = new LinearInterpolator();
 
     public ScaleCircleNavigator(Context context) {

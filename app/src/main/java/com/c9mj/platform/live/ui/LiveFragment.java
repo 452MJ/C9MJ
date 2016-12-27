@@ -36,6 +36,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,10 +50,11 @@ import butterknife.OnClick;
  */
 public class LiveFragment extends BaseFragment {
 
-    int pos, currentPos;
-    List<String> typeIdList = new ArrayList<>();    //直播平台id
-    List<String> typeNameList = new ArrayList<>();  //直播平台名字
-    Integer[] logoArrays = new Integer[]{
+    private int pos;
+    private int currentPos;
+    private final List<String> typeIdList = new ArrayList<>();    //直播平台id
+    private final List<String> typeNameList = new ArrayList<>();  //直播平台名字
+    private final Integer[] logoArrays = new Integer[]{
             0,
             R.drawable.logo_douyu,
             R.drawable.logo_panda,
@@ -64,17 +66,17 @@ public class LiveFragment extends BaseFragment {
             R.drawable.logo_huomao
     };
 
-    List<Fragment> fragmentList = new ArrayList<>();
-    List<String> titleList = new ArrayList<>();
+    private final List<Fragment> fragmentList = new ArrayList<>();
+    private final List<String> titleList = new ArrayList<>();
 
-    Context context;
+    private Context context;
 
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    CommonNavigatorAdapter navigatorAdapter;
+    private CommonNavigatorAdapter navigatorAdapter;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    FragmentAdapter fragmentAdapter;
+    private FragmentAdapter fragmentAdapter;
     @BindView(R.id.tv_live_type)
     TextView tv_live_type;
 
@@ -114,13 +116,9 @@ public class LiveFragment extends BaseFragment {
 
         /***设置其他View***/
         //直播平台ID
-        for (String id : context.getResources().getStringArray(R.array.live_type_id)) {
-            typeIdList.add(id);
-        }
+        Collections.addAll(typeIdList, context.getResources().getStringArray(R.array.live_type_id));
         //直播平台名称
-        for (String name : context.getResources().getStringArray(R.array.live_type_name)) {
-            typeNameList.add(name);
-        }
+        Collections.addAll(typeNameList, context.getResources().getStringArray(R.array.live_type_name));
         //顶部栏标题
         titleList.add(getString(R.string.live_lol));
         titleList.add(getString(R.string.live_ow));
@@ -143,7 +141,7 @@ public class LiveFragment extends BaseFragment {
         navigatorAdapter = new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return fragmentList == null ? 0 : fragmentList.size();
+                return fragmentList.size();
             }
 
             @Override

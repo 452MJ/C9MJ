@@ -35,16 +35,13 @@ import io.reactivex.subscribers.DisposableSubscriber;
 
 public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
-    ILivePlayActivity view;
+    private final ILivePlayActivity view;
     /**********************
      * 以下是弹幕Socket连接相关
      *****************/
     private ArrayList<String> chatRoomList = new ArrayList<>();
     private String socketIP;
     private int socketPort;
-    //建立连接相关
-    private String roomid;
-    private LivePandaBean pandaBean;
     private boolean isConnectSuccess = false;
     //心跳包相关
     private boolean isAlreadySendHeart = false;  //是否已发送心跳包
@@ -112,9 +109,6 @@ public class LivePlayPresenterImpl implements ILivePlayPresenter {
 
     @Override
     public void connectToChatRoom(String roomid, final LivePandaBean pandaBean) {
-
-        this.roomid = roomid;
-        this.pandaBean = pandaBean;
 
         chatRoomList = pandaBean.getData().getChat_addr_list();
         if (chatRoomList == null || chatRoomList.size() == 0) {

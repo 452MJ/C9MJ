@@ -10,7 +10,7 @@ import com.c9mj.platform.demo.mvp.view.IDemoView;
 
 public class DemoPresenterImpl implements IDemoPresenter {
 
-    IDemoView view;
+    private final IDemoView view;
 
     public DemoPresenterImpl(IDemoView view) {
         this.view = view;

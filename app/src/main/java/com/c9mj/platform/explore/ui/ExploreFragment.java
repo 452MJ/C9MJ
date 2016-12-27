@@ -51,6 +51,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPa
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -64,28 +65,28 @@ import butterknife.OnClick;
 public class ExploreFragment extends BaseFragment implements OnItemDragListener, OnItemSwipeListener {
 
 
-    String[] idArray;
-    String[] aliasArray;
-    String[] enameArray;
-    String[] tnameArray;
-    List<Fragment> fragmentList = new ArrayList<>();
+    private String[] idArray;
+    private String[] aliasArray;
+    private String[] enameArray;
+    private String[] tnameArray;
+    private final List<Fragment> fragmentList = new ArrayList<>();
 
-    String titleString = "";//用于保存记录所有栏目
-    String selectedTitleString = "";//用于保存记录已选择栏目
-    String unselectedTitleString = "";//用于保存记录未选择栏目
+    private String titleString = "";//用于保存记录所有栏目
+    private String selectedTitleString = "";//用于保存记录已选择栏目
+    private String unselectedTitleString = "";//用于保存记录未选择栏目
 
-    List<String> titleList = new ArrayList<>();//所有TitleList
-    List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
-    List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
+    private List<String> titleList = new ArrayList<>();//所有TitleList
+    private List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
+    private List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
 
-    Context context;
+    private Context context;
 
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    CommonNavigator navigator;
+    private CommonNavigator navigator;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    FragmentAdapter fragmentAdapter;
+    private FragmentAdapter fragmentAdapter;
 
     //用于展开显示栏目切换
     @BindView(R.id.tv_section)
@@ -94,16 +95,16 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     ScrollView scrollView;
     @BindView(R.id.iv_expandable)
     ImageView iv_expandable;
-    boolean isExpanded = false;
+    private boolean isExpanded = false;
 
     //栏目切换的Top列表
     @BindView(R.id.recyclerview_selected)
     RecyclerView rv_selected;
-    ExploreSelectedTitleListAdapter selectedAdapter;
+    private ExploreSelectedTitleListAdapter selectedAdapter;
     //栏目切换的Bottom列表
     @BindView(R.id.recyclerview_unselected)
     RecyclerView rv_unselected;
-    ExploreUnSelectedTitleListAdapter unselectedAdapter;
+    private ExploreUnSelectedTitleListAdapter unselectedAdapter;
 
 
     public static ExploreFragment newInstance() {
@@ -155,7 +156,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 animatorSet.setDuration(0);
                 animatorSet.start();
 
-                tv_section.getViewTreeObserver().removeGlobalOnLayoutListener(this);//得到后取消监听
+                tv_section.getViewTreeObserver().removeOnGlobalLayoutListener(this);//得到后取消监听
             }
         });
 
@@ -362,7 +363,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     @Override
     public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
-        CardView cardView = (CardView) holder.getView(R.id.cardview);
+        CardView cardView = holder.getView(R.id.cardview);
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_accent));
     }
 
@@ -374,14 +375,14 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     @Override
     public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
-        CardView cardView = (CardView) holder.getView(R.id.cardview);
+        CardView cardView = holder.getView(R.id.cardview);
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_primary));
     }
 
     @Override
     public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
         BaseViewHolder holder = (BaseViewHolder) viewHolder;
-        CardView cardView = (CardView) holder.getView(R.id.cardview);
+        CardView cardView = holder.getView(R.id.cardview);
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_error));
     }
 
@@ -403,7 +404,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
         if (!isCurrentlyActive) {
             BaseViewHolder holder = (BaseViewHolder) viewHolder;
-            CardView cardView = (CardView) holder.getView(R.id.cardview);
+            CardView cardView = holder.getView(R.id.cardview);
             cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.color_primary));
         }
     }
@@ -414,9 +415,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     private List<String> parseStringToListByColons(String result) {
         List<String> resultList = new ArrayList<>();
         String[] resultArray = result.split(":");
-        for (String aResultArray : resultArray) {
-            resultList.add(aResultArray);//得到的Title
-        }
+        Collections.addAll(resultList, resultArray);
         return resultList;
     }
 

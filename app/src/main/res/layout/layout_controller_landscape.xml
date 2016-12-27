@@ -124,7 +124,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/background_landscape_et_danmu"
-                android:hint="输入发送弹幕"
+                android:hint="@string/live_send_danmu"
                 android:maxLength="25"
                 android:padding="3dp"
                 android:textSize="14sp"/>
@@ -135,7 +135,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:background="@null"
-                android:text="发送"
+                android:text="@string/send"
                 android:textColor="@color/color_icons"
                 android:textSize="14sp"/>
 

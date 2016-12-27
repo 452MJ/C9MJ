@@ -18,7 +18,7 @@ public class MediaException extends RuntimeException {
     }
 
     private static String getErrorMessage(int code) {
-        String msg = "";
+        String msg;
         switch (code) {
             case PLMediaPlayer.ERROR_CODE_INVALID_URI:
                 msg = "Invalid URL !";

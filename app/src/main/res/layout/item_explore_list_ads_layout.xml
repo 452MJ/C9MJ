@@ -23,7 +23,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="174dp">
+            android:layout_height="174dp"
+            android:background="?selectableItemBackground">
 
             <android.support.v4.view.ViewPager
                 android:id="@id/viewpager"

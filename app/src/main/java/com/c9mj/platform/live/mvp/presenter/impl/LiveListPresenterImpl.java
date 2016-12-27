@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class LiveListPresenterImpl implements ILiveListPresenter {
 
-    ILiveListFragment view;
+    private final ILiveListFragment view;
 
     public LiveListPresenterImpl(ILiveListFragment view) {
         this.view = view;

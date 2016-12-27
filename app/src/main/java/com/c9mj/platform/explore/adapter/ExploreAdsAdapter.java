@@ -11,9 +11,9 @@ import java.util.List;
  * author: LMJ
  * date: 2016/12/5
  */
-public class ExploreAdsAdapter extends PagerAdapter {
+class ExploreAdsAdapter extends PagerAdapter {
 
-    List<View> list = new ArrayList<>();
+    private List<View> list = new ArrayList<>();
 
     public ExploreAdsAdapter(List<View> list) {
         this.list = list;

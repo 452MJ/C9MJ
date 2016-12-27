@@ -1,5 +1,6 @@
 package com.c9mj.platform.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -24,7 +25,9 @@ public class SpHelper {
     public static final String STRING_TITLE_UNSELECTED = "explore_title_unselected";
     //user
     public static final String STRING_USER = "user_background";
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
+    @SuppressLint("StaticFieldLeak")
     private static SpHelper instance = null;
 
     /****************************************************************************/

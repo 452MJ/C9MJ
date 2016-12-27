@@ -65,7 +65,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/textView14"
                     android:layout_marginTop="5dp"
-                    android:text="游戏分类："
+                    android:text="@string/live_game_type"
                     android:textColor="@color/color_primary_dark"/>
 
                 <TextView

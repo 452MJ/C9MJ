@@ -29,12 +29,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListItemBean, BaseViewHolder> {
 
-    boolean isAutoScrolled = true;
+    private boolean isAutoScrolled = true;
 
-    ViewPager viewPager;
-    BaseViewHolder viewHolder;
-    ExploreListItemBean bean;
-    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+    private ViewPager viewPager;
+    private BaseViewHolder viewHolder;
+    private ExploreListItemBean bean;
+    private final ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -110,6 +110,7 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 if (bean.getAds() != null) {
                     for (ExploreListItemBean.AdsBean ads : bean.getAds()) {
                         ImageView iv_ads = new ImageView(mContext);
+
                         Glide.with(mContext)
                                 .load(ads.getImgsrc())
                                 .crossFade()

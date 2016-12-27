@@ -35,23 +35,23 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private static final String KEY = "key";
 
-    Context context;
+    private Context context;
 
-    DemoPresenterImpl presenter;
+    private DemoPresenterImpl presenter;
 
     @BindView(R.id.layout_refresh)
     SwipeRefreshLayout layout_refresh;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    List<DemoBean> list = new ArrayList<>();
-    DemoAdapter adapter;
+    private final List<DemoBean> list = new ArrayList<>();
+    private DemoAdapter adapter;
 
 
     public static DemoFragment newInstance() {
         return newInstance("");
     }
 
-    public static DemoFragment newInstance(String game_type) {
+    private static DemoFragment newInstance(String game_type) {
         DemoFragment fragment = new DemoFragment();
         Bundle args = new Bundle();
         args.putString(KEY, game_type);

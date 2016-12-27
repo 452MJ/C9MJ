@@ -1,5 +1,6 @@
 package com.c9mj.platform.explore.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,14 +48,16 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
     private static final String TITLE = "title";
     private static final String IMG = "img";
 
-    Context context;
-    String doc_id, title, img;
+    private Context context;
+    private String doc_id;
+    private String title;
+    private String img;
 
-    ExploreDetailPresenterImpl presenter;
+    private ExploreDetailPresenterImpl presenter;
 
-    ExploreDetailBean detailBean;
-    List<ExploreDetailBean.RelativeSysBean> relativeSysList = new ArrayList<>();
-    JsInterface jsInterface = new JsInterface();
+    private ExploreDetailBean detailBean;
+    private List<ExploreDetailBean.RelativeSysBean> relativeSysList = new ArrayList<>();
+    private final JsInterface jsInterface = new JsInterface();
 
     @BindView(R.id.iv_appbar)
     ImageView iv_appbar;
@@ -127,6 +130,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initView() {
         //初始化MVP
         presenter = new ExploreDetailPresenterImpl(this);
@@ -245,7 +249,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
     }
 
 
-    class JsInterface {
+    private class JsInterface {
         @JavascriptInterface
         public void startGallaryOnAndroid(int index) {
             Flowable.just(index)

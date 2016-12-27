@@ -85,46 +85,46 @@ public class LivePlayActivity extends BaseSwipeActivity
     public static final String LIVE_ID = "live_id";     //直播房间ID
     public static final String GAME_TYPE = "game_type"; //直播游戏类型
 
-    public static final int HANDLER_HIDE_CONTROLLER = 100;//隐藏MediaController
-    public static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
-    final String[] indicatorText = new String[]{
+    private static final int HANDLER_HIDE_CONTROLLER = 100;//隐藏MediaController
+    private static final int HANDLER_CONTROLLER_DURATION = 5 * 1000;//MediaController显示时间
+    private final String[] indicatorText = new String[]{
             "聊天",
             "主播"
     };
-    final int[] normalResId = new int[]{
+    private final int[] normalResId = new int[]{
             R.drawable.ic_danmu_on_normal_dark,
             R.drawable.ic_avatar_normal
     };
-    final int[] pressedResId = new int[]{
+    private final int[] pressedResId = new int[]{
             R.drawable.ic_danmu_on_pressed,
             R.drawable.ic_avatar_pressed
     };
-    boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
-    boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
-    boolean isPause = false;         //直播暂停标志位
-    boolean isFullscreen = false;   //全屏标志位
-    boolean isControllerHiden = false;   //MediaController显示隐藏标志位
-    String live_type;   //直播平台
-    String live_id;     //直播房间号ID
-    String game_type;   //直播游戏类型
-    String live_url;   //直播url
-    int surfacePortraitWidth;
-    int surfacePortraitHeight;
-    int videoWidth;
-    int videoHeight;
-    int playWidth;
-    int playHeight;
-    List<LiveDetailBean.StreamListBean> streamList = new ArrayList<>();//直播流列表
-    Context context;
-    LivePlayPresenterImpl presenter;
-    Handler controllerHandler;
+    private boolean isSurfaceViewInit = false;         //SurfaceView初始化标志位
+    private boolean isVideoPrepared = false;         //Video加载标志位，用于显示隐藏ProgreeBar
+    private boolean isPause = false;         //直播暂停标志位
+    private boolean isFullscreen = false;   //全屏标志位
+    private boolean isControllerHiden = false;   //MediaController显示隐藏标志位
+    private String live_type;   //直播平台
+    private String live_id;     //直播房间号ID
+    private String game_type;   //直播游戏类型
+    private String live_url;   //直播url
+    private int surfacePortraitWidth;
+    private int surfacePortraitHeight;
+    private int videoWidth;
+    private int videoHeight;
+    private int playWidth;
+    private int playHeight;
+    private List<LiveDetailBean.StreamListBean> streamList = new ArrayList<>();//直播流列表
+    private Context context;
+    private LivePlayPresenterImpl presenter;
+    private Handler controllerHandler;
     @BindView(R.id.surfaceview)
     SurfaceView surfaceView;                  //用于显示播放画面
     @BindView(R.id.danmuview)
     DanmakuView danmuView;
-    boolean isShowDanmu = false;// 弹幕显示标志位
-    DanmakuContext danmakuContext;
-    BaseDanmakuParser parser = new BaseDanmakuParser() {
+    private boolean isShowDanmu = false;// 弹幕显示标志位
+    private DanmakuContext danmakuContext;
+    private final BaseDanmakuParser parser = new BaseDanmakuParser() {
         @Override
         protected IDanmakus parse() {
             return new Danmakus();
@@ -171,13 +171,13 @@ public class LivePlayActivity extends BaseSwipeActivity
     LinearLayout layout_bottom;
     @BindView(R.id.magic_indicator)
     MagicIndicator indicator;
-    CommonNavigatorAdapter navigatorAdapter;
-    FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
-    List<String> titleList = new ArrayList<>();
-    LivePlayChatFragment chatFragment;//弹幕聊天室Fragment
-    LivePlayAvatarFragment avatarFragment;//主播详情Fragment
-    SupportFragment[] fragments = new SupportFragment[2];
-    int current;
+    private CommonNavigatorAdapter navigatorAdapter;
+    private final FragmentContainerHelper fragmentContainerHelper = new FragmentContainerHelper();
+    private final List<String> titleList = new ArrayList<>();
+    private LivePlayChatFragment chatFragment;//弹幕聊天室Fragment
+    private LivePlayAvatarFragment avatarFragment;//主播详情Fragment
+    private final SupportFragment[] fragments = new SupportFragment[2];
+    private int current;
     private PLMediaPlayer mediaPlayer;  //媒体控制器
 
     @Override
@@ -396,7 +396,6 @@ public class LivePlayActivity extends BaseSwipeActivity
 
                 titleView.setContentView(R.layout.item_live_play_indicator_layout);//加载自定义布局作为Tab
 
-                final LinearLayout live_play_indicator_layout = (LinearLayout) titleView.findViewById(R.id.live_play_indicator_layout);
                 final ImageView live_play_iv_icon = (ImageView) titleView.findViewById(R.id.live_play_iv_icon);
                 final TextView live_play_tv_title = (TextView) titleView.findViewById(R.id.live_play_tv_title);
                 live_play_tv_title.setText(indicatorText[index]);
@@ -489,8 +488,6 @@ public class LivePlayActivity extends BaseSwipeActivity
 //            mediaPlayer.setDataSource(live_url);
             mediaPlayer.setDisplay(surfaceView.getHolder());
             mediaPlayer.prepareAsync();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

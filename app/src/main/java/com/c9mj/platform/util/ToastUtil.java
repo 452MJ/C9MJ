@@ -1,5 +1,6 @@
 package com.c9mj.platform.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -9,6 +10,7 @@ import android.widget.Toast;
  * 用于维护唯一Toast的工具类
  */
 public class ToastUtil {
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private static Toast toast;
     private static boolean isShow = false;

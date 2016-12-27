@@ -42,7 +42,7 @@ public class LivePlayAvatarFragment extends BaseFragment {
         return newInstance("");
     }
 
-    public static LivePlayAvatarFragment newInstance(String game_type) {
+    private static LivePlayAvatarFragment newInstance(String game_type) {
         LivePlayAvatarFragment fragment = new LivePlayAvatarFragment();
         Bundle args = new Bundle();
         args.putString(AVATAR, game_type);

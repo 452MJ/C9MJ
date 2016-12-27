@@ -1,5 +1,6 @@
 package com.c9mj.platform;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -13,6 +14,7 @@ import com.squareup.leakcanary.LeakCanary;
  */
 public class MyApplication extends Application {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
 
     public static Context getContext() {

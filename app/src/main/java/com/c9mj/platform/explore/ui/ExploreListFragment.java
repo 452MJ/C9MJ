@@ -46,18 +46,18 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
 
     private static final String EXPLORE_TYPE_ID = "explore_type_id";
 
-    String explore_type_id;
-    int offset = 0;//用于记录分页偏移量
-    List<ExploreListItemBean> exploreList = new ArrayList<>();
+    private String explore_type_id;
+    private int offset = 0;//用于记录分页偏移量
+    private final List<ExploreListItemBean> exploreList = new ArrayList<>();
 
-    Context context;
-    ExploreListPresenterImpl presenter;
+    private Context context;
+    private ExploreListPresenterImpl presenter;
 
     @BindView(R.id.refreshlayout)
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    ExploreListAdapter adapter;
+    private ExploreListAdapter adapter;
 
     public static ExploreListFragment newInstance() {
         return newInstance("");

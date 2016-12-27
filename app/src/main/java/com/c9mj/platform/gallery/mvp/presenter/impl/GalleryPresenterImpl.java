@@ -10,7 +10,7 @@ import com.c9mj.platform.gallery.mvp.view.IGalleryView;
 
 public class GalleryPresenterImpl implements IGalleryPresenter {
 
-    IGalleryView view;
+    private final IGalleryView view;
 
     public GalleryPresenterImpl(IGalleryView view) {
         this.view = view;

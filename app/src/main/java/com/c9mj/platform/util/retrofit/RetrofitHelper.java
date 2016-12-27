@@ -32,10 +32,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitHelper {
 
-    public static final String BASE_EXPLORE_URL = "http://c.m.163.com";
-    public static final String BASE_LIVE_URL = "http://api.maxjia.com";
+    private static final String BASE_EXPLORE_URL = "http://c.m.163.com";
+    private static final String BASE_LIVE_URL = "http://api.maxjia.com";
     public static final String BASE_USER_URL = "http://api.douban.com/v2/movie/";
-    public static final String BASE_PANDA_URL = "http://www.panda.tv";
+    private static final String BASE_PANDA_URL = "http://www.panda.tv";
     private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {

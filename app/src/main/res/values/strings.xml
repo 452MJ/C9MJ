@@ -2,10 +2,10 @@
     <!--主页-->
     <string name="app_name">C9MJ</string>
     <string name="explore">发现</string>
-    <string name="live">直播</string>
     <string name="user">我的</string>
     <string name="enter">确定</string>
     <string name="cancel">取消</string>
+    <string name="send">发送</string>
     <string name="second_exit">"再按一次Back键退出程序"</string>
     <string name="error_grant">部分所需权限请求被拒绝，程序可能会出现崩溃！</string>
 
@@ -40,6 +40,7 @@
     <string name="live_roomname">直播间名称</string>
     <string name="live_nickname">主播昵称：</string>
     <string name="live_live_platform">直播平台：</string>
+    <string name="live_game_type">游戏分类：</string>
     <string name="live_exchange">切换栏目</string>
     <string name="live_danmu">弹幕</string>
     <string name="live_send_danmu">输入发送弹幕(15字以内)</string>
@@ -50,7 +51,6 @@
     <string name="user_carema">拍照</string>
     <string name="user_carema_cancel">取消拍照</string>
     <string name="user_gallery">相册</string>
-    <string name="user_gallery_cancel">相册取消</string>
     <string name="user_name">姓名</string>
     <string name="user_industry">行业</string>
     <string name="user_career">职业经历</string>
@@ -62,10 +62,6 @@
 
 
     <!--网络错误-->
-    <string name="status_ok">OK</string>
-    <string name="error_token">token过期，请重新登陆！</string>
-    <string name="error_network">网络错误，请检查网络连接设置！</string>
-    <string name="error_server">服务器内部错误，请稍后再试！</string>
     <string name="error_unknown">未知错误！</string>
 
     <!--预览图片-->

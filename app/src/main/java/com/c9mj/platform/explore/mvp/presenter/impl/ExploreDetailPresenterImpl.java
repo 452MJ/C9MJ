@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ExploreDetailPresenterImpl implements IExploreDetailPresenter {
 
-    IExploreDetailView view;
+    private final IExploreDetailView view;
 
     public ExploreDetailPresenterImpl(IExploreDetailView view) {
         this.view = view;

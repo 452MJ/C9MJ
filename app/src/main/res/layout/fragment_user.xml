@@ -14,7 +14,6 @@
         app:layout_behavior="@string/appbar_spring_behavior">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -109,7 +108,6 @@
                         android:textSize="@dimen/textsize_secondary"/>
 
                     <TextView
-                        android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageView"
@@ -157,7 +155,6 @@
                         android:textSize="@dimen/textsize_secondary"/>
 
                     <TextView
-                        android:id="@+id/textView7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageView2"
@@ -203,7 +200,6 @@
                         android:textSize="@dimen/textsize_secondary"/>
 
                     <TextView
-                        android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageView3"
@@ -250,7 +246,6 @@
                         android:textSize="@dimen/textsize_secondary"/>
 
                     <TextView
-                        android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageView4"
@@ -296,7 +291,6 @@
                         android:textSize="@dimen/textsize_secondary"/>
 
                     <TextView
-                        android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/imageView5"

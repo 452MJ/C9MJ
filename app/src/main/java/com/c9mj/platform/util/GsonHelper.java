@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
  * Gson工具类
  */
 public class GsonHelper {
-    public static Object obj = null;
+    private static Object obj = null;
     private static Gson gson;
 
     //序列化所有注解的字段

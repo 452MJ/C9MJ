@@ -7,9 +7,9 @@ package com.c9mj.platform.util.retrofit.exception;
  */
 public class RetrofitException extends RuntimeException {
 
-    public static final int ERROR_TOKEN = 100;
-    public static final int ERROR_NETWORK = ERROR_TOKEN + 1;
-    public static final int ERROR_SERVER = ERROR_NETWORK + 1;
+    private static final int ERROR_TOKEN = 100;
+    private static final int ERROR_NETWORK = ERROR_TOKEN + 1;
+    private static final int ERROR_SERVER = ERROR_NETWORK + 1;
 
     public RetrofitException(int code) {
         this(getErrorMessage(code));
@@ -20,7 +20,7 @@ public class RetrofitException extends RuntimeException {
     }
 
     private static String getErrorMessage(int code) {
-        String msg = "";
+        String msg;
         switch (code) {
             case ERROR_TOKEN:
                 msg = "token过期，请重新登陆！";
