@@ -16,7 +16,7 @@ public class RootActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
-        getWindow().setBackgroundDrawable(null);
+
         loadRootFragment(R.id.layout_container, MainFragment.newInstance());
     }
 }
