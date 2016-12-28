@@ -50,6 +50,8 @@ public class GalleryActivity extends BaseSwipeActivity implements IGalleryView {
         setContentView(R.layout.activity_gallery);
         ButterKnife.bind(this);
 
+        getWindow().setBackgroundDrawable(null);
+
         context = this;
 
         imgList = getIntent().getStringArrayListExtra(IMG_LIST);

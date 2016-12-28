@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_footer"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:padding="10dp"
-    android:text="@string/live_footer"
-    android:textColor="@color/color_secondary_text"
-    android:textSize="@dimen/textsize_secondary" />
+          android:id="@+id/tv_footer"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:layout_gravity="center"
+          android:gravity="center"
+          android:padding="10dp"
+          android:text="@string/live_footer"
+          android:textColor="@color/color_secondary_text"
+          android:textSize="@dimen/textsize_secondary"/>
 

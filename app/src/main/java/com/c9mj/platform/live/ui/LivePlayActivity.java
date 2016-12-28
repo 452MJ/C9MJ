@@ -186,6 +186,8 @@ public class LivePlayActivity extends BaseSwipeActivity
         setContentView(R.layout.activity_live_play);
         ButterKnife.bind(this);
 
+        getWindow().setBackgroundDrawable(null);
+
         context = this;
 
         controllerHandler = new Handler(this);
