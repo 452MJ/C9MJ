@@ -69,7 +69,7 @@ dependencies {
     //Appbar滑动动画
     compile 'com.github.todou:appbarspring:1.0.3'
     //RxPermission（6.0系统权限申请）
-//    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.1@aar'
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.8.2@aar'
     //内存泄漏
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
