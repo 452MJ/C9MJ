@@ -80,3 +80,6 @@
   本项目所有接口Api均利用Fiddler抓包分析所得，只用于分享、学习。
   该项目是本人为熟悉开发流程而设，不得用于商业用途，若有损他人利益则立即删除。
   主要功能包括新闻浏览与视频直播（仍在开发中，bug可能会比较多...）
+  
+##感谢Thanks
+[Neutree](https://github.com/Neutree/PandaTvDanMu)提供的[弹幕协议](https://github.com/Neutree/PandaTvDanMu/blob/master/doc/protocol.md)分析
