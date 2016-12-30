@@ -5,4 +5,5 @@ package com.c9mj.platform.gallery.mvp.presenter;
  */
 
 public interface IGalleryPresenter {
+    void getExploreSet(String photoSetId);
 }

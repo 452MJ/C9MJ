@@ -16,6 +16,8 @@
     <string name="explore_relative_sys">相关新闻</string>
     <string name="explore_drag">1.长按排序 </string>
     <string name="explore_delete">2.向右侧滑删除</string>
+    <string name="explore_tag_doc">doc</string>
+    <string name="explore_tag_photoset">photoset</string>
 
     <!--直播-->
     <string name="live_lol">英雄联盟</string>

@@ -39,14 +39,14 @@ public class ExploreListPresenterImpl implements IExploreListPresenter {
         RetrofitHelper.getExploreHelper().create(ExploreAPI.class)
                 .getExploreList(explore_id, offset, limit)
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Function<JsonObject, Publisher<List<ExploreListItemBean>>>() {
+                .flatMap(new Function<JsonObject, Publisher<ArrayList<ExploreListItemBean>>>() {
                     @Override
-                    public Publisher<List<ExploreListItemBean>> apply(JsonObject jsonObject) throws Exception {
+                    public Publisher<ArrayList<ExploreListItemBean>> apply(JsonObject jsonObject) throws Exception {
                         for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
                             if (entry.getValue().isJsonArray()) {
                                 JsonArray array = entry.getValue().getAsJsonArray();
 
-                                List<ExploreListItemBean> list = new ArrayList<>();
+                                ArrayList<ExploreListItemBean> list = new ArrayList<>();
                                 for (JsonElement element : array) {
                                     list.add((ExploreListItemBean) GsonHelper.parseJson(element, ExploreListItemBean.class));
                                 }
@@ -58,10 +58,10 @@ public class ExploreListPresenterImpl implements IExploreListPresenter {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new HttpSubscriber<List<ExploreListItemBean>>() {
+                .subscribe(new HttpSubscriber<ArrayList<ExploreListItemBean>>() {
 
                     @Override
-                    public void _onNext(List<ExploreListItemBean> exploreListItemBeen) {
+                    public void _onNext(ArrayList<ExploreListItemBean> exploreListItemBeen) {
                         view.updateRecyclerView(exploreListItemBeen);
                     }
 

@@ -1,6 +1,7 @@
 package com.c9mj.platform.explore.api;
 
 
+import com.c9mj.platform.gallery.mvp.model.bean.PhotoSetBean;
 import com.google.gson.JsonObject;
 
 import io.reactivex.Flowable;
@@ -26,4 +27,9 @@ public interface ExploreAPI {
     @GET("/nc/article/{docid}/full.html")
     Flowable<JsonObject> getExploreDetail(@Path("docid") String docid);
 
+    @GET("/photo/api/set/{typeid}/{setid}.json")
+    Flowable<PhotoSetBean> getExploreSet(
+            @Path("typeid") String typeid,
+            @Path("setid") String setid
+    );
 }
