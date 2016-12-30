@@ -12,8 +12,7 @@
         android:elevation="@dimen/widget_elevation"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:elevation="@dimen/widget_elevation"
-        app:layout_behavior="@string/appbar_spring_behavior">
+        app:elevation="@dimen/widget_elevation">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
