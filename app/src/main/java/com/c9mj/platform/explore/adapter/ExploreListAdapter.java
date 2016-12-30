@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -34,7 +35,28 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
     private ViewPager viewPager;
     private BaseViewHolder viewHolder;
     private ExploreListItemBean bean;
+
+    private boolean isSubscribe = false;
+    private Consumer<Long> consumer = new Consumer<Long>() {
+        @Override
+        public void accept(Long integer) throws Exception {
+            if (!isAutoScrolled) {
+                return;
+            }
+            int current = viewPager.getCurrentItem();
+            if (current + 1 == viewPager.getChildCount()) {
+                viewPager.setCurrentItem(0, true);
+            } else {
+                viewPager.setCurrentItem(current + 1, true);
+            }
+        }
+    };
+    private Flowable flowable = Flowable
+            .interval(3, 3, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread());
+
     private final ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -46,8 +68,9 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 viewHolder.setText(R.id.tv_title, bean.getTitle());
                 return;
             }
-            viewHolder.setText(R.id.tv_title, bean.getAds().get(position - 1).getTitle());
-
+            if (bean.getAds() != null && bean.getAds().size() != 0) {
+                viewHolder.setText(R.id.tv_title, bean.getAds().get(position - 1).getTitle());
+            }
         }
 
         @Override
@@ -61,25 +84,6 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                     break;
                 case ViewPager.SCROLL_STATE_IDLE:
                     isAutoScrolled = true;
-                    Flowable.just(0)
-                            .delay(3, TimeUnit.SECONDS)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<Integer>() {
-
-                                @Override
-                                public void accept(Integer integer) throws Exception {
-                                    if (!isAutoScrolled) {
-                                        return;
-                                    }
-                                    int current = viewPager.getCurrentItem();
-                                    if (current + 1 == viewPager.getChildCount()) {
-                                        viewPager.setCurrentItem(0, true);
-                                    } else {
-                                        viewPager.setCurrentItem(current + 1, true);
-                                    }
-                                }
-                            });
                     break;
             }
         }
@@ -130,9 +134,6 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
 
                 viewPager.addOnPageChangeListener(pageChangeListener);
 
-                viewPager.setCurrentItem(0);
-                pageChangeListener.onPageScrollStateChanged(ViewPager.SCROLL_STATE_IDLE);
-
                 //MagicIndicator
                 MagicIndicator magicIndicator = viewHolder.getView(R.id.magic_indicator);
                 magicIndicator.setVisibility(viewList.size() != 1 ? View.VISIBLE : View.GONE);
@@ -142,6 +143,14 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                 magicIndicator.setNavigator(navigator);
                 ViewPagerHelper.bind(magicIndicator, viewPager);
 
+                viewHolder.addOnClickListener(R.id.viewpager);
+
+//                viewPager.setCurrentItem(0);
+//                pageChangeListener.onPageScrollStateChanged(ViewPager.SCROLL_STATE_IDLE);
+                if (!isSubscribe) {
+                    flowable.subscribe(consumer);
+                    isSubscribe = true;
+                }
                 break;
             case ExploreListItemBean.NORMAL:
                 viewHolder.setText(R.id.tv_title, bean.getTitle())
@@ -151,6 +160,8 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
                         .crossFade()
                         .centerCrop()
                         .into((ImageView) viewHolder.getView(R.id.iv_img));
+                break;
+            default:
                 break;
         }
     }
