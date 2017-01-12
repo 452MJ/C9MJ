@@ -44,11 +44,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <net.lucode.hackware.magicindicator.MagicIndicator
-            android:id="@+id/magic_indicator"
+        <TextView
+            android:id="@+id/tv_index"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
+            android:alpha="0.5"
+            android:textColor="@color/color_icons"
             android:layout_marginBottom="60dp"/>
     </FrameLayout>
 </LinearLayout>

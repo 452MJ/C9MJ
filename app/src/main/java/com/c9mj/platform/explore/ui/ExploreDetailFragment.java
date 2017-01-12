@@ -250,13 +250,14 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Integer>() {
                         @Override
-                        public void accept(Integer integer) throws Exception {
+                        public void accept(Integer index) throws Exception {
                             Intent intent = new Intent(getActivity(), GalleryActivity.class);
                             ArrayList<String> imgList = new ArrayList<>();
                             for (ExploreDetailBean.ImgBean imgBean : detailBean.getImg()) {
                                 imgList.add(imgBean.getSrc());
                             }
                             intent.putStringArrayListExtra(GalleryActivity.IMG_LIST, imgList);
+                            intent.putExtra(GalleryActivity.INDEX, index);
                             startActivity(intent);
                         }
                     });
