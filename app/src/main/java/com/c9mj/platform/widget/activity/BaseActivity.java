@@ -22,7 +22,7 @@ public class BaseActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         //6.0权限申请
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            RxPermissions rxPermissions = RxPermissions.getInstance(this);
+            RxPermissions rxPermissions = new RxPermissions(this);
             rxPermissions
                     .request(
                             Manifest.permission.CAMERA,
