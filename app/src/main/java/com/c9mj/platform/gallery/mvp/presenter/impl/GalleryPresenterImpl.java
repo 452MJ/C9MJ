@@ -7,7 +7,6 @@ import com.c9mj.platform.gallery.mvp.presenter.IGalleryPresenter;
 import com.c9mj.platform.gallery.mvp.view.IGalleryView;
 import com.c9mj.platform.util.retrofit.HttpSubscriber;
 import com.c9mj.platform.util.retrofit.RetrofitHelper;
-import com.google.gson.JsonObject;
 
 import org.reactivestreams.Publisher;
 
@@ -39,14 +38,14 @@ public class GalleryPresenterImpl implements IGalleryPresenter {
          * setId=618725
          */
         String[] photoSetArray = photoSetId.split("\\|");
-        String typeId = photoSetArray[0].substring(photoSetArray[0].length()-4, photoSetArray[0].length());//取hou四位
+        String typeId = photoSetArray[0].substring(photoSetArray[0].length() - 4, photoSetArray[0].length());//取hou四位
         String setId = photoSetArray[1];
         RetrofitHelper.getExploreHelper().create(ExploreAPI.class)
                 .getExploreSet(typeId, setId)
                 .flatMap(new Function<PhotoSetBean, Publisher<ArrayList<String>>>() {
                     @Override
                     public Publisher<ArrayList<String>> apply(PhotoSetBean photoSetBean) throws Exception {
-                        ArrayList<String> imgList = new ArrayList<String>();
+                        ArrayList<String> imgList = new ArrayList<>();
                         for (PhotoSetBean.PhotosBean photosBean : photoSetBean.getPhotos()) {
                             imgList.add(photosBean.getImgurl());
                         }

@@ -167,12 +167,7 @@ public class LiveFragment extends BaseFragment {
 
                     }
                 });
-                titleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewPager.setCurrentItem(index);
-                    }
-                });
+                titleView.setOnClickListener(v -> viewPager.setCurrentItem(index));
 
                 return titleView;
             }
@@ -217,20 +212,12 @@ public class LiveFragment extends BaseFragment {
         });
 
         builder.setView(contentView)
-                .setPositiveButton(getString(R.string.enter), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        pos = currentPos;
-                        tv_live_type.setText(typeNameList.get(pos));
-                        dialog.dismiss();
-                    }
+                .setPositiveButton(getString(R.string.enter), (dialog, which) -> {
+                    pos = currentPos;
+                    tv_live_type.setText(typeNameList.get(pos));
+                    dialog.dismiss();
                 })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
 

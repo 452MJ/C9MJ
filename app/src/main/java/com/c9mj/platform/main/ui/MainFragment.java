@@ -139,13 +139,10 @@ public class MainFragment extends BaseFragment {
 
                     }
                 });
-                titleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragmentContainerHelper.handlePageSelected(index);
-                        showHideFragment(fragments[index], fragments[current]);
-                        current = index;
-                    }
+                titleView.setOnClickListener(v -> {
+                    fragmentContainerHelper.handlePageSelected(index);
+                    showHideFragment(fragments[index], fragments[current]);
+                    current = index;
                 });
 
                 return titleView;

@@ -106,27 +106,16 @@ public class UserFragment extends BaseFragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Tips:")
                         .setMessage("如何获取图片？")
-                        .setPositiveButton(getString(R.string.user_gallery), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                PhotoUtil.startGallery(UserFragment.this, REQUEST_GALLERY);
-                            }
+                        .setPositiveButton(getString(R.string.user_gallery), (dialog, which) -> {
+                            dialog.dismiss();
+                            PhotoUtil.startGallery(UserFragment.this, REQUEST_GALLERY);
                         })
-                        .setNeutralButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(getString(R.string.user_carema), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                String fileName = "C9MJ_" + new DateTime(System.currentTimeMillis()).toString("yyyyMMddHHmmss") + ".png";
-                                savePath = Environment.getExternalStorageDirectory() + "/DCIM/Camera/" + fileName;
-                                PhotoUtil.startTakePhoto(UserFragment.this, REQUEST_CAMERA, fileName);
-                            }
+                        .setNeutralButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss())
+                        .setNegativeButton(getString(R.string.user_carema), (dialog, which) -> {
+                            dialog.dismiss();
+                            String fileName = "C9MJ_" + new DateTime(System.currentTimeMillis()).toString("yyyyMMddHHmmss") + ".png";
+                            savePath = Environment.getExternalStorageDirectory() + "/DCIM/Camera/" + fileName;
+                            PhotoUtil.startTakePhoto(UserFragment.this, REQUEST_CAMERA, fileName);
                         });
                 AlertDialog dialog = builder.create();
                 dialog.show();

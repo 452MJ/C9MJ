@@ -9,10 +9,8 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import org.reactivestreams.Publisher;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Flowable;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
@@ -36,41 +34,38 @@ public class RetrofitHelper {
     private static final String BASE_EXPLORE_URL = "http://c.m.163.com";
     private static final String BASE_LIVE_URL = "http://api.maxjia.com";
     private static final String BASE_PANDA_URL = "http://www.panda.tv";
-    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
+    private static final Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
 
-            Request request = chain.request();
-            if (!NetworkUtils.isAvailable(MyApplication.getContext())) {
-                CacheControl cacheControl = new CacheControl.Builder()
-                        .maxStale(30, TimeUnit.SECONDS)
-                        .build();
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        .build();
-            }
-
-            Response response = chain.proceed(request);
-
-            if (NetworkUtils.isAvailable(MyApplication.getContext())) {
-                /**
-                 * If you have problems in testing on which side is problem (server or app).
-                 * You can use such feauture to set headers received from server.
-                 */
-                int maxAge = 60 * 60; // 有网络时,设置缓存超时时间1个小时
-                response = response.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, max-age=" + maxAge)//设置缓存超时时间
-                        .build();
-            } else {
-                int maxStale = 60 * 60 * 24 * 28;//无网络时，设置超时为4周
-                response = response.newBuilder()
-                        .removeHeader("Pragma")
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                        .build();
-            }
-            return response;
+        Request request = chain.request();
+        if (!NetworkUtils.isAvailableByPing()) {
+            CacheControl cacheControl = new CacheControl.Builder()
+                    .maxStale(30, TimeUnit.SECONDS)
+                    .build();
+            request = request.newBuilder()
+                    .cacheControl(CacheControl.FORCE_CACHE)
+                    .build();
         }
+
+        Response response = chain.proceed(request);
+
+        if (NetworkUtils.isAvailableByPing()) {
+            /**
+             * If you have problems in testing on which side is problem (server or app).
+             * You can use such feauture to set headers received from server.
+             */
+            int maxAge = 60 * 60; // 有网络时,设置缓存超时时间1个小时
+            response = response.newBuilder()
+                    .removeHeader("Pragma")
+                    .header("Cache-Control", "public, max-age=" + maxAge)//设置缓存超时时间
+                    .build();
+        } else {
+            int maxStale = 60 * 60 * 24 * 28;//无网络时，设置超时为4周
+            response = response.newBuilder()
+                    .removeHeader("Pragma")
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                    .build();
+        }
+        return response;
     };
     private static Retrofit explore = null;
     private static Retrofit live = null;
@@ -138,25 +133,17 @@ public class RetrofitHelper {
     }
 
     public static <T> FlowableTransformer<LiveBaseBean<T>, T> handleLiveResult() {
-        return new FlowableTransformer<LiveBaseBean<T>, T>() {
+        return upstream -> upstream.flatMap(new Function<LiveBaseBean<T>, Publisher<T>>() {
             @Override
-            public Publisher<T> apply(final Flowable<LiveBaseBean<T>> upstream) {
-                return upstream.flatMap(new Function<LiveBaseBean<T>, Publisher<T>>() {
-                    @Override
-                    public Publisher<T> apply(final LiveBaseBean<T> baseBean) throws Exception {
-                        return new Publisher<T>() {
-                            @Override
-                            public void subscribe(org.reactivestreams.Subscriber<? super T> subscriber) {
-                                if (baseBean.getStatus().equals("ok")) {
-                                    subscriber.onNext(baseBean.getResult());
-                                } else {
-                                    subscriber.onError(new RetrofitException(baseBean.getMsg()));
-                                }
-                            }
-                        };
+            public Publisher<T> apply(final LiveBaseBean<T> baseBean) throws Exception {
+                return subscriber -> {
+                    if (baseBean.getStatus().equals("ok")) {
+                        subscriber.onNext(baseBean.getResult());
+                    } else {
+                        subscriber.onError(new RetrofitException(baseBean.getMsg()));
                     }
-                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+                };
             }
-        };
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

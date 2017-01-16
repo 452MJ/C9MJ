@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context="com.c9mj.platform.live.ui.LivePlayActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.c9mj.platform.live.ui.LivePlayActivity">
 
     <FrameLayout
         android:id="@+id/layout_top"
@@ -16,7 +16,7 @@
             android:id="@+id/surfaceview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"/>
+            android:background="?selectableItemBackgroundBorderless" />
 
         <FrameLayout
             android:id="@+id/progressbar"
@@ -32,7 +32,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:theme="@style/CircularProgress"/>
+                android:theme="@style/CircularProgress" />
 
         </FrameLayout>
 
@@ -40,16 +40,16 @@
             android:id="@+id/danmuview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?selectableItemBackgroundBorderless"/>
+            android:background="?selectableItemBackgroundBorderless" />
 
         <include
             layout="@layout/layout_controller_landscape"
             android:background="?selectableItemBackgroundBorderless"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <include
             layout="@layout/layout_controller_portrait"
-            android:background="?selectableItemBackgroundBorderless"/>
+            android:background="?selectableItemBackgroundBorderless" />
 
     </FrameLayout>
 
@@ -66,14 +66,13 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/color_icons"
-            android:elevation="@dimen/cardview_elevation"/>
+            android:elevation="@dimen/cardview_elevation" />
 
         <FrameLayout
             android:id="@+id/layout_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_layout_background"
-            />
+            android:background="@color/color_layout_background" />
 
     </LinearLayout>
 </LinearLayout>

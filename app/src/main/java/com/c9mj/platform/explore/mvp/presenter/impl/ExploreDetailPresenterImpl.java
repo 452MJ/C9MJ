@@ -18,7 +18,6 @@ import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -52,13 +51,10 @@ public class ExploreDetailPresenterImpl implements IExploreDetailPresenter {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Consumer<ExploreDetailBean>() {
-                    @Override
-                    public void accept(ExploreDetailBean detailBean) throws Exception {
-                        //成功得到新闻详情后，先保存bean，并刷新相关新闻列表
-                        view.updateExploreDetail(detailBean);
-                        view.updateRelativeSys(detailBean.getRelative_sys());
-                    }
+                .doOnNext(detailBean -> {
+                    //成功得到新闻详情后，先保存bean，并刷新相关新闻列表
+                    view.updateExploreDetail(detailBean);
+                    view.updateRelativeSys(detailBean.getRelative_sys());
                 })
                 .flatMap(new Function<ExploreDetailBean, Publisher<String>>() {
                     @Override

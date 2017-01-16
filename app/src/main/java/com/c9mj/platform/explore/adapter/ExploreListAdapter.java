@@ -20,9 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2016/11/4.
@@ -35,26 +33,6 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
     private ViewPager viewPager;
     private BaseViewHolder viewHolder;
     private ExploreListItemBean bean;
-
-    private boolean isSubscribe = false;
-    private Consumer<Long> consumer = new Consumer<Long>() {
-        @Override
-        public void accept(Long integer) throws Exception {
-            if (!isAutoScrolled) {
-                return;
-            }
-            int current = viewPager.getCurrentItem();
-            if (current + 1 == viewPager.getChildCount()) {
-                viewPager.setCurrentItem(0, true);
-            } else {
-                viewPager.setCurrentItem(current + 1, true);
-            }
-        }
-    };
-    private Flowable flowable = Flowable
-            .interval(3, 3, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread());
-
     private final ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
@@ -89,6 +67,24 @@ public class ExploreListAdapter extends BaseMultiItemQuickAdapter<ExploreListIte
         }
 
     };
+    private boolean isSubscribe = false;
+    private Consumer<Long> consumer = new Consumer<Long>() {
+        @Override
+        public void accept(Long integer) throws Exception {
+            if (!isAutoScrolled) {
+                return;
+            }
+            int current = viewPager.getCurrentItem();
+            if (current + 1 == viewPager.getChildCount()) {
+                viewPager.setCurrentItem(0, true);
+            } else {
+                viewPager.setCurrentItem(current + 1, true);
+            }
+        }
+    };
+    private Flowable flowable = Flowable
+            .interval(3, 3, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread());
 
 
     public ExploreListAdapter(List<ExploreListItemBean> data) {

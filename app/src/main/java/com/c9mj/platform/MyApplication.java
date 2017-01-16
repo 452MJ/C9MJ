@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
+import com.blankj.utilcode.utils.Utils;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.ToastUtil;
 import com.squareup.leakcanary.LeakCanary;
@@ -26,6 +27,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         LeakCanary.install(this);
+        Utils.init(context);
         ToastUtil.init(getApplicationContext());
         SpHelper.init(getApplicationContext());
     }

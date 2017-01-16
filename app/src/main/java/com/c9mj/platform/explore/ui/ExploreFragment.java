@@ -252,15 +252,10 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                     ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
                     clipPagerTitleView.setText(selectedTitleList.get(index));
                     clipPagerTitleView.setBackground(ContextCompat.getDrawable(context, R.drawable.ripple_tab));
-                    clipPagerTitleView.setTextSize(SizeUtils.sp2px(context, 12));
+                    clipPagerTitleView.setTextSize(SizeUtils.sp2px(12));
                     clipPagerTitleView.setTextColor(ContextCompat.getColor(context, R.color.color_secondary_text));
                     clipPagerTitleView.setClipColor(ContextCompat.getColor(context, R.color.color_primary));
-                    clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            viewPager.setCurrentItem(index);
-                        }
-                    });
+                    clipPagerTitleView.setOnClickListener(v -> viewPager.setCurrentItem(index));
                     return clipPagerTitleView;
                 }
 
@@ -290,12 +285,7 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
 
                     }
                 });
-                commonPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        viewPager.setCurrentItem(index);
-                    }
-                });
+                commonPagerTitleView.setOnClickListener(v -> viewPager.setCurrentItem(index));
                 return commonPagerTitleView;
             }
 

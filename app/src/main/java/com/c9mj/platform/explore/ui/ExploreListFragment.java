@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.adapter.ExploreListAdapter;
 import com.c9mj.platform.explore.api.ExploreAPI;
-import com.c9mj.platform.explore.mvp.model.bean.ExploreDetailBean;
 import com.c9mj.platform.explore.mvp.model.bean.ExploreListItemBean;
 import com.c9mj.platform.explore.mvp.presenter.impl.ExploreListPresenterImpl;
 import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
@@ -31,7 +30,6 @@ import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 
 import java.util.ArrayList;
@@ -136,7 +134,7 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 ExploreListItemBean exploreItemBean = adapter.getData().get(i);
-                switch (exploreItemBean.getItemType()){
+                switch (exploreItemBean.getItemType()) {
                     case ExploreListItemBean.NORMAL:
                         SupportFragment exploreFragment = (ExploreFragment) getParentFragment();
                         SupportFragment mainFragment = (MainFragment) exploreFragment.getParentFragment();
@@ -158,40 +156,36 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
             @Override
             public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 ExploreListItemBean exploreItemBean = adapter.getData().get(i);
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.viewpager:
 
                         ViewPager viewPager = (ViewPager) view;
                         int pos = viewPager.getCurrentItem();//第几个广告
-                        if (pos == 0){
+                        if (pos == 0) {
                             String skipType = exploreItemBean.getSkipType();//跳转类型
-                            if (TextUtils.equals(skipType, getString(R.string.explore_tag_doc)))
-                            {//doc-->ExploreDetailFragment
+                            if (TextUtils.equals(skipType, getString(R.string.explore_tag_doc))) {//doc-->ExploreDetailFragment
                                 SupportFragment exploreFragment = (ExploreFragment) getParentFragment();
                                 SupportFragment mainFragment = (MainFragment) exploreFragment.getParentFragment();
                                 mainFragment.start(ExploreDetailFragment.newInstance(
                                         exploreItemBean.getDocid(),
                                         exploreItemBean.getTitle(),
                                         exploreItemBean.getImgsrc()));
-                            }else if (TextUtils.equals(skipType, getString(R.string.explore_tag_photoset)))
-                            {//photoset-->GalleryActivity
+                            } else if (TextUtils.equals(skipType, getString(R.string.explore_tag_photoset))) {//photoset-->GalleryActivity
                                 Intent intent = new Intent(getActivity(), GalleryActivity.class);
                                 intent.putExtra(GalleryActivity.PHOTO_SET, exploreItemBean.getPhotosetID());
                                 startActivity(intent);
                             }
-                        }else {
+                        } else {
                             ExploreListItemBean.AdsBean adsBean = exploreItemBean.getAds().get(pos - 1);
                             String skipType = adsBean.getTag();//跳转类型
-                            if (TextUtils.equals(skipType, getString(R.string.explore_tag_doc)))
-                            {//doc-->ExploreDetailFragment
+                            if (TextUtils.equals(skipType, getString(R.string.explore_tag_doc))) {//doc-->ExploreDetailFragment
                                 SupportFragment exploreFragment = (ExploreFragment) getParentFragment();
                                 SupportFragment mainFragment = (MainFragment) exploreFragment.getParentFragment();
                                 mainFragment.start(ExploreDetailFragment.newInstance(
                                         adsBean.getUrl(),
                                         adsBean.getTitle(),
                                         adsBean.getImgsrc()));
-                            }else if (TextUtils.equals(skipType, getString(R.string.explore_tag_photoset)))
-                            {//photoset-->GalleryActivity
+                            } else if (TextUtils.equals(skipType, getString(R.string.explore_tag_photoset))) {//photoset-->GalleryActivity
                                 Intent intent = new Intent(getActivity(), GalleryActivity.class);
                                 intent.putExtra(GalleryActivity.PHOTO_SET, exploreItemBean.getPhotosetID());
                                 startActivity(intent);

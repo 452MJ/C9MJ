@@ -12,7 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -322,13 +321,10 @@ public class LivePlayActivity extends BaseSwipeActivity
         controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
         controllerHandler.sendEmptyMessageDelayed(HANDLER_HIDE_CONTROLLER, HANDLER_CONTROLLER_DURATION);
 
-        et_danmu_landscape.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                //点击弹幕编辑时取消隐藏Controller
-                controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
-                return false;
-            }
+        et_danmu_landscape.setOnTouchListener((v, event) -> {
+            //点击弹幕编辑时取消隐藏Controller
+            controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
+            return false;
         });
 
         //弹幕烈焰使
@@ -423,13 +419,10 @@ public class LivePlayActivity extends BaseSwipeActivity
                     }
                 });
 
-                titleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragmentContainerHelper.handlePageSelected(index);
-                        showHideFragment(fragments[index], fragments[current]);
-                        current = index;
-                    }
+                titleView.setOnClickListener(v -> {
+                    fragmentContainerHelper.handlePageSelected(index);
+                    showHideFragment(fragments[index], fragments[current]);
+                    current = index;
                 });
                 return titleView;
             }
@@ -570,8 +563,8 @@ public class LivePlayActivity extends BaseSwipeActivity
         videoHeight = height;
 
         if (videoWidth != 0 && videoHeight != 0) {
-            float ratioW = (float) videoWidth / (float) (isFullscreen ? ScreenUtils.getScreenWidth(context) : surfacePortraitWidth);
-            float ratioH = (float) videoHeight / (float) (isFullscreen ? ScreenUtils.getScreenHeight(context) : surfacePortraitHeight);
+            float ratioW = (float) videoWidth / (float) (isFullscreen ? ScreenUtils.getScreenWidth() : surfacePortraitWidth);
+            float ratioH = (float) videoHeight / (float) (isFullscreen ? ScreenUtils.getScreenHeight() : surfacePortraitHeight);
             float ratio = Math.max(ratioW, ratioH);
             playWidth = (int) Math.ceil((float) videoWidth / ratio);
             playHeight = (int) Math.ceil((float) videoHeight / ratio);
@@ -851,7 +844,7 @@ public class LivePlayActivity extends BaseSwipeActivity
         }
         BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         danmaku.text = danmuBean.getData().getContent();
-        danmaku.textSize = SizeUtils.sp2px(context, 12 * 1.0f);
+        danmaku.textSize = SizeUtils.sp2px(12 * 1.0f);
         danmaku.textColor = Color.WHITE;
         danmaku.setTime(danmuView.getCurrentTime());
         if (withBorder) {

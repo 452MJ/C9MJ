@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -134,12 +133,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(null);
         toolbar.setNavigationIcon(R.drawable.ic_back_arrow_normal);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pop();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> pop());
         Glide.with(this).load(img).into(iv_appbar);
 
         //设置RefreshLayout
@@ -248,18 +242,15 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
             Flowable.just(index)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Integer>() {
-                        @Override
-                        public void accept(Integer index) throws Exception {
-                            Intent intent = new Intent(getActivity(), GalleryActivity.class);
-                            ArrayList<String> imgList = new ArrayList<>();
-                            for (ExploreDetailBean.ImgBean imgBean : detailBean.getImg()) {
-                                imgList.add(imgBean.getSrc());
-                            }
-                            intent.putStringArrayListExtra(GalleryActivity.IMG_LIST, imgList);
-                            intent.putExtra(GalleryActivity.INDEX, index);
-                            startActivity(intent);
+                    .subscribe(index1 -> {
+                        Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                        ArrayList<String> imgList = new ArrayList<>();
+                        for (ExploreDetailBean.ImgBean imgBean : detailBean.getImg()) {
+                            imgList.add(imgBean.getSrc());
                         }
+                        intent.putStringArrayListExtra(GalleryActivity.IMG_LIST, imgList);
+                        intent.putExtra(GalleryActivity.INDEX, index1);
+                        startActivity(intent);
                     });
         }
     }

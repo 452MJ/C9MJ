@@ -9,7 +9,6 @@ import com.c9mj.platform.R;
 import com.c9mj.platform.util.ToastUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import io.reactivex.functions.Consumer;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
@@ -38,17 +37,13 @@ public class BaseSwipeActivity extends SwipeBackActivity {
                             Manifest.permission.INTERNET,
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .subscribe(new Consumer<Boolean>() {
-                        @Override
-                        public void accept(Boolean granted) throws Exception {
-                            if (granted) {
-                                //所有权限被允许
-                            } else {
-                                //至少一个权限被拒绝
-                                ToastUtil.show(getString(R.string.error_grant));
-                            }
+                    .subscribe(granted -> {
+                        if (granted) {
+                            //所有权限被允许
+                        } else {
+                            //至少一个权限被拒绝
+                            ToastUtil.show(getString(R.string.error_grant));
                         }
-
                     });
         }
 

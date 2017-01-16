@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:text="@string/gallery"
             android:textColor="#ffffff"
-            android:textSize="17sp"/>
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/titlebar_iv_toggle"
@@ -29,7 +29,7 @@
             android:background="?selectableItemBackgroundBorderless"
             android:padding="10dp"
             android:src="@drawable/ic_back_arrow_normal"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
     </RelativeLayout>
 
@@ -42,15 +42,15 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tv_index"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="60dp"
             android:alpha="0.5"
-            android:textColor="@color/color_icons"
-            android:layout_marginBottom="60dp"/>
+            android:textColor="@color/color_icons" />
     </FrameLayout>
 </LinearLayout>

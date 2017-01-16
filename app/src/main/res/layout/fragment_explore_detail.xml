@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -48,7 +47,7 @@
                     android:maxLines="1"
                     android:scrollHorizontally="true"
                     android:textColor="#ffffff"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -81,7 +80,7 @@
                 <WebView
                     android:id="@+id/webview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
             </android.support.v7.widget.CardView>
 
@@ -105,12 +104,12 @@
                         android:padding="5dp"
                         android:text="@string/explore_relative_sys"
                         android:textColor="@color/color_primary"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="@color/color_divider"/>
+                        android:background="@color/color_divider" />
 
                     <RelativeLayout
                         android:id="@+id/layout_relative_0"
@@ -127,7 +126,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@color/color_divider"
                             android:padding="15dp"
-                            android:src="@drawable/ic_explore_default"/>
+                            android:src="@drawable/ic_explore_default" />
 
                         <ImageView
                             android:id="@+id/iv_img_0"
@@ -136,7 +135,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:background="@null"/>
+                            android:background="@null" />
 
                         <TextView
                             android:id="@+id/tv_title_0"
@@ -149,7 +148,7 @@
                             android:paddingRight="5dp"
                             android:paddingTop="5dp"
                             android:textColor="@color/color_primary_text"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_source_0"
@@ -159,7 +158,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_0"
                             android:textColor="@color/color_secondary_text"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_time_0"
@@ -170,7 +169,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_toEndOf="@+id/tv_source_0"
                             android:textColor="@color/color_secondary_text"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                     </RelativeLayout>
 
@@ -179,7 +178,7 @@
                         android:layout_height="0.5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@color/color_divider"/>
+                        android:background="@color/color_divider" />
 
                     <RelativeLayout
                         android:id="@+id/layout_relative_1"
@@ -196,7 +195,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@color/color_divider"
                             android:padding="15dp"
-                            android:src="@drawable/ic_explore_default"/>
+                            android:src="@drawable/ic_explore_default" />
 
                         <ImageView
                             android:id="@+id/iv_img_1"
@@ -205,7 +204,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:background="@null"/>
+                            android:background="@null" />
 
                         <TextView
                             android:id="@+id/tv_title_1"
@@ -218,7 +217,7 @@
                             android:paddingRight="5dp"
                             android:paddingTop="5dp"
                             android:textColor="@color/color_primary_text"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_source_1"
@@ -228,7 +227,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_1"
                             android:textColor="@color/color_secondary_text"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_time_1"
@@ -239,7 +238,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_toEndOf="@+id/tv_source_1"
                             android:textColor="@color/color_secondary_text"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                     </RelativeLayout>
 
@@ -248,7 +247,7 @@
                         android:layout_height="0.5dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:background="@color/color_divider"/>
+                        android:background="@color/color_divider" />
 
                     <RelativeLayout
                         android:id="@+id/layout_relative_2"
@@ -265,7 +264,7 @@
                             android:layout_marginRight="10dp"
                             android:background="@color/color_divider"
                             android:padding="15dp"
-                            android:src="@drawable/ic_explore_default"/>
+                            android:src="@drawable/ic_explore_default" />
 
                         <ImageView
                             android:id="@+id/iv_img_2"
@@ -274,7 +273,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
-                            android:background="@null"/>
+                            android:background="@null" />
 
                         <TextView
                             android:id="@+id/tv_title_2"
@@ -288,7 +287,7 @@
                             android:paddingRight="5dp"
                             android:paddingTop="5dp"
                             android:textColor="@color/color_primary_text"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_source_2"
@@ -298,7 +297,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_toEndOf="@+id/iv_img_2"
                             android:textColor="@color/color_secondary_text"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_time_2"
@@ -309,7 +308,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_toEndOf="@+id/tv_source_2"
                             android:textColor="@color/color_secondary_text"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
 
                     </RelativeLayout>
                 </LinearLayout>

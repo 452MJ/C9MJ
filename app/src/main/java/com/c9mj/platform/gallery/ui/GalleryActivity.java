@@ -1,7 +1,6 @@
 package com.c9mj.platform.gallery.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -16,14 +15,8 @@ import com.c9mj.platform.gallery.mvp.presenter.impl.GalleryPresenterImpl;
 import com.c9mj.platform.gallery.mvp.view.IGalleryView;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.activity.BaseSwipeActivity;
-import com.c9mj.platform.widget.inicator.ScaleCircleNavigator;
-
-import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,19 +55,16 @@ public class GalleryActivity extends BaseSwipeActivity implements IGalleryView, 
         context = this;
 
         photoSetId = getIntent().getStringExtra(PHOTO_SET);
-        if (TextUtils.isEmpty(photoSetId))
-        {//photoSetId为空，直接取imgList
+        if (TextUtils.isEmpty(photoSetId)) {//photoSetId为空，直接取imgList
             imgList = getIntent().getStringArrayListExtra(IMG_LIST);
             index = getIntent().getIntExtra(INDEX, 0);
         }
 
         initView();
 
-        if (TextUtils.isEmpty(photoSetId))
-        {//photoSetId为空，可以设置ViewPager
+        if (TextUtils.isEmpty(photoSetId)) {//photoSetId为空，可以设置ViewPager
             initViewPager();
-        }else
-        {//photoSetId不为空，请求获取具体的photoSet
+        } else {//photoSetId不为空，请求获取具体的photoSet
             presenter.getExploreSet(photoSetId);
         }
     }
@@ -97,7 +87,7 @@ public class GalleryActivity extends BaseSwipeActivity implements IGalleryView, 
     /**
      * 初始化ViewPager
      */
-    private void initViewPager(){
+    private void initViewPager() {
 
         for (String url : imgList) {
             PhotoView photoView = new PhotoView(context);
