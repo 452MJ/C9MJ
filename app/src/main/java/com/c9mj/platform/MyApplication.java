@@ -7,6 +7,7 @@ import android.content.Context;
 import com.blankj.utilcode.utils.Utils;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.ToastUtil;
+import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -30,5 +31,6 @@ public class MyApplication extends Application {
         Utils.init(context);
         ToastUtil.init(getApplicationContext());
         SpHelper.init(getApplicationContext());
+        RxPaparazzo.register(this);
     }
 }

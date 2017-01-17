@@ -68,6 +68,8 @@ dependencies {
     compile 'com.github.todou:appbarspring:1.0.3'
     //RxPermission（6.0系统权限申请）
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.1@aar'
+    //RxPaparazzo 拍照&相册
+    compile "com.github.miguelbcr:RxPaparazzo:0.4.3-2.x"
     //内存泄漏
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

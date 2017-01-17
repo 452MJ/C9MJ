@@ -4,9 +4,7 @@ package com.c9mj.platform.user.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -21,18 +19,17 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
-import com.c9mj.platform.util.PhotoUtil;
 import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.BaseFragment;
-
-import org.joda.time.DateTime;
-
-import java.io.File;
+import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo;
+import com.yalantis.ucrop.UCrop;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * author: LMJ
@@ -40,8 +37,6 @@ import butterknife.OnClick;
  */
 public class UserFragment extends BaseFragment {
 
-    private static final int REQUEST_CAMERA = 100;
-    private static final int REQUEST_GALLERY = REQUEST_CAMERA + 1;
     @BindView(R.id.iv_appbar)
     ImageView iv_appbar;
     @BindView(R.id.toolbar)
@@ -97,9 +92,13 @@ public class UserFragment extends BaseFragment {
 
     @OnClick({R.id.toolbar, R.id.btn_photo})
     public void onClick(View view) {
+        UCrop.Options options = new UCrop.Options();
+        int color = ContextCompat.getColor(view.getContext(), R.color.color_primary);
+        options.setToolbarColor(color);
+        options.setStatusBarColor(ContextCompat.getColor(view.getContext(), R.color.color_primary_dark));
+        options.setActiveWidgetColor(color);
         switch (view.getId()) {
             case R.id.toolbar:
-//                SnackbarUtil.show("ToolBar");
                 break;
             case R.id.btn_photo: {
                 final Context context = view.getContext();
@@ -108,14 +107,42 @@ public class UserFragment extends BaseFragment {
                         .setMessage("如何获取图片？")
                         .setPositiveButton(getString(R.string.user_gallery), (dialog, which) -> {
                             dialog.dismiss();
-                            PhotoUtil.startGallery(UserFragment.this, REQUEST_GALLERY);
+                            RxPaparazzo.takeImage(UserFragment.this)
+                                    .crop(options)
+                                    .usingGallery()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(response -> {
+                                        if (response.resultCode() == Activity.RESULT_OK) {
+                                            String filePath = response.data();
+                                            Glide.with(this).load(filePath).into(iv_appbar);
+                                            SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                                        } else if (response.resultCode() == Activity.RESULT_CANCELED) {
+                                            ToastUtil.show(getString(R.string.user_carema_cancel));
+                                        } else {
+                                            ToastUtil.show(getString(R.string.error_unknown));
+                                        }
+                                    });
                         })
                         .setNeutralButton(getString(R.string.cancel), (dialog, which) -> dialog.dismiss())
                         .setNegativeButton(getString(R.string.user_carema), (dialog, which) -> {
                             dialog.dismiss();
-                            String fileName = "C9MJ_" + new DateTime(System.currentTimeMillis()).toString("yyyyMMddHHmmss") + ".png";
-                            savePath = Environment.getExternalStorageDirectory() + "/DCIM/Camera/" + fileName;
-                            PhotoUtil.startTakePhoto(UserFragment.this, REQUEST_CAMERA, fileName);
+                            RxPaparazzo.takeImage(UserFragment.this)
+                                    .crop(options)
+                                    .usingCamera()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(response -> {
+                                        if (response.resultCode() == Activity.RESULT_OK) {
+                                            String filePath = response.data();
+                                            Glide.with(this).load(filePath).into(iv_appbar);
+                                            SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                                        } else if (response.resultCode() == Activity.RESULT_CANCELED) {
+                                            ToastUtil.show(getString(R.string.user_carema_cancel));
+                                        } else {
+                                            ToastUtil.show(getString(R.string.error_unknown));
+                                        }
+                                    });
                         });
                 AlertDialog dialog = builder.create();
                 dialog.show();
@@ -126,41 +153,5 @@ public class UserFragment extends BaseFragment {
                 break;
             }
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_CAMERA: {// 调用相机拍照
-                if (resultCode == Activity.RESULT_OK) {
-                    //如果调用相机时指定了savePath的Uri，则不会返回data，data == null
-                    //我们可以直接从之前设置savePath得到相片File
-                    File temp = new File(savePath);
-                    PhotoUtil.updateGallery(this.getContext(), savePath);
-                    String filePath = temp.getAbsolutePath();
-                    Glide.with(this).load(filePath).into(iv_appbar);
-                    SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
-                } else if (resultCode == Activity.RESULT_CANCELED) {
-                    ToastUtil.show(getString(R.string.user_carema_cancel));
-                } else {
-                    ToastUtil.show(getString(R.string.error_unknown));
-                }
-            }
-            break;
-            case REQUEST_GALLERY: {// 相册获取
-                if (resultCode == Activity.RESULT_OK) {
-                    String filePath = PhotoUtil.getRealPathFromURI(this.getContext(), data.getData());
-                    Glide.with(this).load(filePath).into(iv_appbar);
-                    SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
-                } else if (resultCode == Activity.RESULT_CANCELED) {
-                    ToastUtil.show(getString(R.string.user_carema_cancel));
-                } else {
-                    ToastUtil.show(getString(R.string.error_unknown));
-                }
-            }
-            break;
-
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }
