@@ -11,14 +11,13 @@
 
 ##本项目所用开源库如下
 * [butterknife](https://github.com/JakeWharton/butterknife)
-* [glide](https://github.com/bumptech/glide)
+* [Glide](https://github.com/bumptech/glide)
 * [RxJava2](https://github.com/ReactiveX/RxJava)
 * [Retrofit](https://github.com/square/retrofit)
 * [Fragmentation](https://github.com/YoKeyword/Fragmentation)
 * [Photoview](https://github.com/chrisbanes/PhotoView)
 * [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
 * [MagicIndicator](https://github.com/hackware1993/MagicIndicator)
-* [joda-time](https://github.com/JodaOrg/joda-time)
 * [AndroidUtilCode](https://github.com/Blankj/AndroidUtilCode)
 * [DanmakuFlameMaster](https://github.com/Bilibili/DanmakuFlameMaster)
 * [LeakCanary](https://github.com/square/leakcanary)
