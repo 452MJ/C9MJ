@@ -4,20 +4,22 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
+import com.blankj.utilcode.utils.SPUtils;
+import com.blankj.utilcode.utils.ToastUtils;
 import com.blankj.utilcode.utils.Utils;
-import com.c9mj.platform.util.SpHelper;
-import com.c9mj.platform.util.ToastUtil;
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
- * author: LMJ
- * date: 2016/9/6
+ * author: liminjie
+ * date: 2017/2/27
+ * desc: MyApplication自定义
  */
 public class MyApplication extends Application {
 
     @SuppressLint("StaticFieldLeak")
     private static Context context;
+    public static SPUtils spUtils;
 
     public static Context getContext() {
         return context;
@@ -29,8 +31,8 @@ public class MyApplication extends Application {
         context = getApplicationContext();
         LeakCanary.install(this);
         Utils.init(context);
-        ToastUtil.init(getApplicationContext());
-        SpHelper.init(getApplicationContext());
+        ToastUtils.init(true);
+        spUtils = new SPUtils(getString(R.string.app_name));
         RxPaparazzo.register(this);
     }
 }

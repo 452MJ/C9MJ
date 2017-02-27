@@ -26,11 +26,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.SizeUtils;
+import com.c9mj.platform.MyApplication;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.adapter.ExploreSelectedTitleListAdapter;
 import com.c9mj.platform.explore.adapter.ExploreUnSelectedTitleListAdapter;
-import com.c9mj.platform.util.SpHelper;
 import com.c9mj.platform.util.adapter.FragmentAdapter;
+import com.c9mj.platform.util.global.Constants;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -154,24 +155,24 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
             }
         });
 
-        if (TextUtils.isEmpty(SpHelper.getString(SpHelper.STRING_TITLE))) {
+        if (TextUtils.isEmpty(MyApplication.spUtils.getString(Constants.STRING_TITLE))) {
             for (String aTnameArray : tnameArray) {
                 titleString = titleString + aTnameArray + ":";
             }
-            SpHelper.setString(SpHelper.STRING_TITLE, titleString);
+            MyApplication.spUtils.putString(Constants.STRING_TITLE, titleString);
         } else {
-            titleString = SpHelper.getString(SpHelper.STRING_TITLE);
+            titleString = MyApplication.spUtils.getString(Constants.STRING_TITLE);
         }
 
         //得到所保存的Seclected&UnSelected的Title信息
-        selectedTitleString = SpHelper.getString(SpHelper.STRING_TITLE_SELECTED);
-        unselectedTitleString = SpHelper.getString(SpHelper.STRING_TITLE_UNSELECTED);
+        selectedTitleString = MyApplication.spUtils.getString(Constants.STRING_TITLE_SELECTED);
+        unselectedTitleString = MyApplication.spUtils.getString(Constants.STRING_TITLE_UNSELECTED);
 
         //初始化，已选择栏目&未选择栏目
         if (TextUtils.isEmpty(selectedTitleString) || TextUtils.isEmpty(unselectedTitleString)) {
 
-            SpHelper.setString(SpHelper.STRING_TITLE_SELECTED, "");
-            SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, "");
+            MyApplication.spUtils.putString(Constants.STRING_TITLE_SELECTED, "");
+            MyApplication.spUtils.putString(Constants.STRING_TITLE_UNSELECTED, "");
 
             for (int i = 0; i < tnameArray.length; i++) {
                 if (i < tnameArray.length / 2) {
@@ -180,8 +181,8 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                     unselectedTitleString = unselectedTitleString + tnameArray[i] + ":";
                 }
             }
-            SpHelper.setString(SpHelper.STRING_TITLE_SELECTED, selectedTitleString);
-            SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, unselectedTitleString);
+            MyApplication.spUtils.putString(Constants.STRING_TITLE_SELECTED, selectedTitleString);
+            MyApplication.spUtils.putString(Constants.STRING_TITLE_UNSELECTED, unselectedTitleString);
         }
 
         //Title之间以:进行区分， 得到List
@@ -204,18 +205,20 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
 
         rv_unselected.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
-            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
-                selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(pos));
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                selectedAdapter.add(selectedAdapter.getData().size(), unselectedAdapter.getItem(position));
 
-                int index = titleList.indexOf(unSelectedTitleList.get(pos));
+                int index = titleList.indexOf(unSelectedTitleList.get(position));
                 String explore_type_id = idArray[index];
                 fragmentList.add(ExploreListFragment.newInstance(explore_type_id));
 
-                unselectedAdapter.remove(pos);
+                unselectedAdapter.remove(position);
 
                 navigator.notifyDataSetChanged();    // must call firstly
                 fragmentAdapter.notifyDataSetChanged();
             }
+
+
         });
 
         rv_selected.setLayoutManager(new GridLayoutManager(context, 4));
@@ -333,8 +336,8 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 //保存已选择&未选择的栏目列表
                 selectedTitleString = parseListToStringByColons(selectedTitleList);
                 unselectedTitleString = parseListToStringByColons(unSelectedTitleList);
-                SpHelper.setString(SpHelper.STRING_TITLE_SELECTED, selectedTitleString);
-                SpHelper.setString(SpHelper.STRING_TITLE_UNSELECTED, unselectedTitleString);
+                MyApplication.spUtils.putString(Constants.STRING_TITLE_SELECTED, selectedTitleString);
+                MyApplication.spUtils.putString(Constants.STRING_TITLE_UNSELECTED, unselectedTitleString);
                 break;
 
             case R.id.tv_section:

@@ -26,10 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * 快速构建MVP的模板
- * Created by Administrator on 2016/11/16.
- */
+
 
 public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, IDemoView {
 
@@ -87,12 +84,6 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
 
-        //footerView
-        View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
-//        TextView tv_footer = (TextView) footerView.findViewById(R.id.tv_footer);
-//        tv_footer.setTextColor(context.getResources().getColor(R.color.color_text_black));
-        adapter.addFooterView(footerView);
-
         //emptyView
         View emptyView = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
 //        TextView tv_empty = (TextView) emptyView.findViewById(R.id.tv_empty);
@@ -102,23 +93,24 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new SimpleClickListener() {
+
             @Override
-            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
             }
 
             @Override
-            public void onItemLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
 
             }
 
             @Override
-            public void onItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
             }
 
             @Override
-            public void onItemChildLongClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
 
             }
         });

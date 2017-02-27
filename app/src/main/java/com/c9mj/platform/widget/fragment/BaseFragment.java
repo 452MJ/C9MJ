@@ -5,10 +5,11 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
- * author: LMJ
- * date: 2016/9/5
- * Fragment基类
+ * author: liminjie
+ * date: 2017/2/27
+ * desc: BaseFragment基类
  */
+
 public class BaseFragment extends SwipeBackFragment {
 
     @Override

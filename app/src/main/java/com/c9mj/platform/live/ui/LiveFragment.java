@@ -200,14 +200,14 @@ public class LiveFragment extends BaseFragment {
         recylcerView.setAdapter(adapter);
         recylcerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Glide.with(context)
-                        .load(logoArrays[pos])
+                        .load(logoArrays[position])
                         .dontAnimate()
                         .into(iv_logo);
 
                 iv_logo.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                currentPos = pos;
+                currentPos = position;
             }
         });
 

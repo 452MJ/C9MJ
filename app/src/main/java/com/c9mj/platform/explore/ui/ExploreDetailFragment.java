@@ -18,13 +18,13 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.mvp.model.bean.ExploreDetailBean;
 import com.c9mj.platform.explore.mvp.presenter.impl.ExploreDetailPresenterImpl;
 import com.c9mj.platform.explore.mvp.view.IExploreDetailView;
 import com.c9mj.platform.gallery.ui.GalleryActivity;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -203,7 +203,7 @@ public class ExploreDetailFragment extends BaseFragment implements IExploreDetai
 
     @Override
     public void showError(String message) {
-        ToastUtil.show(message);
+        ToastUtils.showShortToast(message);
     }
 
 

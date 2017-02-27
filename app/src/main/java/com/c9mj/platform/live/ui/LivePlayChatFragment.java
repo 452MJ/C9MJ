@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LivePlayChatAdapter;
 import com.c9mj.platform.live.mvp.model.DanmuBean;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -106,10 +106,10 @@ public class LivePlayChatFragment extends BaseFragment {
     public void onClick() {
         String danmu = et_danmu.getText().toString();
         if (TextUtils.isEmpty(danmu)) {
-            ToastUtil.show("发送弹幕内容不能为空");
+            ToastUtils.showShortToast("发送弹幕内容不能为空");
             return;
         } else if (activity == null) {
-            ToastUtil.show("发送弹幕内容失败");
+            ToastUtils.showShortToast("发送弹幕内容失败");
             return;
         }
 

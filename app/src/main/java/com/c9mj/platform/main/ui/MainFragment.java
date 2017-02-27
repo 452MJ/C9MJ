@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.ui.ExploreFragment;
 import com.c9mj.platform.live.ui.LiveFragment;
 import com.c9mj.platform.user.ui.UserFragment;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 
 import net.lucode.hackware.magicindicator.FragmentContainerHelper;
@@ -164,7 +164,7 @@ public class MainFragment extends BaseFragment {
     public boolean onBackPressedSupport() {
         if (System.currentTimeMillis() - exitTime > 2000) {
             exitTime = System.currentTimeMillis();
-            ToastUtil.show(getString(R.string.second_exit));
+            ToastUtils.showShortToast(getString(R.string.second_exit));
             return true;
         } else {
             return super.onBackPressedSupport();

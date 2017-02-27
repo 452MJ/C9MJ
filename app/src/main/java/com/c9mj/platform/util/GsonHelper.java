@@ -4,10 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 /**
- * author: LMJ
- * date: 2016/9/1
- * Gson工具类
+ * author: liminjie
+ * date: 2017/2/27
+ * desc: GsonHelper工具类
  */
+
 public class GsonHelper {
     private static Object obj = null;
     private static Gson gson;

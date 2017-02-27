@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/11/24.
+ * author: liminjie
+ * date: 2017/2/27
+ * desc: ScaleCircleNavigator可缩放圆点指示器
  */
 
 public class ScaleCircleNavigator extends View implements IPagerNavigator, NavigatorHelper.OnNavigatorScrollListener {

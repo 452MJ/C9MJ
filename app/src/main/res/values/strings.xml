@@ -68,5 +68,7 @@
 
     <!--预览图片-->
     <string name="gallery">预览图片</string>
+    <string name="loadmore_end">所有数据加载完成</string>
+    <string name="loadmore_fail">加载失败，点击重试</string>
 
 </resources>

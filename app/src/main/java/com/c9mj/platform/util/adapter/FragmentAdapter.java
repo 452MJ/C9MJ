@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * author: LMJ
- * date: 2016/9/1
- * 用于管理FragmentViewPager
+ * author: liminjie
+ * date: 2017/2/27
+ * desc: FragmentAdapter用于管理FragmentViewPager
  */
+
 public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     private List<Fragment> fragmentList = new ArrayList<>();

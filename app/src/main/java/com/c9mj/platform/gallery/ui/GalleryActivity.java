@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.gallery.adapter.GalleryAdapter;
 import com.c9mj.platform.gallery.mvp.presenter.impl.GalleryPresenterImpl;
 import com.c9mj.platform.gallery.mvp.view.IGalleryView;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.activity.BaseSwipeActivity;
 
 import java.util.ArrayList;
@@ -132,7 +132,7 @@ public class GalleryActivity extends BaseSwipeActivity implements IGalleryView, 
 
     @Override
     public void showError(String message) {
-        ToastUtil.show(message);
+        ToastUtils.showShortToast(message);
     }
 
     @OnClick({R.id.titlebar_iv_toggle})

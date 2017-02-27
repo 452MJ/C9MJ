@@ -7,9 +7,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2016/11/16.
- */
 
 public class DemoAdapter extends BaseQuickAdapter<DemoBean, BaseViewHolder> {
 

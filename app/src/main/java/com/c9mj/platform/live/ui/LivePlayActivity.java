@@ -27,13 +27,13 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.utils.ScreenUtils;
 import com.blankj.utilcode.utils.SizeUtils;
+import com.blankj.utilcode.utils.ToastUtils;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.mvp.model.DanmuBean;
 import com.c9mj.platform.live.mvp.model.LiveDetailBean;
 import com.c9mj.platform.live.mvp.model.LivePandaBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LivePlayPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILivePlayActivity;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.util.retrofit.exception.MediaException;
 import com.c9mj.platform.widget.activity.BaseSwipeActivity;
 import com.pili.pldroid.player.AVOptions;
@@ -544,7 +544,7 @@ public class LivePlayActivity extends BaseSwipeActivity
 
     @Override
     public void showError(String message) {
-        ToastUtil.show(message);
+        ToastUtils.showShortToast(message);
     }
 
 
@@ -558,7 +558,7 @@ public class LivePlayActivity extends BaseSwipeActivity
     }
 
     @Override
-    public void onVideoSizeChanged(PLMediaPlayer plMediaPlayer, int width, int height) {
+    public void onVideoSizeChanged(PLMediaPlayer plMediaPlayer, int width, int height, int i2, int i3) {
         videoWidth = width;
         videoHeight = height;
 
@@ -573,6 +573,7 @@ public class LivePlayActivity extends BaseSwipeActivity
             surfaceView.setLayoutParams(lp);
         }
     }
+
 
     @Override
     public void onCompletion(PLMediaPlayer plMediaPlayer) {
@@ -759,7 +760,7 @@ public class LivePlayActivity extends BaseSwipeActivity
 
                 String danmu = et_danmu_landscape.getText().toString();
                 if (TextUtils.isEmpty(danmu)) {
-                    ToastUtil.show("发送弹幕内容不能为空");
+                    ToastUtils.showShortToast("发送弹幕内容不能为空");
                     return;
                 }
 
@@ -786,12 +787,12 @@ public class LivePlayActivity extends BaseSwipeActivity
                     isShowDanmu = false;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已关闭！");
+                    ToastUtils.showShortToast("弹幕已关闭！");
                 } else if (!isShowDanmu) {//已关闭弹幕
                     isShowDanmu = true;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已开启！");
+                    ToastUtils.showShortToast("弹幕已开启！");
                 }
 
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
@@ -814,12 +815,12 @@ public class LivePlayActivity extends BaseSwipeActivity
                     isShowDanmu = false;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已关闭！");
+                    ToastUtils.showShortToast("弹幕已关闭！");
                 } else if (!isShowDanmu) {//已关闭弹幕
                     isShowDanmu = true;
                     iv_danmu_visible_landscape.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
                     iv_danmu_visible_portrait.setImageResource(isShowDanmu ? R.drawable.selector_btn_danmu_on : R.drawable.selector_btn_danmu_off);
-                    ToastUtil.show("弹幕已开启！");
+                    ToastUtils.showShortToast("弹幕已开启！");
                 }
 
                 controllerHandler.removeMessages(HANDLER_HIDE_CONTROLLER);
@@ -910,7 +911,7 @@ public class LivePlayActivity extends BaseSwipeActivity
         layout_top.addView(layout_landscape, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         layout_top.addView(layout_portrait, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        onVideoSizeChanged(mediaPlayer, videoWidth, videoHeight);
+        onVideoSizeChanged(mediaPlayer, videoWidth, videoHeight, 0, 0);
 
         //显示状态栏
         WindowManager.LayoutParams lp = getWindow().getAttributes();

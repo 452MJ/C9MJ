@@ -1,6 +1,5 @@
 package com.c9mj.platform.live.ui;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -15,15 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveListAdapter;
 import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveListFragment;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
+import com.c9mj.platform.widget.recyclerview.CustomLoadMoreView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 
@@ -113,27 +113,27 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
-        adapter.openLoadMore(LiveAPI.LIMIT);//加载更多的触发条件
+        adapter.setAutoLoadMoreSize(LiveAPI.LIMIT);//加载更多的触发条件
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
-        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_loading, (ViewGroup) recyclerView.getParent(), false));
+        adapter.setLoadMoreView(new CustomLoadMoreView());
+
         View emptyView = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
         TextView tv_empty = (TextView) emptyView.findViewById(R.id.tv_empty);
         tv_empty.setText(getString(R.string.live_empty));
-        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_failed, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
+
         recyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
-            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int pos) {
-                LiveListItemBean liveItemBean = adapter.getData().get(pos);
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                LiveListItemBean liveItemBean = (LiveListItemBean) adapter.getData().get(position);
 
                 Intent intent = new Intent(getActivity(), LivePlayActivity.class);
                 intent.putExtra(LivePlayActivity.LIVE_TYPE, liveItemBean.getLive_type());
                 intent.putExtra(LivePlayActivity.LIVE_ID, liveItemBean.getLive_id());
                 intent.putExtra(LivePlayActivity.GAME_TYPE, liveItemBean.getGame_type());
                 startActivity(intent);
-
-
             }
+
         });
 
         /***设置其他View***/
@@ -146,20 +146,17 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         adapter.addData(list);//在roomBeanList的尾部添加
         offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT) {//分页数据size比每页数据的limit小，说明已全部加载数据
-            adapter.loadComplete();//下一次不再加载更多，并显示FooterView
-            View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
-            TextView tv_footer = (TextView) footerView.findViewById(R.id.tv_footer);
-            tv_footer.setText(getString(R.string.live_footer));
-            adapter.addFooterView(footerView);
+            adapter.loadMoreEnd();
+        } else {
+            adapter.loadMoreComplete();
         }
-//        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showError(String message) {
         refreshLayout.setRefreshing(false);
-        adapter.showLoadMoreFailedView();//在加载失败的时候调用showLoadMoreFailedView()就能显示加载失败的footer了，点击footer会重新加载
-        ToastUtil.show(message);
+        adapter.loadMoreFail();//在加载失败的时候调用showLoadMoreFailedView()就能显示加载失败的footer了，点击footer会重新加载
+        ToastUtils.showShortToast(message);
     }
 
     @Override

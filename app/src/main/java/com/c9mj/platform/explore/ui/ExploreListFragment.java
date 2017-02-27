@@ -1,6 +1,5 @@
 package com.c9mj.platform.explore.ui;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -17,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.adapter.ExploreListAdapter;
 import com.c9mj.platform.explore.api.ExploreAPI;
@@ -26,9 +26,9 @@ import com.c9mj.platform.explore.mvp.view.IExploreListFragment;
 import com.c9mj.platform.gallery.ui.GalleryActivity;
 import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.main.ui.MainFragment;
-import com.c9mj.platform.util.ToastUtil;
 import com.c9mj.platform.widget.animation.CustionAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
+import com.c9mj.platform.widget.recyclerview.CustomLoadMoreView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 
@@ -119,15 +119,14 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter.openLoadAnimation(new CustionAnimation());
         adapter.isFirstOnly(true);
-        adapter.openLoadMore(ExploreAPI.LIMIT);//加载更多的触发条件
+        adapter.setAutoLoadMoreSize(ExploreAPI.LIMIT);//加载更多的触发条件
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
+        adapter.setLoadMoreView(new CustomLoadMoreView());
 
-        adapter.setLoadingView(LayoutInflater.from(context).inflate(R.layout.layout_loading, (ViewGroup) recyclerView.getParent(), false));
         View emptyView = LayoutInflater.from(context).inflate(R.layout.layout_empty, (ViewGroup) recyclerView.getParent(), false);
         TextView tv_empty = (TextView) emptyView.findViewById(R.id.tv_empty);
         tv_empty.setText(getString(R.string.explore_empty));
         adapter.setEmptyView(emptyView);
-        adapter.setLoadMoreFailedView(LayoutInflater.from(context).inflate(R.layout.layout_loadmore_failed, (ViewGroup) recyclerView.getParent(), false));
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new SimpleClickListener() {
@@ -212,20 +211,17 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
         adapter.addData(list);//在roomBeanList的尾部添加
         offset = adapter.getData().size();
         if (list.size() < LiveAPI.LIMIT) {//分页数据size比每页数据的limit小，说明已全部加载数据
-            adapter.loadComplete();//下一次不再加载更多，并显示FooterView
-            View footerView = LayoutInflater.from(context).inflate(R.layout.layout_footer, (ViewGroup) recyclerView.getParent(), false);
-            TextView tv_footer = (TextView) footerView.findViewById(R.id.tv_footer);
-            tv_footer.setText(getString(R.string.explore_footer));
-            adapter.addFooterView(footerView);
+            adapter.loadMoreEnd();
+        } else {
+            adapter.loadMoreComplete();
         }
-//        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void showError(String message) {
         refreshLayout.setRefreshing(false);
-        adapter.showLoadMoreFailedView();//在加载失败的时候调用showLoadMoreFailedView()就能显示加载失败的footer了，点击footer会重新加载
-        ToastUtil.show(message);
+        adapter.loadMoreFail();//在加载失败的时候调用showLoadMoreFailedView()就能显示加载失败的footer了，点击footer会重新加载
+        ToastUtils.showShortToast(message);
     }
 
     @Override

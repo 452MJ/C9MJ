@@ -4,9 +4,9 @@ package com.c9mj.platform.util;
 import com.c9mj.platform.live.mvp.model.LivePandaBean;
 
 /**
- * author: LMJ
- * date: 2016/10/19
- * 弹幕数据包生成工具类
+ * author: liminjie
+ * date: 2017/2/27
+ * desc: DanmuUtil弹幕数据包生成工具类
  */
 
 public class DanmuUtil {

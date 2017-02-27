@@ -17,10 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.c9mj.platform.MyApplication;
 import com.c9mj.platform.R;
-import com.c9mj.platform.util.SpHelper;
-import com.c9mj.platform.util.ToastUtil;
+import com.c9mj.platform.util.global.Constants;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo;
 import com.yalantis.ucrop.UCrop;
@@ -82,7 +83,7 @@ public class UserFragment extends BaseFragment {
         toolbar.setTitle(getString(R.string.user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        String filePath = SpHelper.getString(SpHelper.STRING_USER);//查询保存的背景图片路径
+        String filePath = MyApplication.spUtils.getString(Constants.STRING_USER);//查询保存的背景图片路径
         if (!TextUtils.isEmpty(filePath)) {
             Glide.with(this).load(filePath).into(iv_appbar);
         } else {
@@ -116,11 +117,11 @@ public class UserFragment extends BaseFragment {
                                         if (response.resultCode() == Activity.RESULT_OK) {
                                             String filePath = response.data();
                                             Glide.with(this).load(filePath).into(iv_appbar);
-                                            SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                                            MyApplication.spUtils.putString(Constants.STRING_USER, filePath);//保存图片路径
                                         } else if (response.resultCode() == Activity.RESULT_CANCELED) {
-                                            ToastUtil.show(getString(R.string.user_carema_cancel));
+                                            ToastUtils.showShortToast(getString(R.string.user_carema_cancel));
                                         } else {
-                                            ToastUtil.show(getString(R.string.error_unknown));
+                                            ToastUtils.showShortToast(getString(R.string.error_unknown));
                                         }
                                     });
                         })
@@ -136,11 +137,11 @@ public class UserFragment extends BaseFragment {
                                         if (response.resultCode() == Activity.RESULT_OK) {
                                             String filePath = response.data();
                                             Glide.with(this).load(filePath).into(iv_appbar);
-                                            SpHelper.setString(SpHelper.STRING_USER, filePath);//保存图片路径
+                                            MyApplication.spUtils.putString(Constants.STRING_USER, filePath);//保存图片路径
                                         } else if (response.resultCode() == Activity.RESULT_CANCELED) {
-                                            ToastUtil.show(getString(R.string.user_carema_cancel));
+                                            ToastUtils.showShortToast(getString(R.string.user_carema_cancel));
                                         } else {
-                                            ToastUtil.show(getString(R.string.error_unknown));
+                                            ToastUtils.showShortToast(getString(R.string.error_unknown));
                                         }
                                     });
                         });
