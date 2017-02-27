@@ -1,4 +1,4 @@
-package com.c9mj.platform.widget.animation;
+package com.c9mj.platform.widget.recyclerview.animation;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.animation.BaseAnimation;
  * date: 2017/2/27
  * desc: CustionAnimation列表的加载动画
  */
-public class CustionAnimation implements BaseAnimation {
+public class CustomAnimation implements BaseAnimation {
     @Override
     public Animator[] getAnimators(View view) {
         return new Animator[]{

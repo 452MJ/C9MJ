@@ -15,7 +15,7 @@ import com.c9mj.platform.demo.adapter.DemoAdapter;
 import com.c9mj.platform.demo.mvp.model.bean.DemoBean;
 import com.c9mj.platform.demo.mvp.presenter.impl.DemoPresenterImpl;
 import com.c9mj.platform.demo.mvp.view.IDemoView;
-import com.c9mj.platform.widget.animation.CustionAnimation;
+import com.c9mj.platform.widget.recyclerview.animation.CustomAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
@@ -81,7 +81,7 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new DemoAdapter(list);
-        adapter.openLoadAnimation(new CustionAnimation());
+        adapter.openLoadAnimation(new CustomAnimation());
         adapter.isFirstOnly(true);
 
         //emptyView

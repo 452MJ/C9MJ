@@ -21,7 +21,7 @@ import com.c9mj.platform.live.api.LiveAPI;
 import com.c9mj.platform.live.mvp.model.LiveListItemBean;
 import com.c9mj.platform.live.mvp.presenter.impl.LiveListPresenterImpl;
 import com.c9mj.platform.live.mvp.view.ILiveListFragment;
-import com.c9mj.platform.widget.animation.CustionAnimation;
+import com.c9mj.platform.widget.recyclerview.animation.CustomAnimation;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.c9mj.platform.widget.recyclerview.CustomLoadMoreView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -111,7 +111,7 @@ public class LiveListFragment extends BaseFragment implements ILiveListFragment,
         //设置RecyclerView
         adapter = new LiveListAdapter(liveList);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-        adapter.openLoadAnimation(new CustionAnimation());
+        adapter.openLoadAnimation(new CustomAnimation());
         adapter.isFirstOnly(true);
         adapter.setAutoLoadMoreSize(LiveAPI.LIMIT);//加载更多的触发条件
         adapter.setOnLoadMoreListener(this);//加载更多回调监听
