@@ -1,6 +1,5 @@
 package com.c9mj.platform;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -15,24 +14,32 @@ import com.squareup.leakcanary.LeakCanary;
  * date: 2017/2/27
  * desc: MyApplication自定义
  */
-public class MyApplication extends Application {
+public class App extends Application {
 
-    @SuppressLint("StaticFieldLeak")
-    private static Context context;
-    public static SPUtils spUtils;
+    protected static Application instance;
+    protected static SPUtils spUtils;
+
+    public static SPUtils getSpUtils() {
+        return spUtils;
+    }
+
+    public static Application getInstance() {
+        return instance;
+    }
 
     public static Context getContext() {
-        return context;
+        return getInstance().getApplicationContext();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        context = getApplicationContext();
+        instance = this;
         LeakCanary.install(this);
-        Utils.init(context);
+        Utils.init(getApplicationContext());
         ToastUtils.init(true);
         spUtils = new SPUtils(getString(R.string.app_name));
         RxPaparazzo.register(this);
     }
+
 }

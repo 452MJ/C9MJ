@@ -1,4 +1,4 @@
-package com.c9mj.platform.demo.ui;
+package com.c9mj.platform.demo_list.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,13 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.utils.ToastUtils;
 import com.c9mj.platform.R;
-import com.c9mj.platform.demo.adapter.DemoAdapter;
-import com.c9mj.platform.demo.mvp.model.bean.DemoBean;
-import com.c9mj.platform.demo.mvp.presenter.impl.DemoPresenterImpl;
-import com.c9mj.platform.demo.mvp.view.IDemoView;
-import com.c9mj.platform.widget.recyclerview.animation.CustomAnimation;
+import com.c9mj.platform.demo_list.adapter.DemoListAdapter;
+import com.c9mj.platform.demo_list.mvp.model.bean.DemoListBean;
+import com.c9mj.platform.demo_list.mvp.presenter.impl.DemoListPresenterImpl;
+import com.c9mj.platform.demo_list.mvp.view.IDemoListView;
 import com.c9mj.platform.widget.fragment.BaseFragment;
+import com.c9mj.platform.widget.recyclerview.animation.CustomAnimation;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 
@@ -27,26 +28,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-
-public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, IDemoView {
+public class DemoListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, IDemoListView {
 
     private static final String KEY = "key";
-    private final List<DemoBean> list = new ArrayList<>();
+    private final List<DemoListBean> list = new ArrayList<>();
     @BindView(R.id.layout_refresh)
     SwipeRefreshLayout layout_refresh;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
     private Context context;
-    private DemoPresenterImpl presenter;
-    private DemoAdapter adapter;
+    private DemoListPresenterImpl presenter;
+    private DemoListAdapter adapter;
 
-
-    public static DemoFragment newInstance() {
+    public static DemoListFragment newInstance() {
         return newInstance("");
     }
 
-    private static DemoFragment newInstance(String game_type) {
-        DemoFragment fragment = new DemoFragment();
+    private static DemoListFragment newInstance(String game_type) {
+        DemoListFragment fragment = new DemoListFragment();
         Bundle args = new Bundle();
         args.putString(KEY, game_type);
         fragment.setArguments(args);
@@ -56,7 +55,7 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_demo, container, false);
+        View view = inflater.inflate(R.layout.fragment_demo_list, container, false);
         ButterKnife.bind(this, view);
 
         context = view.getContext();
@@ -68,7 +67,7 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void initView() {
         //初始化MVP
-        presenter = new DemoPresenterImpl(this);
+        presenter = new DemoListPresenterImpl(this);
 
         //设置RefreshLayout
         layout_refresh.setColorSchemeResources(R.color.color_primary);
@@ -76,11 +75,11 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         //设置RecyclerView
         for (int i = 0; i < 5; i++) {
-            list.add(new DemoBean());
+            list.add(new DemoListBean());
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new DemoAdapter(list);
+        adapter = new DemoListAdapter(list);
         adapter.openLoadAnimation(new CustomAnimation());
         adapter.isFirstOnly(true);
 
@@ -122,7 +121,7 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         list.clear();
         for (int i = 0; i < 5; i++) {
-            list.add(new DemoBean());
+            list.add(new DemoListBean());
         }
         adapter.setNewData(list);
         layout_refresh.setRefreshing(false);
@@ -130,7 +129,7 @@ public class DemoFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void showError(String message) {
-
+        ToastUtils.showShortToast(message);
     }
 
 

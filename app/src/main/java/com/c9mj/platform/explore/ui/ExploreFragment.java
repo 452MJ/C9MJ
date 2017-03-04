@@ -26,7 +26,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.utils.SizeUtils;
-import com.c9mj.platform.MyApplication;
+import com.c9mj.platform.App;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.adapter.ExploreSelectedTitleListAdapter;
 import com.c9mj.platform.explore.adapter.ExploreUnSelectedTitleListAdapter;
@@ -89,8 +89,8 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
     private String[] enameArray;
     private String[] tnameArray;
     private String titleString = "";//用于保存记录所有栏目
-    private String selectedTitleString = "";//用于保存记录已选择栏目
-    private String unselectedTitleString = "";//用于保存记录未选择栏目
+    private String selectedTitleString;//用于保存记录已选择栏目
+    private String unselectedTitleString;//用于保存记录未选择栏目
     private List<String> titleList = new ArrayList<>();//所有TitleList
     private List<String> selectedTitleList = new ArrayList<>();//编辑模式下的已选择Tab的TitleList
     private List<String> unSelectedTitleList = new ArrayList<>();//编辑模式下的未选择Tab的TitleList
@@ -155,24 +155,26 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
             }
         });
 
-        if (TextUtils.isEmpty(MyApplication.spUtils.getString(Constants.STRING_TITLE))) {
+        if (TextUtils.isEmpty(App.getSpUtils().getString(Constants.STRING_TITLE))) {
             for (String aTnameArray : tnameArray) {
                 titleString = titleString + aTnameArray + ":";
             }
-            MyApplication.spUtils.putString(Constants.STRING_TITLE, titleString);
+            App.getSpUtils().putString(Constants.STRING_TITLE, titleString);
         } else {
-            titleString = MyApplication.spUtils.getString(Constants.STRING_TITLE);
+            titleString = App.getSpUtils().getString(Constants.STRING_TITLE);
         }
 
         //得到所保存的Seclected&UnSelected的Title信息
-        selectedTitleString = MyApplication.spUtils.getString(Constants.STRING_TITLE_SELECTED);
-        unselectedTitleString = MyApplication.spUtils.getString(Constants.STRING_TITLE_UNSELECTED);
+        selectedTitleString = App.getSpUtils().getString(Constants.STRING_TITLE_SELECTED);
+        unselectedTitleString = App.getSpUtils().getString(Constants.STRING_TITLE_UNSELECTED);
 
         //初始化，已选择栏目&未选择栏目
         if (TextUtils.isEmpty(selectedTitleString) || TextUtils.isEmpty(unselectedTitleString)) {
 
-            MyApplication.spUtils.putString(Constants.STRING_TITLE_SELECTED, "");
-            MyApplication.spUtils.putString(Constants.STRING_TITLE_UNSELECTED, "");
+            selectedTitleString = unselectedTitleString = "";
+
+            App.getSpUtils().putString(Constants.STRING_TITLE_SELECTED, "");
+            App.getSpUtils().putString(Constants.STRING_TITLE_UNSELECTED, "");
 
             for (int i = 0; i < tnameArray.length; i++) {
                 if (i < tnameArray.length / 2) {
@@ -181,8 +183,8 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                     unselectedTitleString = unselectedTitleString + tnameArray[i] + ":";
                 }
             }
-            MyApplication.spUtils.putString(Constants.STRING_TITLE_SELECTED, selectedTitleString);
-            MyApplication.spUtils.putString(Constants.STRING_TITLE_UNSELECTED, unselectedTitleString);
+            App.getSpUtils().putString(Constants.STRING_TITLE_SELECTED, selectedTitleString);
+            App.getSpUtils().putString(Constants.STRING_TITLE_UNSELECTED, unselectedTitleString);
         }
 
         //Title之间以:进行区分， 得到List
@@ -336,8 +338,8 @@ public class ExploreFragment extends BaseFragment implements OnItemDragListener,
                 //保存已选择&未选择的栏目列表
                 selectedTitleString = parseListToStringByColons(selectedTitleList);
                 unselectedTitleString = parseListToStringByColons(unSelectedTitleList);
-                MyApplication.spUtils.putString(Constants.STRING_TITLE_SELECTED, selectedTitleString);
-                MyApplication.spUtils.putString(Constants.STRING_TITLE_UNSELECTED, unselectedTitleString);
+                App.getSpUtils().putString(Constants.STRING_TITLE_SELECTED, selectedTitleString);
+                App.getSpUtils().putString(Constants.STRING_TITLE_UNSELECTED, unselectedTitleString);
                 break;
 
             case R.id.tv_section:

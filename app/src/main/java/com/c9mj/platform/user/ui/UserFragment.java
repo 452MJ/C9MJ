@@ -19,7 +19,7 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.utils.ToastUtils;
 import com.bumptech.glide.Glide;
-import com.c9mj.platform.MyApplication;
+import com.c9mj.platform.App;
 import com.c9mj.platform.R;
 import com.c9mj.platform.util.global.Constants;
 import com.c9mj.platform.widget.fragment.BaseFragment;
@@ -83,7 +83,7 @@ public class UserFragment extends BaseFragment {
         toolbar.setTitle(getString(R.string.user));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        String filePath = MyApplication.spUtils.getString(Constants.STRING_USER);//查询保存的背景图片路径
+        String filePath = App.getSpUtils().getString(Constants.STRING_USER);//查询保存的背景图片路径
         if (!TextUtils.isEmpty(filePath)) {
             Glide.with(this).load(filePath).into(iv_appbar);
         } else {
@@ -117,7 +117,7 @@ public class UserFragment extends BaseFragment {
                                         if (response.resultCode() == Activity.RESULT_OK) {
                                             String filePath = response.data();
                                             Glide.with(this).load(filePath).into(iv_appbar);
-                                            MyApplication.spUtils.putString(Constants.STRING_USER, filePath);//保存图片路径
+                                            App.getSpUtils().putString(Constants.STRING_USER, filePath);//保存图片路径
                                         } else if (response.resultCode() == Activity.RESULT_CANCELED) {
                                             ToastUtils.showShortToast(getString(R.string.user_carema_cancel));
                                         } else {
@@ -137,7 +137,7 @@ public class UserFragment extends BaseFragment {
                                         if (response.resultCode() == Activity.RESULT_OK) {
                                             String filePath = response.data();
                                             Glide.with(this).load(filePath).into(iv_appbar);
-                                            MyApplication.spUtils.putString(Constants.STRING_USER, filePath);//保存图片路径
+                                            App.getSpUtils().putString(Constants.STRING_USER, filePath);//保存图片路径
                                         } else if (response.resultCode() == Activity.RESULT_CANCELED) {
                                             ToastUtils.showShortToast(getString(R.string.user_carema_cancel));
                                         } else {

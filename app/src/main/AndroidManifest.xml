@@ -14,7 +14,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

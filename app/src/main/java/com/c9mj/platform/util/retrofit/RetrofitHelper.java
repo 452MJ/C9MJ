@@ -1,7 +1,7 @@
 package com.c9mj.platform.util.retrofit;
 
 import com.blankj.utilcode.utils.NetworkUtils;
-import com.c9mj.platform.MyApplication;
+import com.c9mj.platform.App;
 import com.c9mj.platform.live.mvp.model.LiveBaseBean;
 import com.c9mj.platform.util.retrofit.exception.RetrofitException;
 
@@ -77,7 +77,7 @@ public class RetrofitHelper {
             try {
                 synchronized (RetrofitHelper.class) {
                     if (explore == null) {
-                        File httpCacheDirectory = new File(MyApplication.getContext().getCacheDir(), "exploreCache");
+                        File httpCacheDirectory = new File(App.getContext().getCacheDir(), "exploreCache");
                         Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);//缓存10MB
                         OkHttpClient.Builder httpBuidler = new OkHttpClient().newBuilder();
                         httpBuidler.cache(cache)
