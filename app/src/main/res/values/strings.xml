@@ -1,6 +1,7 @@
 <resources>
-    <!--主页-->
     <string name="app_name">C9MJ</string>
+    <!--通用-->
+    <string name="progress_loading">正在努力工作，请稍等…</string>
     <string name="explore">发现</string>
     <string name="user">我的</string>
     <string name="enter">确定</string>

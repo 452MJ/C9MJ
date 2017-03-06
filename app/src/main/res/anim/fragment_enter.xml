@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--A跳转B，B的Enter进场动画-->
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<translate-->
+    <!--android:fromXDelta="26%p"-->
+    <!--android:interpolator="@android:anim/decelerate_interpolator"-->
+    <!--android:toXDelta="0"/>-->
+
+    <scale
+        android:duration="150"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.1"
+        android:toYScale="1.1"/>
+
+    <set android:startOffset="150">
+
+        <scale
+            android:duration="150"
+            android:fromXScale="1.1"
+            android:fromYScale="1.1"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toXScale="1.0"
+            android:toYScale="1.0"/>
+    </set>
+
+</set>

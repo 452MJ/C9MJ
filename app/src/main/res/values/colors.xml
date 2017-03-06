@@ -14,7 +14,21 @@
     <!--导航栏-->
     <color name="color_tab_pressed">@color/color_primary</color>
     <color name="color_tab_normal">@color/color_secondary_text</color>
+    <!--字体文本颜色-->
+    <color name="color_text_normal">#3c4457</color>
+    <color name="color_text_black">#030303</color>
+    <color name="color_text_grey">#c2c2c2</color>
+    <color name="color_text_white">#ffffff</color>
+    <color name="color_text_hint">#8f8e94</color>
+    <color name="color_text_exercise">#4a4a4a</color>
+    <color name="color_text_title_levelTwo">#4a4a4a</color>
+    <color name="color_text_subheading">#9B9B9B</color>
 
     <color name="color_background_white">#ffffff</color>
     <color name="color_statusbar">#212121</color>
+
+    <!--各种颜色-->
+    <color name="transparent">#00000000</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_black">#000000</color>
 </resources>

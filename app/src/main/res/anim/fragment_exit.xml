@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--B返回A，B的Exit退场动画-->
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="300">
+    <!--<translate-->
+    <!--android:fromXDelta="0%p"-->
+    <!--android:interpolator="@android:anim/decelerate_interpolator"-->
+    <!--android:toXDelta="-26%p"/>-->
+
+    <alpha
+        android:fromAlpha="1.0"
+        android:toAlpha="0.7"/>
+</set>

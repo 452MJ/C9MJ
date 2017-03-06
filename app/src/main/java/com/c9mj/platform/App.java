@@ -16,14 +16,14 @@ import com.squareup.leakcanary.LeakCanary;
  */
 public class App extends Application {
 
-    protected static Application instance;
-    protected static SPUtils spUtils;
+    protected static App instance;
+    private SPUtils spUtils;
 
     public static SPUtils getSpUtils() {
-        return spUtils;
+        return getInstance().spUtils;
     }
 
-    public static Application getInstance() {
+    public static App getInstance() {
         return instance;
     }
 
