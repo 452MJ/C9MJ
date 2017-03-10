@@ -1,4 +1,4 @@
-package com.c9mj.platform.util.adapter;
+package com.c9mj.platform.util.global;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

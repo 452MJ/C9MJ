@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,8 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
 
         context = view.getContext();
 
+        Log.d(TAG, "onCreateView: ");
+
         explore_type_id = getArguments().getString(EXPLORE_TYPE_ID);//得到传入的explore_type_id
 
         initView();
@@ -100,10 +103,12 @@ public class ExploreListFragment extends BaseFragment implements IExploreListFra
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
-        refreshLayout.setRefreshing(true);
-        //根据game_type分类请求直播数据
-        presenter.getExploreList(explore_type_id, offset, LiveAPI.LIMIT);
+        if (savedInstanceState == null) {
+            refreshLayout.setProgressViewOffset(false, 0, 30);// 这句话是为了，第一次进入页面初始化数据的时候显示加载进度条
+            refreshLayout.setRefreshing(true);
+            //根据game_type分类请求直播数据
+            presenter.getExploreList(explore_type_id, offset, LiveAPI.LIMIT);
+        }
     }
 
     private void initView() {

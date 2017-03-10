@@ -30,7 +30,7 @@ import com.c9mj.platform.App;
 import com.c9mj.platform.R;
 import com.c9mj.platform.explore.adapter.ExploreSelectedTitleListAdapter;
 import com.c9mj.platform.explore.adapter.ExploreUnSelectedTitleListAdapter;
-import com.c9mj.platform.util.adapter.FragmentAdapter;
+import com.c9mj.platform.util.global.FragmentAdapter;
 import com.c9mj.platform.util.global.Constants;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;

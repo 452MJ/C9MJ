@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.c9mj.platform.R;
 import com.c9mj.platform.live.adapter.LiveTypeAdapter;
-import com.c9mj.platform.util.adapter.FragmentAdapter;
+import com.c9mj.platform.util.global.FragmentAdapter;
 import com.c9mj.platform.widget.fragment.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
