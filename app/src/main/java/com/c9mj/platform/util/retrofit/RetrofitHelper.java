@@ -59,7 +59,7 @@ public class RetrofitHelper {
                     .header("Cache-Control", "public, max-age=" + maxAge)//设置缓存超时时间
                     .build();
         } else {
-            int maxStale = 60 * 60 * 24 * 28;//无网络时，设置超时为4周
+            int maxStale = 60 * 60;//无网络时，设置超时为4周
             response = response.newBuilder()
                     .removeHeader("Pragma")
                     .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
@@ -85,7 +85,7 @@ public class RetrofitHelper {
                                 .writeTimeout(10, TimeUnit.SECONDS)
                                 .readTimeout(10, TimeUnit.SECONDS)
                                 //添加拦截器
-                                .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)//离线缓存
+//                                .addNetworkInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR)//离线缓存
                                 .addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
 
                         explore = new Retrofit.Builder()
