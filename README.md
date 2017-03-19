@@ -2,7 +2,9 @@
   A personal app demo named  C9MJ TV(news + video live) and based on MVP + Glide + Retrofit + RxJava2 + butterknife(you can watch douyu / panda / zhanqi / yy / longzhu /  quanmin / Netease cc / huomao TV live ) . PS: Only watch the Panda TV have a barrage (danmu / bullet) chat. This English is translated by Google.
     
   个人练手项目(新闻 + 视频直播)： 基于 MVP + Glide + Retrofit + RxJava2.0 + butterknife 的C9MJ TV (斗鱼/熊猫/战旗/虎牙/龙珠/全民/网易/火猫) App。ps：只有观看熊猫Panda TV才有弹幕播放功能。
-    
+  
+##体验 apk
+[下载链接](https://github.com/452MJ/C9MJ/raw/master/screenshots/app-debug.apk)
 
 ##基本架构Architecture
 * 主流框架：Glide + Retrofit + RxJava2.0 + butterknife  
