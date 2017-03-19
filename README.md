@@ -1,17 +1,17 @@
-#C9MJ
+# C9MJ 
   A personal app demo named  C9MJ TV(news + video live) and based on MVP + Glide + Retrofit + RxJava2 + butterknife(you can watch douyu / panda / zhanqi / yy / longzhu /  quanmin / Netease cc / huomao TV live ) . PS: Only watch the Panda TV have a barrage (danmu / bullet) chat. This English is translated by Google.
     
   个人练手项目(新闻 + 视频直播)： 基于 MVP + Glide + Retrofit + RxJava2.0 + butterknife 的C9MJ TV (斗鱼/熊猫/战旗/虎牙/龙珠/全民/网易/火猫) App。ps：只有观看熊猫Panda TV才有弹幕播放功能。
-
-##demo apk下载链接
+  
+## 体验 apk
 [下载链接](https://github.com/452MJ/C9MJ/raw/master/screenshots/app-debug.apk)
 
-##基本架构Architecture
+## 基本架构Architecture
 * 主流框架：Glide + Retrofit + RxJava2.0 + butterknife  
 
 * 采用MVP模式进行解耦
 
-##本项目所用开源库Dependencies
+## 本项目所用开源库Dependencies
 * [butterknife](https://github.com/JakeWharton/butterknife)
 * [Glide](https://github.com/bumptech/glide)
 * [RxJava2](https://github.com/ReactiveX/RxJava)
@@ -24,7 +24,7 @@
 * [DanmakuFlameMaster](https://github.com/Bilibili/DanmakuFlameMaster)
 * [LeakCanary](https://github.com/square/leakcanary)
 
-##部分截图Screenshot
+## 部分截图Screenshot
 
 * 发现 
 <br>
@@ -48,15 +48,15 @@
 <img src="https://github.com/452MJ/C9MJ/blob/master/screenshots/user.jpg" width = "33%"/>
 <br>
 
-##关于About
+## 关于About
   本项目所有接口Api均利用Fiddler抓包分析所得，只用于分享、学习。
   该项目是本人为熟悉开发流程而设，不得用于商业用途，若有损他人利益则立即删除。
   主要功能包括新闻浏览与视频直播（仍在开发中，bug可能会比较多...）
   
-##感谢Thanks
+## 感谢Thanks
 [Neutree](https://github.com/Neutree/PandaTvDanMu)提供的[弹幕协议](https://github.com/Neutree/PandaTvDanMu/blob/master/doc/protocol.md)分析
 
-##证书License
+## 证书License
 ```
    Copyright 2016 452MJ
 
