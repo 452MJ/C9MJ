@@ -21,6 +21,7 @@
 * [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
 * [MagicIndicator](https://github.com/hackware1993/MagicIndicator)
 * [AndroidUtilCode](https://github.com/Blankj/AndroidUtilCode)
+* [PLDroidPlayer](https://github.com/pili-engineering/PLDroidPlayer)
 * [DanmakuFlameMaster](https://github.com/Bilibili/DanmakuFlameMaster)
 * [LeakCanary](https://github.com/square/leakcanary)
 
